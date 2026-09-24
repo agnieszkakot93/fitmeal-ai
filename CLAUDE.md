@@ -24,3 +24,11 @@ Every new branch is named `<type>/<short-description>`:
 Examples: `feat/weekly-plan-swap`, `fix/usda-import-duplicate-foods`, `chore/bump-fastapi`, `docs/api-auth-flow`.
 
 Only these types are allowed. Pick the one that matches the main purpose of the branch; if a branch mixes several, it should probably be split.
+
+## Deleting branches after merge
+
+A branch is deleted as soon as its pull request is merged, both on GitHub and locally. The long-lived branches `main` and `develop` are never deleted.
+
+- **Remote:** press "Delete branch" on the merged PR, or `git push origin --delete <branch>`. Turning on "Automatically delete head branches" in the repository settings does this for every PR.
+- **Local:** `git switch develop && git pull && git branch -d <branch>`, then `git fetch --prune` to drop stale remote-tracking refs.
+- Follow-up work goes on a new branch cut from the latest `develop`, never on the merged one.
