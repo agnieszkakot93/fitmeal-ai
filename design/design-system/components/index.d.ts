@@ -32,9 +32,10 @@ export declare const StatTile: React.FC<{ value: string; unit?: string; label: s
 export declare const PlanCard: React.FC<{ tier?: 'free' | 'standard' | 'premium'; name: string; flag?: string; promise?: string; price: string; period?: string; subprice?: string; features?: string[]; selected?: boolean; soon?: boolean }>;
 export declare const LockedPreview: React.FC<{ kicker: string; stats: { label: string; from: string; to: string }[]; note?: string; cta: string; tier?: 'standard' | 'premium' }>;
 export declare const SectionHeader: React.FC<{ title: string; meta?: string; action?: string }>;
-export declare const NavBar: React.FC<{ title: string; large?: boolean; subtitle?: string; back?: string; trailing?: React.ReactNode; overlay?: boolean }>;
+export declare const NavBar: React.FC<{ title: string; large?: boolean; subtitle?: string; back?: string; trailing?: React.ReactNode; avatar?: React.ReactNode; overlay?: boolean }>;
+export declare const Avatar: React.FC<{ initials?: string; size?: number; badge?: boolean | string; label?: string }>;
 export declare const OnboardingProgress: React.FC<{ step: number; total?: number }>;
-export declare const TabBar: React.FC<{ active?: 'today' | 'plan' | 'shopping' | 'profile'; accessory?: React.ReactNode; minimized?: boolean }>;
+export declare const TabBar: React.FC<{ active?: 'today' | 'plan' | 'shopping'; accessory?: React.ReactNode; minimized?: boolean }>;
 export declare const BottomAccessory: React.FC<{ icon?: string; tone?: 'basil' | 'paprika'; title: string; subtitle?: string; action?: string; progress?: number }>;
 export declare const RecipeHero: React.FC<{ macros?: { protein: number; carbs: number; fat: number }; height?: number; tone?: 'paprika' | 'basil' | 'premium'; className?: string; children?: React.ReactNode }>;
 export declare const PhoneFrame: React.FC<{ caption?: string; theme?: 'light' | 'dark'; children?: React.ReactNode }>;

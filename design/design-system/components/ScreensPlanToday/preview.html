@@ -18,6 +18,7 @@ function row(label, value, icon){ return h('div', {style:{display:'flex', alignI
   h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)'}}, label),
   h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value),
   h('span', {style:{color:'var(--ink-faint)'}}, h(F.Icon, {name:'chevron-right', size:18}))); }
+var AV = h(F.Avatar, {initials:'OL', label:'Profile'});
 var TODAY_MEALS = [
   h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', swappable:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
   h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
@@ -40,7 +41,7 @@ show([
    h('div', {key:'c'}, cta('Generate week'))
  ]),
  Ph('13 Weekly plan', [
-   h(F.NavBar, {key:'n', large:true, title:'Plan', subtitle:'22\u201328 Sep \u00b7 on target 7 of 7 days', trailing:h(F.IconButton, {icon:'more', label:'Plan options'})}),
+   h(F.NavBar, {key:'n', large:true, title:'Plan', subtitle:'22\u201328 Sep \u00b7 on target 7 of 7 days', trailing:h(F.IconButton, {icon:'more', label:'Plan options'}), avatar:AV}),
    h('div', {key:'d', style:{padding:'4px 16px 12px'}}, h(F.DayStrip, {selected:2, days:[{name:'Mon',num:22,state:'done'},{name:'Tue',num:23,state:'done'},{name:'Wed',num:24,state:'prep'},{name:'Thu',num:25},{name:'Fri',num:26,state:'prep'},{name:'Sat',num:27},{name:'Sun',num:28}]})),
    scroll(
      h('div', {style:{display:'flex', gap:10, alignItems:'center', padding:12, borderRadius:'var(--radius-md)', background:'var(--paprika-soft)', color:'var(--paprika-ink)'}},
@@ -52,12 +53,12 @@ show([
    h(F.TabBar, {key:'t', active:'plan', accessory:h(F.BottomAccessory, {icon:'repeat', tone:'paprika', title:'Cook today · 2 recipes', subtitle:'Covers Wed + Thu · about 45 min', action:'Start'})})
  ]),
  Ph('14 Today', [
-   h(F.NavBar, {key:'n', large:true, title:'Today', subtitle:'Wednesday, 24 September'}),
+   h(F.NavBar, {key:'n', large:true, title:'Today', subtitle:'Wednesday, 24 September', avatar:AV}),
    scroll(daySummary(), h(F.SectionHeader, {title:'Meals', meta:'1 of 3 eaten'}), TODAY_MEALS),
    h(F.TabBar, {key:'t', active:'today', accessory:h(F.BottomAccessory, {icon:'clock', title:'Up next · Lunch 13:30', subtitle:'Chicken Teriyaki · meal prep 1/2', action:'Eat'})})
  ]),
  Ph('15 Swap meal', [
-   h(F.NavBar, {key:'n', large:true, title:'Today'}),
+   h(F.NavBar, {key:'n', large:true, title:'Today', avatar:AV}),
    scroll(daySummary()),
    h('div', {key:'s', className:'fm-scrim'},
      h('div', {className:'fm-sheet'},

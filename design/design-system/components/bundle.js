@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"FitMeal","components":[{"name":"Icon"},{"name":"Button"},{"name":"IconButton"},{"name":"Chip"},{"name":"SegmentedControl"},{"name":"SelectCard"},{"name":"Toggle"},{"name":"Checkbox"},{"name":"NumberField"},{"name":"ExclusionRow"},{"name":"DistributionEditor"},{"name":"MacroRing"},{"name":"MacroBar"},{"name":"MacroLine"},{"name":"Delta"},{"name":"Badge"},{"name":"MealCard"},{"name":"DayStrip"},{"name":"RebalanceBanner"},{"name":"IngredientRow"},{"name":"SwapOption"},{"name":"ChangeItem"},{"name":"CompareCard"},{"name":"ConfidencePrompt"},{"name":"ShoppingItem"},{"name":"StatTile"},{"name":"PlanCard"},{"name":"LockedPreview"},{"name":"SectionHeader"},{"name":"NavBar"},{"name":"OnboardingProgress"},{"name":"TabBar"},{"name":"BottomAccessory"},{"name":"RecipeHero"},{"name":"PhoneFrame"}]} */
+/* @ds-bundle: {"format":4,"namespace":"FitMeal","components":[{"name":"Icon"},{"name":"Button"},{"name":"IconButton"},{"name":"Chip"},{"name":"SegmentedControl"},{"name":"SelectCard"},{"name":"Toggle"},{"name":"Checkbox"},{"name":"NumberField"},{"name":"ExclusionRow"},{"name":"DistributionEditor"},{"name":"MacroRing"},{"name":"MacroBar"},{"name":"MacroLine"},{"name":"Delta"},{"name":"Badge"},{"name":"MealCard"},{"name":"DayStrip"},{"name":"RebalanceBanner"},{"name":"IngredientRow"},{"name":"SwapOption"},{"name":"ChangeItem"},{"name":"CompareCard"},{"name":"ConfidencePrompt"},{"name":"ShoppingItem"},{"name":"StatTile"},{"name":"PlanCard"},{"name":"LockedPreview"},{"name":"SectionHeader"},{"name":"NavBar"},{"name":"Avatar"},{"name":"OnboardingProgress"},{"name":"TabBar"},{"name":"BottomAccessory"},{"name":"RecipeHero"},{"name":"PhoneFrame"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
@@ -480,18 +480,30 @@
   }
 
   function NavBar(p) {
-    var trailing = p.trailing ? h('span', { className: 'fm-glass fm-glass-group' }, p.trailing) : h('span', { className: 'fm-nav-spacer' });
+    var trailing = (p.trailing || p.avatar)
+      ? h('span', { className: 'fm-nav-right' }, p.trailing && h('span', { className: 'fm-glass fm-glass-group' }, p.trailing), p.avatar)
+      : h('span', { className: 'fm-nav-spacer' });
     var lead = p.back
       ? h('button', { type: 'button', className: 'fm-glass fm-glassbtn', 'aria-label': p.back === 'Cancel' ? 'Cancel' : 'Back to ' + p.back },
           h(Icon, { name: p.back === 'Cancel' ? 'close' : 'chevron-left', size: 22, weight: 2 }))
       : h('span', { className: 'fm-nav-spacer' });
     return h('header', { className: cx('fm-nav', p.large && 'is-large', p.overlay && 'is-overlay', p.className) },
-      (p.back || p.trailing || !p.large) && h('div', { className: 'fm-nav-row' },
+      (p.back || p.trailing || p.avatar || !p.large) && h('div', { className: 'fm-nav-row' },
         lead,
         !p.large && h('span', { className: 'fm-nav-title' }, p.title),
         trailing),
       p.large && h('h1', { className: 'fm-nav-large' }, p.title),
       p.subtitle && h('p', { className: 'fm-nav-sub' }, p.subtitle));
+  }
+
+  function Avatar(p) {
+    var size = p.size || 36;
+    return h('button', {
+      type: 'button', className: cx('fm-avatar', p.className), 'aria-label': p.label || 'Profile',
+      style: { width: Math.max(44, size), height: Math.max(44, size) }
+    },
+      h('span', { className: 'fm-avatar-face', style: { width: size, height: size, fontSize: Math.round(size * 0.38) } }, p.initials || h(Icon, { name: 'user', size: Math.round(size * 0.55) })),
+      p.badge && h('span', { className: 'fm-avatar-badge', 'aria-label': typeof p.badge === 'string' ? p.badge : 'New' }));
   }
 
   function OnboardingProgress(p) {
@@ -507,8 +519,7 @@
   var TABS = [
     { id: 'today', label: 'Today', icon: 'today' },
     { id: 'plan', label: 'Plan', icon: 'plan' },
-    { id: 'shopping', label: 'Shopping', icon: 'cart' },
-    { id: 'profile', label: 'Profile', icon: 'user' }
+    { id: 'shopping', label: 'Shopping', icon: 'cart' }
   ];
   function TabBar(p) {
     var active = p.active || 'today';
@@ -580,7 +591,7 @@
     Badge: Badge, MealCard: MealCard, DayStrip: DayStrip, RebalanceBanner: RebalanceBanner, IngredientRow: IngredientRow,
     SwapOption: SwapOption, ChangeItem: ChangeItem, CompareCard: CompareCard, ConfidencePrompt: ConfidencePrompt,
     ShoppingItem: ShoppingItem, StatTile: StatTile, PlanCard: PlanCard, LockedPreview: LockedPreview,
-    SectionHeader: SectionHeader, NavBar: NavBar, OnboardingProgress: OnboardingProgress, TabBar: TabBar,
+    SectionHeader: SectionHeader, NavBar: NavBar, Avatar: Avatar, OnboardingProgress: OnboardingProgress, TabBar: TabBar,
     BottomAccessory: BottomAccessory, RecipeHero: RecipeHero, PhoneFrame: PhoneFrame
   });
 })();

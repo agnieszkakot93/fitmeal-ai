@@ -18,6 +18,7 @@ function row(label, value, icon){ return h('div', {style:{display:'flex', alignI
   h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)'}}, label),
   h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value),
   h('span', {style:{color:'var(--ink-faint)'}}, h(F.Icon, {name:'chevron-right', size:18}))); }
+var AV = h(F.Avatar, {initials:'OL', label:'Profile'});
 var TODAY_MEALS = [
   h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', swappable:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
   h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
@@ -41,7 +42,7 @@ show([
        h(F.SelectCard, {icon:'text', title:'Paste text', description:'Copy a recipe from anywhere'}),
        h(F.SelectCard, {icon:'edit', title:'Enter manually', description:'Type ingredients line by line'})),
      h('p', {className:'fm-foot'}, 'Tip: in Instagram, tap Share \u2192 FitMeal. Imports stay private to you.')),
-   h(F.TabBar, {key:'t', active:'add'})
+   h(F.TabBar, {key:'t', active:'none'})
  ]),
  Ph('21 Import preview', [
    h(F.NavBar, {key:'n', back:'Cancel', title:'Check ingredients'}),
