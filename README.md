@@ -23,3 +23,16 @@ docs/       PRD, plans, decisions
 - **Backend:** Python 3.12, FastAPI, PostgreSQL 16, Redis, arq, SciPy/HiGHS + OR-Tools
 - **AI:** Claude API (Haiku 4.5 for extraction, Sonnet 5 for PDFs/hard cases). Used for import only; nutrition math is deterministic.
 - **Hosting:** Hetzner Cloud VPS (EU) + Docker Compose, Cloudflare (DNS/CDN/R2), Sentry, PostHog EU
+
+## Claude Code agent team
+
+Subagents in [`.claude/agents/`](.claude/agents) cover the roles on this project. Claude Code picks them automatically from their descriptions, or you can ask for one by name ("have the security-engineer review this").
+
+| Agent | Owns |
+|---|---|
+| `engineering-manager` | Breaking work into tasks, sequencing, scope checks against the PRD and plan, Definition of Done |
+| `mobile-architect` | `ios/`: SwiftUI, Share Extension, SwiftData, StoreKit 2, OpenAPI client |
+| `backend-engineer` | `backend/`, `data/`, `infra/`: FastAPI, Postgres/Alembic, nutrition engine, optimizer, import pipeline |
+| `product-designer` | Flows, screen specs, PL/EN copy, explainability, paywall, accessibility |
+| `security-engineer` | Read-only reviews: auth, payments, GDPR health data, SSRF, LLM prompt safety |
+| `qa-engineer` | Test plans, property-based tests, golden set and LLM evals, acceptance checks |
