@@ -32,3 +32,23 @@ A branch is deleted as soon as its pull request is merged, both on GitHub and lo
 - **Remote:** press "Delete branch" on the merged PR, or `git push origin --delete <branch>`. Turning on "Automatically delete head branches" in the repository settings does this for every PR.
 - **Local:** `git switch develop && git pull && git branch -d <branch>`, then `git fetch --prune` to drop stale remote-tracking refs.
 - Follow-up work goes on a new branch cut from the latest `develop`, never on the merged one.
+
+## Brand Research
+
+Use the brand-researcher subagent for:
+
+- Product and competitor research.
+- App naming and brand positioning.
+- Domain and trademark investigation.
+- International naming considerations.
+
+The brand-researcher reports to the Engineering Manager.
+
+All findings must be documented in:
+docs/branding/NAME_RESEARCH.md
+
+Brand selection requires Product Owner approval.
+
+Do not rename application identifiers, domains,
+packages, or product assets until the final name
+has been approved.
