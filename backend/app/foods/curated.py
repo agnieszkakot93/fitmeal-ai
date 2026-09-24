@@ -6,10 +6,17 @@ weights, densities, package sizes — and says where its nutrition comes from:
 a USDA FoodData Central record (``fdc``) or a product label (``nutrition``).
 Items with neither are kept in the file as ``pending`` and skipped by the
 importer.
+
+Every entry also carries its provenance: a ``review`` status (only a named
+human sets ``verified``) and a ``traces`` status saying whether its "may
+contain" list is known, and from which source. Both default to the cautious
+side: review ``draft``, traces ``unknown``.
 """
 
 from __future__ import annotations
 
+import datetime
+from enum import StrEnum
 from pathlib import Path
 from typing import Self
 
@@ -17,7 +24,7 @@ import yaml
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from app.foods.vocab import CulinaryRole, FoodCategory
-from app.nutrition.allergens import Allergen, Origin
+from app.nutrition.allergens import Allergen, Origin, TraceStatus
 from app.nutrition.units import UNITS, UnitKind
 
 
@@ -57,6 +64,47 @@ class LabelNutrition(_Strict):
     source_ref: str
 
 
+class ReviewStatus(StrEnum):
+    DRAFT = "draft"
+    AUTO_CHECKED = "auto_checked"  # passed automated checks; no human has signed off
+    VERIFIED = "verified"  # a named human checked the whole entry; never set by an agent
+
+
+class Review(_Strict):
+    status: ReviewStatus = ReviewStatus.DRAFT
+    by: str | None = Field(default=None, pattern=r"^[A-Z]{2,4}$", description="initials")
+    date: datetime.date | None = None
+
+    @model_validator(mode="after")
+    def _signed(self) -> Self:
+        if self.status is ReviewStatus.VERIFIED and (self.by is None or self.date is None):
+            raise ValueError("a verified review needs `by` (initials) and `date`")
+        return self
+
+
+class TraceSourceType(StrEnum):
+    LABEL = "label"  # a product label's "may contain" statement
+    POLICY = "policy"  # a rule of the approved generic-food policy (docs/data/TRACE_POLICY.md)
+
+
+class TraceSource(_Strict):
+    type: TraceSourceType
+    ref: str = Field(min_length=1)
+
+
+class Traces(_Strict):
+    status: TraceStatus = TraceStatus.UNKNOWN
+    source: TraceSource | None = None
+
+    @model_validator(mode="after")
+    def _sourced(self) -> Self:
+        if self.status is TraceStatus.UNKNOWN and self.source is not None:
+            raise ValueError("unknown traces have no source; use none_declared or declared")
+        if self.status is not TraceStatus.UNKNOWN and self.source is None:
+            raise ValueError(f"traces {self.status.value!r} need a source")
+        return self
+
+
 class CuratedFood(_Strict):
     slug: str = Field(pattern=r"^[a-z0-9]+(-[a-z0-9]+)*$")
     name: Names
@@ -66,6 +114,8 @@ class CuratedFood(_Strict):
     allergens: list[Allergen] = []
     # "may contain" / trace declarations, kept apart from what the food contains
     may_contain: list[Allergen] = []
+    traces: Traces = Traces()
+    review: Review = Review()
     derived_from: list[str] = []
     culinary_roles: list[CulinaryRole] = Field(min_length=1)
     substitution_groups: list[str] = []
@@ -82,6 +132,13 @@ class CuratedFood(_Strict):
         both = set(self.allergens) & set(self.may_contain)
         if both:
             raise ValueError(f"{self.slug}: {sorted(both)} listed as both allergen and trace")
+        if self.traces.status is TraceStatus.DECLARED and not self.may_contain:
+            raise ValueError(f"{self.slug}: declared traces need a non-empty may_contain")
+        if self.traces.status is not TraceStatus.DECLARED and self.may_contain:
+            raise ValueError(
+                f"{self.slug}: may_contain needs traces status 'declared', "
+                f"not {self.traces.status.value!r}"
+            )
         for unit, grams in self.portions.items():
             if unit not in UNITS:
                 raise ValueError(f"{self.slug}: unknown portion unit {unit!r}")

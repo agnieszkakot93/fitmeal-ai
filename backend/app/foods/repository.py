@@ -6,7 +6,7 @@ from sqlalchemy.orm import selectinload
 
 from app.core.text import fold
 from app.foods.models import FoodAlias, FoodItem
-from app.nutrition.allergens import Allergen, IngredientAllergens, Origin
+from app.nutrition.allergens import Allergen, IngredientAllergens, Origin, TraceStatus
 from app.nutrition.calc import FoodFacts
 from app.nutrition.nutrients import Nutrients
 from app.nutrition.units import FoodUnitData
@@ -89,4 +89,5 @@ def to_allergens(item: FoodItem) -> IngredientAllergens:
             *item.culinary_roles,
             *item.substitution_groups,
         ),
+        trace_status=TraceStatus(item.effective_trace_status),
     )

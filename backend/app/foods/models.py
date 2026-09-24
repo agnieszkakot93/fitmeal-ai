@@ -21,6 +21,9 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.db import Base
+from app.nutrition.allergens import TraceStatus
+
+_TRACE_STATUSES = ", ".join(f"'{s.value}'" for s in TraceStatus)
 
 
 class FoodItem(Base):
@@ -31,6 +34,11 @@ class FoodItem(Base):
         CheckConstraint(
             "kcal >= 0 AND protein_g >= 0 AND fat_g >= 0 AND carbs_g >= 0 AND fiber_g >= 0",
             name="nutrients_non_negative",
+        ),
+        CheckConstraint(
+            f"trace_status IN ({_TRACE_STATUSES}) "
+            f"AND effective_trace_status IN ({_TRACE_STATUSES})",
+            name="trace_status_valid",
         ),
     )
 
@@ -57,13 +65,19 @@ class FoodItem(Base):
     # "may contain" traces; effective = own + inherited, minus effective_allergens
     may_contain: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
     effective_may_contain: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
+    # whether the traces are known at all (TraceStatus); unknown is never "none".
+    # effective = unknown if the food or anything it is derived from is unknown
+    trace_status: Mapped[str] = mapped_column(Text, server_default=TraceStatus.UNKNOWN.value)
+    effective_trace_status: Mapped[str] = mapped_column(
+        Text, server_default=TraceStatus.UNKNOWN.value
+    )
     culinary_roles: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
     substitution_groups: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
 
     # nutrition source, e.g. ("usda_fdc", "171077") or ("label", "Piątnica skyr")
     source: Mapped[str] = mapped_column(Text)
     source_ref: Mapped[str | None] = mapped_column(Text)
-    # a human has checked names, portions, density and allergens
+    # a named human has verified the curated entry (review status "verified")
     reviewed: Mapped[bool] = mapped_column(Boolean, server_default="false")
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
