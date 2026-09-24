@@ -21,6 +21,8 @@ docs/       PRD, plans, decisions
 
 New branches are named `<type>/<short-description>`, where type is one of `feat`, `fix`, `chore`, `refactor`, `docs`, `test`, `perf`, `ci` (e.g. `feat/weekly-plan-swap`, `fix/usda-import-duplicate-foods`). Full rules in [CLAUDE.md](CLAUDE.md#branch-naming).
 
+Branches are deleted (on GitHub and locally) once their PR is merged; `main` and `develop` are kept. See [CLAUDE.md](CLAUDE.md#deleting-branches-after-merge).
+
 ## Stack at a glance
 
 - **iOS:** Swift 6, SwiftUI (iOS 17+), SwiftData, StoreKit 2, Sign in with Apple
