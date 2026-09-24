@@ -17,6 +17,10 @@ data/       Food database seeds and import scripts
 docs/       PRD, plans, decisions
 ```
 
+## Branch naming
+
+New branches are named `<type>/<short-description>`, where type is one of `feat`, `fix`, `chore`, `refactor`, `docs`, `test`, `perf`, `ci` (e.g. `feat/weekly-plan-swap`, `fix/usda-import-duplicate-foods`). Full rules in [CLAUDE.md](CLAUDE.md#branch-naming).
+
 ## Stack at a glance
 
 - **iOS:** Swift 6, SwiftUI (iOS 17+), SwiftData, StoreKit 2, Sign in with Apple
