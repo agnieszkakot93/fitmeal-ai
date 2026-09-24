@@ -44,6 +44,9 @@ async def _import(curated_path: Path, fdc_dirs: list[Path], dry_run: bool) -> in
         print("no --fdc-dir given: only label-sourced foods will be imported", file=sys.stderr)
     report = importer.resolve(curated, index)
     print(report.summary())
+    if report.allergen_problems:
+        print("allergen contradictions found: nothing written", file=sys.stderr)
+        return 1
     if dry_run:
         return 0
     async with get_sessionmaker()() as session, session.begin():

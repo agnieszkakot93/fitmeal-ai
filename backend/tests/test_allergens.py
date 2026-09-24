@@ -15,10 +15,12 @@ from app.nutrition.allergens import (
     IngredientAllergens,
     Origin,
     Severity,
+    TraceStatus,
     Verdict,
     classify,
     classify_all,
     effective_allergens,
+    effective_trace_status,
     effective_traces,
     violates_exclusions,
 )
@@ -56,6 +58,40 @@ def test_traces_inherit_and_drop_what_is_contained() -> None:
     assert result["bar"] == {Allergen.PEANUTS, Allergen.SESAME}
 
 
+UNKNOWN, NONE, DECLARED = TraceStatus.UNKNOWN, TraceStatus.NONE_DECLARED, TraceStatus.DECLARED
+
+
+def test_trace_status_unknown_parent_makes_child_unknown() -> None:
+    direct = {"cocoa": UNKNOWN, "sugar": NONE, "chocolate": DECLARED, "bar": NONE}
+    derived_from = {"chocolate": ["cocoa", "sugar"], "bar": ["chocolate"]}
+    traces = {
+        "cocoa": frozenset(),
+        "sugar": frozenset(),
+        "chocolate": frozenset({Allergen.PEANUTS}),
+        "bar": frozenset({Allergen.PEANUTS}),
+    }
+    result = effective_trace_status(direct, derived_from, traces)
+    assert result == {"cocoa": UNKNOWN, "sugar": NONE, "chocolate": UNKNOWN, "bar": UNKNOWN}
+
+
+def test_known_trace_status_follows_effective_traces() -> None:
+    direct = {"chocolate": DECLARED, "bar": NONE, "choc-milk": DECLARED}
+    derived_from = {"bar": ["chocolate"], "choc-milk": []}
+    # choc-milk declared only milk, which it also contains: nothing left as a trace
+    traces = {
+        "chocolate": frozenset({Allergen.PEANUTS}),
+        "bar": frozenset({Allergen.PEANUTS}),
+        "choc-milk": frozenset(),
+    }
+    result = effective_trace_status(direct, derived_from, traces)
+    assert result == {"chocolate": DECLARED, "bar": DECLARED, "choc-milk": NONE}
+
+
+def test_trace_status_unknown_parent_fails_loudly() -> None:
+    with pytest.raises(KeyError):
+        effective_trace_status({"bar": NONE}, {"bar": ["chocolate"]}, {})
+
+
 def test_exclusions_match_by_allergen_and_origin() -> None:
     assert violates_exclusions([Allergen.FISH], Origin.FISH, [Cat.FISH]) == {Cat.FISH}
     # meat is an origin, not an allergen
@@ -82,35 +118,51 @@ def ingredient(
     may_contain: frozenset[Allergen] = frozenset(),
     origin: Origin = Origin.PLANT,
     names: tuple[str, ...] = (),
+    trace_status: TraceStatus | None = None,
 ) -> IngredientAllergens:
-    return IngredientAllergens(origin, contains, may_contain, names)
+    """A test ingredient; traces are known (declared or none) unless stated."""
+    if trace_status is None:
+        trace_status = DECLARED if may_contain else NONE
+    return IngredientAllergens(origin, contains, may_contain, names, trace_status)
 
 
 PEANUT = frozenset({Allergen.PEANUTS})
 
 
 @pytest.mark.parametrize(
-    ("severity", "relaxed", "contains", "traces"),
+    ("severity", "relaxed", "contains", "traces", "unknown"),
     [
-        (Severity.ALLERGY, False, Verdict.EXCLUDED, Verdict.EXCLUDED),
-        (Severity.INTOLERANCE, False, Verdict.EXCLUDED, Verdict.ALLOWED),
-        (Severity.INTOLERANCE, True, Verdict.PENALISED, Verdict.ALLOWED),
-        (Severity.DISLIKE, False, Verdict.PENALISED, Verdict.ALLOWED),
-        (Severity.PREFER_NOT, False, Verdict.PENALISED, Verdict.ALLOWED),
+        (Severity.ALLERGY, False, Verdict.EXCLUDED, Verdict.EXCLUDED, Verdict.EXCLUDED),
+        (Severity.INTOLERANCE, False, Verdict.EXCLUDED, Verdict.ALLOWED, Verdict.ALLOWED),
+        (Severity.INTOLERANCE, True, Verdict.PENALISED, Verdict.ALLOWED, Verdict.ALLOWED),
+        (Severity.DISLIKE, False, Verdict.PENALISED, Verdict.ALLOWED, Verdict.ALLOWED),
+        (Severity.PREFER_NOT, False, Verdict.PENALISED, Verdict.ALLOWED, Verdict.ALLOWED),
     ],
 )
 def test_severity_semantics(
-    severity: Severity, relaxed: bool, contains: Verdict, traces: Verdict
+    severity: Severity, relaxed: bool, contains: Verdict, traces: Verdict, unknown: Verdict
 ) -> None:
     exclusion = Exclusion(Cat.PEANUTS, severity, relaxed=relaxed)
     assert classify(ingredient(contains=PEANUT), exclusion) is contains
     assert classify(ingredient(may_contain=PEANUT), exclusion) is traces
+    assert classify(ingredient(trace_status=UNKNOWN), exclusion) is unknown
     assert classify(ingredient(), exclusion) is Verdict.ALLOWED
 
 
-def test_default_is_no_traces() -> None:
+def test_default_is_no_traces_but_unknown_status() -> None:
     food = IngredientAllergens(Origin.PLANT, contains=PEANUT)
     assert food.may_contain == frozenset()
+    # the safe default: forgetting the status can only make the check stricter
+    assert food.trace_status is UNKNOWN
+    assert classify(food, Exclusion(Cat.SESAME, Severity.ALLERGY)) is Verdict.EXCLUDED
+
+
+def test_unknown_traces_leave_non_allergen_categories_alone() -> None:
+    food = ingredient(names=("Tofu",), trace_status=UNKNOWN)
+    assert classify(food, Exclusion(Cat.MEAT, Severity.ALLERGY)) is Verdict.ALLOWED
+    assert classify(food, Exclusion(Cat.OTHER, Severity.ALLERGY, "garlic")) is Verdict.ALLOWED
+    assert classify(food, Exclusion(Cat.OTHER, Severity.ALLERGY, "tofu")) is Verdict.EXCLUDED
+    assert classify(food, Exclusion(Cat.DAIRY, Severity.ALLERGY)) is Verdict.EXCLUDED
 
 
 def test_origin_backs_up_missing_allergen_tag() -> None:
@@ -184,6 +236,9 @@ def test_allergy_excludes_every_contained_or_traced_allergen(category: Exclusion
             origin=origin,
         )
         assert classify(food, allergy) is Verdict.EXCLUDED, (category, allergen, origin)
+    for origin in Origin:
+        unknown = ingredient(origin=origin, trace_status=UNKNOWN)
+        assert classify(unknown, allergy) is Verdict.EXCLUDED, (category, origin)
 
 
 ingredients = st.builds(
@@ -192,6 +247,7 @@ ingredients = st.builds(
     contains=st.frozensets(st.sampled_from(Allergen), max_size=4),
     may_contain=st.frozensets(st.sampled_from(Allergen), max_size=4),
     names=st.lists(st.text(max_size=20), max_size=3).map(tuple),
+    trace_status=st.sampled_from(TraceStatus),
 )
 
 WORD = st.text(alphabet="abcdefghijklmnopqrstuvwxyząćęłńóśźż", min_size=1, max_size=8)
@@ -253,9 +309,46 @@ def test_no_allergy_to_a_free_text_term_is_ever_allowed(
     assert classify_all(food, [*others, allergy]) is Verdict.EXCLUDED
 
 
+@settings(max_examples=500)
+@given(
+    food=ingredients,
+    category=st.sampled_from(ALLERGEN_CATEGORIES),
+    others=exclusion_lists,
+    data=st.data(),
+)
+def test_allergy_never_allows_unknown_traces(
+    food: IngredientAllergens,
+    category: ExclusionCategory,
+    others: list[Exclusion],
+    data: st.DataObject,
+) -> None:
+    food = replace(food, trace_status=UNKNOWN)
+    user = data.draw(st.permutations([*others, Exclusion(category, Severity.ALLERGY)]))
+    assert classify_all(food, user) is Verdict.EXCLUDED
+
+
+@given(food=ingredients, user=exclusion_lists)
+def test_unknown_traces_are_never_less_strict(
+    food: IngredientAllergens, user: list[Exclusion]
+) -> None:
+    unknown = replace(food, trace_status=UNKNOWN)
+    assert strictness(classify_all(unknown, user)) >= strictness(classify_all(food, user))
+
+
+@given(food=ingredients, exclusion=exclusions())
+def test_trace_status_only_matters_for_allergies_to_allergens(
+    food: IngredientAllergens, exclusion: Exclusion
+) -> None:
+    verdicts = {classify(replace(food, trace_status=s), exclusion) for s in TraceStatus}
+    if exclusion.severity is not Severity.ALLERGY or not EXCLUSION_ALLERGENS[exclusion.category]:
+        assert len(verdicts) == 1
+
+
 @given(food=ingredients, exclusion=exclusions())
 def test_only_allergies_exclude_on_traces(food: IngredientAllergens, exclusion: Exclusion) -> None:
-    traces_only = ingredient(may_contain=food.contains | food.may_contain)
+    traces_only = ingredient(
+        may_contain=food.contains | food.may_contain, trace_status=food.trace_status
+    )
     if exclusion.severity is not Severity.ALLERGY:
         assert classify(traces_only, exclusion) is Verdict.ALLOWED
     if classify(food, exclusion) is Verdict.EXCLUDED:
@@ -278,3 +371,44 @@ def test_confirming_a_trace_is_never_less_strict(
 ) -> None:
     confirmed = replace(food, contains=food.contains | food.may_contain, may_contain=frozenset())
     assert strictness(classify_all(confirmed, user)) >= strictness(classify_all(food, user))
+
+
+@st.composite
+def derivation_graphs(
+    draw: st.DrawFn,
+) -> tuple[dict[str, TraceStatus], dict[str, list[str]], dict[str, frozenset[Allergen]]]:
+    """Random acyclic graphs: food ``fN`` may only derive from ``f0`` .. ``fN-1``."""
+    n = draw(st.integers(min_value=1, max_value=8))
+    keys = [f"f{i}" for i in range(n)]
+    status = {k: draw(st.sampled_from(TraceStatus)) for k in keys}
+    derived_from = {
+        k: draw(st.lists(st.sampled_from(keys[:i]), unique=True)) if i else []
+        for i, k in enumerate(keys)
+    }
+    traces = {k: draw(st.frozensets(st.sampled_from(Allergen), max_size=3)) for k in keys}
+    return status, derived_from, traces
+
+
+def ancestors(key: str, derived_from: dict[str, list[str]]) -> set[str]:
+    seen: set[str] = set()
+    stack = list(derived_from[key])
+    while stack:
+        parent = stack.pop()
+        if parent not in seen:
+            seen.add(parent)
+            stack.extend(derived_from[parent])
+    return seen
+
+
+@given(graph=derivation_graphs())
+def test_inheritance_never_upgrades_unknown_to_known(
+    graph: tuple[dict[str, TraceStatus], dict[str, list[str]], dict[str, frozenset[Allergen]]],
+) -> None:
+    status, derived_from, traces = graph
+    result = effective_trace_status(status, derived_from, traces)
+    for key in status:
+        lineage = {key} | ancestors(key, derived_from)
+        if any(status[k] is UNKNOWN for k in lineage):
+            assert result[key] is UNKNOWN, key
+        else:
+            assert result[key] is (DECLARED if traces[key] else NONE), key

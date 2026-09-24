@@ -3,19 +3,26 @@
 Allergens follow the 14 declarable allergens of EU Regulation 1169/2011.
 A food's *effective* allergens are its own plus those of everything it is
 derived from (whey → milk), computed transitively. "May contain" (trace)
-declarations are tracked separately from what a food contains.
+declarations are tracked separately from what a food contains, together with a
+:class:`TraceStatus`: whether the traces are known at all. Unknown is its own
+state and never means "none".
 
 A user's :class:`Exclusion` pairs a category with a :class:`Severity`, and
 :func:`classify` turns it into a :class:`Verdict` for one ingredient:
 
-============================  =========  ===========
-severity                      contains   may contain
-============================  =========  ===========
-allergy                       excluded   excluded
-intolerance                   excluded   allowed
-intolerance, relaxed by user  penalised  allowed
-dislike / prefer not to eat   penalised  allowed
-============================  =========  ===========
+============================  =========  ===========  ==============
+severity                      contains   may contain  traces unknown
+============================  =========  ===========  ==============
+allergy                       excluded   excluded     excluded
+intolerance                   excluded   allowed      allowed
+intolerance, relaxed by user  penalised  allowed      allowed
+dislike / prefer not to eat   penalised  allowed      allowed
+============================  =========  ===========  ==============
+
+"Traces unknown" applies to categories backed by EU allergens: an allergy to
+milk excludes every food whose traces are unknown, since any allergen could be
+among them (the same rule as an unresolved ingredient, PRD §9). Categories with
+no allergen behind them (``meat``, free-text ``other``) are unaffected.
 """
 
 from __future__ import annotations
@@ -56,6 +63,14 @@ class Origin(StrEnum):
     PLANT = "plant"
     FUNGI = "fungi"
     OTHER = "other"
+
+
+class TraceStatus(StrEnum):
+    """What is known about a food's "may contain" (trace) allergens."""
+
+    UNKNOWN = "unknown"  # nobody has checked: any allergen could be a trace
+    NONE_DECLARED = "none_declared"  # checked, and the source declares no traces
+    DECLARED = "declared"  # checked, and ``may_contain`` lists them
 
 
 class ExclusionCategory(StrEnum):
@@ -160,15 +175,20 @@ class Exclusion:
 class IngredientAllergens:
     """What the exclusion check needs to know about one ingredient.
 
-    ``contains`` and ``may_contain`` should be the *effective* sets (see
-    :func:`effective_allergens` and :func:`effective_traces`). ``names`` are the
-    names, aliases and tags a free-text exclusion is matched against.
+    ``contains``, ``may_contain`` and ``trace_status`` should be the
+    *effective* values (see :func:`effective_allergens`,
+    :func:`effective_traces` and :func:`effective_trace_status`). ``names`` are
+    the names, aliases and tags a free-text exclusion is matched against.
+
+    ``trace_status`` defaults to unknown, the safe side: a caller that forgets
+    it gets a stricter check, never a looser one.
     """
 
     origin: Origin
     contains: frozenset[Allergen] = frozenset()
     may_contain: frozenset[Allergen] = frozenset()
     names: tuple[str, ...] = ()
+    trace_status: TraceStatus = TraceStatus.UNKNOWN
 
 
 class DerivationCycleError(ValueError):
@@ -185,10 +205,17 @@ def effective_allergens(
     key → keys of the foods it is made from. Unknown parents raise ``KeyError``
     so a typo in the data can never silently drop an allergen.
     """
-    result: dict[str, frozenset[Allergen]] = {}
+    return _closure(direct, derived_from)
+
+
+def _closure[T](
+    direct: Mapping[str, Iterable[T]],
+    derived_from: Mapping[str, Iterable[str]],
+) -> dict[str, frozenset[T]]:
+    result: dict[str, frozenset[T]] = {}
     visiting: set[str] = set()
 
-    def visit(key: str) -> frozenset[Allergen]:
+    def visit(key: str) -> frozenset[T]:
         if key in result:
             return result[key]
         if key in visiting:
@@ -243,6 +270,33 @@ def effective_traces(
     return {key: traces - contains.get(key, frozenset()) for key, traces in closure.items()}
 
 
+def effective_trace_status(
+    direct: Mapping[str, TraceStatus],
+    derived_from: Mapping[str, Iterable[str]],
+    traces: Mapping[str, frozenset[Allergen]],
+) -> dict[str, TraceStatus]:
+    """Trace status after inheritance.
+
+    Unknown anywhere in a food's derivation closure (itself or any ancestor)
+    makes it unknown: a known child can never hide an unknown parent. Otherwise
+    the status follows the effective traces (``traces``, the result of
+    :func:`effective_traces`): declared if any remain, else none declared.
+    """
+    unknown_in = _closure(
+        {key: [key] if status is TraceStatus.UNKNOWN else [] for key, status in direct.items()},
+        derived_from,
+    )
+    result: dict[str, TraceStatus] = {}
+    for key, unknown in unknown_in.items():
+        if unknown:
+            result[key] = TraceStatus.UNKNOWN
+        elif traces.get(key):
+            result[key] = TraceStatus.DECLARED
+        else:
+            result[key] = TraceStatus.NONE_DECLARED
+    return result
+
+
 def _matches_term(term: str, names: Iterable[str]) -> bool:
     # Substring, not whole-word: for a hard constraint, over-matching ("pea"
     # also hits "chickpeas") is the safe direction.
@@ -260,7 +314,11 @@ def _contains(ingredient: IngredientAllergens, exclusion: Exclusion) -> bool:
 
 
 def _traces(ingredient: IngredientAllergens, exclusion: Exclusion) -> bool:
-    return bool(ingredient.may_contain & EXCLUSION_ALLERGENS[exclusion.category])
+    """Whether a trace of this category is declared or cannot be ruled out."""
+    allergens = EXCLUSION_ALLERGENS[exclusion.category]
+    if ingredient.trace_status is TraceStatus.UNKNOWN and allergens:
+        return True
+    return bool(ingredient.may_contain & allergens)
 
 
 def classify(ingredient: IngredientAllergens, exclusion: Exclusion) -> Verdict:

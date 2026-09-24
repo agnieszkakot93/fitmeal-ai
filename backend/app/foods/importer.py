@@ -16,10 +16,17 @@ from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.text import fold
-from app.foods.curated import CuratedFile, CuratedFood
+from app.foods.curated import CuratedFile, CuratedFood, ReviewStatus
 from app.foods.fdc import FdcIndex
+from app.foods.lint import allergen_problems
 from app.foods.models import FoodAlias, FoodDerivation, FoodItem, FoodPackage, FoodPortion
-from app.nutrition.allergens import Allergen, effective_allergens, effective_traces
+from app.nutrition.allergens import (
+    Allergen,
+    TraceStatus,
+    effective_allergens,
+    effective_trace_status,
+    effective_traces,
+)
 from app.nutrition.nutrients import Nutrients, energy_is_consistent
 
 
@@ -32,6 +39,8 @@ class ResolvedFood:
     source_ref: str
     effective_allergens: frozenset[Allergen]
     effective_may_contain: frozenset[Allergen] = frozenset()
+    # unknown unless the food and everything it is derived from say otherwise
+    effective_trace_status: TraceStatus = TraceStatus.UNKNOWN
 
 
 @dataclass
@@ -41,6 +50,8 @@ class ImportReport:
     # slug → close FDC descriptions to help fix the curated entry
     unmatched: dict[str, list[str]] = field(default_factory=dict)
     energy_warnings: list[str] = field(default_factory=list)
+    # contradictions between origin/name and declared allergens; block writing
+    allergen_problems: list[str] = field(default_factory=list)
 
     def summary(self) -> str:
         lines = [
@@ -54,6 +65,11 @@ class ImportReport:
         if self.energy_warnings:
             lines.append(f"energy/macro mismatches: {len(self.energy_warnings)}")
             lines.extend(f"  - {w}" for w in self.energy_warnings)
+        if self.allergen_problems:
+            lines.append(
+                f"allergen contradictions (fix before importing): {len(self.allergen_problems)}"
+            )
+            lines.extend(f"  - {p}" for p in self.allergen_problems)
         return "\n".join(lines)
 
 
@@ -64,6 +80,10 @@ def resolve(curated: CuratedFile, index: FdcIndex | None) -> ImportReport:
     traces = effective_traces(
         {f.slug: f.may_contain for f in curated.foods}, derived_from, allergens
     )
+    trace_status = effective_trace_status(
+        {f.slug: f.traces.status for f in curated.foods}, derived_from, traces
+    )
+    report.allergen_problems = allergen_problems(curated)
 
     for food in curated.foods:
         if food.pending:
@@ -81,6 +101,7 @@ def resolve(curated: CuratedFile, index: FdcIndex | None) -> ImportReport:
                 n.source_ref,
                 allergens[food.slug],
                 traces[food.slug],
+                trace_status[food.slug],
             )
         else:
             assert food.fdc is not None
@@ -104,6 +125,7 @@ def resolve(curated: CuratedFile, index: FdcIndex | None) -> ImportReport:
                 str(match.fdc_id),
                 allergens[food.slug],
                 traces[food.slug],
+                trace_status[food.slug],
             )
 
         if not energy_is_consistent(resolved.nutrients):
@@ -139,10 +161,13 @@ async def apply(session: AsyncSession, resolved: list[ResolvedFood]) -> None:
         item.effective_allergens = sorted(a.value for a in r.effective_allergens)
         item.may_contain = sorted(a.value for a in c.may_contain)
         item.effective_may_contain = sorted(a.value for a in r.effective_may_contain)
+        item.trace_status = c.traces.status.value
+        item.effective_trace_status = r.effective_trace_status.value
         item.culinary_roles = [role.value for role in c.culinary_roles]
         item.substitution_groups = list(c.substitution_groups)
         item.source = r.source
         item.source_ref = r.source_ref
+        item.reviewed = c.review.status is ReviewStatus.VERIFIED
         session.add(item)
         items[c.slug] = item
     await session.flush()
@@ -163,8 +188,8 @@ async def apply(session: AsyncSession, resolved: list[ResolvedFood]) -> None:
     parent_ids = dict((await session.execute(select(FoodItem.slug, FoodItem.id))).all())
     for r in resolved:
         for parent in r.curated.derived_from:
-            # A parent that is still pending has no row yet; its allergens and
-            # traces are already folded into the effective columns above.
+            # A parent that is still pending has no row yet; its allergens,
+            # traces and trace status are already in the effective columns above.
             if parent in parent_ids:
                 session.add(
                     FoodDerivation(food_id=items[r.curated.slug].id, parent_id=parent_ids[parent])
