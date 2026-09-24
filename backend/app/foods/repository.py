@@ -6,6 +6,7 @@ from sqlalchemy.orm import selectinload
 
 from app.core.text import fold
 from app.foods.models import FoodAlias, FoodItem
+from app.nutrition.allergens import Allergen, IngredientAllergens, Origin
 from app.nutrition.calc import FoodFacts
 from app.nutrition.nutrients import Nutrients
 from app.nutrition.units import FoodUnitData
@@ -67,5 +68,25 @@ def to_facts(item: FoodItem) -> FoodFacts:
         units=FoodUnitData(
             density_g_per_ml=item.density_g_per_ml,
             portions_g={p.unit: p.grams for p in item.portions},
+        ),
+    )
+
+
+def to_allergens(item: FoodItem) -> IngredientAllergens:
+    """The exclusion-check view of a food; needs ``aliases`` loaded (``get_by_slug(s)``).
+
+    Free-text exclusions match names, aliases, culinary roles and substitution
+    groups. Not the category: "fish" must not hit chicken via ``meat_fish``.
+    """
+    return IngredientAllergens(
+        origin=Origin(item.origin),
+        contains=frozenset(Allergen(a) for a in item.effective_allergens),
+        may_contain=frozenset(Allergen(a) for a in item.effective_may_contain),
+        names=(
+            item.name_en,
+            item.name_pl,
+            *(a.alias for a in item.aliases),
+            *item.culinary_roles,
+            *item.substitution_groups,
         ),
     )

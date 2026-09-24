@@ -44,6 +44,10 @@ class FoodSearchHit(FoodSummary):
 class FoodDetail(FoodSummary):
     origin: str
     allergens: list[str] = Field(description="Effective allergens, including inherited ones")
+    may_contain: list[str] = Field(
+        description='Effective "may contain" (trace) allergens, including inherited ones. '
+        "Never repeats an entry of `allergens`."
+    )
     culinary_roles: list[str]
     substitution_groups: list[str]
     density_g_per_ml: float | None
@@ -62,6 +66,7 @@ class FoodDetail(FoodSummary):
             **FoodSummary.of(item).model_dump(),
             origin=item.origin,
             allergens=item.effective_allergens,
+            may_contain=item.effective_may_contain,
             culinary_roles=item.culinary_roles,
             substitution_groups=item.substitution_groups,
             density_g_per_ml=item.density_g_per_ml,

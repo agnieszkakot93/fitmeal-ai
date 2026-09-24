@@ -1,8 +1,10 @@
 import itertools
-import random
 from collections.abc import Callable
+from dataclasses import replace
 
 import pytest
+from hypothesis import given, settings
+from hypothesis import strategies as st
 
 from app.nutrition.allergens import (
     EXCLUSION_ALLERGENS,
@@ -165,9 +167,8 @@ def test_classify_all_takes_the_strictest() -> None:
 
 
 # ── Properties ──────────────────────────────────────────────────────────────
-# hypothesis is not a dependency yet, so these enumerate the (finite) space of
-# category x allergen x origin exhaustively, and sample random combinations
-# with fixed seeds.
+# The first test enumerates category x allergen x origin exhaustively; the rest
+# are hypothesis properties over generated ingredients and exclusion lists.
 
 
 @pytest.mark.parametrize("category", ALLERGEN_CATEGORIES)
@@ -185,63 +186,95 @@ def test_allergy_excludes_every_contained_or_traced_allergen(category: Exclusion
         assert classify(food, allergy) is Verdict.EXCLUDED, (category, allergen, origin)
 
 
-def random_ingredient(rng: random.Random) -> IngredientAllergens:
-    allergens = list(Allergen)
-    return ingredient(
-        contains=frozenset(rng.sample(allergens, rng.randint(0, 3))),
-        may_contain=frozenset(rng.sample(allergens, rng.randint(0, 3))),
-        origin=rng.choice(list(Origin)),
-    )
+ingredients = st.builds(
+    IngredientAllergens,
+    origin=st.sampled_from(Origin),
+    contains=st.frozensets(st.sampled_from(Allergen), max_size=4),
+    may_contain=st.frozensets(st.sampled_from(Allergen), max_size=4),
+    names=st.lists(st.text(max_size=20), max_size=3).map(tuple),
+)
+
+WORD = st.text(alphabet="abcdefghijklmnopqrstuvwxyząćęłńóśźż", min_size=1, max_size=8)
 
 
-def random_exclusions(rng: random.Random) -> list[Exclusion]:
-    exclusions = []
-    for category in rng.sample(ALLERGEN_CATEGORIES, rng.randint(1, 5)):
-        severity = rng.choice(list(Severity))
-        relaxed = severity is Severity.INTOLERANCE and rng.random() < 0.5
-        exclusions.append(Exclusion(category, severity, relaxed=relaxed))
-    return exclusions
+@st.composite
+def exclusions(draw: st.DrawFn) -> Exclusion:
+    category = draw(st.sampled_from(ExclusionCategory))
+    severity = draw(st.sampled_from(Severity))
+    relaxed = severity is Severity.INTOLERANCE and draw(st.booleans())
+    term = draw(WORD) if category is ExclusionCategory.OTHER else None
+    return Exclusion(category, severity, term=term, relaxed=relaxed)
 
 
-@pytest.mark.parametrize("seed", range(20))
-def test_no_allergy_hit_is_ever_allowed(seed: int) -> None:
-    rng = random.Random(seed)
-    for _ in range(500):
-        food = random_ingredient(rng)
-        exclusions = random_exclusions(rng)
-        present = food.contains | food.may_contain
-        allergic_hit = any(
-            e.severity is Severity.ALLERGY and present & EXCLUSION_ALLERGENS[e.category]
-            for e in exclusions
+exclusion_lists = st.lists(exclusions(), max_size=6)
+
+
+def strictness(verdict: Verdict) -> int:
+    return list(Verdict).index(verdict)
+
+
+@settings(max_examples=500)
+@given(
+    food=ingredients,
+    category=st.sampled_from(ALLERGEN_CATEGORIES),
+    as_trace=st.booleans(),
+    others=exclusion_lists,
+    data=st.data(),
+)
+def test_no_allergy_hit_is_ever_allowed(
+    food: IngredientAllergens,
+    category: ExclusionCategory,
+    as_trace: bool,
+    others: list[Exclusion],
+    data: st.DataObject,
+) -> None:
+    allergen = data.draw(st.sampled_from(sorted(EXCLUSION_ALLERGENS[category])))
+    if as_trace:
+        food = replace(food, may_contain=food.may_contain | {allergen})
+    else:
+        food = replace(food, contains=food.contains | {allergen})
+    user = data.draw(st.permutations([*others, Exclusion(category, Severity.ALLERGY)]))
+    assert classify_all(food, user) is Verdict.EXCLUDED
+
+
+@settings(max_examples=500)
+@given(
+    food=ingredients,
+    term=WORD,
+    prefix=st.text(max_size=5),
+    suffix=st.text(max_size=5),
+    others=exclusion_lists,
+)
+def test_no_allergy_to_a_free_text_term_is_ever_allowed(
+    food: IngredientAllergens, term: str, prefix: str, suffix: str, others: list[Exclusion]
+) -> None:
+    food = replace(food, names=(*food.names, f"{prefix} {term.upper()} {suffix}"))
+    allergy = Exclusion(ExclusionCategory.OTHER, Severity.ALLERGY, term=term)
+    assert classify_all(food, [*others, allergy]) is Verdict.EXCLUDED
+
+
+@given(food=ingredients, exclusion=exclusions())
+def test_only_allergies_exclude_on_traces(food: IngredientAllergens, exclusion: Exclusion) -> None:
+    traces_only = ingredient(may_contain=food.contains | food.may_contain)
+    if exclusion.severity is not Severity.ALLERGY:
+        assert classify(traces_only, exclusion) is Verdict.ALLOWED
+    if classify(food, exclusion) is Verdict.EXCLUDED:
+        assert exclusion.severity is Severity.ALLERGY or (
+            exclusion.severity is Severity.INTOLERANCE and not exclusion.relaxed
         )
-        if allergic_hit:
-            assert classify_all(food, exclusions) is Verdict.EXCLUDED, (food, exclusions)
 
 
-@pytest.mark.parametrize("seed", range(20))
-def test_only_hard_contains_or_allergy_traces_exclude(seed: int) -> None:
-    rng = random.Random(seed)
-    for _ in range(500):
-        food = random_ingredient(rng)
-        for exclusion in random_exclusions(rng):
-            verdict = classify(food, exclusion)
-            if exclusion.severity is Severity.ALLERGY:
-                continue
-            traces_only = ingredient(may_contain=food.contains | food.may_contain)
-            assert classify(traces_only, exclusion) is Verdict.ALLOWED
-            if verdict is Verdict.EXCLUDED:
-                assert exclusion.severity is Severity.INTOLERANCE
-                assert not exclusion.relaxed
+@given(food=ingredients, base=exclusion_lists, extra=exclusion_lists)
+def test_more_exclusions_are_never_less_strict(
+    food: IngredientAllergens, base: list[Exclusion], extra: list[Exclusion]
+) -> None:
+    before = strictness(classify_all(food, base))
+    assert strictness(classify_all(food, [*base, *extra])) >= before
 
 
-@pytest.mark.parametrize("seed", range(20))
-def test_more_exclusions_are_never_less_strict(seed: int) -> None:
-    rng = random.Random(seed)
-    strictness = list(Verdict)
-    for _ in range(500):
-        food = random_ingredient(rng)
-        base = random_exclusions(rng)
-        extra = random_exclusions(rng)
-        before = strictness.index(classify_all(food, base))
-        after = strictness.index(classify_all(food, base + extra))
-        assert after >= before
+@given(food=ingredients, user=exclusion_lists)
+def test_confirming_a_trace_is_never_less_strict(
+    food: IngredientAllergens, user: list[Exclusion]
+) -> None:
+    confirmed = replace(food, contains=food.contains | food.may_contain, may_contain=frozenset())
+    assert strictness(classify_all(confirmed, user)) >= strictness(classify_all(food, user))

@@ -1,10 +1,11 @@
 """The hand-curated ingredient list (``data/foods/curated.yaml``).
 
 The curated file owns everything *about* an ingredient — names, aliases,
-category, allergens, culinary roles, portion weights, densities, package
-sizes — and says where its nutrition comes from: a USDA FoodData Central
-record (``fdc``) or a product label (``nutrition``). Items with neither are
-kept in the file as ``pending`` and skipped by the importer.
+category, allergens and "may contain" traces, culinary roles, portion
+weights, densities, package sizes — and says where its nutrition comes from:
+a USDA FoodData Central record (``fdc``) or a product label (``nutrition``).
+Items with neither are kept in the file as ``pending`` and skipped by the
+importer.
 """
 
 from __future__ import annotations
@@ -63,6 +64,8 @@ class CuratedFood(_Strict):
     category: FoodCategory
     origin: Origin
     allergens: list[Allergen] = []
+    # "may contain" / trace declarations, kept apart from what the food contains
+    may_contain: list[Allergen] = []
     derived_from: list[str] = []
     culinary_roles: list[CulinaryRole] = Field(min_length=1)
     substitution_groups: list[str] = []
@@ -76,6 +79,9 @@ class CuratedFood(_Strict):
     def _check(self) -> Self:
         if self.fdc is not None and self.nutrition is not None:
             raise ValueError(f"{self.slug}: use either fdc or nutrition, not both")
+        both = set(self.allergens) & set(self.may_contain)
+        if both:
+            raise ValueError(f"{self.slug}: {sorted(both)} listed as both allergen and trace")
         for unit, grams in self.portions.items():
             if unit not in UNITS:
                 raise ValueError(f"{self.slug}: unknown portion unit {unit!r}")
