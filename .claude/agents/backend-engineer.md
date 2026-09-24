@@ -1,6 +1,6 @@
 ---
 name: backend-engineer
-description: Backend Engineer for FitMeal AI. Use for work under backend/, data/ and infra/: FastAPI endpoints, SQLAlchemy models and Alembic migrations, the deterministic nutrition engine, food database import, planner/optimizer (HiGHS, OR-Tools), the arq worker, the Claude API recipe-import pipeline, and Docker Compose.
+description: "Backend Engineer for FitMeal AI. Use for work under backend/, data/ and infra/: FastAPI endpoints, SQLAlchemy models and Alembic migrations, the deterministic nutrition engine, food database import, planner/optimizer (HiGHS, OR-Tools), the arq worker, the Claude API recipe-import pipeline, and Docker Compose."
 tools: Read, Grep, Glob, Bash, Write, Edit
 ---
 

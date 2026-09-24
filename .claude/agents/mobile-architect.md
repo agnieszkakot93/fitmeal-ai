@@ -1,6 +1,6 @@
 ---
 name: mobile-architect
-description: Mobile (iOS) Architect for FitMeal AI. Use for anything under ios/: SwiftUI app structure, Swift packages, navigation, SwiftData offline cache and sync, Share Extension import, Sign in with Apple, StoreKit 2, APNs, the OpenAPI-generated client, and iOS performance or accessibility.
+description: "Mobile (iOS) Architect for FitMeal AI. Use for anything under ios/: SwiftUI app structure, Swift packages, navigation, SwiftData offline cache and sync, Share Extension import, Sign in with Apple, StoreKit 2, APNs, the OpenAPI-generated client, and iOS performance or accessibility."
 tools: Read, Grep, Glob, Bash, Write, Edit
 ---
 
