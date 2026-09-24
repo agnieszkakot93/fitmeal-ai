@@ -1,0 +1,74 @@
+<!-- @dsCard group="Screens" height=900 width=1317 page subtitle="Scroll-minimized tab bar, cooking mode toolbar with timer, glass context menu" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Liquid Glass patterns</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
+function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
+function scroll(){ return h.apply(null, ['div', {className:'fm-screen-scroll'}].concat([].slice.call(arguments))); }
+function cta(label, extra){ return h('div', {className:'fm-sticky'}, extra || null, h(F.Button, {variant:'primary', size:'lg', block:true}, label)); }
+function q(title, sub){ return h('div', {style:{display:'flex', flexDirection:'column', gap:8, paddingTop:8}}, h('h1', {className:'fm-hxl', style:{fontSize:32, lineHeight:'36px'}}, title), sub ? h('p', {className:'fm-callout'}, sub) : null); }
+function card(){ return h.apply(null, ['div', {style:{background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-lg)', padding:16, display:'flex', flexDirection:'column', gap:12}}].concat([].slice.call(arguments))); }
+function row(label, value, icon){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
+  icon ? h('span', {style:{color:'var(--ink-muted)'}}, h(F.Icon, {name:icon, size:20})) : null,
+  h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)'}}, label),
+  h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value),
+  h('span', {style:{color:'var(--ink-faint)'}}, h(F.Icon, {name:'chevron-right', size:18}))); }
+var TODAY_MEALS = [
+  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', swappable:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
+  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
+  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]})
+];
+function daySummary(){ return card(
+  h('div', {style:{display:'flex', alignItems:'center', gap:16}},
+    h(F.MacroRing, {value:1497, target:1500, size:112, stroke:10, macros:{protein:{share:.32}, carbs:{share:.35}, fat:{share:.33}}}),
+    h('div', {style:{flex:1, display:'flex', flexDirection:'column', gap:10}},
+      h(F.MacroBar, {macro:'protein', value:125, target:115, mode:'min', compact:true}),
+      h(F.MacroBar, {macro:'carbs', value:150, target:140, compact:true}),
+      h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
+show([
+ Ph('Today \u00b7 scrolled (tab bar minimized)', [
+   h(F.NavBar, {key:'n', title:'Today', trailing:h(F.IconButton, {icon:'plan', label:'Calendar'})}),
+   scroll(
+     h(F.MealCard, {slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
+     h(F.MealCard, {slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
+     h(F.RebalanceBanner, {title:'On target', body:'1,497 of 1,500 kcal \u00b7 125 g protein planned today.', before:{kcal:1497, protein:125}, after:{kcal:1500, protein:125}, cta:'See day'})),
+   h(F.TabBar, {key:'t', active:'today', minimized:true, accessory:h(F.BottomAccessory, {icon:'clock', title:'Lunch 13:30', subtitle:'Chicken Teriyaki', action:'Eat'})})
+ ]),
+ Ph('Cooking mode', [
+   h(F.RecipeHero, {key:'hero', className:'fm-hero-top', height:230, tone:'basil', macros:{protein:.37, carbs:.40, fat:.23}}),
+   h(F.NavBar, {key:'n', overlay:true, back:'Cancel', title:'', trailing:h(F.IconButton, {icon:'text', label:'Ingredients'})}),
+   scroll(
+     h('span', {className:'fm-cap', style:{paddingTop:16}}, 'Step 3 of 6'),
+     h('p', {style:{margin:0, font:'600 26px/34px var(--font-display)', letterSpacing:'-.01em'}}, 'Sear the chicken 4 minutes a side, until golden. Then set it aside.'),
+     h('div', {className:'fm-row', style:{gap:6}}, h(F.Badge, {tone:'paprika'}, 'Chicken breast 300 g'), h(F.Badge, null, 'Olive oil 5 g'))),
+   h('div', {key:'tb', className:'fm-tabbar-wrap'},
+     h(F.BottomAccessory, {icon:'clock', tone:'paprika', title:'Sear chicken \u00b7 3:42', subtitle:'Timer running', progress:0.4, action:'Pause'}),
+     h('div', {className:'fm-tabbar-row'},
+       h(F.IconButton, {variant:'glass', icon:'chevron-left', label:'Previous step', size:24}),
+       h('div', {style:{flex:1}}, h(F.Button, {variant:'glass-prominent', size:'lg', block:true, trailingIcon:'chevron-right'}, 'Next step')),
+       h(F.IconButton, {variant:'glass', icon:'clock', label:'Timers', size:22})))
+ ]),
+ Ph('Meal menu (long-press)', [
+   h(F.NavBar, {key:'n', large:true, title:'Plan', subtitle:'Wednesday, 24 September'}),
+   scroll(
+     h(F.MealCard, {slot:'Breakfast', title:'Protein Snickers Shake', kcal:520, protein:44, actions:false, onToggleEaten:false}),
+     h('div', {style:{position:'relative', zIndex:2}},
+       h('div', {style:{transform:'scale(1.03)', boxShadow:'var(--shadow-glass)', borderRadius:'var(--radius-lg)'}},
+         h(F.MealCard, {slot:'Lunch', title:'Chicken Teriyaki', kcal:548, protein:49, actions:false, onToggleEaten:false, badges:[{label:'Cook 2 portions', tone:'paprika', icon:'repeat'}]})),
+       h('div', {className:'fm-glass', style:{position:'absolute', right:0, top:150, width:240, borderRadius:26, padding:6, background:'var(--glass-fill-strong)', zIndex:4}},
+         [['swap','Swap meal'],['plan','Move to tomorrow'],['check','Mark as eaten'],['minus','Smaller portion'],['close','Skip this meal']].map(function(it, i){
+           return h('button', {key:i, type:'button', style:{display:'flex', width:'100%', alignItems:'center', gap:12, padding:'11px 14px', border:0, borderRadius:20, background: i === 0 ? 'var(--glass-selected)' : 'transparent', color: i === 4 ? 'var(--danger)' : 'var(--ink)', font:'500 16px/22px var(--font-text)', cursor:'pointer', textAlign:'left'}},
+             h(F.Icon, {name:it[0], size:20}), it[1]); }))),
+     h(F.MealCard, {slot:'Dinner', title:'Turkey Pasta Bake', kcal:429, protein:32, actions:false, onToggleEaten:false})),
+   h('div', {key:'dim', style:{position:'absolute', inset:0, background:'var(--scrim)', opacity:.35, zIndex:1, pointerEvents:'none'}}),
+   h(F.TabBar, {key:'t', active:'plan'})
+ ])
+]);
+</script>
+</body>
+</html>

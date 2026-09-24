@@ -40,22 +40,22 @@ show([
    h(F.TabBar, {key:'t', active:'today'})
  ]),
  Ph('17 Recipe', [
-   h(F.NavBar, {key:'n', back:'Today', title:'', trailing:[h(F.IconButton, {key:1, icon:'heart', label:'Save'}), h(F.IconButton, {key:2, icon:'more', label:'More'})]}),
+   h(F.RecipeHero, {key:'hero', className:'fm-hero-top', height:270, macros:{protein:.37, carbs:.40, fat:.23}}),
+   h(F.NavBar, {key:'n', overlay:true, back:'Today', title:'', trailing:[h(F.IconButton, {key:1, icon:'heart', label:'Save'}), h(F.IconButton, {key:2, icon:'more', label:'More'})]}),
    scroll(
-     h('div', {className:'fm-stack', style:{gap:8}},
+     h('div', {className:'fm-stack', style:{gap:8, paddingTop:16}},
        h('h1', {className:'fm-h2'}, 'Creamy Chicken Pasta'),
        h(F.MacroLine, {kcal:545, protein:51, carbs:54, fat:14, size:'lg'}),
-       h('div', {className:'fm-row', style:{gap:6}}, h(F.Badge, {icon:'clock'}, '25 min'), h(F.Badge, {icon:'repeat', tone:'paprika'}, '2 portions'), h(F.Badge, {icon:'wallet'}, '~12 PLN / portion'), h(F.Badge, {icon:'fridge', tone:'basil'}, 'Fridge 2 days'))),
-     h('button', {type:'button', style:{display:'flex', alignItems:'center', gap:10, padding:12, borderRadius:'var(--radius-md)', border:0, background:'var(--paprika-soft)', color:'var(--paprika-ink)', font:'600 15px/20px var(--font-text)', textAlign:'left', cursor:'pointer'}},
-       h(F.Icon, {name:'edit', size:20}), h('span', {style:{flex:1}}, 'Fitted to your lunch \u2014 4 changes. Why?'), h(F.Icon, {name:'chevron-right', size:18})),
-     h(F.SegmentedControl, {options:['Ingredients','Steps'], value:'Ingredients'}),
+       h('div', {className:'fm-row', style:{gap:6}}, h(F.Badge, {icon:'clock'}, '25 min'), h(F.Badge, {icon:'repeat', tone:'paprika'}, '2 portions'), h(F.Badge, {icon:'wallet'}, '~12 PLN'), h(F.Badge, {icon:'fridge', tone:'basil'}, '2 days'))),
+     h('button', {type:'button', style:{display:'flex', alignItems:'center', gap:10, padding:'12px 14px', borderRadius:'var(--radius-pill)', border:0, background:'var(--paprika-soft)', color:'var(--paprika-ink)', font:'600 15px/20px var(--font-text)', textAlign:'left', cursor:'pointer'}},
+       h(F.Icon, {name:'edit', size:20}), h('span', {style:{flex:1}}, 'Fitted to your lunch · 4 changes'), h(F.Icon, {name:'chevron-right', size:18})),
      h('div', {className:'fm-group'},
        h(F.IngredientRow, {name:'Chicken breast', amount:'300 g', was:'200 g', role:'protein'}),
-       h(F.IngredientRow, {name:'Penne', amount:'120 g', was:'200 g', role:'base'}),
        h(F.IngredientRow, {name:'Skyr, natural', amount:'150 g', was:'Cream 150 g', role:'sauce'}),
-       h(F.IngredientRow, {name:'Mushrooms', amount:'250 g'}),
-       h(F.IngredientRow, {name:'Parmesan', amount:'30 g'}))),
-   h('div', {key:'c'}, cta('Mark as cooked'))
+       h(F.IngredientRow, {name:'Mushrooms', amount:'250 g'}))),
+   h('div', {key:'c', className:'fm-sticky'}, h('div', {style:{display:'flex', gap:10}},
+     h(F.Button, {variant:'glass', size:'lg', icon:'play'}, 'Cook'),
+     h('div', {style:{flex:1}}, h(F.Button, {variant:'glass-prominent', size:'lg', block:true, icon:'check'}, 'Mark as cooked'))))
  ]),
  Ph('18 Why did FitMeal change this?', [
    h(F.NavBar, {key:'n', back:'Recipe', title:'Changes'}),
@@ -73,7 +73,7 @@ show([
  Ph('19 Ingredient swap', [
    h(F.NavBar, {key:'n', back:'Recipe', title:''}),
    h('div', {key:'s', className:'fm-scrim'},
-     h('div', {className:'fm-sheet', style:{height:600, boxSizing:'border-box'}},
+     h('div', {className:'fm-sheet'},
        h('span', {className:'fm-sheet-grab'}),
        h('div', {style:{display:'flex', justifyContent:'space-between', alignItems:'center'}}, h('h2', {className:'fm-h2'}, 'Swap chicken breast'), h(F.IconButton, {icon:'close', label:'Close'})),
        h('p', {className:'fm-callout'}, '300 g \u00b7 amounts are converted by protein, not 1:1'),

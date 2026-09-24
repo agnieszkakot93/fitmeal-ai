@@ -4,8 +4,8 @@ type Tone = 'neutral' | 'basil' | 'paprika' | 'warning' | 'danger' | 'premium' |
 type Macro = 'protein' | 'carbs' | 'fat';
 export interface DeltaItem { value: number; unit: 'kcal' | 'g' | 'PLN'; letter?: 'P' | 'C' | 'F'; tone?: 'good' | 'bad' | 'neutral' }
 export declare const Icon: React.FC<{ name: string; size?: number; weight?: number; label?: string; className?: string }> & { names: string[] };
-export declare const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'quiet' | 'danger' | 'premium' | 'accent'; size?: 'lg' | 'md' | 'sm'; icon?: string; trailingIcon?: string; block?: boolean }>;
-export declare const IconButton: React.FC<{ icon: string; label: string; variant?: 'sunken' | 'raised'; size?: number; onClick?: () => void; disabled?: boolean }>;
+export declare const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'quiet' | 'danger' | 'premium' | 'accent' | 'glass' | 'glass-prominent'; size?: 'lg' | 'md' | 'sm'; icon?: string; trailingIcon?: string; block?: boolean }>;
+export declare const IconButton: React.FC<{ icon: string; label: string; variant?: 'glass' | 'glass-prominent' | 'sunken' | 'raised'; size?: number; onClick?: () => void; disabled?: boolean }>;
 export declare const Chip: React.FC<{ selected?: boolean; onChange?: (v: boolean) => void; icon?: string; disabled?: boolean; children: React.ReactNode }>;
 export declare const SegmentedControl: React.FC<{ options: (string | { value: string; label: string })[]; value?: string; onChange?: (v: string) => void; label?: string }>;
 export declare const SelectCard: React.FC<{ title: string; description?: string; icon?: string; meta?: string; selected?: boolean; multiple?: boolean; onChange?: (v: boolean) => void }>;
@@ -32,7 +32,9 @@ export declare const StatTile: React.FC<{ value: string; unit?: string; label: s
 export declare const PlanCard: React.FC<{ tier?: 'free' | 'standard' | 'premium'; name: string; flag?: string; promise?: string; price: string; period?: string; subprice?: string; features?: string[]; selected?: boolean; soon?: boolean }>;
 export declare const LockedPreview: React.FC<{ kicker: string; stats: { label: string; from: string; to: string }[]; note?: string; cta: string; tier?: 'standard' | 'premium' }>;
 export declare const SectionHeader: React.FC<{ title: string; meta?: string; action?: string }>;
-export declare const NavBar: React.FC<{ title: string; large?: boolean; subtitle?: string; back?: string; trailing?: React.ReactNode }>;
+export declare const NavBar: React.FC<{ title: string; large?: boolean; subtitle?: string; back?: string; trailing?: React.ReactNode; overlay?: boolean }>;
 export declare const OnboardingProgress: React.FC<{ step: number; total?: number }>;
-export declare const TabBar: React.FC<{ active?: 'today' | 'plan' | 'shopping' | 'profile' }>;
-export declare const PhoneFrame: React.FC<{ caption?: string; footer?: React.ReactNode; theme?: 'light' | 'dark'; children?: React.ReactNode }>;
+export declare const TabBar: React.FC<{ active?: 'today' | 'plan' | 'shopping' | 'profile'; accessory?: React.ReactNode; minimized?: boolean }>;
+export declare const BottomAccessory: React.FC<{ icon?: string; tone?: 'basil' | 'paprika'; title: string; subtitle?: string; action?: string; progress?: number }>;
+export declare const RecipeHero: React.FC<{ macros?: { protein: number; carbs: number; fat: number }; height?: number; tone?: 'paprika' | 'basil' | 'premium'; className?: string; children?: React.ReactNode }>;
+export declare const PhoneFrame: React.FC<{ caption?: string; theme?: 'light' | 'dark'; children?: React.ReactNode }>;

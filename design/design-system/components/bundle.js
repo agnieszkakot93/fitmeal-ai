@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"FitMeal","components":[{"name":"Icon"},{"name":"Button"},{"name":"IconButton"},{"name":"Chip"},{"name":"SegmentedControl"},{"name":"SelectCard"},{"name":"Toggle"},{"name":"Checkbox"},{"name":"NumberField"},{"name":"ExclusionRow"},{"name":"DistributionEditor"},{"name":"MacroRing"},{"name":"MacroBar"},{"name":"MacroLine"},{"name":"Delta"},{"name":"Badge"},{"name":"MealCard"},{"name":"DayStrip"},{"name":"RebalanceBanner"},{"name":"IngredientRow"},{"name":"SwapOption"},{"name":"ChangeItem"},{"name":"CompareCard"},{"name":"ConfidencePrompt"},{"name":"ShoppingItem"},{"name":"StatTile"},{"name":"PlanCard"},{"name":"LockedPreview"},{"name":"SectionHeader"},{"name":"NavBar"},{"name":"OnboardingProgress"},{"name":"TabBar"},{"name":"PhoneFrame"}]} */
+/* @ds-bundle: {"format":4,"namespace":"FitMeal","components":[{"name":"Icon"},{"name":"Button"},{"name":"IconButton"},{"name":"Chip"},{"name":"SegmentedControl"},{"name":"SelectCard"},{"name":"Toggle"},{"name":"Checkbox"},{"name":"NumberField"},{"name":"ExclusionRow"},{"name":"DistributionEditor"},{"name":"MacroRing"},{"name":"MacroBar"},{"name":"MacroLine"},{"name":"Delta"},{"name":"Badge"},{"name":"MealCard"},{"name":"DayStrip"},{"name":"RebalanceBanner"},{"name":"IngredientRow"},{"name":"SwapOption"},{"name":"ChangeItem"},{"name":"CompareCard"},{"name":"ConfidencePrompt"},{"name":"ShoppingItem"},{"name":"StatTile"},{"name":"PlanCard"},{"name":"LockedPreview"},{"name":"SectionHeader"},{"name":"NavBar"},{"name":"OnboardingProgress"},{"name":"TabBar"},{"name":"BottomAccessory"},{"name":"RecipeHero"},{"name":"PhoneFrame"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
@@ -54,7 +54,8 @@
     target: 'M12 3.5a8.5 8.5 0 110 17 8.5 8.5 0 010-17zM12 8a4 4 0 110 8 4 4 0 010-8zM12 11.5v1',
     more: 'M6 12h.01M12 12h.01M18 12h.01',
     settings: 'M12 9a3 3 0 110 6 3 3 0 010-6zM12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1',
-    arrow: 'M5 12h14M13 6l6 6-6 6'
+    arrow: 'M5 12h14M13 6l6 6-6 6',
+    play: 'M8 5.5v13l10.5-6.5z'
   };
   function Icon(p) {
     var size = p.size || 22;
@@ -75,7 +76,7 @@
     var rest = Object.assign({}, p);
     ['variant', 'size', 'icon', 'trailingIcon', 'block', 'className', 'children'].forEach(function (k) { delete rest[k]; });
     return h('button', Object.assign({ type: 'button' }, rest, {
-      className: cx('fm-btn', 'fm-btn-' + variant, 'fm-btn-' + size, p.block && 'fm-btn-block', p.className)
+      className: cx('fm-btn', 'fm-btn-' + variant, 'fm-btn-' + size, p.block && 'fm-btn-block', variant.indexOf('glass') === 0 && 'fm-glass', p.className)
     }),
       p.icon && h(Icon, { name: p.icon, size: size === 'sm' ? 16 : 20 }),
       p.children && h('span', null, p.children),
@@ -84,7 +85,7 @@
 
   function IconButton(p) {
     return h('button', {
-      type: 'button', className: cx('fm-iconbtn', p.variant && 'fm-iconbtn-' + p.variant, p.className),
+      type: 'button', className: cx('fm-iconbtn', p.variant && 'fm-iconbtn-' + p.variant, p.variant && p.variant.indexOf('glass') === 0 && 'fm-glass', p.className),
       'aria-label': p.label, onClick: p.onClick, disabled: p.disabled
     }, h(Icon, { name: p.icon, size: p.size || 22 }));
   }
@@ -479,11 +480,16 @@
   }
 
   function NavBar(p) {
-    return h('header', { className: cx('fm-nav', p.large && 'is-large', p.className) },
-      h('div', { className: 'fm-nav-row' },
-        p.back ? h('button', { type: 'button', className: 'fm-nav-back' }, h(Icon, { name: 'chevron-left', size: 22 }), p.back) : h('span'),
+    var trailing = p.trailing ? h('span', { className: 'fm-glass fm-glass-group' }, p.trailing) : h('span', { className: 'fm-nav-spacer' });
+    var lead = p.back
+      ? h('button', { type: 'button', className: 'fm-glass fm-glassbtn', 'aria-label': p.back === 'Cancel' ? 'Cancel' : 'Back to ' + p.back },
+          h(Icon, { name: p.back === 'Cancel' ? 'close' : 'chevron-left', size: 22, weight: 2 }))
+      : h('span', { className: 'fm-nav-spacer' });
+    return h('header', { className: cx('fm-nav', p.large && 'is-large', p.overlay && 'is-overlay', p.className) },
+      (p.back || p.trailing || !p.large) && h('div', { className: 'fm-nav-row' },
+        lead,
         !p.large && h('span', { className: 'fm-nav-title' }, p.title),
-        h('span', { className: 'fm-nav-trail' }, p.trailing)),
+        trailing),
       p.large && h('h1', { className: 'fm-nav-large' }, p.title),
       p.subtitle && h('p', { className: 'fm-nav-sub' }, p.subtitle));
   }
@@ -492,7 +498,7 @@
     var total = p.total || 11;
     var step = p.step || 1;
     return h('div', { className: cx('fm-onbprog', p.className) },
-      h('button', { type: 'button', className: 'fm-nav-back', 'aria-label': 'Back' }, h(Icon, { name: 'chevron-left', size: 22 })),
+      h('button', { type: 'button', className: 'fm-glass fm-glassbtn', 'aria-label': 'Back' }, h(Icon, { name: 'chevron-left', size: 22, weight: 2 })),
       h('div', { className: 'fm-onbprog-track', role: 'progressbar', 'aria-valuemin': 1, 'aria-valuemax': total, 'aria-valuenow': step },
         h('span', { style: { width: (step / total * 100) + '%' } })),
       h('span', { className: 'fm-onbprog-count' }, step + '/' + total));
@@ -501,22 +507,56 @@
   var TABS = [
     { id: 'today', label: 'Today', icon: 'today' },
     { id: 'plan', label: 'Plan', icon: 'plan' },
-    { id: 'add', label: 'Add', icon: 'plus' },
     { id: 'shopping', label: 'Shopping', icon: 'cart' },
     { id: 'profile', label: 'Profile', icon: 'user' }
   ];
   function TabBar(p) {
     var active = p.active || 'today';
-    return h('nav', { className: cx('fm-tabbar', p.className), 'aria-label': 'Main' },
-      TABS.map(function (t) {
+    var min = !!p.minimized;
+    var tabs = min ? TABS.filter(function (t) { return t.id === active; }) : TABS;
+    var bar = h('nav', { className: cx('fm-glass', 'fm-tabbar', min && 'is-min'), 'aria-label': 'Main' },
+      tabs.map(function (t) {
         var on = t.id === active;
-        if (t.id === 'add') {
-          return h('button', { key: t.id, type: 'button', className: 'fm-tab fm-tab-add', 'aria-label': 'Add recipe' },
-            h('span', { className: 'fm-tab-addbtn' }, h(Icon, { name: 'plus', size: 24, weight: 2.25 })));
-        }
-        return h('button', { key: t.id, type: 'button', className: cx('fm-tab', on && 'is-active'), 'aria-current': on ? 'page' : undefined },
-          h(Icon, { name: t.icon, size: 24, weight: on ? 2.1 : 1.6 }), h('span', null, t.label));
+        return h('button', { key: t.id, type: 'button', className: cx('fm-tab', on && 'is-active'), 'aria-current': on ? 'page' : undefined, 'aria-label': t.label },
+          h(Icon, { name: t.icon, size: min ? 24 : 23, weight: on ? 2.1 : 1.7 }), !min && h('span', null, t.label));
       }));
+    var add = h('button', { type: 'button', className: 'fm-glass fm-glass-accent fm-tab-add', 'aria-label': 'Add recipe' },
+      h(Icon, { name: 'plus', size: 26, weight: 2.25 }));
+    return h('div', { className: cx('fm-tabbar-wrap', min && 'is-min', p.className) },
+      p.accessory && !min && h('div', { className: 'fm-tabbar-acc' }, p.accessory),
+      h('div', { className: 'fm-tabbar-row' }, bar, min && p.accessory && h('div', { className: 'fm-tabbar-inline' }, p.accessory), add));
+  }
+
+  function BottomAccessory(p) {
+    return h('div', { className: cx('fm-glass', 'fm-acc', p.className), role: 'status' },
+      h('span', { className: cx('fm-acc-icon', 'is-' + (p.tone || 'basil')) }, h(Icon, { name: p.icon || 'clock', size: 18, weight: 2 })),
+      h('span', { className: 'fm-acc-text' },
+        h('span', { className: 'fm-acc-title' }, p.title),
+        p.subtitle && h('span', { className: 'fm-acc-sub' }, p.subtitle)),
+      p.progress != null && h('span', { className: 'fm-acc-progress', style: { width: Math.round(p.progress * 100) + '%' } }),
+      p.action && h('button', { type: 'button', className: 'fm-acc-action' }, p.action));
+  }
+
+  function RecipeHero(p) {
+    var m = p.macros || { protein: 0.34, carbs: 0.4, fat: 0.26 };
+    var H = p.height || 300, W = 375, cxp = W / 2, cyp = H / 2 + 22, R = 92, C = 2 * Math.PI * 62;
+    var start = 0;
+    var arcs = ['protein', 'carbs', 'fat'].map(function (k) {
+      var frac = m[k] || 0;
+      var el = h('circle', { key: k, cx: cxp, cy: cyp, r: 62, fill: 'none', stroke: MACROS[k].color, strokeWidth: 40,
+        strokeDasharray: Math.max(0, frac * C - 5) + ' ' + C, strokeDashoffset: -start * C, transform: 'rotate(-90 ' + cxp + ' ' + cyp + ')' });
+      start += frac;
+      return el;
+    });
+    return h('div', { className: cx('fm-hero', 'is-' + (p.tone || 'paprika'), p.className), style: { height: H } },
+      h('svg', { width: '100%', height: H, viewBox: '0 0 ' + W + ' ' + H, preserveAspectRatio: 'xMidYMid slice', 'aria-hidden': 'true' },
+        h('circle', { className: 'fm-hero-disc', cx: 40, cy: 40, r: 70 }),
+        h('circle', { className: 'fm-hero-disc', cx: W - 20, cy: H - 10, r: 90 }),
+        h('circle', { className: 'fm-hero-plate', cx: cxp, cy: cyp, r: R + 16 }),
+        h('circle', { className: 'fm-hero-rim', cx: cxp, cy: cyp, r: R }),
+        arcs,
+        h('circle', { className: 'fm-hero-center', cx: cxp, cy: cyp, r: 30 })),
+      p.children);
   }
 
   function PhoneFrame(p) {
@@ -527,8 +567,7 @@
           h('span', null, '9:41'),
           h('span', { className: 'fm-phone-island' }),
           h('span', { className: 'fm-phone-sig' }, h('i'), h('i'), h('i'))),
-        h('div', { className: 'fm-phone-screen' }, p.children),
-        p.footer,
+        h('div', { className: 'fm-phone-screen' }, p.children, p.footer),
         h('div', { className: 'fm-phone-home' }, h('span'))));
   }
 
@@ -541,6 +580,7 @@
     Badge: Badge, MealCard: MealCard, DayStrip: DayStrip, RebalanceBanner: RebalanceBanner, IngredientRow: IngredientRow,
     SwapOption: SwapOption, ChangeItem: ChangeItem, CompareCard: CompareCard, ConfidencePrompt: ConfidencePrompt,
     ShoppingItem: ShoppingItem, StatTile: StatTile, PlanCard: PlanCard, LockedPreview: LockedPreview,
-    SectionHeader: SectionHeader, NavBar: NavBar, OnboardingProgress: OnboardingProgress, TabBar: TabBar, PhoneFrame: PhoneFrame
+    SectionHeader: SectionHeader, NavBar: NavBar, OnboardingProgress: OnboardingProgress, TabBar: TabBar,
+    BottomAccessory: BottomAccessory, RecipeHero: RecipeHero, PhoneFrame: PhoneFrame
   });
 })();

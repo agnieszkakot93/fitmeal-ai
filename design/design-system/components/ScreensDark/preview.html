@@ -34,19 +34,19 @@ show([
  Ph('Today \u00b7 dark', [
    h(F.NavBar, {key:'n', large:true, title:'Today', subtitle:'Wednesday, 24 September'}),
    scroll(daySummary(), h(F.SectionHeader, {title:'Meals', meta:'1 of 3 eaten'}), TODAY_MEALS),
-   h(F.TabBar, {key:'t', active:'today'})
+   h(F.TabBar, {key:'t', active:'today', accessory:h(F.BottomAccessory, {icon:'clock', title:'Up next · Lunch 13:30', subtitle:'Chicken Teriyaki · meal prep 1/2', action:'Eat'})})
  ], null, 'dark'),
- Ph('Recipe \u00b7 dark', [
-   h(F.NavBar, {key:'n', back:'Today', title:''}),
+ Ph('Recipe · dark', [
+   h(F.RecipeHero, {key:'hero', className:'fm-hero-top', height:250}),
+   h(F.NavBar, {key:'n', overlay:true, back:'Today', title:'', trailing:[h(F.IconButton, {key:1, icon:'heart', label:'Save'}), h(F.IconButton, {key:2, icon:'more', label:'More'})]}),
    scroll(
-     h('h1', {className:'fm-h2'}, 'Creamy Chicken Pasta'),
+     h('h1', {className:'fm-h2', style:{paddingTop:16}}, 'Creamy Chicken Pasta'),
      h(F.MacroLine, {kcal:545, protein:51, carbs:54, fat:14, size:'lg'}),
      h(F.CompareCard, {original:{kcal:684, protein:31}, yours:{kcal:545, protein:51}}),
      h('div', {className:'fm-group'},
        h(F.IngredientRow, {name:'Chicken breast', amount:'300 g', was:'200 g', role:'protein'}),
-       h(F.IngredientRow, {name:'Skyr, natural', amount:'150 g', was:'Cream 150 g', role:'sauce'}),
-       h(F.IngredientRow, {name:'Mushrooms', amount:'250 g'}))),
-   h('div', {key:'c'}, cta('Mark as cooked'))
+       h(F.IngredientRow, {name:'Skyr, natural', amount:'150 g', was:'Cream 150 g', role:'sauce'}))),
+   h('div', {key:'c', className:'fm-sticky'}, h(F.Button, {variant:'glass-prominent', size:'lg', block:true, icon:'check'}, 'Mark as cooked'))
  ], null, 'dark'),
  Ph('Swap \u00b7 dark', [
    h(F.NavBar, {key:'n', large:true, title:'Today'}),

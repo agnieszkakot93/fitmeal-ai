@@ -44,7 +44,7 @@ show([
        h(F.ShoppingItem, {name:'Mozzarella light', qty:'250 g', packages:'2 \u00d7 125 g', checked:true})),
      h(F.SectionHeader, {title:'Vegetables'}),
      h('div', {className:'fm-group'}, h(F.ShoppingItem, {name:'Spinach', qty:'300 g', checked:true}), h(F.ShoppingItem, {name:'Peppers', qty:'5 pcs'}))),
-   h(F.TabBar, {key:'t', active:'shopping'})
+   h(F.TabBar, {key:'t', active:'shopping', accessory:h(F.BottomAccessory, {icon:'cart', title:'4 of 23 in the basket', subtitle:'~164 PLN estimated', progress:4/23})})
  ]),
  Ph('25 Economy Mode preview', [
    h(F.NavBar, {key:'n', back:'Shopping', title:''}),

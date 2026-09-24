@@ -49,18 +49,18 @@ show([
      h(F.MealCard, {slot:'Breakfast', title:'Protein Snickers Shake', kcal:520, protein:44, actions:false, onToggleEaten:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
      h(F.MealCard, {slot:'Lunch', title:'Chicken Teriyaki', kcal:548, protein:49, actions:false, onToggleEaten:false, badges:[{label:'Cook 2 portions', tone:'paprika', icon:'repeat'}]}),
      h(F.MealCard, {slot:'Dinner', title:'Turkey Pasta Bake', kcal:429, protein:32, actions:false, onToggleEaten:false, badges:[{label:'Cook 2 portions', tone:'paprika', icon:'repeat'}]})),
-   h(F.TabBar, {key:'t', active:'plan'})
+   h(F.TabBar, {key:'t', active:'plan', accessory:h(F.BottomAccessory, {icon:'repeat', tone:'paprika', title:'Cook today · 2 recipes', subtitle:'Covers Wed + Thu · about 45 min', action:'Start'})})
  ]),
  Ph('14 Today', [
    h(F.NavBar, {key:'n', large:true, title:'Today', subtitle:'Wednesday, 24 September'}),
    scroll(daySummary(), h(F.SectionHeader, {title:'Meals', meta:'1 of 3 eaten'}), TODAY_MEALS),
-   h(F.TabBar, {key:'t', active:'today'})
+   h(F.TabBar, {key:'t', active:'today', accessory:h(F.BottomAccessory, {icon:'clock', title:'Up next · Lunch 13:30', subtitle:'Chicken Teriyaki · meal prep 1/2', action:'Eat'})})
  ]),
  Ph('15 Swap meal', [
    h(F.NavBar, {key:'n', large:true, title:'Today'}),
    scroll(daySummary()),
    h('div', {key:'s', className:'fm-scrim'},
-     h('div', {className:'fm-sheet', style:{height:560, boxSizing:'border-box'}},
+     h('div', {className:'fm-sheet'},
        h('span', {className:'fm-sheet-grab'}),
        h('div', {style:{display:'flex', justifyContent:'space-between', alignItems:'center'}}, h('h2', {className:'fm-h2'}, 'Swap lunch'), h(F.IconButton, {icon:'close', label:'Close'})),
        h('p', {className:'fm-callout'}, 'Now: Chicken Teriyaki \u00b7 548 kcal \u00b7 49 P'),

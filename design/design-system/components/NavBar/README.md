@@ -1,5 +1,11 @@
 # NavBar
 
-The screen header: back link, centred title or large title, trailing actions.
+The iOS 26 screen header. Back and trailing actions float as Liquid Glass (a round back button and one glass capsule grouping the trailing icons), and there is no bar background.
 
-**Props:** `title`, `large` (32px large title for tab roots), `subtitle`, `back` (label of the previous screen), `trailing` (nodes, e.g. IconButtons).
+**Props:**
+- `title`
+- `large`: a 32px large title for tab roots. Trailing actions float at the top right.
+- `subtitle`
+- `back`: the previous screen's name, used as the accessible label. The button shows a chevron; `'Cancel'` shows a close icon instead.
+- `trailing`: one IconButton or several, grouped into a single glass capsule.
+- `overlay`: floats the bar over a `RecipeHero`.

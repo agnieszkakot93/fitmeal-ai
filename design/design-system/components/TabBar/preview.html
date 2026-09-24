@@ -1,4 +1,4 @@
-<!-- @dsCard group="Navigation" height=96 -->
+<!-- @dsCard group="Navigation" height=520 -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>TabBar — preview</title></head>
@@ -7,7 +7,13 @@
 <script>
 var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
-root(h('div', {style:{maxWidth:375}}, h(F.TabBar, {active:'today'})));
+function stage(el){ return h('div', {style:{position:'relative', height:150, maxWidth:375, overflow:'hidden', borderRadius:24, background:'var(--surface)'}},
+  h('div', {style:{padding:'12px 16px', display:'flex', flexDirection:'column', gap:8}},
+    h(F.MealCard, {slot:'Lunch', title:'Chicken Teriyaki', kcal:548, protein:49, actions:false, onToggleEaten:false, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]})), el); }
+root(h('div', {className:'fm-stack', style:{padding:16, gap:16}},
+  h('div', {style:{width:375}}, stage(h(F.TabBar, {active:'today'}))),
+  h('div', {style:{width:375}}, stage(h(F.TabBar, {active:'plan', accessory:h(F.BottomAccessory, {icon:'repeat', tone:'paprika', title:'Cook today \u00b7 2 recipes', subtitle:'Covers Wed + Thu', action:'Start'})}))),
+  h('div', {style:{width:375}}, stage(h(F.TabBar, {active:'today', minimized:true, accessory:h(F.BottomAccessory, {icon:'clock', title:'Lunch 13:30', subtitle:'Chicken Teriyaki', action:'Eat'})})))));
 </script>
 </body>
 </html>

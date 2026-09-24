@@ -1,4 +1,4 @@
-<!-- @dsCard group="Actions" height=150 -->
+<!-- @dsCard group="Actions" height=230 -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Button — preview</title></head>
@@ -17,7 +17,11 @@ root(h('div', {className:'fm-stack', style:{padding:16}},
     h(F.Button, {variant:'quiet', size:'sm', icon:'swap'}, 'Swap'),
     h(F.Button, {variant:'primary', size:'md'}, 'Add to this week'),
     h(F.Button, {variant:'danger', size:'md', icon:'trash'}, 'Delete account'),
-    h(F.Button, {variant:'primary', size:'md', disabled:true}, 'Continue'))));
+    h(F.Button, {variant:'primary', size:'md', disabled:true}, 'Continue')),
+  h('div', {className:'fm-row', style:{padding:16, borderRadius:24, background:'linear-gradient(120deg, var(--paprika) 0 30%, var(--macro-carbs) 30% 55%, var(--basil) 55% 80%, var(--macro-fat) 80%)'}},
+    h(F.Button, {variant:'glass', size:'lg', icon:'play'}, 'Cook'),
+    h(F.Button, {variant:'glass-prominent', size:'lg', icon:'check'}, 'Mark as cooked'),
+    h(F.Button, {variant:'glass', size:'md', icon:'swap'}, 'Swap'))));
 </script>
 </body>
 </html>

@@ -47,6 +47,19 @@ The palette is basil green, paprika and warm paper, with three macro colours. Al
 
 Every text token's usage note names the grounds it passes 4.5:1 on in both themes. Control borders (`line-strong`) and icons meet 3:1.
 
+## Liquid Glass (iOS 26)
+
+FitMeal follows Apple's Liquid Glass design language. Content (meals, numbers, recipes) sits on warm solid paper. Navigation and controls float above it as glass that blurs and tints whatever scrolls underneath. There are two layers and never more.
+
+- **What is glass:** the tab bar and its Add button, the bottom accessory, NavBar back and trailing buttons (grouped into one capsule), floating CTAs over a hero or scrolling list, partial-height sheets, context menus and the cooking-mode toolbar.
+- **What is never glass:** cards, list groups, ingredient rows, macro visuals and any content. Glass on glass is not allowed. Inside a glass container, controls are plain (`.fm-glass-group .fm-iconbtn`).
+- **Recipe:** fill `glass-fill` (controls) or `glass-fill-strong` (sheets and menus), plus a backdrop `blur(glass-blur) saturate(glass-saturation)`, plus `shadow-glass` (a top-lit specular rim and a soft float shadow). In SwiftUI, use `.glassEffect()` / `.glassEffect(.regular.tint(...))` inside a `GlassEffectContainer`, and `.buttonStyle(.glass)` / `.glassProminent`.
+- **Tints:** `glass-tint-basil` is the one prominent floating action on a screen. `glass-tint-paprika` is only for the Add button. Everything else is untinted, and colour comes from the content underneath.
+- **Text on glass** is `ink` or `basil` only, never `ink-muted`. Ink stays at 7:1 or better even over a paprika or amber card underneath. The selected tab uses bold `basil` on the `glass-selected` lens.
+- **Shape:** capsules and circles. All buttons are capsules (`radius-pill`). Floating sheets inset 8px use `radius-sheet` (40), concentric with the iPhone's display corners.
+- **Behaviour:** the tab bar shrinks to the active tab plus Add while scrolling down, and the accessory moves inline (`.tabBarMinimizeBehavior(.onScrollDown)`). Glass elements morph into each other when they appear or disappear (`glassEffectID`). A long-press lifts a card and shows a glass menu.
+- **Accessibility:** with Reduce Transparency, every glass element becomes solid `surface-raised` (built into `bundle.css` via `prefers-reduced-transparency`). With Increase Contrast, add a `line-strong` edge. With Reduce Motion, glass cross-fades instead of morphing.
+
 ## Typography
 
 - **Display — Bricolage Grotesque** (700/650): screen titles, meal and recipe names, and every large numeral. It's friendly, a little editorial, and its figures read well big.
@@ -58,17 +71,18 @@ Every text token's usage note names the grounds it passes 4.5:1 on in both theme
 ## Space, shape, elevation
 
 - **4 pt grid:** `space-1` 4 … `space-12` 48. The screen gutter is `space-5` (20). Card padding is `space-4` (16). Sections are separated by `space-6` (24).
-- **Radii** get softer as things get bigger: `radius-xs` 6 (checkbox) → `radius-sm` 10 (fields, segments) → `radius-md` 14 (buttons, options, groups) → `radius-lg` 20 (meal and plan cards) → `radius-xl` 28 (sheets). Pills (`radius-pill`) are for chips, badges and day pills.
-- **Elevation:** cards use a `line` border plus a faint `shadow-card`. Only bottom sheets and the sticky CTA get `shadow-sheet`. Sheets sit over `scrim`.
+- **Radii** get softer as things get bigger: `radius-xs` 6 (checkbox) → `radius-sm` 10 (fields) → `radius-md` 14 (options, groups) → `radius-lg` 20 (meal and plan cards) → `radius-xl` 28 (hero bottom, full sheets) → `radius-sheet` 40 (floating sheets). `radius-pill` is for every button, chip, badge, segmented control and glass control.
+- **Elevation:** content cards use a `line` border plus a faint `shadow-card`. Only glass gets `shadow-glass`. Full-height sheets sit over `scrim`.
 - **Hit targets** are at least `size-tap` (44). Row-level controls make the whole row tappable.
 
 ## Layout patterns
 
-- **Tab roots** (Today, Plan, Shopping, Profile) use a `NavBar large` title plus subtitle, scrolling content and the `TabBar`. Add is a paprika button that opens the Add Recipe screen.
+- **Tab roots** (Today, Plan, Shopping, Profile) use a `NavBar large` title plus subtitle, content scrolling under a floating glass `TabBar`, and a separate round Add button that opens Add Recipe. A `BottomAccessory` shows what's next: *Up next · Lunch 13:30* on Today, *Cook today · 2 recipes* on Plan, basket progress on Shopping.
 - **Onboarding** uses `OnboardingProgress` (11 steps), one `display-xl` question, options as `SelectCard` / `SegmentedControl` / `Chip`, and one sticky primary *Continue*. Simple mode is the default and Advanced is opt-in.
-- **Decisions** (swap meal, swap ingredient, *I don't have this*) open a bottom sheet with ranked `SwapOption`s, each showing its `Delta`, and one primary button naming the result.
-- **Recipes** show the name, `MacroLine lg`, badges (time, portions, cost, storage), a paprika *Fitted to your lunch — N changes. Why?* link, and ingredient rows with changes tinted.
-- **Motion:** use the standard iOS springs. Totals count up or down over about 250 ms after a rebalance. Respect Reduce Motion.
+- **Decisions** (swap meal, swap ingredient, *I don't have this*) open a floating glass sheet (inset 8px, `radius-sheet`) with ranked `SwapOption`s, each showing its `Delta`, and one primary button naming the result.
+- **Recipes** open with an edge-to-edge `RecipeHero` (the macro plate) under a glass `NavBar overlay`, then the name, `MacroLine lg`, badges (time, portions, cost, storage), a paprika *Fitted to your lunch · N changes* link, and ingredient rows with changes tinted. The bottom has a glass *Cook* button and a glass-prominent *Mark as cooked*.
+- **Cooking mode** shows one big step per screen, with a glass toolbar (previous, *Next step*, timers) and the running timer in a `BottomAccessory`.
+- **Motion:** use the standard iOS springs. Totals count up or down over about 250 ms after a rebalance. Glass morphs between states. Respect Reduce Motion.
 
 ## Iconography
 
@@ -91,19 +105,19 @@ Icons are single-ink and take the text colour of their row. No emoji or illustra
 
 The React bundle is `window.FitMeal` (React 18). It is the visual reference for the SwiftUI `DesignSystem` package: each component maps to one SwiftUI view with the same name and props. Groups:
 
-- **Actions:** `Button`, `IconButton`
+- **Actions:** `Button` (including `glass` / `glass-prominent`), `IconButton` (including `glass`)
 - **Inputs:** `Chip`, `SegmentedControl`, `SelectCard`, `Toggle`, `Checkbox`, `NumberField`, `ExclusionRow`, `DistributionEditor`
 - **Nutrition:** `MacroRing`, `MacroBar`, `MacroLine`, `Delta`
 - **Meals:** `MealCard`, `DayStrip`, `RebalanceBanner`, `StatTile`
-- **Recipes:** `IngredientRow`, `SwapOption`, `ChangeItem`, `CompareCard`, `ConfidencePrompt`
+- **Recipes:** `RecipeHero`, `IngredientRow`, `SwapOption`, `ChangeItem`, `CompareCard`, `ConfidencePrompt`
 - **Shopping:** `ShoppingItem`
 - **Status:** `Badge`
 - **Monetization:** `PlanCard`, `LockedPreview`
-- **Navigation:** `SectionHeader`, `NavBar`, `OnboardingProgress`, `TabBar`
+- **Navigation:** `SectionHeader`, `NavBar`, `OnboardingProgress`, `TabBar`, `BottomAccessory`
 - **Layout:** `PhoneFrame`, for showcase pages only
 
-Helper classes in `bundle.css`: `.fm-group` (inset list container), `.fm-changes` (ChangeItem list), `.fm-sheet` / `.fm-scrim` (bottom sheet), `.fm-sticky` (bottom CTA), `.fm-cap` (caption label).
+Helper classes in `bundle.css`: `.fm-glass` (the glass material), `.fm-glass-group` (toolbar capsule), `.fm-group` (inset list container), `.fm-changes` (ChangeItem list), `.fm-sheet` / `.fm-scrim` (floating glass sheet), `.fm-sticky` (bottom CTA over a fade), `.fm-cap` (caption label).
 
 ## App screens
 
-The **Screens** group lays out the MVP flow from the PRD on iPhone frames: onboarding (Welcome → Goal → Calories → Macros → Meals and distribution → Exclusions → Preferences → Cooking and budget), Create plan, Weekly plan, Today, Swap meal, Rebalance, Recipe, *Why did FitMeal change this?*, Ingredient swap, Add recipe, Import preview, Your version, *I don't have this*, Shopping list, Economy Mode preview, Paywall, Profile, and a dark-theme set. Together they cover all 12 steps of the MVP Definition of Done.
+The **Screens** group lays out the MVP flow from the PRD on iPhone frames: onboarding (Welcome → Goal → Calories → Macros → Meals and distribution → Exclusions → Preferences → Cooking and budget), Create plan, Weekly plan, Today, Swap meal, Rebalance, Recipe, *Why did FitMeal change this?*, Ingredient swap, Add recipe, Import preview, Your version, *I don't have this*, Shopping list, Economy Mode preview, Paywall, Profile, a dark-theme set, and a Liquid Glass page (scroll-minimized tab bar, cooking mode, long-press glass menu). Together they cover all 12 steps of the MVP Definition of Done.
