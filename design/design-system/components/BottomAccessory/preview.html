@@ -1,0 +1,16 @@
+<!-- @dsCard group="Navigation" height=190 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>BottomAccessory — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:360, borderRadius:24, background:'linear-gradient(120deg, var(--paprika) 0 30%, var(--macro-carbs) 30% 55%, var(--basil) 55% 80%, var(--macro-fat) 80%)'}},
+  h(F.BottomAccessory, {icon:'clock', title:'Up next \u00b7 Lunch 13:30', subtitle:'Chicken Teriyaki \u00b7 meal prep 1/2', action:'Eat'}),
+  h(F.BottomAccessory, {icon:'clock', tone:'paprika', title:'Sear chicken \u00b7 3:42', subtitle:'Timer running', progress:.4, action:'Pause'}),
+  h(F.BottomAccessory, {icon:'cart', title:'4 of 23 in the basket', subtitle:'~164 PLN estimated', progress:4/23})));
+</script>
+</body>
+</html>

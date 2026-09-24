@@ -1,0 +1,13 @@
+<!-- @dsCard group="Navigation" height=64 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>OnboardingProgress — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {style:{maxWidth:375}}, h(F.OnboardingProgress, {step:4, total:11})));
+</script>
+</body>
+</html>

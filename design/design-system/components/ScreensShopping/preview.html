@@ -1,0 +1,91 @@
+<!-- @dsCard group="Screens" height=900 width=1748 page subtitle="Shopping list, Economy Mode preview, Plans paywall, Profile" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Shopping, paywall and profile</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
+function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
+function scroll(){ return h.apply(null, ['div', {className:'fm-screen-scroll'}].concat([].slice.call(arguments))); }
+function cta(label, extra){ return h('div', {className:'fm-sticky'}, extra || null, h(F.Button, {variant:'primary', size:'lg', block:true}, label)); }
+function q(title, sub){ return h('div', {style:{display:'flex', flexDirection:'column', gap:8, paddingTop:8}}, h('h1', {className:'fm-hxl', style:{fontSize:32, lineHeight:'36px'}}, title), sub ? h('p', {className:'fm-callout'}, sub) : null); }
+function card(){ return h.apply(null, ['div', {style:{background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-lg)', padding:16, display:'flex', flexDirection:'column', gap:12}}].concat([].slice.call(arguments))); }
+function row(label, value, icon){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
+  icon ? h('span', {style:{color:'var(--ink-muted)'}}, h(F.Icon, {name:icon, size:20})) : null,
+  h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)'}}, label),
+  h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value),
+  h('span', {style:{color:'var(--ink-faint)'}}, h(F.Icon, {name:'chevron-right', size:18}))); }
+var AV = h(F.Avatar, {initials:'OL', label:'Profile'});
+var TODAY_MEALS = [
+  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', swappable:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
+  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
+  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]})
+];
+function daySummary(){ return card(
+  h('div', {style:{display:'flex', alignItems:'center', gap:16}},
+    h(F.MacroRing, {value:1497, target:1500, size:112, stroke:10, macros:{protein:{share:.32}, carbs:{share:.35}, fat:{share:.33}}}),
+    h('div', {style:{flex:1, display:'flex', flexDirection:'column', gap:10}},
+      h(F.MacroBar, {macro:'protein', value:125, target:115, mode:'min', compact:true}),
+      h(F.MacroBar, {macro:'carbs', value:150, target:140, compact:true}),
+      h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
+show([
+ Ph('24 Shopping list', [
+   h(F.NavBar, {key:'n', large:true, title:'Shopping', subtitle:'22\u201328 Sep \u00b7 23 items \u00b7 ~164 PLN', trailing:h(F.IconButton, {icon:'more', label:'List options'}), avatar:AV}),
+   scroll(
+     h(F.SectionHeader, {title:'Protein', meta:'~52 PLN'}),
+     h('div', {className:'fm-group'},
+       h(F.ShoppingItem, {name:'Chicken breast', qty:'1 kg', packages:'2 \u00d7 500 g', pantry:'350 g at home', price:'~24 PLN'}),
+       h(F.ShoppingItem, {name:'Turkey mince', qty:'600 g', packages:'2 \u00d7 300 g', price:'~22 PLN'})),
+     h(F.SectionHeader, {title:'Dairy', meta:'~26 PLN'}),
+     h('div', {className:'fm-group'},
+       h(F.ShoppingItem, {name:'Skyr, natural', qty:'1.2 kg', packages:'4 \u00d7 300 g cup', price:'~18 PLN'}),
+       h(F.ShoppingItem, {name:'Mozzarella light', qty:'250 g', packages:'2 \u00d7 125 g', checked:true})),
+     h(F.SectionHeader, {title:'Vegetables'}),
+     h('div', {className:'fm-group'}, h(F.ShoppingItem, {name:'Spinach', qty:'300 g', checked:true}), h(F.ShoppingItem, {name:'Peppers', qty:'5 pcs'}))),
+   h(F.TabBar, {key:'t', active:'shopping', accessory:h(F.BottomAccessory, {icon:'cart', title:'4 of 23 in the basket', subtitle:'~164 PLN estimated', progress:4/23})})
+ ]),
+ Ph('25 Economy Mode preview', [
+   h(F.NavBar, {key:'n', back:'Shopping', title:''}),
+   scroll(
+     h('h1', {className:'fm-h2'}, 'We found a simpler week'),
+     h('p', {className:'fm-callout'}, 'Same meals you like, reshuffled so ingredients repeat and packages get used up.'),
+     h(F.LockedPreview, {kicker:'Economy version found', stats:[{label:'Unique items', from:'34', to:'23'},{label:'Est. cost', from:'164 PLN', to:'138 PLN'},{label:'Calories', from:'1,500', to:'1,500'},{label:'Protein', from:'\u2265115 g', to:'\u2265115 g'}], note:'Estimated from your plan, this week. Prices are averages for Poland.', cta:'Unlock Economy Mode'}),
+     h(F.Button, {variant:'quiet', size:'md', block:true}, 'Keep my current week'))
+ ]),
+ Ph('26 Paywall', [
+   h('div', {key:'x', style:{display:'flex', justifyContent:'flex-end', padding:'0 12px'}}, h(F.IconButton, {icon:'close', label:'Close'})),
+   scroll(
+     h('h1', {className:'fm-h2'}, 'Plan every week without counting'),
+     h('div', {className:'fm-stack', style:{gap:8}},
+       h(F.SegmentedControl, {options:['Monthly','Yearly \u00b7 save 33%'], value:'Yearly \u00b7 save 33%'}),
+       h(F.PlanCard, {tier:'standard', name:'Standard', flag:'Most popular', selected:true, promise:'Plan my week for me', price:'199.99 z\u0142', period:'/ year', subprice:'16.67 z\u0142 / month', features:['7-day plans with meal prep','~30 imports a month + PDF','Swaps with automatic rebalancing','Economy Mode']}),
+       h(F.PlanCard, {tier:'premium', name:'Premium', flag:'Coming soon', soon:true, promise:'Optimize food, shopping and cost', price:'329.99 z\u0142', period:'/ year'}))),
+   h('div', {key:'c'}, cta('Start 7-day free trial', null)),
+   h('p', {key:'f', className:'fm-foot', style:{textAlign:'center', padding:'0 20px 8px'}}, 'Then 199.99 z\u0142/year. Cancel anytime in Settings. Restore purchases \u00b7 Terms')
+ ]),
+ Ph('27 Profile (from the avatar)', [
+   h(F.NavBar, {key:'n', large:true, title:'Today', avatar:AV}),
+   scroll(daySummary()),
+   h('div', {key:'s', className:'fm-scrim'},
+     h('div', {className:'fm-sheet is-page'},
+       h('span', {className:'fm-sheet-grab'}),
+       h('div', {className:'fm-nav-row'}, h('span', {className:'fm-nav-spacer'}), h('span', {className:'fm-nav-title'}, 'Profile'), h(F.IconButton, {icon:'check', label:'Done', variant:'glass-prominent'})),
+       scroll(
+         h('div', {style:{display:'flex', alignItems:'center', gap:14}},
+           h(F.Avatar, {initials:'OL', size:60, label:'Change photo'}),
+           h('div', {className:'fm-stack', style:{gap:4}}, h('p', {className:'fm-h3'}, 'Ola'), h(F.Badge, {tone:'basil', icon:'check'}, 'Standard · renews 24 Sep 2027'))),
+         h('div', {style:{display:'grid', gridTemplateColumns:'1fr 1fr', gap:8}},
+           h(F.StatTile, {value:'3.2', unit:'kg', label:'Waste avoided', note:'Estimated, this month'}),
+           h(F.StatTile, {value:'96', unit:'%', label:'Protein target hit'})),
+         h(F.SectionHeader, {title:'My targets'}),
+         h('div', {className:'fm-group'}, row('Calories & macros', '1,500 · 115 P', 'target'), row('Exclusions', 'Fish, peanuts', 'alert'), row('Meal prep', '2 days', 'repeat')),
+         h(F.SectionHeader, {title:'Account'}),
+         h('div', {className:'fm-group'}, row('Subscription', 'Standard', 'wallet'), row('Export my data', '', 'doc'), row('Delete account', '', 'trash')))))
+ ])
+]);
+</script>
+</body>
+</html>

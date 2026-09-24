@@ -1,0 +1,27 @@
+<!-- @dsCard group="Actions" height=230 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Button — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-stack', style:{padding:16}},
+  h('div', {className:'fm-row'},
+    h(F.Button, {variant:'primary', size:'lg', icon:'plan'}, 'Generate week'),
+    h(F.Button, {variant:'accent', size:'lg', icon:'link'}, 'Import recipe'),
+    h(F.Button, {variant:'premium', size:'lg', icon:'lock'}, 'Optimize with Premium')),
+  h('div', {className:'fm-row'},
+    h(F.Button, {variant:'secondary', size:'sm', icon:'doc'}, 'Recipe'),
+    h(F.Button, {variant:'quiet', size:'sm', icon:'swap'}, 'Swap'),
+    h(F.Button, {variant:'primary', size:'md'}, 'Add to this week'),
+    h(F.Button, {variant:'danger', size:'md', icon:'trash'}, 'Delete account'),
+    h(F.Button, {variant:'primary', size:'md', disabled:true}, 'Continue')),
+  h('div', {className:'fm-row', style:{padding:16, borderRadius:24, background:'linear-gradient(120deg, var(--paprika) 0 30%, var(--macro-carbs) 30% 55%, var(--basil) 55% 80%, var(--macro-fat) 80%)'}},
+    h(F.Button, {variant:'glass', size:'lg', icon:'play'}, 'Cook'),
+    h(F.Button, {variant:'glass-prominent', size:'lg', icon:'check'}, 'Mark as cooked'),
+    h(F.Button, {variant:'glass', size:'md', icon:'swap'}, 'Swap'))));
+</script>
+</body>
+</html>

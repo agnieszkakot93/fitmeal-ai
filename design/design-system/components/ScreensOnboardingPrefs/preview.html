@@ -1,0 +1,79 @@
+<!-- @dsCard group="Screens" height=900 width=1748 page subtitle="Distribution, Exclusions with severity, Preferences, Cooking and budget" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Onboarding 2 — meals, exclusions, preferences</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
+function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
+function scroll(){ return h.apply(null, ['div', {className:'fm-screen-scroll'}].concat([].slice.call(arguments))); }
+function cta(label, extra){ return h('div', {className:'fm-sticky'}, extra || null, h(F.Button, {variant:'primary', size:'lg', block:true}, label)); }
+function q(title, sub){ return h('div', {style:{display:'flex', flexDirection:'column', gap:8, paddingTop:8}}, h('h1', {className:'fm-hxl', style:{fontSize:32, lineHeight:'36px'}}, title), sub ? h('p', {className:'fm-callout'}, sub) : null); }
+function card(){ return h.apply(null, ['div', {style:{background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-lg)', padding:16, display:'flex', flexDirection:'column', gap:12}}].concat([].slice.call(arguments))); }
+function row(label, value, icon){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
+  icon ? h('span', {style:{color:'var(--ink-muted)'}}, h(F.Icon, {name:icon, size:20})) : null,
+  h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)'}}, label),
+  h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value),
+  h('span', {style:{color:'var(--ink-faint)'}}, h(F.Icon, {name:'chevron-right', size:18}))); }
+var AV = h(F.Avatar, {initials:'OL', label:'Profile'});
+var TODAY_MEALS = [
+  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', swappable:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
+  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
+  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]})
+];
+function daySummary(){ return card(
+  h('div', {style:{display:'flex', alignItems:'center', gap:16}},
+    h(F.MacroRing, {value:1497, target:1500, size:112, stroke:10, macros:{protein:{share:.32}, carbs:{share:.35}, fat:{share:.33}}}),
+    h('div', {style:{flex:1, display:'flex', flexDirection:'column', gap:10}},
+      h(F.MacroBar, {macro:'protein', value:125, target:115, mode:'min', compact:true}),
+      h(F.MacroBar, {macro:'carbs', value:150, target:140, compact:true}),
+      h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
+show([
+ Ph('05 Meals & distribution', [
+   h(F.OnboardingProgress, {key:'p', step:5}),
+   scroll(q('How do you eat?'),
+     h('div', {className:'fm-stack', style:{gap:8}}, h('span', {className:'fm-cap'}, 'Meals per day'), h(F.SegmentedControl, {options:['2','3','4','5'], value:'3'})),
+     h('div', {className:'fm-stack', style:{gap:8}}, h('span', {className:'fm-cap'}, 'Biggest meal'),
+       h('div', {className:'fm-row', style:{gap:8}}, h(F.Chip, null, 'Even'), h(F.Chip, {selected:true}, 'Breakfast'), h(F.Chip, null, 'Lunch'), h(F.Chip, null, 'Dinner'))),
+     h(F.DistributionEditor, {kcal:1500, meals:[{name:'Breakfast', pct:37},{name:'Lunch', pct:36},{name:'Dinner', pct:27}]})),
+   h('div', {key:'c'}, cta('Continue'))
+ ]),
+ Ph('07 Exclusions', [
+   h(F.OnboardingProgress, {key:'p', step:7}),
+   scroll(q('Anything you don\u2019t eat?', 'Allergies are never optimized around. They\u2019re removed from every plan and every swap.'),
+     h('div', {className:'fm-stack', style:{gap:8}},
+       h(F.ExclusionRow, {name:'Fish', examples:'salmon, tuna, cod', severity:'dislike'}),
+       h(F.ExclusionRow, {name:'Peanuts', examples:'incl. peanut butter', severity:'allergy'}),
+       h(F.ExclusionRow, {name:'Dairy', examples:'milk, whey, skyr', severity:'intolerance'}),
+       h(F.ExclusionRow, {name:'Shellfish'}))),
+   h('div', {key:'c'}, cta('Continue'))
+ ]),
+ Ph('09 Preferences', [
+   h(F.OnboardingProgress, {key:'p', step:9}),
+   scroll(q('What do you like?', 'Pick any. We\u2019ll rank recipes by these.'),
+     h('div', {className:'fm-stack', style:{gap:8}}, h('span', {className:'fm-cap'}, 'Style'),
+       h('div', {className:'fm-row', style:{gap:8}}, h(F.Chip, {selected:true}, 'High protein'), h(F.Chip, null, 'Vegetarian'), h(F.Chip, null, 'Vegan'), h(F.Chip, {selected:true}, 'Mediterranean'), h(F.Chip, {selected:true}, 'Quick meals'), h(F.Chip, null, 'Low-cost'))),
+     h('div', {className:'fm-stack', style:{gap:8}}, h('span', {className:'fm-cap'}, 'Breakfast'),
+       h(F.SegmentedControl, {options:['Sweet','Savory','Either'], value:'Sweet'})),
+     h('div', {className:'fm-stack', style:{gap:8}}, h('span', {className:'fm-cap'}, 'Equipment'),
+       h('div', {className:'fm-row', style:{gap:8}}, h(F.Chip, {selected:true}, 'Oven'), h(F.Chip, {selected:true}, 'Air fryer'), h(F.Chip, {selected:true}, 'Blender'), h(F.Chip, null, 'Microwave'), h(F.Chip, null, 'Thermomix')))),
+   h('div', {key:'c'}, cta('Continue'))
+ ]),
+ Ph('10\u201311 Cooking & budget', [
+   h(F.OnboardingProgress, {key:'p', step:11}),
+   scroll(q('How do you cook?'),
+     h('div', {className:'fm-stack', style:{gap:8}}, h('span', {className:'fm-cap'}, 'Max cooking time'), h(F.SegmentedControl, {options:['15','30','45','60+'], value:'30'})),
+     h('div', {className:'fm-stack', style:{gap:8}}, h('span', {className:'fm-cap'}, 'Cook once for'), h(F.SegmentedControl, {options:['1 day','2 days','3 days','4 days'], value:'2 days'}),
+       h('p', {className:'fm-foot'}, 'Lunch and dinner are cooked in batches. Shakes stay fresh.')),
+     h('div', {className:'fm-stack', style:{gap:8}}, h('span', {className:'fm-cap'}, 'Budget'),
+       h(F.SelectCard, {icon:'wallet', title:'Economy', description:'Fewer unique items, full packages', selected:true}),
+       h(F.SelectCard, {icon:'box', title:'Standard', description:'Balanced variety and cost'}))),
+   h('div', {key:'c'}, cta('Create my plan'))
+ ])
+]);
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!-- @dsCard group="Navigation" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>NavBar — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {style:{maxWidth:375}},
+  h(F.NavBar, {back:'Plan', title:'Recipe', trailing:[h(F.IconButton, {key:1, icon:'heart', label:'Save'}), h(F.IconButton, {key:2, icon:'more', label:'More'})]}),
+  h(F.NavBar, {large:true, title:'Today', subtitle:'Wednesday, 24 September', avatar:h(F.Avatar, {initials:'OL'})}),
+  h(F.NavBar, {large:true, title:'Shopping', subtitle:'23 items \u00b7 ~164 PLN', trailing:h(F.IconButton, {icon:'more', label:'List options'}), avatar:h(F.Avatar, {initials:'OL', badge:'Subscription renews soon'})})));
+</script>
+</body>
+</html>

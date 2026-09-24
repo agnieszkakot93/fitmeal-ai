@@ -1,0 +1,92 @@
+<!-- @dsCard group="Screens" height=900 width=1748 page subtitle="Add recipe, Import preview with a low-confidence question, Result, I don't have this" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Add and import a recipe</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
+function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
+function scroll(){ return h.apply(null, ['div', {className:'fm-screen-scroll'}].concat([].slice.call(arguments))); }
+function cta(label, extra){ return h('div', {className:'fm-sticky'}, extra || null, h(F.Button, {variant:'primary', size:'lg', block:true}, label)); }
+function q(title, sub){ return h('div', {style:{display:'flex', flexDirection:'column', gap:8, paddingTop:8}}, h('h1', {className:'fm-hxl', style:{fontSize:32, lineHeight:'36px'}}, title), sub ? h('p', {className:'fm-callout'}, sub) : null); }
+function card(){ return h.apply(null, ['div', {style:{background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-lg)', padding:16, display:'flex', flexDirection:'column', gap:12}}].concat([].slice.call(arguments))); }
+function row(label, value, icon){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
+  icon ? h('span', {style:{color:'var(--ink-muted)'}}, h(F.Icon, {name:icon, size:20})) : null,
+  h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)'}}, label),
+  h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value),
+  h('span', {style:{color:'var(--ink-faint)'}}, h(F.Icon, {name:'chevron-right', size:18}))); }
+var AV = h(F.Avatar, {initials:'OL', label:'Profile'});
+var TODAY_MEALS = [
+  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', swappable:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
+  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
+  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]})
+];
+function daySummary(){ return card(
+  h('div', {style:{display:'flex', alignItems:'center', gap:16}},
+    h(F.MacroRing, {value:1497, target:1500, size:112, stroke:10, macros:{protein:{share:.32}, carbs:{share:.35}, fat:{share:.33}}}),
+    h('div', {style:{flex:1, display:'flex', flexDirection:'column', gap:10}},
+      h(F.MacroBar, {macro:'protein', value:125, target:115, mode:'min', compact:true}),
+      h(F.MacroBar, {macro:'carbs', value:150, target:140, compact:true}),
+      h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
+show([
+ Ph('20 Add recipe', [
+   h(F.NavBar, {key:'n', large:true, title:'Add a recipe', subtitle:'From Instagram, TikTok, a blog, a PDF or your notes.'}),
+   scroll(
+     h(F.NumberField, {label:'Paste a link', value:'', placeholder:'https://\u2026'}),
+     h('div', {className:'fm-stack', style:{gap:8}},
+       h(F.SelectCard, {icon:'link', title:'Paste link', description:'Recipe pages, Instagram and TikTok captions', meta:'2 of 3 left'}),
+       h(F.SelectCard, {icon:'doc', title:'Upload PDF', description:'E-books and plans from your dietitian', meta:'1 trial'}),
+       h(F.SelectCard, {icon:'text', title:'Paste text', description:'Copy a recipe from anywhere'}),
+       h(F.SelectCard, {icon:'edit', title:'Enter manually', description:'Type ingredients line by line'})),
+     h('p', {className:'fm-foot'}, 'Tip: in Instagram, tap Share \u2192 FitMeal. Imports stay private to you.')),
+   h(F.TabBar, {key:'t', active:'none'})
+ ]),
+ Ph('21 Import preview', [
+   h(F.NavBar, {key:'n', back:'Cancel', title:'Check ingredients'}),
+   scroll(
+     h('div', {className:'fm-stack', style:{gap:4}}, h('span', {className:'fm-cap'}, 'Recipe detected'), h('h1', {className:'fm-h2'}, 'Viral Cheesy Chicken Wrap'), h('p', {className:'fm-foot'}, 'from instagram.com \u00b7 serves 2 \u00b7 20 min')),
+     h(F.ConfidencePrompt, {raw:'1 cup cheese', question:'Which cheese?', options:['Mozzarella','Cheddar','Gouda','Other']}),
+     h('div', {className:'fm-group'},
+       h(F.IngredientRow, {name:'Chicken breast', amount:'300 g', swappable:false}),
+       h(F.IngredientRow, {name:'Tortilla, wheat', amount:'2 pieces \u00b7 124 g', swappable:false}),
+       h(F.IngredientRow, {name:'Protein powder', amount:'1 scoop \u00b7 30 g?', role:'check', swappable:false}),
+       h(F.IngredientRow, {name:'Sriracha mayo', amount:'2 tbsp \u00b7 28 g', swappable:false}))),
+   h('div', {key:'c'}, cta('Continue', h('p', {className:'fm-foot', style:{textAlign:'center'}}, '2 items need a quick check')))
+ ]),
+ Ph('22 Your version', [
+   h(F.NavBar, {key:'n', back:'Ingredients', title:''}),
+   scroll(
+     h('h1', {className:'fm-h2'}, 'Viral Cheesy Chicken Wrap'),
+     h(F.CompareCard, {original:{kcal:684, protein:31}, yours:{kcal:548, protein:49}, target:'Your lunch: 555 kcal \u00b7 45+ g protein'}),
+     h(F.SectionHeader, {title:'What changed', action:'See all'}),
+     h('div', {className:'fm-group'},
+       h(F.IngredientRow, {name:'Skyr-garlic sauce', amount:'60 g', was:'Sriracha mayo', swappable:false}),
+       h(F.IngredientRow, {name:'Chicken breast', amount:'360 g', was:'300 g', swappable:false}),
+       h(F.IngredientRow, {name:'Mozzarella light', amount:'60 g', was:'100 g', swappable:false})),
+     h('div', {style:{display:'flex', gap:10, padding:12, borderRadius:'var(--radius-md)', background:'var(--basil-soft)', color:'var(--basil-ink)'}},
+       h(F.Icon, {name:'leaf', size:20}), h('p', {style:{margin:0, font:'500 14px/20px var(--font-text)'}}, 'Cook it twice this week to use the whole skyr cup and the rest of your spinach.'))),
+   h('div', {key:'c', className:'fm-sticky'}, h(F.Button, {variant:'primary', size:'lg', block:true}, 'Add to this week'), h(F.Button, {variant:'quiet', size:'md', block:true}, 'Save to my recipes'))
+ ]),
+ Ph('23 I don\u2019t have this', [
+   h(F.NavBar, {key:'n', back:'Recipe', title:''}),
+   h('div', {key:'s', className:'fm-scrim'},
+     h('div', {className:'fm-sheet'},
+       h('span', {className:'fm-sheet-grab'}),
+       h('span', {className:'fm-cap'}, 'Missing'),
+       h('h2', {className:'fm-h2'}, 'Broccoli 200 g'),
+       card(
+         h('span', {className:'fm-cap', style:{color:'var(--basil-ink)'}}, 'Use instead'),
+         h('p', {className:'fm-h3'}, 'Zucchini 220 g'),
+         h(F.Delta, {items:[{value:7, unit:'kcal'},{value:-1, unit:'g', letter:'P'}]}),
+         h('p', {className:'fm-foot'}, 'You have zucchini in your pantry.')),
+       h('p', {className:'fm-foot'}, 'Updates this recipe, Wed + Thu in your plan and your shopping list.'),
+       h(F.Button, {variant:'primary', size:'lg', block:true}, 'Use zucchini'),
+       h(F.Button, {variant:'quiet', size:'md', block:true}, 'See other options')))
+ ])
+]);
+</script>
+</body>
+</html>

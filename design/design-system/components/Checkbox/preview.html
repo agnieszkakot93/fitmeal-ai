@@ -1,0 +1,13 @@
+<!-- @dsCard group="Inputs" height=64 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Checkbox — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-row', style:{padding:16}}, h(F.Checkbox, {label:'Skyr'}), h(F.Checkbox, {checked:true, label:'Chicken'})));
+</script>
+</body>
+</html>

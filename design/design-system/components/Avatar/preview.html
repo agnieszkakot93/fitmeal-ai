@@ -1,0 +1,14 @@
+<!-- @dsCard group="Navigation" height=100 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Avatar — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-row', style:{padding:16, gap:16}},
+  h(F.Avatar, {initials:'OL'}), h(F.Avatar, {initials:'OL', badge:true}), h(F.Avatar), h(F.Avatar, {initials:'OL', size:60})));
+</script>
+</body>
+</html>
