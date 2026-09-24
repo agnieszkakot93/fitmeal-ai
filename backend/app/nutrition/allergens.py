@@ -2,13 +2,29 @@
 
 Allergens follow the 14 declarable allergens of EU Regulation 1169/2011.
 A food's *effective* allergens are its own plus those of everything it is
-derived from (whey → milk), computed transitively.
+derived from (whey → milk), computed transitively. "May contain" (trace)
+declarations are tracked separately from what a food contains.
+
+A user's :class:`Exclusion` pairs a category with a :class:`Severity`, and
+:func:`classify` turns it into a :class:`Verdict` for one ingredient:
+
+============================  =========  ===========
+severity                      contains   may contain
+============================  =========  ===========
+allergy                       excluded   excluded
+intolerance                   excluded   allowed
+intolerance, relaxed by user  penalised  allowed
+dislike / prefer not to eat   penalised  allowed
+============================  =========  ===========
 """
 
 from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
+from dataclasses import dataclass
 from enum import StrEnum
+
+from app.core.text import fold
 
 
 class Allergen(StrEnum):
@@ -43,36 +59,116 @@ class Origin(StrEnum):
 
 
 class ExclusionCategory(StrEnum):
-    """The checklist the user sees in onboarding (PRD §7)."""
+    """The checklist the user sees in onboarding (PRD §7).
 
+    Every EU allergen is its own category, with the same value as its
+    :class:`Allergen`. ``shellfish``, ``meat``, ``dairy`` and ``nuts`` are the
+    broader groups the checklist also shows; ``other`` is a free-text term the
+    user types in (see :class:`Exclusion`).
+    """
+
+    # EU Regulation 1169/2011, Annex II
+    GLUTEN = "gluten"
+    CRUSTACEANS = "crustaceans"
+    EGGS = "eggs"
     FISH = "fish"
+    PEANUTS = "peanuts"
+    SOY = "soy"
+    MILK = "milk"
+    TREE_NUTS = "tree_nuts"
+    CELERY = "celery"
+    MUSTARD = "mustard"
+    SESAME = "sesame"
+    SULPHITES = "sulphites"
+    LUPIN = "lupin"
+    MOLLUSCS = "molluscs"
+    # broader groups
     SHELLFISH = "shellfish"
     MEAT = "meat"
     DAIRY = "dairy"
-    EGGS = "eggs"
-    GLUTEN = "gluten"
-    SOY = "soy"
     NUTS = "nuts"
+    # free text, matched against ingredient names and tags
+    OTHER = "other"
 
 
 EXCLUSION_ALLERGENS: dict[ExclusionCategory, frozenset[Allergen]] = {
-    ExclusionCategory.FISH: frozenset({Allergen.FISH}),
+    **{ExclusionCategory(a.value): frozenset({a}) for a in Allergen},
     ExclusionCategory.SHELLFISH: frozenset({Allergen.CRUSTACEANS, Allergen.MOLLUSCS}),
     ExclusionCategory.MEAT: frozenset(),
     ExclusionCategory.DAIRY: frozenset({Allergen.MILK}),
-    ExclusionCategory.EGGS: frozenset({Allergen.EGGS}),
-    ExclusionCategory.GLUTEN: frozenset({Allergen.GLUTEN}),
-    ExclusionCategory.SOY: frozenset({Allergen.SOY}),
     ExclusionCategory.NUTS: frozenset({Allergen.TREE_NUTS, Allergen.PEANUTS}),
+    ExclusionCategory.OTHER: frozenset(),
 }
 
+# Origins back up the allergen tags: a dairy food missing its "milk" tag is
+# still caught by a milk exclusion.
 EXCLUSION_ORIGINS: dict[ExclusionCategory, frozenset[Origin]] = {
     ExclusionCategory.FISH: frozenset({Origin.FISH}),
     ExclusionCategory.SHELLFISH: frozenset({Origin.SHELLFISH}),
     ExclusionCategory.MEAT: frozenset({Origin.MEAT, Origin.POULTRY}),
+    ExclusionCategory.MILK: frozenset({Origin.DAIRY}),
     ExclusionCategory.DAIRY: frozenset({Origin.DAIRY}),
     ExclusionCategory.EGGS: frozenset({Origin.EGG}),
 }
+
+
+class Severity(StrEnum):
+    """How strongly the user wants to avoid a category (PRD §7)."""
+
+    ALLERGY = "allergy"
+    INTOLERANCE = "intolerance"
+    DISLIKE = "dislike"
+    PREFER_NOT = "prefer_not"
+
+
+class Verdict(StrEnum):
+    """What one exclusion means for one ingredient, from least to most strict."""
+
+    ALLOWED = "allowed"
+    PENALISED = "penalised"  # allowed, but scored down
+    EXCLUDED = "excluded"  # hard constraint: never used
+
+
+_STRICTNESS = {Verdict.ALLOWED: 0, Verdict.PENALISED: 1, Verdict.EXCLUDED: 2}
+
+
+@dataclass(frozen=True, slots=True)
+class Exclusion:
+    """One entry of the user's exclusion list.
+
+    ``term`` is the user-entered text for ``other`` and must be empty for every
+    other category. ``relaxed`` lets the user downgrade an intolerance to
+    "avoid when possible"; allergies can never be relaxed.
+    """
+
+    category: ExclusionCategory
+    severity: Severity
+    term: str | None = None
+    relaxed: bool = False
+
+    def __post_init__(self) -> None:
+        if self.category is ExclusionCategory.OTHER:
+            if self.term is None or not fold(self.term):
+                raise ValueError("an 'other' exclusion needs a non-empty term")
+        elif self.term is not None:
+            raise ValueError(f"only 'other' exclusions take a term, not {self.category!r}")
+        if self.relaxed and self.severity is not Severity.INTOLERANCE:
+            raise ValueError("only an intolerance can be relaxed")
+
+
+@dataclass(frozen=True, slots=True)
+class IngredientAllergens:
+    """What the exclusion check needs to know about one ingredient.
+
+    ``contains`` and ``may_contain`` should be the *effective* sets (see
+    :func:`effective_allergens` and :func:`effective_traces`). ``names`` are the
+    names, aliases and tags a free-text exclusion is matched against.
+    """
+
+    origin: Origin
+    contains: frozenset[Allergen] = frozenset()
+    may_contain: frozenset[Allergen] = frozenset()
+    names: tuple[str, ...] = ()
 
 
 class DerivationCycleError(ValueError):
@@ -117,7 +213,11 @@ def violates_exclusions(
     origin: Origin,
     excluded: Iterable[ExclusionCategory],
 ) -> set[ExclusionCategory]:
-    """Which of the user's excluded categories this food falls into."""
+    """Which of the given categories this food *contains*.
+
+    Ignores severity, traces and free-text ``other`` terms; use
+    :func:`classify` to decide whether a food may be used.
+    """
     food_allergens = set(allergens)
     hits: set[ExclusionCategory] = set()
     for category in excluded:
@@ -126,3 +226,60 @@ def violates_exclusions(
         if origin in EXCLUSION_ORIGINS.get(category, frozenset()):
             hits.add(category)
     return hits
+
+
+def effective_traces(
+    direct: Mapping[str, Iterable[Allergen]],
+    derived_from: Mapping[str, Iterable[str]],
+    contains: Mapping[str, frozenset[Allergen]],
+) -> dict[str, frozenset[Allergen]]:
+    """Transitive "may contain" closure, minus what each food definitely contains.
+
+    ``direct`` maps food key → its own trace declarations and must cover the
+    same keys as the derivation graph; ``contains`` is the result of
+    :func:`effective_allergens`.
+    """
+    closure = effective_allergens(direct, derived_from)
+    return {key: traces - contains.get(key, frozenset()) for key, traces in closure.items()}
+
+
+def _matches_term(term: str, names: Iterable[str]) -> bool:
+    # Substring, not whole-word: for a hard constraint, over-matching ("pea"
+    # also hits "chickpeas") is the safe direction.
+    needle = fold(term)
+    return any(needle in fold(name) for name in names)
+
+
+def _contains(ingredient: IngredientAllergens, exclusion: Exclusion) -> bool:
+    if exclusion.category is ExclusionCategory.OTHER:
+        assert exclusion.term is not None  # enforced by Exclusion.__post_init__
+        return _matches_term(exclusion.term, ingredient.names)
+    return bool(ingredient.contains & EXCLUSION_ALLERGENS[exclusion.category]) or (
+        ingredient.origin in EXCLUSION_ORIGINS.get(exclusion.category, frozenset())
+    )
+
+
+def _traces(ingredient: IngredientAllergens, exclusion: Exclusion) -> bool:
+    return bool(ingredient.may_contain & EXCLUSION_ALLERGENS[exclusion.category])
+
+
+def classify(ingredient: IngredientAllergens, exclusion: Exclusion) -> Verdict:
+    """What one of the user's exclusions means for this ingredient."""
+    if _contains(ingredient, exclusion):
+        if exclusion.severity is Severity.ALLERGY:
+            return Verdict.EXCLUDED
+        if exclusion.severity is Severity.INTOLERANCE and not exclusion.relaxed:
+            return Verdict.EXCLUDED
+        return Verdict.PENALISED
+    if exclusion.severity is Severity.ALLERGY and _traces(ingredient, exclusion):
+        return Verdict.EXCLUDED
+    return Verdict.ALLOWED
+
+
+def classify_all(ingredient: IngredientAllergens, exclusions: Iterable[Exclusion]) -> Verdict:
+    """The strictest verdict across all of the user's exclusions."""
+    return max(
+        (classify(ingredient, e) for e in exclusions),
+        key=_STRICTNESS.__getitem__,
+        default=Verdict.ALLOWED,
+    )

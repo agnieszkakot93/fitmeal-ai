@@ -125,7 +125,7 @@ Estimates (~4 zł/USD):
 | 30-page PDF, Sonnet 5 | ~40k / ~10k | ≈ $0.18 ≈ **0.70 zł** |
 
 - Standard user with ~10 imports and 1 PDF per month: **≈ 1.2 zł/month**, under the PRD target of 3–4 zł.
-- **Import cache:** key by normalized URL (and content hash for text). A viral recipe imported by 500 users costs one LLM call. The per-user personalization is deterministic and free.
+- **Import cache:** key by normalized URL for public links, shared across users: a viral recipe imported by 500 users costs one LLM call. Private text and PDF imports are cached per user only (content hash scoped to the user), never shared. The per-user personalization is deterministic and free.
 - **Quotas** are enforced in Redis per entitlement (Free: 3 links + 1 PDF per month; Standard: ~30; Premium: fair use) with hard daily caps for abuse.
 - **Privacy:** only recipe content goes to the LLM, never the user's profile, allergies or identity.
 
@@ -146,7 +146,7 @@ ios/
     Persistence/                # SwiftData models for offline cache + sync queue
     Domain/                     # plain Swift models, formatters (kcal, g, PLN), entitlements
     Features/
-      Onboarding/               # 11 onboarding screens (Welcome … Meal prep)
+      Onboarding/               # 14 onboarding screens (Welcome … Meal prep)
       Today/
       WeeklyPlan/
       Recipe/                   # recipe detail, "Why did FitMeal change this?"
@@ -258,7 +258,7 @@ Hetzner, Cloudflare and SaaS free tiers change. Check current prices and limits 
 
 - **GDPR:** allergies, intolerances and diet goals are arguably **health data (Art. 9)**. Get explicit consent at onboarding, keep a privacy policy, sign a DPA with every processor (Hetzner, Cloudflare, Anthropic, Sentry, PostHog), host in the EU, and keep PII out of LLM prompts and analytics events.
 - **App Store requirements:** in-app **account deletion**, privacy nutrition labels, Sign in with Apple, restore purchases, and subscription terms on the paywall.
-- **Nutrition safety (PRD §12):** a disclaimer at onboarding. Sensitive-profile flags (pregnancy, eating disorder history, kidney disease, children) show guardrail messaging. Hard floors: no plan below a safe minimum kcal without an explicit warning.
+- **Nutrition safety (PRD §12):** 18+ only, confirmed at onboarding. Sensitive conditions (pregnancy, eating disorders, kidney disease) are not collected; a general health notice tells affected users to consult a professional. Hard floor: targets and planned days below 1200 kcal are refused with an explanation.
 - **Copyright (PRD §8.1):** imports are `private_only`. The app shows its own generated instructions and never the source's photos. Public catalog is blocked until legal review.
 - **API:** JWT access tokens (15 min) + rotating refresh tokens, per-user rate limits in Redis, request size limits (PDF ≤ 20 MB), and URL fetch SSRF protection (block private IP ranges, timeouts, size caps).
 
@@ -293,7 +293,7 @@ Assumes 1 full-time developer (with AI assistance) plus part-time design help, i
 
 | Sprint | Backend | iOS |
 |---|---|---|
-| **S4** (wk 7–8) | Auth (Sign in with Apple → JWT), users/profile API, OpenAPI published | Xcode project, SPM packages, DesignSystem v1, APIClient generation, **onboarding (11 screens)** with Simple/Advanced macro modes |
+| **S4** (wk 7–8) | Auth (Sign in with Apple → JWT), users/profile API, OpenAPI published | Xcode project, SPM packages, DesignSystem v1, APIClient generation, **onboarding (14 screens, incl. 18+ confirmation and Art. 9 consent)** with Simple/Advanced macro modes |
 | **S5** (wk 9–10) | **Planner v1**: filtering, scoring, CP-SAT, meal-prep grouping, portion scaling; plan API | Today + Weekly Plan screens, SwiftData cache, "meal eaten" tracking |
 | **S6** (wk 11–12) | Meal swap + **daily rebalancing**, ingredient swap, "I don't have this", variant persistence, explanations API | Recipe screen, "Why did FitMeal change this?", Recipe Swap, Ingredient Swap flows |
 | **S7** (wk 13–14) | Async import jobs (arq), PDF import (text layer + Sonnet 5 fallback), import cache, quotas | Add Recipe, **Share Extension**, Import Preview with low-confidence clarification prompts |
