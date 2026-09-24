@@ -1,7 +1,7 @@
-<!-- @dsCard group="Screens" height=900 width=1748 page subtitle="Welcome, Goal, Calories, Macros (Advanced)" -->
+<!-- @dsCard group="Screens" height=900 width=2179 page subtitle="Welcome, 18+ confirmation (and the under-18 stop), health-data consent with the health notice, Goal" -->
 <!doctype html>
 <html>
-<head><meta charset="utf-8"><title>Onboarding 1 — goal and targets</title></head>
+<head><meta charset="utf-8"><title>Onboarding 1 — welcome, age, consent, goal</title></head>
 <body>
 <div id="root"></div>
 <script>
@@ -10,19 +10,23 @@ function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(e
 function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
 function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
 function scroll(){ return h.apply(null, ['div', {className:'fm-screen-scroll'}].concat([].slice.call(arguments))); }
-function cta(label, extra){ return h('div', {className:'fm-sticky'}, extra || null, h(F.Button, {variant:'primary', size:'lg', block:true}, label)); }
-function q(title, sub){ return h('div', {style:{display:'flex', flexDirection:'column', gap:8, paddingTop:8}}, h('h1', {className:'fm-hxl', style:{fontSize:32, lineHeight:'36px'}}, title), sub ? h('p', {className:'fm-callout'}, sub) : null); }
+function cta(label, extra, disabled){ return h('div', {className:'fm-sticky'}, extra || null, h(F.Button, {variant:'primary', size:'lg', block:true, disabled:!!disabled}, label)); }
+function q(title, sub){ return h('div', {style:{display:'flex', flexDirection:'column', gap:8, paddingTop:8}}, h('h1', {className:'fm-hxl', style:{fontSize:30, lineHeight:'34px'}}, title), sub ? h('p', {className:'fm-callout'}, sub) : null); }
 function card(){ return h.apply(null, ['div', {style:{background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-lg)', padding:16, display:'flex', flexDirection:'column', gap:12}}].concat([].slice.call(arguments))); }
-function row(label, value, icon){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
-  icon ? h('span', {style:{color:'var(--ink-muted)'}}, h(F.Icon, {name:icon, size:20})) : null,
-  h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)'}}, label),
-  h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value),
+function row(label, value, icon, danger){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
+  icon ? h('span', {style:{color: danger ? 'var(--danger)' : 'var(--ink-muted)'}}, h(F.Icon, {name:icon, size:20})) : null,
+  h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)', color: danger ? 'var(--danger)' : 'var(--ink)'}}, label),
+  value ? h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value) : null,
   h('span', {style:{color:'var(--ink-faint)'}}, h(F.Icon, {name:'chevron-right', size:18}))); }
+function label(t){ return h('span', {className:'fm-cap'}, t); }
+function sheet(){ return h('div', {key:'s', className:'fm-scrim'}, h.apply(null, ['div', {className:'fm-sheet'}, h('span', {className:'fm-sheet-grab'})].concat([].slice.call(arguments)))); }
+function sheetHead(title){ return h('div', {style:{display:'flex', justifyContent:'space-between', alignItems:'center'}}, h('h2', {className:'fm-h2'}, title), h(F.IconButton, {icon:'close', label:'Close'})); }
 var AV = h(F.Avatar, {initials:'OL', label:'Profile'});
+var PREP = {portion:'1/2', cook:'Wed', eatBy:'Thu'};
 var TODAY_MEALS = [
-  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', swappable:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
-  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
-  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]})
+  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', badges:[{label:'Prepare fresh', icon:'clock'}]}),
+  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, status:'cooked', prep:PREP}),
+  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, prep:PREP})
 ];
 function daySummary(){ return card(
   h('div', {style:{display:'flex', alignItems:'center', gap:16}},
@@ -31,6 +35,7 @@ function daySummary(){ return card(
       h(F.MacroBar, {macro:'protein', value:125, target:115, mode:'min', compact:true}),
       h(F.MacroBar, {macro:'carbs', value:150, target:140, compact:true}),
       h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
+var UP_NEXT = h(F.BottomAccessory, {icon:'clock', title:'Up next · Dinner 19:00', subtitle:'Turkey Pasta Bake · meal prep 1/2', action:'Eat'});
 show([
  Ph('01 Welcome', [
    h('div', {key:'a', style:{flex:1, display:'flex', flexDirection:'column', justifyContent:'center', gap:20, padding:'0 20px'}},
@@ -41,35 +46,43 @@ show([
    h('div', {key:'b', className:'fm-sticky'},
      h(F.Button, {variant:'primary', size:'lg', block:true}, 'Get started'),
      h(F.Button, {variant:'quiet', size:'md', block:true}, 'I already have an account'),
-     h('p', {className:'fm-foot', style:{textAlign:'center'}}, 'Not medical advice. Pregnant, managing a condition or recovering from an eating disorder? Talk to a dietitian first.'))
+     h('p', {className:'fm-foot', style:{textAlign:'center'}}, 'No account needed to set up your plan.'))
  ]),
- Ph('02 Goal', [
-   h(F.OnboardingProgress, {key:'p', step:1}),
-   scroll(q('What\u2019s your goal?', 'We\u2019ll suggest numbers. You can change every one of them.'),
+ Ph('02 Age confirmation', [
+   h(F.OnboardingProgress, {key:'p', step:2}),
+   scroll(q('Are you 18 or older?', 'FitMeal is designed for adults. We don’t ask for or store your date of birth.')),
+   h('div', {key:'c', className:'fm-sticky'},
+     h(F.Button, {variant:'primary', size:'lg', block:true}, 'I’m 18 or older'),
+     h(F.Button, {variant:'secondary', size:'lg', block:true}, 'I’m under 18'))
+ ]),
+ Ph('02b Under 18', [
+   h('div', {key:'a', style:{flex:1, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'flex-start', gap:16, padding:'0 24px'}},
+     h('span', {style:{display:'grid', placeItems:'center', width:56, height:56, borderRadius:999, background:'var(--basil-soft)', color:'var(--basil-ink)'}}, h(F.Icon, {name:'shield', size:28})),
+     h('h1', {className:'fm-h2'}, 'FitMeal is for adults'),
+     h('p', {className:'fm-body'}, 'Nutrition needs change a lot while you’re still growing, so FitMeal’s plans aren’t made for people under 18.'),
+     h('p', {className:'fm-body'}, 'A doctor, school nurse or dietitian can help you plan meals that fit you.')),
+   h('div', {key:'c', className:'fm-sticky'}, h(F.Button, {variant:'secondary', size:'lg', block:true, icon:'chevron-left'}, 'Go back'))
+ ]),
+ Ph('03 Consent & health notice', [
+   h(F.OnboardingProgress, {key:'p', step:3}),
+   scroll(q('Your health data'),
+     card(
+       h('p', {className:'fm-body', style:{fontSize:15, lineHeight:'21px'}}, 'To build your plans, FitMeal processes health-related data: allergies, intolerances, goals and (if you add it) body data.'),
+       h('p', {className:'fm-foot'}, 'Stored in the EU. Never sent to AI, never in analytics. You can withdraw consent in Profile at any time.'),
+       h('div', {style:{display:'flex', gap:12, alignItems:'flex-start', paddingTop:4, borderTop:'1px solid var(--line)'}},
+         h('span', {style:{paddingTop:12}}, h(F.Checkbox, {label:'I agree to health-data processing'})),
+         h('p', {style:{margin:'12px 0 0', font:'500 15px/21px var(--font-text)'}}, 'I agree that FitMeal processes my health data to build my plans. ', h('a', {href:'#', style:{color:'var(--basil)', fontWeight:650}}, 'Privacy policy')))),
+     h(F.Notice, {tone:'offline', icon:'info', title:'Not medical advice', body:'If you’re pregnant or breastfeeding, have or have had an eating disorder, have kidney disease, diabetes or another condition, or follow a prescribed diet, talk to a doctor or dietitian first. We don’t ask about any of this.'})),
+   h('div', {key:'c'}, cta('Continue', null, true))
+ ]),
+ Ph('04 Goal', [
+   h(F.OnboardingProgress, {key:'p', step:4}),
+   scroll(q('What’s your goal?', 'We’ll suggest numbers. You can change every one of them.'),
      h('div', {className:'fm-stack', style:{gap:8}},
-       h(F.SelectCard, {icon:'flame', title:'Lose fat', description:'About 400\u2013500 kcal under maintenance', selected:true}),
+       h(F.SelectCard, {icon:'flame', title:'Lose fat', description:'About 400–500 kcal under maintenance', selected:true}),
        h(F.SelectCard, {icon:'target', title:'Maintain', description:'Eat at maintenance, keep protein high'}),
        h(F.SelectCard, {icon:'plus', title:'Build muscle', description:'A small surplus with a protein minimum'}),
        h(F.SelectCard, {icon:'edit', title:'Custom target', description:'Type your own calories and macros'}))),
-   h('div', {key:'c'}, cta('Continue'))
- ]),
- Ph('03 Calories', [
-   h(F.OnboardingProgress, {key:'p', step:2}),
-   scroll(q('How many calories a day?', 'Suggested for fat loss. Type your own if you have a number from a dietitian or coach.'),
-     h(F.NumberField, {large:true, value:'1500', unit:'kcal'}),
-     h('div', {style:{display:'flex', gap:10, padding:12, borderRadius:'var(--radius-md)', background:'var(--surface-sunken)'}},
-       h('span', {style:{color:'var(--ink-muted)'}}, h(F.Icon, {name:'info', size:20})),
-       h('p', {className:'fm-foot', style:{color:'var(--ink)'}}, 'Below 1,200 kcal we\u2019ll ask you to confirm. FitMeal never builds a plan under a safe minimum without telling you.'))),
-   h('div', {key:'c'}, cta('Continue'))
- ]),
- Ph('04 Macros \u00b7 Advanced', [
-   h(F.OnboardingProgress, {key:'p', step:3}),
-   scroll(q('Set your macros'),
-     h(F.SegmentedControl, {options:['Simple','Advanced'], value:'Advanced', label:'Macro mode'}),
-     h('div', {className:'fm-stack'},
-       h(F.NumberField, {label:'Protein', value:'115', unit:'g minimum', hint:'Hit at least this. More is fine.'}),
-       h('div', {style:{display:'flex', gap:12}}, h(F.NumberField, {label:'Fat', value:'50', unit:'g'}), h(F.NumberField, {label:'Carbs', value:'140', unit:'g'}))),
-     card(h('span', {className:'fm-cap'}, 'Adds up to'), h(F.MacroLine, {kcal:1470, protein:115, carbs:140, fat:50, size:'lg'}), h('p', {className:'fm-foot'}, '30 kcal under your target \u2014 we\u2019ll fill it with carbs.'))),
    h('div', {key:'c'}, cta('Continue'))
  ])
 ]);

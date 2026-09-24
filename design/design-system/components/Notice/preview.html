@@ -1,0 +1,17 @@
+<!-- @dsCard group="Status" height=560 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Notice — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:360, gap:10}},
+  h(F.Notice, {tone:'danger', title:'Contains peanuts (peanut butter)', body:'Peanuts are your allergy. Swap or remove it to plan this recipe.', actions:[{label:'Swap peanut butter', icon:'swap'}, {label:'Remove it'}]}),
+  h(F.Notice, {tone:'warning', title:'We couldn\u2019t build a 7-day plan', body:'Too few breakfasts match your exclusions and the 15-minute limit.', actions:[{label:'Allow 30 min breakfasts'}, {label:'Plan 3 days'}]}),
+  h(F.Notice, {tone:'info', title:'Plan ready, with 1 goal relaxed', items:['Ingredient reuse: 29 unique items instead of your usual ~24']}),
+  h(F.Notice, {tone:'offline', title:'You\u2019re offline', body:'Swaps need a connection. Your plan, recipes and shopping list still work.'})));
+</script>
+</body>
+</html>

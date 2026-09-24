@@ -1,0 +1,15 @@
+<!-- @dsCard group="Meals" height=540 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>RebalanceProposal — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:360, gap:12}},
+  h(F.RebalanceProposal, {title:'Your day is 90 kcal over', body:'Rebalance the meals you haven\u2019t eaten yet?', adjustments:[{meal:'Dinner', portion:'\u221210%', kcal:'\u221245 kcal'},{meal:'Snack', portion:'\u221215%', kcal:'\u221225 kcal'}], locked:[{meal:'Breakfast', reason:'eaten'}], before:{kcal:1590, protein:129}, after:{kcal:1520, protein:125}}),
+  h(F.RebalanceProposal, {unreachable:true, title:'Today will be about 140 kcal over', body:'Even \u221220% on dinner can\u2019t bring the day back to your target.', before:{kcal:1760, protein:131}, after:{kcal:1638, protein:123}})));
+</script>
+</body>
+</html>

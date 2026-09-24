@@ -1,4 +1,4 @@
-<!-- @dsCard group="Recipes" height=220 -->
+<!-- @dsCard group="Recipes" height=420 -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>CompareCard — preview</title></head>
@@ -7,7 +7,9 @@
 <script>
 var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
-root(h('div', {style:{padding:16, maxWidth:360}}, h(F.CompareCard, {original:{kcal:684, protein:31}, yours:{kcal:518, protein:48}, target:'Your lunch target: 520 kcal · 45+ g protein'})));
+root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:360}},
+  h(F.CompareCard, {original:{kcal:612, protein:29}, sourceKcal:540, yours:{kcal:548, protein:49}, target:'Your lunch: 555 kcal \u00b7 45+ g protein'}),
+  h(F.CompareCard, {missed:'Protein 41 g \u2014 4 g under your 45 g minimum', original:{kcal:690, protein:22}, yours:{kcal:552, protein:41}})));
 </script>
 </body>
 </html>

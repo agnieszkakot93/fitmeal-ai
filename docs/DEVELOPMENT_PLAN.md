@@ -160,7 +160,7 @@ ios/
 | Concern | Choice |
 |---|---|
 | State | `@Observable` view models per feature + a small dependency container (protocols for API, storage, store). No TCA. The app is mostly screens over server state, so extra framework weight doesn't pay off. |
-| Navigation | `NavigationStack` with typed routes per tab; tabs: Today · Plan · Add · Shopping · Profile |
+| Navigation | `NavigationStack` with typed routes per tab; tabs: Today · Plan · Shopping in a floating Liquid Glass tab bar, with Add as a separate round button beside it (`Tab(role: .search)`-style) and Profile opened as a sheet from the avatar on each tab root (see `design/design-system/`) |
 | Networking | `swift-openapi-generator` client from FastAPI's `openapi.json`, so the API contract is compile-checked |
 | Offline | SwiftData cache of the active plan, saved recipes and shopping list. Shopping-list checkmarks and "meal eaten" events queue offline and sync later. Plan generation and swaps need network in MVP. |
 | Auth | `AuthenticationServices` (Sign in with Apple) → backend → access + refresh JWT in Keychain |

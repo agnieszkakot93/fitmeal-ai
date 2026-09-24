@@ -1,4 +1,4 @@
-<!-- @dsCard group="Meals" height=250 -->
+<!-- @dsCard group="Meals" height=270 -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>MealCard — preview</title></head>
@@ -8,8 +8,9 @@
 var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 root(h('div', {className:'fm-row', style:{padding:16, alignItems:'stretch'}},
-  h('div', {style:{width:340}}, h(F.MealCard, {slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep · 1/2', tone:'paprika', icon:'repeat'}]})),
-  h('div', {style:{width:340}}, h(F.MealCard, {slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, status:'eaten', swappable:false, badges:[{label:'Prepare fresh', icon:'clock'}]}))));
+  h('div', {style:{width:340}}, h(F.MealCard, {slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, status:'cooked', prep:{portion:'1/2', cook:'Wed', eatBy:'Thu'}})),
+  h('div', {style:{width:340}}, h(F.MealCard, {slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, status:'eaten', badges:[{label:'Prepare fresh', icon:'clock'}]})),
+  h('div', {style:{width:340}}, h(F.MealCard, {slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, status:'skipped'}))));
 </script>
 </body>
 </html>

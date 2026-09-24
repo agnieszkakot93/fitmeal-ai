@@ -1,4 +1,4 @@
-<!-- @dsCard group="Recipes" height=220 -->
+<!-- @dsCard group="Recipes" height=270 -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>ChangeItem — preview</title></head>
@@ -7,10 +7,10 @@
 <script>
 var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
-root(h('ul', {className:'fm-changes', style:{padding:16, maxWidth:360}},
+root(h('ul', {className:'fm-changes', style:{padding:16, maxWidth:380}},
   h(F.ChangeItem, {what:'Reduced oil by 8 g', effect:'saves 72 kcal', icon:'minus'}),
   h(F.ChangeItem, {what:'Increased chicken by 40 g', effect:'adds 9 g protein', icon:'plus'}),
-  h(F.ChangeItem, {what:'Replaced cream with skyr', effect:'saves 96 kcal · adds 8 g protein', icon:'swap'})));
+  h(F.ChangeItem, {what:'Replaced cream with skyr', effect:'saves 96 kcal \u00b7 adds 8 g protein', icon:'swap', rejected:true})));
 </script>
 </body>
 </html>

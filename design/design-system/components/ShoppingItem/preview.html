@@ -1,4 +1,4 @@
-<!-- @dsCard group="Shopping" height=200 -->
+<!-- @dsCard group="Shopping" height=220 -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>ShoppingItem — preview</title></head>
@@ -8,8 +8,8 @@
 var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 root(h('div', {className:'fm-group', style:{margin:16, maxWidth:360}},
-  h(F.ShoppingItem, {name:'Skyr, natural', qty:'1.2 kg', packages:'4 × 300 g cup', price:'~18 PLN'}),
-  h(F.ShoppingItem, {name:'Chicken breast', qty:'1 kg', packages:'2 × 500 g', pantry:'350 g at home', price:'~24 PLN'}),
+  h(F.ShoppingItem, {name:'Skyr, natural', qty:'1.2 kg', packages:'4 \u00d7 300 g cup'}),
+  h(F.ShoppingItem, {name:'Chicken breast', qty:'1.2 kg', packages:'3 \u00d7 400 g', checked:true, extra:'200 g'}),
   h(F.ShoppingItem, {name:'Spinach', qty:'300 g', checked:true})));
 </script>
 </body>

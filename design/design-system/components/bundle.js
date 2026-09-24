@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"FitMeal","components":[{"name":"Icon"},{"name":"Button"},{"name":"IconButton"},{"name":"Chip"},{"name":"SegmentedControl"},{"name":"SelectCard"},{"name":"Toggle"},{"name":"Checkbox"},{"name":"NumberField"},{"name":"ExclusionRow"},{"name":"DistributionEditor"},{"name":"MacroRing"},{"name":"MacroBar"},{"name":"MacroLine"},{"name":"Delta"},{"name":"Badge"},{"name":"MealCard"},{"name":"DayStrip"},{"name":"RebalanceBanner"},{"name":"IngredientRow"},{"name":"SwapOption"},{"name":"ChangeItem"},{"name":"CompareCard"},{"name":"ConfidencePrompt"},{"name":"ShoppingItem"},{"name":"StatTile"},{"name":"PlanCard"},{"name":"LockedPreview"},{"name":"SectionHeader"},{"name":"NavBar"},{"name":"Avatar"},{"name":"OnboardingProgress"},{"name":"TabBar"},{"name":"BottomAccessory"},{"name":"RecipeHero"},{"name":"PhoneFrame"}]} */
+/* @ds-bundle: {"format":4,"namespace":"FitMeal","components":[{"name":"Icon"},{"name":"Button"},{"name":"IconButton"},{"name":"Chip"},{"name":"SegmentedControl"},{"name":"SelectCard"},{"name":"Toggle"},{"name":"Checkbox"},{"name":"NumberField"},{"name":"ExclusionRow"},{"name":"DistributionEditor"},{"name":"MacroRing"},{"name":"MacroBar"},{"name":"MacroLine"},{"name":"Delta"},{"name":"Badge"},{"name":"Notice"},{"name":"MealCard"},{"name":"DayStrip"},{"name":"RebalanceProposal"},{"name":"IngredientRow"},{"name":"SwapOption"},{"name":"ChangeItem"},{"name":"CompareCard"},{"name":"ConfidencePrompt"},{"name":"ShoppingItem"},{"name":"StatTile"},{"name":"PlanCard"},{"name":"LockedPreview"},{"name":"SectionHeader"},{"name":"NavBar"},{"name":"Avatar"},{"name":"OnboardingProgress"},{"name":"TabBar"},{"name":"BottomAccessory"},{"name":"RecipeHero"},{"name":"PhoneFrame"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
@@ -55,7 +55,9 @@
     more: 'M6 12h.01M12 12h.01M18 12h.01',
     settings: 'M12 9a3 3 0 110 6 3 3 0 010-6zM12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1',
     arrow: 'M5 12h14M13 6l6 6-6 6',
-    play: 'M8 5.5v13l10.5-6.5z'
+    play: 'M8 5.5v13l10.5-6.5z',
+    'wifi-off': 'M3 3l18 18M8.5 16.5a5 5 0 017 0M5 12.9a10 10 0 015.2-2.8M16.8 10.4A10 10 0 0119 12.9M2 8.8a15 15 0 014.4-2.7M11 5.1A15 15 0 0122 8.8M12 19.5h.01',
+    shield: 'M12 3l7 3v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z'
   };
   function Icon(p) {
     var size = p.size || 22;
@@ -180,6 +182,7 @@
   function ExclusionRow(p) {
     var ctl = useState(p.severity || null);
     var sev = p.onChange ? p.severity : ctl[0];
+    var rl = useState(!!p.relaxed);
     function set(v) { var nv = v === sev ? null : v; if (p.onChange) p.onChange(nv); else ctl[1](nv); }
     return h('div', { className: cx('fm-excl', sev && 'is-set', p.className) },
       h('div', { className: 'fm-excl-head' },
@@ -192,7 +195,14 @@
             key: s.id, type: 'button', role: 'radio', 'aria-checked': on,
             className: cx('fm-excl-tier', 'fm-tier-' + s.id, on && 'is-selected'), onClick: function () { set(s.id); }
           }, s.id === 'allergy' && on && h(Icon, { name: 'alert', size: 14 }), s.label);
-        })));
+        })),
+      sev === 'allergy' && h('p', { className: 'fm-excl-note is-allergy' }, h(Icon, { name: 'shield', size: 14, weight: 2 }),
+        'Never planned or suggested \u2014 including \u201cmay contain\u201d traces.'),
+      sev === 'intolerance' && h('div', { className: 'fm-excl-relax' },
+        h(Checkbox, { checked: rl[0], onChange: function (v) { rl[1](v); }, label: 'Avoid when possible' }),
+        h('span', null, rl[0]
+          ? h(React.Fragment, null, h('b', null, 'Avoid when possible. '), 'Used only when nothing else fits, and always labelled.')
+          : h(React.Fragment, null, h('b', null, 'Never planned. '), 'Traces are OK. Tick to allow it when nothing else fits.'))));
   }
 
   function DistributionEditor(p) {
@@ -303,24 +313,45 @@
       p.icon && h(Icon, { name: p.icon, size: 13, weight: 2 }), p.children);
   }
 
+  var NOTICE_ICONS = { danger: 'alert', warning: 'alert', info: 'info', offline: 'wifi-off' };
+  function Notice(p) {
+    var tone = p.tone || 'info';
+    return h('section', { className: cx('fm-notice', 'is-' + tone, p.className), role: tone === 'danger' ? 'alert' : 'status' },
+      h('div', { className: 'fm-notice-head' },
+        h('span', { className: 'fm-notice-icon' }, h(Icon, { name: p.icon || NOTICE_ICONS[tone], size: 18, weight: 2 })),
+        h('div', { className: 'fm-notice-text' },
+          p.title && h('p', { className: 'fm-notice-title' }, p.title),
+          p.body && h('p', { className: 'fm-notice-body' }, p.body))),
+      p.items && h('ul', { className: 'fm-notice-items' }, p.items.map(function (it, i) { return h('li', { key: i }, it); })),
+      p.actions && h('div', { className: 'fm-notice-actions' }, p.actions.map(function (a, i) {
+        return h(Button, { key: i, variant: i === 0 ? 'primary' : 'quiet', size: 'sm', icon: a.icon }, a.label || a);
+      })));
+  }
+
   /* ---------- Meals ---------- */
   function MealCard(p) {
     var status = p.status || 'planned';
-    return h('article', { className: cx('fm-meal', status === 'eaten' && 'is-eaten', p.className) },
+    var locked = status === 'eaten' || status === 'skipped';
+    var badges = (p.badges || []).slice();
+    if (p.prep) badges.unshift({ label: 'Meal prep ' + p.prep.portion + ' \u00b7 cook ' + p.prep.cook + ' \u00b7 eat by ' + p.prep.eatBy, tone: 'paprika', icon: 'repeat' });
+    if (status === 'cooked') badges.unshift({ label: 'Cooked', tone: 'basil', icon: 'flame' });
+    var pill = status === 'eaten' ? { cls: 'is-on', icon: 'lock', text: 'Eaten', label: 'Eaten. Locked: swaps and rebalances won\u2019t change it' }
+      : status === 'skipped' ? { cls: 'is-skipped', icon: 'lock', text: 'Skipped', label: 'Skipped. Locked: swaps and rebalances won\u2019t change it' }
+      : { cls: '', icon: 'check', text: 'Eat', label: 'Mark as eaten' };
+    return h('article', { className: cx('fm-meal', locked && 'is-locked', 'is-' + status, p.className) },
       h('div', { className: 'fm-meal-top' },
-        h('span', { className: 'fm-meal-slot' }, p.slot, p.time && h('span', { className: 'fm-meal-time' }, ' · ' + p.time)),
+        h('span', { className: 'fm-meal-slot' }, p.slot, p.time && h('span', { className: 'fm-meal-time' }, ' \u00b7 ' + p.time)),
         p.onToggleEaten !== false && h('button', {
-          type: 'button', className: cx('fm-meal-eat', status === 'eaten' && 'is-on'),
-          'aria-pressed': status === 'eaten', 'aria-label': status === 'eaten' ? 'Eaten' : 'Mark as eaten'
-        }, h(Icon, { name: 'check', size: 16, weight: 2.5 }), status === 'eaten' ? 'Eaten' : 'Eat')),
+          type: 'button', className: cx('fm-meal-eat', pill.cls), 'aria-pressed': status === 'eaten', 'aria-label': pill.label
+        }, h(Icon, { name: pill.icon, size: 15, weight: 2.25 }), pill.text)),
       h('h3', { className: 'fm-meal-title' }, p.title),
       h(MacroLine, { kcal: p.kcal, protein: p.protein, carbs: p.carbs, fat: p.fat }),
-      (p.badges && p.badges.length) ? h('div', { className: 'fm-meal-badges' }, p.badges.map(function (b, i) {
+      badges.length ? h('div', { className: 'fm-meal-badges' }, badges.map(function (b, i) {
         return h(Badge, { key: i, tone: b.tone, icon: b.icon }, b.label);
       })) : null,
       p.actions !== false && h('div', { className: 'fm-meal-actions' },
         h(Button, { variant: 'secondary', size: 'sm', icon: 'doc' }, 'Recipe'),
-        p.swappable !== false && h(Button, { variant: 'quiet', size: 'sm', icon: 'swap' }, 'Swap')));
+        !locked && p.swappable !== false && h(Button, { variant: 'quiet', size: 'sm', icon: 'swap' }, 'Swap')));
   }
 
   function DayStrip(p) {
@@ -335,20 +366,36 @@
       }));
   }
 
-  function RebalanceBanner(p) {
-    return h('section', { className: cx('fm-rebal', p.className), 'aria-live': 'polite' },
+  function RebalanceProposal(p) {
+    var adj = p.adjustments || [];
+    var st = useState(adj.map(function (a) { return a.accepted !== false; }));
+    var unreachable = !!p.unreachable;
+    return h('section', { className: cx('fm-rebal', unreachable && 'is-unreachable', p.className), 'aria-live': 'polite' },
       h('div', { className: 'fm-rebal-head' },
-        h(Icon, { name: 'target', size: 20 }),
+        h(Icon, { name: unreachable ? 'alert' : 'target', size: 20 }),
         h('div', null,
-          h('p', { className: 'fm-rebal-title' }, p.title || 'Day is over target'),
-          h('p', { className: 'fm-rebal-body' }, p.body))),
-      h('div', { className: 'fm-rebal-compare' },
+          h('p', { className: 'fm-rebal-title' }, p.title || 'Rebalance your day?'),
+          p.body && h('p', { className: 'fm-rebal-body' }, p.body))),
+      (adj.length || (p.locked && p.locked.length)) ? h('div', { className: 'fm-rebal-list' },
+        adj.map(function (a, i) {
+          return h('div', { key: 'a' + i, className: cx('fm-rebal-row', !st[0][i] && 'is-off') },
+            h(Checkbox, { checked: st[0][i], label: 'Adjust ' + a.meal, onChange: function (v) { var n = st[0].slice(); n[i] = v; st[1](n); } }),
+            h('span', { className: 'fm-rebal-meal' }, a.meal, h('small', null, ' portion ' + a.portion)),
+            h('span', { className: 'fm-rebal-delta' }, a.kcal));
+        }),
+        (p.locked || []).map(function (l, i) {
+          return h('div', { key: 'l' + i, className: 'fm-rebal-row is-locked' },
+            h('span', { className: 'fm-rebal-lock' }, h(Icon, { name: 'lock', size: 15 })),
+            h('span', { className: 'fm-rebal-meal' }, l.meal, h('small', null, ' ' + l.reason)),
+            h('span', { className: 'fm-rebal-delta' }, 'no change'));
+        })) : null,
+      p.before && h('div', { className: 'fm-rebal-compare' },
         h('div', null, h('span', { className: 'fm-cap' }, 'Now'), h(MacroLine, { kcal: p.before.kcal, protein: p.before.protein })),
         h(Icon, { name: 'arrow', size: 18, className: 'fm-muted' }),
-        h('div', null, h('span', { className: 'fm-cap' }, 'After adjusting'), h(MacroLine, { kcal: p.after.kcal, protein: p.after.protein }))),
-      h('div', { className: 'fm-rebal-actions' },
-        h(Button, { variant: 'primary', size: 'sm' }, p.cta || 'Adjust portion'),
-        h(Button, { variant: 'quiet', size: 'sm' }, 'Keep as is')));
+        h('div', null, h('span', { className: 'fm-cap' }, unreachable ? 'Best possible' : 'With changes'), h(MacroLine, { kcal: p.after.kcal, protein: p.after.protein }))),
+      h('div', { className: 'fm-rebal-actions' }, unreachable
+        ? [h(Button, { key: 1, variant: 'primary', size: 'sm' }, 'Accept anyway'), h(Button, { key: 2, variant: 'quiet', size: 'sm' }, 'Different swap'), h(Button, { key: 3, variant: 'quiet', size: 'sm' }, 'Undo swap')]
+        : [h(Button, { key: 1, variant: 'primary', size: 'sm' }, p.cta || 'Apply changes'), h(Button, { key: 2, variant: 'quiet', size: 'sm' }, 'Keep day as is')]));
   }
 
   /* ---------- Recipes ---------- */
@@ -369,26 +416,30 @@
 
   function SwapOption(p) {
     return h('button', {
-      type: 'button', role: 'radio', 'aria-checked': !!p.selected, disabled: !!p.blocked,
-      className: cx('fm-swapopt', p.selected && 'is-selected', p.blocked && 'is-blocked', p.className)
+      type: 'button', role: 'radio', 'aria-checked': !!p.selected,
+      className: cx('fm-swapopt', p.selected && 'is-selected', p.className)
     },
       h('span', { className: 'fm-swapopt-body' },
         h('span', { className: 'fm-swapopt-title' }, p.title,
           p.amount && h('span', { className: 'fm-swapopt-amt' }, ' ' + p.amount),
           p.best && h(Badge, { tone: 'basil' }, 'Best fit')),
-        p.blocked
-          ? h('span', { className: 'fm-swapopt-blocked' }, h(Icon, { name: 'lock', size: 14 }), p.blocked)
-          : p.delta && h(Delta, { items: p.delta }),
+        p.delta && h(Delta, { items: p.delta }),
         p.note && h('span', { className: 'fm-swapopt-note' }, p.note)),
-      !p.blocked && h('span', { className: 'fm-selectcard-mark' }, p.selected && h(Icon, { name: 'check', size: 14, weight: 2.5 })));
+      h('span', { className: 'fm-selectcard-mark' }, p.selected && h(Icon, { name: 'check', size: 14, weight: 2.5 })));
   }
 
   function ChangeItem(p) {
-    return h('li', { className: cx('fm-change', p.className) },
+    var ctl = useState(!p.rejected);
+    var kept = ctl[0];
+    return h('li', { className: cx('fm-change', !kept && 'is-rejected', p.className) },
       h('span', { className: 'fm-change-icon' }, h(Icon, { name: p.icon || 'edit', size: 16 })),
       h('span', { className: 'fm-change-body' },
         h('span', { className: 'fm-change-what' }, p.what),
-        h('span', { className: 'fm-change-effect' }, p.effect)));
+        h('span', { className: 'fm-change-effect' }, kept ? p.effect : 'Rejected. FitMeal re-solves without it.')),
+      p.decidable !== false && h('button', {
+        type: 'button', className: cx('fm-change-toggle', kept && 'is-on'), 'aria-pressed': kept,
+        'aria-label': (kept ? 'Keep: ' : 'Rejected: ') + p.what, onClick: function () { ctl[1](!kept); }
+      }, kept ? h(React.Fragment, null, h(Icon, { name: 'check', size: 14, weight: 2.5 }), 'Keep') : 'Undo'));
   }
 
   function CompareCard(p) {
@@ -397,15 +448,19 @@
       return h('div', { className: cx('fm-cmp-col', isYours && 'is-yours') },
         h('span', { className: 'fm-cap' }, label),
         h('span', { className: 'fm-cmp-kcal' }, fmt(d.kcal), h('small', null, ' kcal')),
-        h('span', { className: 'fm-cmp-p' }, h('span', { className: 'fm-dot', style: { background: 'var(--macro-protein)' } }), fmt(d.protein) + ' g protein'));
+        h('span', { className: 'fm-cmp-p' }, h('span', { className: 'fm-dot', style: { background: 'var(--macro-protein)' } }), fmt(d.protein) + ' g protein'),
+        !isYours && p.sourceKcal != null && h('span', { className: 'fm-cmp-source' }, 'Source says ' + fmt(p.sourceKcal) + ' kcal'));
     }
     return h('section', { className: cx('fm-cmp', p.className) },
-      p.found !== false && h('p', { className: 'fm-cmp-found' }, h(Icon, { name: 'check', size: 16, weight: 2.5 }), p.foundLabel || 'Optimized version found'),
+      p.missed
+        ? h('p', { className: 'fm-cmp-missed' }, h(Icon, { name: 'alert', size: 16, weight: 2 }), p.missed)
+        : p.found !== false && h('p', { className: 'fm-cmp-found' }, h(Icon, { name: 'check', size: 16, weight: 2.5 }), p.foundLabel || 'Optimized version found'),
       h('div', { className: 'fm-cmp-grid' },
         col(p.originalLabel || 'Original', o, false),
         h('span', { className: 'fm-cmp-arrow' }, h(Icon, { name: 'arrow', size: 20 })),
         col(p.yoursLabel || 'Your version', y, true)),
-      p.target && h('p', { className: 'fm-cmp-target' }, p.target));
+      p.target && h('p', { className: 'fm-cmp-target' }, p.target),
+      p.sourceKcal != null && h('p', { className: 'fm-cmp-target' }, 'FitMeal calculates every number itself. The source\u2019s figure is shown for comparison only.'));
   }
 
   function ConfidencePrompt(p) {
@@ -417,20 +472,22 @@
       h('p', { className: 'fm-conf-q' }, p.question),
       h('div', { className: 'fm-conf-opts' }, (p.options || []).map(function (o) {
         return h(Chip, { key: o, selected: ctl[0] === o, onChange: function () { ctl[1](o); } }, o);
-      })));
+      })),
+      ctl[0] == null && h('p', { className: 'fm-conf-note' }, h(Icon, { name: 'lock', size: 13, weight: 2 }), p.note || 'Until you choose, this recipe can\u2019t be planned.'));
   }
 
   /* ---------- Shopping ---------- */
   function ShoppingItem(p) {
     var ctl = useState(!!p.checked);
     var on = ctl[0];
-    return h('div', { className: cx('fm-shop', on && 'is-done', p.className) },
+    return h('div', { className: cx('fm-shop', on && !p.extra && 'is-done', on && p.extra && 'is-grown', p.className) },
       h(Checkbox, { checked: on, onChange: function (v) { ctl[1](v); }, label: p.name }),
       h('div', { className: 'fm-shop-main' },
         h('span', { className: 'fm-shop-name' }, p.name),
         (p.packages || p.pantry) && h('span', { className: 'fm-shop-meta' },
           p.packages && h('span', null, h(Icon, { name: 'box', size: 13 }), ' ' + p.packages),
-          p.pantry && h('span', { className: 'fm-shop-pantry' }, h(Icon, { name: 'fridge', size: 13 }), ' ' + p.pantry))),
+          p.pantry && h('span', { className: 'fm-shop-pantry' }, h(Icon, { name: 'fridge', size: 13 }), ' ' + p.pantry)),
+        p.extra && h('span', { className: 'fm-shop-extra' }, h(Icon, { name: 'plus', size: 13, weight: 2.25 }), ' ' + p.extra + ' more to buy')),
       h('span', { className: 'fm-shop-qty' }, p.qty, p.price && h('small', null, p.price)));
   }
 
@@ -507,7 +564,7 @@
   }
 
   function OnboardingProgress(p) {
-    var total = p.total || 11;
+    var total = p.total || 14;
     var step = p.step || 1;
     return h('div', { className: cx('fm-onbprog', p.className) },
       h('button', { type: 'button', className: 'fm-glass fm-glassbtn', 'aria-label': 'Back' }, h(Icon, { name: 'chevron-left', size: 22, weight: 2 })),
@@ -588,7 +645,7 @@
     Icon: Icon, Button: Button, IconButton: IconButton, Chip: Chip, SegmentedControl: SegmentedControl,
     SelectCard: SelectCard, Toggle: Toggle, Checkbox: Checkbox, NumberField: NumberField, ExclusionRow: ExclusionRow,
     DistributionEditor: DistributionEditor, MacroRing: MacroRing, MacroBar: MacroBar, MacroLine: MacroLine, Delta: Delta,
-    Badge: Badge, MealCard: MealCard, DayStrip: DayStrip, RebalanceBanner: RebalanceBanner, IngredientRow: IngredientRow,
+    Badge: Badge, Notice: Notice, MealCard: MealCard, DayStrip: DayStrip, RebalanceProposal: RebalanceProposal, IngredientRow: IngredientRow,
     SwapOption: SwapOption, ChangeItem: ChangeItem, CompareCard: CompareCard, ConfidencePrompt: ConfidencePrompt,
     ShoppingItem: ShoppingItem, StatTile: StatTile, PlanCard: PlanCard, LockedPreview: LockedPreview,
     SectionHeader: SectionHeader, NavBar: NavBar, Avatar: Avatar, OnboardingProgress: OnboardingProgress, TabBar: TabBar,

@@ -8,10 +8,11 @@
 var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:360}},
-  h(F.NumberField, {large:true, value:'1500', unit:'kcal/day', hint:'Suggested from your goal — change it anytime.'}),
-  h('div', {className:'fm-row', style:{flexWrap:'nowrap'}},
+  h(F.NumberField, {large:true, value:'1500', unit:'kcal/day', hint:'Suggested from your body data. Change it anytime.'}),
+  h(F.NumberField, {label:'Daily calories', value:'1100', unit:'kcal', error:'FitMeal doesn\u2019t build plans below 1,200 kcal a day. Very low intakes need a doctor or dietitian.'}),
+  h('div', {className:'fm-fieldrow'},
     h(F.NumberField, {label:'Protein min.', value:'115', unit:'g'}),
-    h(F.NumberField, {label:'Weekly budget', value:'80', unit:'PLN', error:'Too low for 7 days'}))));
+    h(F.NumberField, {label:'Weight', value:'68', unit:'kg'}))));
 </script>
 </body>
 </html>

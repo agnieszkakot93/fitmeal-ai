@@ -7,10 +7,11 @@ FitMeal takes a recipe someone actually wants to eat and fits it to their calori
 
 1. **Numbers are the hero.** Kcal and protein are always visible, set in `numeral` / `numeral-xl` with tabular figures. Never hide a number behind a vague label like "healthy".
 2. **Show what changed and why.** Anything FitMeal alters is tinted `paprika-soft` and can be explained with a `ChangeItem` list ("Reduced oil by 8 g — saves 72 kcal").
-3. **Allergies are hard walls.** `danger` belongs only to allergies, destructive actions and errors. A blocked option stays visible with its reason (`SwapOption blocked`), so people learn why.
-4. **The user approves.** Rebalancing, swaps and imports propose a change and wait for a tap (*Adjust dinner −70 kcal*, *Keep as is*). Nothing is applied silently.
+3. **Allergies are hard walls.** `danger` belongs only to allergies, destructive actions and errors. Options that conflict with an allergy or a strict intolerance are never offered. A recipe that contains one gets a blocking `Notice` naming the ingredient and the allergen, and it is never collapsed or hidden.
+4. **Nothing changes until the user confirms.** Transformations, swaps, *I don't have this* and rebalances are proposals. Each change in *Why did FitMeal change this?* and each adjustment in a `RebalanceProposal` can be rejected on its own. Meals marked eaten or skipped are locked.
 5. **Value before the paywall.** Show the real result first (`CompareCard`, `LockedPreview`), then ask for the upgrade.
 6. **Food, not "AI".** Never lead with AI, sparkles or robots. The product is the plan.
+7. **Safe by default.** Adults only (18+). There's a hard floor of 1,200 kcal a day for every target, plan and rebalance. The app makes no medical claims and asks for no medical conditions (see *Safety, privacy and consent*).
 
 ## Content fundamentals
 
@@ -21,12 +22,18 @@ FitMeal takes a recipe someone actually wants to eat and fits it to their calori
 - **Estimates are labelled** as estimates, with their basis: *Estimated from your plan, this week.* Never promise savings ("Save 200 PLN a month").
 - **No medical claims.** Don't use "treat", "cure" or "detox". Sensitive profiles get the disclaimer in `footnote`.
 - **No emoji** in UI copy. The one exception is post-meal feedback, which may use a fixed four-face scale.
+- **Never moralize food or bodies.** Don't call foods "good" or "bad", don't say "cheat meal", and don't body-shame. Say what changed in numbers.
+- **Name:** *FitMeal* is the working title (`docs/branding/NAME_RESEARCH.md`). Keep it set in plain type. No logo or wordmark exists until the Product Owner approves the final name; when that happens, the name, the cover and this book change together.
+- **Languages:** Polish is the primary market and English ships from day one. Every string needs a PL version. Check Polish plural forms (1 posiłek, 2 posiłki, 5 posiłków) and allow about 30% extra length.
 
 Real copy to match:
 
 | Where | Copy |
 | --- | --- |
-| Rebalance | *Your day is 70 kcal over. Make dinner 8% smaller to land back on target.* |
+| Rebalance | *Your day is 90 kcal over. Rebalance the meal you haven't eaten yet?* · *Dinner, portion −16%, −70 kcal* |
+| Calorie floor | *FitMeal doesn't build plans below 1,200 kcal a day. Very low intakes need supervision from a doctor or dietitian.* |
+| Allergen block | *Contains peanuts (peanut butter). Peanuts are your allergy. You can save this recipe, but we can't personalize or plan it until peanut butter is swapped or removed.* |
+| No plan | *We couldn't build a 7-day plan. Too few breakfasts fit your exclusions and the 15-minute limit.* |
 | Import | *Recipe detected · 1 cup cheese — Which cheese?* |
 | Swap | *Amounts are converted by protein, not 1:1* |
 | Paywall | *Economy version found · 34 → 23 unique items · same calories, same protein target* |
@@ -41,7 +48,7 @@ The palette is basil green, paprika and warm paper, with three macro colours. Al
 - **Brand:** `basil` is the primary action, the selected state, success and "on target". Text on a basil fill is `on-basil`, which turns dark in the dark theme. Selected fills use `basil-soft` with `basil-ink` text.
 - **Accent:** `paprika` means *FitMeal changed this* and *Add*. It covers change tints (`paprika-soft` / `paprika-ink`), the Add tab button and the import CTA. Text on a paprika fill is always `on-paprika`, never white. Paprika is never used for errors.
 - **Macros:** `macro-protein` (terracotta), `macro-carbs` (amber) and `macro-fat` (blue), on a `macro-track`. Carbs is the lightest and protein the darkest in light mode. Fat is blue, so no pair relies on a red–green split. A macro colour never appears without its letter or word (P / C / F).
-- **Severity:** `danger` marks ALLERGY, `warning` marks INTOLERANCE and low-confidence imports, and *Don't like* / *Prefer not* stay neutral.
+- **Severity:** `danger` marks ALLERGY and allergen-block notices. `warning` marks INTOLERANCE, low-confidence imports, missed targets and plans that can't be built. *Don't like* and *Prefer not* stay neutral.
 - **Premium:** `premium` on `premium-soft` is for the Premium tier only.
 - **Focus:** `focus-ring`, a solid 2px ring offset 2px, at least 5.8:1 on every surface in both themes.
 
@@ -61,6 +68,26 @@ FitMeal follows Apple's Liquid Glass design language, in its light and clear for
 - **Behaviour:** the tab bar shrinks to the active tab plus Add while scrolling down, and the accessory moves inline (`.tabBarMinimizeBehavior(.onScrollDown)`). Glass elements morph into each other when they appear or disappear (`glassEffectID`). A long-press lifts a card and shows a glass menu.
 - **Accessibility:** with Reduce Transparency, every glass element becomes solid `surface-raised` (built into `bundle.css` via `prefers-reduced-transparency`). With Increase Contrast, add a `line-strong` edge. With Reduce Motion, glass cross-fades instead of morphing.
 
+## Safety, privacy and consent
+
+- **Adults only.** Onboarding step 2 asks *Are you 18 or older?* with two equal buttons. *I'm under 18* ends onboarding on a kind stop screen, and there is no way around it. No date of birth is stored.
+- **Health-data consent (GDPR Art. 9)** has its own screen: a plain explanation, a **separate, unticked** checkbox and a Privacy link. It is never bundled with the terms. *Continue* stays disabled until it's ticked. Consent can be withdrawn in Profile › Privacy & health, which leads to account deletion.
+- **Health notice:** a neutral `Notice` in onboarding says the app is general planning, not medical advice, and names who should talk to a doctor or dietitian first. It stays available in Profile. The app never asks about or stores medical conditions.
+- **1,200 kcal floor:** a refusal, not a warning. `NumberField` shows the error and the reason, *Continue* is disabled, and a suggested value is clamped to 1,200.
+- **Allergens:** the checklist is the 14 EU allergens, diet categories, and free text that must be matched to a food and confirmed. An unmatched entry says it can't be enforced. `ExclusionRow` states what each tier does. *Allergy* also excludes derived ingredients and "may contain" traces. An *Intolerance* can be relaxed to *avoid when possible*. Unclear imported ingredients count as possible allergens until clarified.
+- **Account deletion** says what is deleted and that the App Store subscription must be cancelled with Apple. *Export my data* sits next to it.
+
+## MVP scope in the UI
+
+The MVP ships Free + Standard, with Premium shown as *Coming soon*. Don't design Phase 2 features into MVP screens:
+
+- **No prices:** no PLN on swaps, recipes or the shopping list, and no *estimated saved*. Economy Mode v1 compares unique ingredients at the same calories and protein.
+- **No Pantry Mode:** no "at home" amounts and no *Cook from what I have*.
+- **No waste statistics.**
+- **Plans:** 3, 5 or 7 days (Free is limited to 3). Meal prep is *cook once for* 1–3 days. Budget is a tier (Economy, Standard or Flexible), with no amount.
+
+These components already support the Phase 2 versions (`Delta` with `PLN`, `ShoppingItem` `pantry` / `price`, premium `LockedPreview`), so the screens can switch them on later.
+
 ## Typography
 
 - **Display — Bricolage Grotesque** (700/650): screen titles, meal and recipe names, and every large numeral. It's friendly, a little editorial, and its figures read well big.
@@ -78,10 +105,15 @@ FitMeal follows Apple's Liquid Glass design language, in its light and clear for
 
 ## Layout patterns
 
+- **Onboarding** has 14 steps, each with one question and one sticky primary: welcome, 18+, consent and health notice, goal, body data (optional, *Skip, I'll enter my own*), calories, macros (Simple by default, Advanced opt-in), meals per day, distribution, allergens, diet and other exclusions, preferences, budget, and meal prep with cooking. No account is needed. *Sign in with Apple* is asked when the first plan is generated, as a sheet over the new plan (whether to show the plan first is an open decision in the PRD). Use Apple's own `SignInWithAppleButton` in the app.
 - **Tab roots** (Today, Plan, Shopping) use a `NavBar large` title plus subtitle, the user's `Avatar` at the top right, content scrolling under a floating glass `TabBar` with three tabs, and a separate round Add button that opens Add Recipe. A `BottomAccessory` shows what's next: *Up next · Lunch 13:30* on Today, *Cook today · 2 recipes* on Plan, basket progress on Shopping.
 - **Profile** is not a tab. Tapping the `Avatar` opens it as a page sheet over the current tab, with a glass-prominent check (Done) at the top right. It holds stats, targets (calories, exclusions, meal prep), subscription, data export and account deletion.
-- **Onboarding** uses `OnboardingProgress` (11 steps), one `display-xl` question, options as `SelectCard` / `SegmentedControl` / `Chip`, and one sticky primary *Continue*. Simple mode is the default and Advanced is opt-in.
-- **Decisions** (swap meal, swap ingredient, *I don't have this*) open a floating glass sheet (inset 8px, `radius-sheet`) with ranked `SwapOption`s, each showing its `Delta`, and one primary button naming the result.
+- **Decisions** (swap meal, swap ingredient, *I don't have this*) open a floating glass sheet (inset 8px, `radius-sheet`). It holds ranked `SwapOption`s with their `Delta`, the effect on the day (*Your day after the swap*), and one primary button naming the result, with *Nothing changes until you confirm*.
+- **Rebalance proposal:** after a confirmed swap that leaves the day outside tolerance, a `RebalanceProposal` lists each adjustment (±20% at most) with its own checkbox. Eaten, skipped and earlier meals are shown as locked, and *Keep day as is* is always available. When the target can't be restored, it switches to the unreachable variant.
+- **Meal status:** every `MealCard` on Today and Plan can be marked cooked, eaten or skipped in one tap, including offline. Prepped meals show *cook Wed · eat by Thu*.
+- **States:** *No plan possible* explains the blocker in plain words and lists concrete changes (never relaxing an allergy). A plan built by relaxing a soft goal says which goal. Offline shows what still works and what needs a connection. All three use `Notice`.
+- **Import:** the allergen block sits at the top of Import Preview. Unclear lines open a Clarification prompt that blocks planning until answered. *Your version* shows the source's own nutrition figure for comparison only. A missed target is shown as missed, with options.
+- **Shopping list:** sections follow the backend's store-walk order (vegetables, fruit, meat & fish, dairy & eggs …). Package counts are shown. A checked item that grew shows *+200 g more to buy*.
 - **Recipes** open with an edge-to-edge `RecipeHero` (the macro plate) under a glass `NavBar overlay`, then the name, `MacroLine lg`, badges (time, portions, cost, storage), a paprika *Fitted to your lunch · N changes* link, and ingredient rows with changes tinted. The bottom has a glass *Cook* button and a glass-prominent *Mark as cooked*.
 - **Cooking mode** shows one big step per screen, with a glass toolbar (previous, *Next step*, timers) and the running timer in a `BottomAccessory`.
 - **Motion:** use the standard iOS springs. Totals count up or down over about 250 ms after a rebalance. Glass morphs between states. Respect Reduce Motion.
@@ -110,10 +142,10 @@ The React bundle is `window.FitMeal` (React 18). It is the visual reference for 
 - **Actions:** `Button` (including `glass` / `glass-prominent`), `IconButton` (including `glass`)
 - **Inputs:** `Chip`, `SegmentedControl`, `SelectCard`, `Toggle`, `Checkbox`, `NumberField`, `ExclusionRow`, `DistributionEditor`
 - **Nutrition:** `MacroRing`, `MacroBar`, `MacroLine`, `Delta`
-- **Meals:** `MealCard`, `DayStrip`, `RebalanceBanner`, `StatTile`
+- **Meals:** `MealCard`, `DayStrip`, `RebalanceProposal`, `StatTile`
 - **Recipes:** `RecipeHero`, `IngredientRow`, `SwapOption`, `ChangeItem`, `CompareCard`, `ConfidencePrompt`
 - **Shopping:** `ShoppingItem`
-- **Status:** `Badge`
+- **Status:** `Badge`, `Notice`
 - **Monetization:** `PlanCard`, `LockedPreview`
 - **Navigation:** `SectionHeader`, `NavBar`, `Avatar`, `OnboardingProgress`, `TabBar`, `BottomAccessory`
 - **Layout:** `PhoneFrame`, for showcase pages only
@@ -122,4 +154,14 @@ Helper classes in `bundle.css`: `.fm-glass` (the glass material), `.fm-glass-gro
 
 ## App screens
 
-The **Screens** group lays out the MVP flow from the PRD on iPhone frames: onboarding (Welcome → Goal → Calories → Macros → Meals and distribution → Exclusions → Preferences → Cooking and budget), Create plan, Weekly plan, Today, Swap meal, Rebalance, Recipe, *Why did FitMeal change this?*, Ingredient swap, Add recipe, Import preview, Your version, *I don't have this*, Shopping list, Economy Mode preview, Paywall, Profile (a sheet opened from the avatar), a dark-theme set, and a Liquid Glass page (scroll-minimized tab bar, cooking mode, long-press glass menu). Together they cover all 12 steps of the MVP Definition of Done.
+The **Screens** group lays out the MVP flow of the PRD (after the review decisions) on iPhone frames:
+
+- **Onboarding (01–15):** welcome, 18+ confirmation and the under-18 stop, consent and health notice, goal, body data, suggested calories and the 1,200 kcal floor, macros, meals and distribution, the 14 EU allergens with severity tiers, diet and free-text exclusions, preferences, budget and meal prep, and *Sign in with Apple* to save the first plan.
+- **Plan and Today (16–19):** create plan (3, 5 or 7 days), weekly plan with cook and eat-by days, Today with meal statuses, and swap meal with its effect on the day.
+- **Rebalance and recipe (20–24):** rebalance proposal, the can't-restore case, recipe, *Why did FitMeal change this?* with keep and undo per change, and ingredient swap.
+- **Import (25–30):** add recipe, Import Preview with an allergen block, clarification prompt, your version with source nutrition, target missed, and *I don't have this*.
+- **Plan states (31–33):** no plan possible, a plan with a relaxed goal, and offline.
+- **Shopping, paywall and profile (34–38):** shopping list, Economy Mode v1 preview, paywall, Profile with consent and health notice, and delete account.
+- A dark-theme set and a Liquid Glass page.
+
+Together they cover every step of the MVP Definition of Done.

@@ -1,4 +1,4 @@
-<!-- @dsCard group="Screens" height=900 width=1748 page subtitle="Create plan, Weekly plan with meal prep, Today, Swap meal sheet" -->
+<!-- @dsCard group="Screens" height=900 width=1748 page subtitle="Create plan (3/5/7 days), Weekly plan with cook and eat-by days, Today with meal statuses, Swap meal with its effect on the day" -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Plan and Today</title></head>
@@ -10,19 +10,23 @@ function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(e
 function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
 function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
 function scroll(){ return h.apply(null, ['div', {className:'fm-screen-scroll'}].concat([].slice.call(arguments))); }
-function cta(label, extra){ return h('div', {className:'fm-sticky'}, extra || null, h(F.Button, {variant:'primary', size:'lg', block:true}, label)); }
-function q(title, sub){ return h('div', {style:{display:'flex', flexDirection:'column', gap:8, paddingTop:8}}, h('h1', {className:'fm-hxl', style:{fontSize:32, lineHeight:'36px'}}, title), sub ? h('p', {className:'fm-callout'}, sub) : null); }
+function cta(label, extra, disabled){ return h('div', {className:'fm-sticky'}, extra || null, h(F.Button, {variant:'primary', size:'lg', block:true, disabled:!!disabled}, label)); }
+function q(title, sub){ return h('div', {style:{display:'flex', flexDirection:'column', gap:8, paddingTop:8}}, h('h1', {className:'fm-hxl', style:{fontSize:30, lineHeight:'34px'}}, title), sub ? h('p', {className:'fm-callout'}, sub) : null); }
 function card(){ return h.apply(null, ['div', {style:{background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-lg)', padding:16, display:'flex', flexDirection:'column', gap:12}}].concat([].slice.call(arguments))); }
-function row(label, value, icon){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
-  icon ? h('span', {style:{color:'var(--ink-muted)'}}, h(F.Icon, {name:icon, size:20})) : null,
-  h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)'}}, label),
-  h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value),
+function row(label, value, icon, danger){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
+  icon ? h('span', {style:{color: danger ? 'var(--danger)' : 'var(--ink-muted)'}}, h(F.Icon, {name:icon, size:20})) : null,
+  h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)', color: danger ? 'var(--danger)' : 'var(--ink)'}}, label),
+  value ? h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value) : null,
   h('span', {style:{color:'var(--ink-faint)'}}, h(F.Icon, {name:'chevron-right', size:18}))); }
+function label(t){ return h('span', {className:'fm-cap'}, t); }
+function sheet(){ return h('div', {key:'s', className:'fm-scrim'}, h.apply(null, ['div', {className:'fm-sheet'}, h('span', {className:'fm-sheet-grab'})].concat([].slice.call(arguments)))); }
+function sheetHead(title){ return h('div', {style:{display:'flex', justifyContent:'space-between', alignItems:'center'}}, h('h2', {className:'fm-h2'}, title), h(F.IconButton, {icon:'close', label:'Close'})); }
 var AV = h(F.Avatar, {initials:'OL', label:'Profile'});
+var PREP = {portion:'1/2', cook:'Wed', eatBy:'Thu'};
 var TODAY_MEALS = [
-  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', swappable:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
-  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
-  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]})
+  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', badges:[{label:'Prepare fresh', icon:'clock'}]}),
+  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, status:'cooked', prep:PREP}),
+  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, prep:PREP})
 ];
 function daySummary(){ return card(
   h('div', {style:{display:'flex', alignItems:'center', gap:16}},
@@ -31,47 +35,48 @@ function daySummary(){ return card(
       h(F.MacroBar, {macro:'protein', value:125, target:115, mode:'min', compact:true}),
       h(F.MacroBar, {macro:'carbs', value:150, target:140, compact:true}),
       h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
+var UP_NEXT = h(F.BottomAccessory, {icon:'clock', title:'Up next · Dinner 19:00', subtitle:'Turkey Pasta Bake · meal prep 1/2', action:'Eat'});
 show([
- Ph('12 Create my plan', [
+ Ph('16 Create my plan', [
    h(F.NavBar, {key:'n', back:'Plan', title:'New week'}),
    scroll(
-     h('h1', {className:'fm-h1'}, 'Plan 22\u201328 Sep'),
-     h('div', {className:'fm-group'}, row('Calories', '1,500 kcal', 'flame'), row('Protein', '\u2265 115 g', 'target'), row('Meals', '3 \u00b7 large breakfast', 'today'), row('Meal prep', '2 days', 'repeat'), row('Budget', 'Economy', 'wallet'), row('Cooking', '\u2264 30 min', 'clock'), row('Excluded', 'Fish, peanuts', 'alert')),
-     h('div', null, h(F.Toggle, {label:'Reuse ingredients', checked:true}), h(F.Toggle, {label:'Minimize waste', checked:true}), h(F.Toggle, {label:'Suggest substitutions', checked:true}))),
+     h('h1', {className:'fm-h1'}, 'Plan 22–28 Sep'),
+     h('div', {className:'fm-stack', style:{gap:8}}, label('Plan length'), h(F.SegmentedControl, {options:['3 days','5 days','7 days'], value:'7 days'})),
+     h('div', {className:'fm-group'}, row('Calories', '1,500 kcal', 'flame'), row('Protein', '≥ 115 g', 'target'), row('Meals', '3 · large breakfast', 'today'), row('Meal prep', 'cook once for 2 days', 'repeat'), row('Cooking', '≤ 30 min', 'clock'), row('Excluded', 'Peanuts, milk, fish, pork', 'alert')),
+     h('div', null, h(F.Toggle, {label:'Economy: reuse ingredients', description:'Fewer unique items on your list', checked:true}))),
    h('div', {key:'c'}, cta('Generate week'))
  ]),
- Ph('13 Weekly plan', [
-   h(F.NavBar, {key:'n', large:true, title:'Plan', subtitle:'22\u201328 Sep \u00b7 on target 7 of 7 days', trailing:h(F.IconButton, {icon:'more', label:'Plan options'}), avatar:AV}),
+ Ph('17 Weekly plan', [
+   h(F.NavBar, {key:'n', large:true, title:'Plan', subtitle:'22–28 Sep · on target 7 of 7 days', trailing:h(F.IconButton, {icon:'more', label:'Plan options'}), avatar:AV}),
    h('div', {key:'d', style:{padding:'4px 16px 12px'}}, h(F.DayStrip, {selected:2, days:[{name:'Mon',num:22,state:'done'},{name:'Tue',num:23,state:'done'},{name:'Wed',num:24,state:'prep'},{name:'Thu',num:25},{name:'Fri',num:26,state:'prep'},{name:'Sat',num:27},{name:'Sun',num:28}]})),
    scroll(
      h('div', {style:{display:'flex', gap:10, alignItems:'center', padding:12, borderRadius:'var(--radius-md)', background:'var(--paprika-soft)', color:'var(--paprika-ink)'}},
-       h(F.Icon, {name:'repeat', size:20}), h('p', {style:{margin:0, font:'600 14px/20px var(--font-text)'}}, 'Cook today: lunch and dinner cover Wed + Thu.')),
+       h(F.Icon, {name:'repeat', size:20}), h('p', {style:{margin:0, font:'600 14px/20px var(--font-text)'}}, 'Cook today: lunch and dinner cover Wed + Thu. Eat by Thu.')),
      h(F.MacroLine, {kcal:1497, protein:125, carbs:150, fat:40}),
-     h(F.MealCard, {slot:'Breakfast', title:'Protein Snickers Shake', kcal:520, protein:44, actions:false, onToggleEaten:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
-     h(F.MealCard, {slot:'Lunch', title:'Chicken Teriyaki', kcal:548, protein:49, actions:false, onToggleEaten:false, badges:[{label:'Cook 2 portions', tone:'paprika', icon:'repeat'}]}),
-     h(F.MealCard, {slot:'Dinner', title:'Turkey Pasta Bake', kcal:429, protein:32, actions:false, onToggleEaten:false, badges:[{label:'Cook 2 portions', tone:'paprika', icon:'repeat'}]})),
+     h(F.MealCard, {slot:'Breakfast', title:'Protein Snickers Shake', kcal:520, protein:44, actions:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
+     h(F.MealCard, {slot:'Lunch', title:'Chicken Teriyaki', kcal:548, protein:49, actions:false, prep:{portion:'1/2', cook:'Wed', eatBy:'Thu'}}),
+     h(F.MealCard, {slot:'Dinner', title:'Turkey Pasta Bake', kcal:429, protein:32, actions:false, prep:{portion:'1/2', cook:'Wed', eatBy:'Thu'}})),
    h(F.TabBar, {key:'t', active:'plan', accessory:h(F.BottomAccessory, {icon:'repeat', tone:'paprika', title:'Cook today · 2 recipes', subtitle:'Covers Wed + Thu · about 45 min', action:'Start'})})
  ]),
- Ph('14 Today', [
+ Ph('18 Today', [
    h(F.NavBar, {key:'n', large:true, title:'Today', subtitle:'Wednesday, 24 September', avatar:AV}),
    scroll(daySummary(), h(F.SectionHeader, {title:'Meals', meta:'1 of 3 eaten'}), TODAY_MEALS),
-   h(F.TabBar, {key:'t', active:'today', accessory:h(F.BottomAccessory, {icon:'clock', title:'Up next · Lunch 13:30', subtitle:'Chicken Teriyaki · meal prep 1/2', action:'Eat'})})
+   h(F.TabBar, {key:'t', active:'today', accessory:UP_NEXT})
  ]),
- Ph('15 Swap meal', [
+ Ph('19 Swap meal', [
    h(F.NavBar, {key:'n', large:true, title:'Today', avatar:AV}),
    scroll(daySummary()),
-   h('div', {key:'s', className:'fm-scrim'},
-     h('div', {className:'fm-sheet'},
-       h('span', {className:'fm-sheet-grab'}),
-       h('div', {style:{display:'flex', justifyContent:'space-between', alignItems:'center'}}, h('h2', {className:'fm-h2'}, 'Swap lunch'), h(F.IconButton, {icon:'close', label:'Close'})),
-       h('p', {className:'fm-callout'}, 'Now: Chicken Teriyaki \u00b7 548 kcal \u00b7 49 P'),
-       h('div', {className:'fm-row', style:{gap:8}}, h(F.Chip, {selected:true}, 'Similar macros'), h(F.Chip, null, 'Uses my groceries'), h(F.Chip, null, 'Quicker')),
-       h('div', {className:'fm-stack', style:{gap:8}},
-         h(F.SwapOption, {title:'Creamy Chicken Pasta', best:true, selected:true, delta:[{value:-3, unit:'kcal'},{value:2, unit:'g', letter:'P', tone:'good'}], note:'Uses skyr and spinach already on your list'}),
-         h(F.SwapOption, {title:'Turkey Burrito Bowl', delta:[{value:-17, unit:'kcal'},{value:-3, unit:'g', letter:'P'}], note:'+2 new items'}),
-         h(F.SwapOption, {title:'Chicken Curry', delta:[{value:4, unit:'kcal'},{value:-1, unit:'g', letter:'P'}]})),
-       h(F.Button, {variant:'primary', size:'lg', block:true}, 'Swap for Wed + Thu')))
- ], null)
+   sheet(sheetHead('Swap lunch'),
+     h('p', {className:'fm-callout'}, 'Now: Chicken Teriyaki · 548 kcal · 49 P'),
+     h('div', {className:'fm-row', style:{gap:8}}, h(F.Chip, {selected:true}, 'Similar macros'), h(F.Chip, null, 'Uses my list'), h(F.Chip, null, 'Quicker')),
+     h('div', {className:'fm-stack', style:{gap:8}},
+       h(F.SwapOption, {title:'Turkey Burrito Bowl', best:true, delta:[{value:-17, unit:'kcal'},{value:-3, unit:'g', letter:'P'}], note:'+2 new items'}),
+       h(F.SwapOption, {title:'Chicken Katsu Curry', selected:true, delta:[{value:93, unit:'kcal', tone:'bad'},{value:4, unit:'g', letter:'P', tone:'good'}], note:'Uses spinach already on your list'})),
+     h('div', {style:{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'10px 12px', borderRadius:'var(--radius-md)', background:'var(--warning-soft)'}},
+       h('span', {style:{font:'600 14px/20px var(--font-text)'}}, 'Your day after the swap'), h(F.MacroLine, {kcal:1590, protein:129})),
+     h(F.Button, {variant:'primary', size:'lg', block:true}, 'Swap lunch (Wed + Thu)'),
+     h('p', {className:'fm-foot', style:{textAlign:'center'}}, 'Nothing changes until you confirm.'))
+ ])
 ]);
 </script>
 </body>

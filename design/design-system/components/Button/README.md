@@ -9,6 +9,7 @@ The call to action. Every size is a capsule, following iOS 26. Solid variants si
 - `danger`: outlined, for example *Delete account*.
 - `premium`: an ink fill, for example *Optimize with Premium*.
 - `accent`: a paprika fill, reserved for *Import recipe*.
+- *Sign in with Apple* is not a FitMeal button. The app uses Apple's own `SignInWithAppleButton` (black in light, white in dark), which the previews stand in for with a `premium` button.
 - `glass`: Liquid Glass in `ink`, a floating secondary action.
 - `glass-prominent`: basil-tinted glass, the one floating primary action (SwiftUI `.buttonStyle(.glassProminent)`).
 
