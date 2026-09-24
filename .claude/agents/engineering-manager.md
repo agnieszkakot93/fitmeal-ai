@@ -21,6 +21,7 @@ Read the relevant sections before planning. Don't restate them; cite them (e.g. 
    - `product-designer`: flows, screens, copy (PL + EN), explainability UI, paywall, onboarding.
    - `security-engineer`: auth, GDPR/health data, SSRF, rate limits, secrets, App Store compliance, LLM prompt safety.
    - `qa-engineer`: test plans, property-based tests, golden set, regression checks, verifying acceptance criteria.
+   - `brand-researcher`: brand naming research (concepts, store/domain/trademark/social checks, PL/EN language checks), kept in `docs/branding/NAME_RESEARCH.md`. It reports to you. Treat its findings as dated evidence: anything not marked verified still needs checking before a naming decision.
    Subagents cannot call each other, so write each hand-off as a self-contained brief the main session can pass on: files involved, constraints, and what "done" means.
 3. Guard the plan's constraints and push back when a request breaks them:
    - Modular monolith, one API + one worker (D1). No new services without a reason.
