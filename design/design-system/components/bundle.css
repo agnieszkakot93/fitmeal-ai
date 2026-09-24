@@ -313,9 +313,9 @@ button:focus-visible, input:focus-visible, [role="radio"]:focus-visible { outlin
 .fm-showcase { display: flex; gap: 40px; padding: 32px; align-items: flex-start; background: var(--surface-sunken); min-height: 100vh; box-sizing: border-box; }
 
 /* ---------- Liquid Glass (iOS 26) ---------- */
-.fm-glass { background: var(--glass-fill); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)); backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)); box-shadow: var(--shadow-glass); border: 0; color: var(--ink); }
-.fm-glass.fm-glass-accent { background: var(--glass-tint-paprika); color: var(--on-paprika); }
-.fm-glass.fm-btn-glass-prominent, .fm-glass.fm-iconbtn-glass-prominent { background: var(--glass-tint-basil); color: var(--on-basil); }
+.fm-glass { background: linear-gradient(180deg, var(--glass-sheen), rgba(255,255,255,0) 55%), var(--glass-fill); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)); backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)); box-shadow: var(--shadow-glass); border: 0; color: var(--ink); }
+.fm-glass.fm-glass-accent { background: linear-gradient(180deg, var(--glass-sheen-tint), rgba(255,255,255,0) 60%), var(--glass-tint-paprika); color: var(--on-paprika); }
+.fm-glass.fm-btn-glass-prominent, .fm-glass.fm-iconbtn-glass-prominent { background: linear-gradient(180deg, var(--glass-sheen-tint), rgba(255,255,255,0) 60%), var(--glass-tint-basil); color: var(--on-basil); }
 @media (prefers-reduced-transparency: reduce) {
   .fm-glass { background: var(--surface-raised); -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
@@ -344,8 +344,8 @@ button:focus-visible, input:focus-visible, [role="radio"]:focus-visible { outlin
 .fm-tabbar { flex: 1; display: flex; height: var(--size-tabbar); padding: 4px; border-radius: var(--radius-pill); box-sizing: border-box; }
 .fm-tabbar.is-min { flex: none; width: var(--size-tabbar); }
 .fm-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; border: 0; background: none; border-radius: var(--radius-pill); color: var(--ink); font: 600 10.5px/13px var(--font-text); cursor: pointer; padding: 0; }
-.fm-tab.is-active { background: var(--glass-selected); color: var(--basil); font-weight: 700; }
-.fm-tabbar.is-min .fm-tab.is-active { background: none; }
+.fm-tab.is-active { background: var(--glass-selected); box-shadow: var(--shadow-lens); color: var(--basil); font-weight: 700; }
+.fm-tabbar.is-min .fm-tab.is-active { background: none; box-shadow: none; }
 .fm-tab-add { display: grid; place-items: center; width: var(--size-tabbar); height: var(--size-tabbar); border-radius: var(--radius-pill); cursor: pointer; flex: none; padding: 0; }
 .fm-tabbar-inline { flex: 1; min-width: 0; }
 .fm-tabbar-inline .fm-acc { height: var(--size-tabbar); }
@@ -358,7 +358,7 @@ button:focus-visible, input:focus-visible, [role="radio"]:focus-visible { outlin
 .fm-acc-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .fm-acc-title { font: 650 14px/18px var(--font-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .fm-acc-sub { font: 500 12px/16px var(--font-text); color: var(--ink); opacity: .78; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.fm-acc-action { flex: none; min-height: 36px; padding: 0 14px; border: 0; border-radius: var(--radius-pill); background: var(--glass-tint-basil); color: var(--on-basil); font: 650 14px/18px var(--font-text); cursor: pointer; }
+.fm-acc-action { flex: none; min-height: 36px; padding: 0 14px; border: 0; border-radius: var(--radius-pill); background: linear-gradient(180deg, var(--glass-sheen-tint), rgba(255,255,255,0) 60%), var(--glass-tint-basil); color: var(--on-basil); font: 650 14px/18px var(--font-text); cursor: pointer; }
 .fm-acc-progress { position: absolute; left: 0; bottom: 0; height: 3px; background: var(--paprika); border-radius: var(--radius-pill); }
 
 /* Recipe hero */
@@ -388,7 +388,7 @@ button:focus-visible, input:focus-visible, [role="radio"]:focus-visible { outlin
 .fm-screen-scroll { flex: 1; overflow: hidden; padding: 0 var(--space-5) var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); }
 .fm-screen-scroll > * { flex-shrink: 0; }
 .fm-sticky { padding: var(--space-4) var(--space-5) var(--space-1); background: linear-gradient(to top, var(--surface) 70%, rgba(0,0,0,0)); display: flex; flex-direction: column; gap: var(--space-2); margin-top: -16px; position: relative; z-index: 2; }
-.fm-sheet { margin: auto 8px 8px; border-radius: var(--radius-sheet); background: var(--glass-fill-strong); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)); backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)); box-shadow: var(--shadow-glass); padding: var(--space-2) var(--space-4) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
+.fm-sheet { margin: auto 8px 8px; border-radius: var(--radius-sheet); background: linear-gradient(180deg, var(--glass-sheen), rgba(255,255,255,0) 30%), var(--glass-fill-strong); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)); backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation)); box-shadow: var(--shadow-glass); padding: var(--space-2) var(--space-4) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
 .fm-sheet-grab { align-self: center; width: 36px; height: 5px; border-radius: var(--radius-pill); background: var(--line-strong); }
 .fm-scrim { position: absolute; inset: 0; z-index: 5; background: var(--scrim); display: flex; flex-direction: column; padding-bottom: 14px; }
 .fm-scrim.is-light { background: transparent; }
