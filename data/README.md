@@ -51,3 +51,6 @@ docker compose -f infra/docker-compose.yml run --rm api \
   FDC's "carbohydrate by difference" includes fiber, so the importer subtracts it.
 - Allergens are the EU 14. `derived_from` makes a food inherit its parents'
   allergens (whey protein → skim milk → milk).
+- `may_contain` lists "may contain" / trace declarations (default: none), kept
+  apart from `allergens`. Traces are inherited through `derived_from` too; an
+  allergen a food already contains is not also listed as a trace.

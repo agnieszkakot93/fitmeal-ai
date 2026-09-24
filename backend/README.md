@@ -52,5 +52,5 @@ tests/         unit tests + API/DB tests against real Postgres
 |---|---|
 | `GET /healthz` | DB connectivity check |
 | `GET /v1/foods/search?q=pierś&lang=pl` | Fuzzy ingredient search over PL/EN aliases, diacritics-insensitive |
-| `GET /v1/foods/{slug}` | Ingredient detail: nutrition, allergens (incl. inherited), portions, packages |
+| `GET /v1/foods/{slug}` | Ingredient detail: nutrition, allergens and "may contain" traces (both incl. inherited), portions, packages |
 | `POST /v1/nutrition/calculate` | Ingredient list (`amount` + any unit such as `łyżka`, `szklanka`, `szt`) → grams, totals, per serving. Lines that can't be converted come back together as a 422. |

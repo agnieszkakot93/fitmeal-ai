@@ -5,11 +5,19 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.foods import importer
-from app.foods.curated import load_curated
+from app.foods import importer, repository
+from app.foods.curated import CuratedFile, load_curated
 from app.foods.fdc import load_fdc_dirs
 from app.foods.models import FoodAlias, FoodItem
 from app.main import app
+from app.nutrition.allergens import (
+    Allergen,
+    Exclusion,
+    ExclusionCategory,
+    Severity,
+    Verdict,
+    classify,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 CURATED = ROOT / "data" / "foods" / "curated.yaml"
@@ -77,12 +85,89 @@ async def test_food_detail(imported: importer.ImportReport, client: AsyncClient)
     assert res.status_code == 200
     body = res.json()
     assert body["allergens"] == ["eggs"]
+    assert body["may_contain"] == []
     assert body["portions_g"] == {"piece": 50}
     assert body["source"] == "usda_fdc"
     assert body["source_ref"] == "748967"  # foundation record preferred
     assert "jajko" in body["aliases"]["pl"]
 
     assert (await client.get("/v1/foods/nope")).status_code == 404
+
+
+def _label_food(slug: str, **extra: object) -> dict[str, object]:
+    return {
+        "slug": slug,
+        "name": {"en": slug.title(), "pl": slug},
+        "category": "sweets_baking",
+        "origin": "plant",
+        "culinary_roles": ["sweetener"],
+        "nutrition": {
+            "kcal": 500,
+            "protein_g": 5,
+            "fat_g": 30,
+            "carbs_g": 50,
+            "fiber_g": 5,
+            "source_ref": "test label",
+        },
+        **extra,
+    }
+
+
+@pytest.fixture
+async def traced(db_session: AsyncSession) -> None:
+    curated = CuratedFile.model_validate(
+        {
+            "foods": [
+                _label_food("chocolate", allergens=["milk"], may_contain=["peanuts"]),
+                # its "milk" trace is dropped: it inherits "contains milk"
+                _label_food("choc-bar", derived_from=["chocolate"], may_contain=["milk", "sesame"]),
+                _label_food("sugar"),
+            ]
+        }
+    )
+    report = importer.resolve(curated, None)
+    await importer.apply(db_session, report.resolved)
+    await db_session.commit()
+
+
+async def test_may_contain_round_trips_through_the_db(
+    db_session: AsyncSession, traced: None
+) -> None:
+    items = await repository.get_by_slugs(db_session, ["chocolate", "choc-bar", "sugar"])
+    assert items["chocolate"].may_contain == ["peanuts"]
+    assert items["chocolate"].effective_may_contain == ["peanuts"]
+    assert items["choc-bar"].may_contain == ["milk", "sesame"]
+    assert items["choc-bar"].effective_may_contain == ["peanuts", "sesame"]
+    assert items["choc-bar"].effective_allergens == ["milk"]
+    assert items["sugar"].may_contain == []
+    assert items["sugar"].effective_may_contain == []
+
+
+async def test_stored_traces_reach_the_exclusion_check(
+    db_session: AsyncSession, traced: None
+) -> None:
+    bar = await repository.get_by_slug(db_session, "choc-bar")
+    assert bar is not None
+    food = repository.to_allergens(bar)
+    assert food.contains == {Allergen.MILK}
+    assert food.may_contain == {Allergen.PEANUTS, Allergen.SESAME}
+    assert "Choc-Bar" in food.names
+    peanuts = ExclusionCategory.PEANUTS
+    assert classify(food, Exclusion(peanuts, Severity.ALLERGY)) is Verdict.EXCLUDED
+    assert classify(food, Exclusion(peanuts, Severity.INTOLERANCE)) is Verdict.ALLOWED
+
+
+async def test_food_detail_reports_traces(traced: None, client: AsyncClient) -> None:
+    body = (await client.get("/v1/foods/choc-bar")).json()
+    assert body["allergens"] == ["milk"]
+    assert body["may_contain"] == ["peanuts", "sesame"]
+    assert (await client.get("/v1/foods/sugar")).json()["may_contain"] == []
+
+
+async def test_openapi_documents_may_contain(client: AsyncClient) -> None:
+    detail = (await client.get("/openapi.json")).json()["components"]["schemas"]["FoodDetail"]
+    assert "may_contain" in detail["required"]
+    assert detail["properties"]["may_contain"]["type"] == "array"
 
 
 async def test_calculate_recipe_nutrition(

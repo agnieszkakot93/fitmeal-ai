@@ -6,7 +6,7 @@ import pytest
 from pydantic import ValidationError
 
 from app.foods.curated import CuratedFile, load_curated
-from app.nutrition.allergens import Allergen, Origin, effective_allergens
+from app.nutrition.allergens import Allergen, Origin, effective_allergens, effective_traces
 
 CURATED = Path(__file__).resolve().parents[2] / "data" / "foods" / "curated.yaml"
 
@@ -69,6 +69,52 @@ def test_known_allergens(
     effective: dict[str, frozenset[Allergen]], slug: str, allergen: Allergen
 ) -> None:
     assert allergen in effective[slug]
+
+
+def test_real_file_traces_never_repeat_contained_allergens(
+    curated: CuratedFile, effective: dict[str, frozenset[Allergen]]
+) -> None:
+    traces = effective_traces(
+        {f.slug: f.may_contain for f in curated.foods},
+        {f.slug: f.derived_from for f in curated.foods},
+        effective,
+    )
+    assert all(not (traces[slug] & effective[slug]) for slug in traces)
+
+
+def _food(**extra: object) -> dict[str, object]:
+    return {
+        "slug": "granola",
+        "name": {"en": "Granola", "pl": "Granola"},
+        "category": "grains_pasta",
+        "origin": "plant",
+        "culinary_roles": ["carb_base"],
+        **extra,
+    }
+
+
+def test_may_contain_defaults_to_none() -> None:
+    food = CuratedFile.model_validate({"foods": [_food()]}).foods[0]
+    assert food.may_contain == []
+
+
+def test_may_contain_loads_separately_from_allergens() -> None:
+    raw = _food(allergens=["gluten"], may_contain=["tree_nuts", "peanuts"])
+    food = CuratedFile.model_validate({"foods": [raw]}).foods[0]
+    assert food.allergens == [Allergen.GLUTEN]
+    assert food.may_contain == [Allergen.TREE_NUTS, Allergen.PEANUTS]
+
+
+@pytest.mark.parametrize(
+    "extra",
+    [
+        {"allergens": ["gluten"], "may_contain": ["gluten"]},
+        {"may_contain": ["walnuts"]},
+    ],
+)
+def test_rejects_bad_may_contain(extra: dict[str, object]) -> None:
+    with pytest.raises(ValidationError):
+        CuratedFile.model_validate({"foods": [_food(**extra)]})
 
 
 def test_rejects_unknown_parent() -> None:

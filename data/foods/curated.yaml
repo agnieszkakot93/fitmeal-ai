@@ -1,8 +1,8 @@
 # FitMeal AI — curated ingredient list
 #
 # This file owns everything *about* an ingredient: names, aliases, category,
-# allergens (EU 14), culinary roles, portion weights, densities and package
-# sizes. Nutrition values are NOT typed here: they come from
+# allergens (EU 14) and `may_contain` traces, culinary roles, portion weights,
+# densities and package sizes. Nutrition values are NOT typed here: they come from
 #   * `fdc`       → a USDA FoodData Central record (public domain), or
 #   * `nutrition` → a product label (per 100 g, EU style: carbs exclude fiber).
 # Entries with neither are "pending": kept for their names/aliases, skipped by

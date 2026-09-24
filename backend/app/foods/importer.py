@@ -19,7 +19,7 @@ from app.core.text import fold
 from app.foods.curated import CuratedFile, CuratedFood
 from app.foods.fdc import FdcIndex
 from app.foods.models import FoodAlias, FoodDerivation, FoodItem, FoodPackage, FoodPortion
-from app.nutrition.allergens import Allergen, effective_allergens
+from app.nutrition.allergens import Allergen, effective_allergens, effective_traces
 from app.nutrition.nutrients import Nutrients, energy_is_consistent
 
 
@@ -31,6 +31,7 @@ class ResolvedFood:
     source: str
     source_ref: str
     effective_allergens: frozenset[Allergen]
+    effective_may_contain: frozenset[Allergen] = frozenset()
 
 
 @dataclass
@@ -58,9 +59,10 @@ class ImportReport:
 
 def resolve(curated: CuratedFile, index: FdcIndex | None) -> ImportReport:
     report = ImportReport()
-    allergens = effective_allergens(
-        {f.slug: f.allergens for f in curated.foods},
-        {f.slug: f.derived_from for f in curated.foods},
+    derived_from = {f.slug: f.derived_from for f in curated.foods}
+    allergens = effective_allergens({f.slug: f.allergens for f in curated.foods}, derived_from)
+    traces = effective_traces(
+        {f.slug: f.may_contain for f in curated.foods}, derived_from, allergens
     )
 
     for food in curated.foods:
@@ -72,7 +74,13 @@ def resolve(curated: CuratedFile, index: FdcIndex | None) -> ImportReport:
             n = food.nutrition
             nutrients = Nutrients(n.kcal, n.protein_g, n.fat_g, n.carbs_g, n.fiber_g)
             resolved = ResolvedFood(
-                food, nutrients, None, "label", n.source_ref, allergens[food.slug]
+                food,
+                nutrients,
+                None,
+                "label",
+                n.source_ref,
+                allergens[food.slug],
+                traces[food.slug],
             )
         else:
             assert food.fdc is not None
@@ -95,6 +103,7 @@ def resolve(curated: CuratedFile, index: FdcIndex | None) -> ImportReport:
                 "usda_fdc",
                 str(match.fdc_id),
                 allergens[food.slug],
+                traces[food.slug],
             )
 
         if not energy_is_consistent(resolved.nutrients):
@@ -128,6 +137,8 @@ async def apply(session: AsyncSession, resolved: list[ResolvedFood]) -> None:
         item.density_g_per_ml = c.density_g_per_ml
         item.allergens = sorted(a.value for a in c.allergens)
         item.effective_allergens = sorted(a.value for a in r.effective_allergens)
+        item.may_contain = sorted(a.value for a in c.may_contain)
+        item.effective_may_contain = sorted(a.value for a in r.effective_may_contain)
         item.culinary_roles = [role.value for role in c.culinary_roles]
         item.substitution_groups = list(c.substitution_groups)
         item.source = r.source
@@ -152,8 +163,8 @@ async def apply(session: AsyncSession, resolved: list[ResolvedFood]) -> None:
     parent_ids = dict((await session.execute(select(FoodItem.slug, FoodItem.id))).all())
     for r in resolved:
         for parent in r.curated.derived_from:
-            # A parent that is still pending has no row yet; its allergens are
-            # already folded into effective_allergens above.
+            # A parent that is still pending has no row yet; its allergens and
+            # traces are already folded into the effective columns above.
             if parent in parent_ids:
                 session.add(
                     FoodDerivation(food_id=items[r.curated.slug].id, parent_id=parent_ids[parent])

@@ -54,6 +54,9 @@ class FoodItem(Base):
     allergens: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
     # own allergens + everything inherited through food_derivations
     effective_allergens: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
+    # "may contain" traces; effective = own + inherited, minus effective_allergens
+    may_contain: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
+    effective_may_contain: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
     culinary_roles: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
     substitution_groups: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
 
