@@ -1,0 +1,1290 @@
+# FitMeal AI — curated ingredient list
+#
+# This file owns everything *about* an ingredient: names, aliases, category,
+# allergens (EU 14), culinary roles, portion weights, densities and package
+# sizes. Nutrition values are NOT typed here: they come from
+#   * `fdc`       → a USDA FoodData Central record (public domain), or
+#   * `nutrition` → a product label (per 100 g, EU style: carbs exclude fiber).
+# Entries with neither are "pending": kept for their names/aliases, skipped by
+# the importer until a nutrition source is added.
+#
+# REVIEW STATUS: all entries are a first draft. The FDC descriptions follow SR
+# Legacy naming; `fitmeal-admin foods import --dry-run` lists any that do not
+# match together with the closest FDC descriptions. Portion weights, densities
+# and package sizes are typical values that still need a human check.
+#
+# Portion units: piece, clove, slice, scoop, handful, can, bunch, stalk, pack,
+# pinch, plus volume overrides (tsp, tbsp, cup, szklanka) where weighing beats
+# density (flour, rice, oats ...). Package sizes are in grams.
+
+foods:
+
+  # ── Meat & poultry ────────────────────────────────────────────────────────
+  - slug: chicken-breast-raw
+    name: {en: "Chicken breast, raw", pl: "Pierś z kurczaka, surowa"}
+    aliases: {en: [chicken breast, chicken fillet, chicken breast fillet], pl: [pierś z kurczaka, filet z kurczaka, filet z piersi kurczaka, kurczak]}
+    category: meat_fish
+    origin: poultry
+    culinary_roles: [main_protein]
+    substitution_groups: [lean_poultry]
+    portions: {piece: 200}
+    packages_g: [400, 500, 1000]
+    fdc: {description: "Chicken, broilers or fryers, breast, meat only, raw"}
+
+  - slug: chicken-thigh-raw
+    name: {en: "Chicken thigh, boneless, raw", pl: "Udko z kurczaka bez kości, surowe"}
+    aliases: {en: [chicken thigh, boneless chicken thigh], pl: [udo z kurczaka, udko z kurczaka, filet z uda kurczaka, mięso z ud]}
+    category: meat_fish
+    origin: poultry
+    culinary_roles: [main_protein]
+    substitution_groups: [poultry]
+    portions: {piece: 110}
+    packages_g: [500, 1000]
+    fdc: {description: "Chicken, broilers or fryers, thigh, meat only, raw"}
+
+  - slug: turkey-breast-raw
+    name: {en: "Turkey breast, raw", pl: "Pierś z indyka, surowa"}
+    aliases: {en: [turkey breast, turkey fillet], pl: [pierś z indyka, filet z indyka, indyk]}
+    category: meat_fish
+    origin: poultry
+    culinary_roles: [main_protein]
+    substitution_groups: [lean_poultry]
+    packages_g: [500, 1000]
+    fdc: {description: "Turkey, whole, breast, meat only, raw"}
+
+  - slug: turkey-ground-raw
+    name: {en: "Ground turkey, raw", pl: "Mięso mielone z indyka, surowe"}
+    aliases: {en: [ground turkey, minced turkey, turkey mince], pl: [mielony indyk, mięso mielone z indyka, indyk mielony]}
+    category: meat_fish
+    origin: poultry
+    culinary_roles: [main_protein]
+    substitution_groups: [ground_meat]
+    packages_g: [400, 500]
+    fdc: {description: "Ground turkey, raw"}
+
+  - slug: beef-ground-90-raw
+    name: {en: "Ground beef 90% lean, raw", pl: "Wołowina mielona chuda (10% tłuszczu), surowa"}
+    aliases: {en: [ground beef, minced beef, beef mince, lean ground beef], pl: [mielona wołowina, wołowina mielona, mięso mielone wołowe]}
+    category: meat_fish
+    origin: meat
+    culinary_roles: [main_protein]
+    substitution_groups: [ground_meat, red_meat]
+    packages_g: [400, 500]
+    fdc: {description: "Beef, ground, 90% lean meat / 10% fat, raw"}
+
+  - slug: pork-tenderloin-raw
+    name: {en: "Pork tenderloin, lean, raw", pl: "Polędwiczka wieprzowa, surowa"}
+    aliases: {en: [pork tenderloin, pork fillet], pl: [polędwiczka wieprzowa, polędwica wieprzowa, schab]}
+    category: meat_fish
+    origin: meat
+    culinary_roles: [main_protein]
+    substitution_groups: [lean_pork, red_meat]
+    portions: {piece: 450}
+    packages_g: [450, 500]
+    fdc: {description: "Pork, fresh, loin, tenderloin, separable lean only, raw"}
+
+  - slug: ham-deli-lean
+    name: {en: "Ham, lean deli slices", pl: "Szynka chuda w plastrach"}
+    aliases: {en: [ham, deli ham, sliced ham], pl: [szynka, szynka w plastrach, szynka drobiowa]}
+    category: meat_fish
+    origin: meat
+    culinary_roles: [main_protein, topping]
+    substitution_groups: [deli_meat]
+    portions: {slice: 10}
+    packages_g: [100, 150]
+    fdc: {description: "Ham, sliced, pre-packaged, deli meat (96%fat free, water added)"}
+
+  # ── Fish & seafood ────────────────────────────────────────────────────────
+  - slug: salmon-atlantic-raw
+    name: {en: "Salmon, Atlantic, raw", pl: "Łosoś atlantycki, surowy"}
+    aliases: {en: [salmon, salmon fillet], pl: [łosoś, filet z łososia]}
+    category: meat_fish
+    origin: fish
+    allergens: [fish]
+    culinary_roles: [main_protein]
+    substitution_groups: [oily_fish]
+    portions: {piece: 125}
+    packages_g: [250, 500]
+    fdc: {description: "Fish, salmon, Atlantic, farmed, raw"}
+
+  - slug: cod-raw
+    name: {en: "Cod, raw", pl: "Dorsz, surowy"}
+    aliases: {en: [cod, cod fillet], pl: [dorsz, filet z dorsza]}
+    category: meat_fish
+    origin: fish
+    allergens: [fish]
+    culinary_roles: [main_protein]
+    substitution_groups: [white_fish]
+    portions: {piece: 150}
+    packages_g: [400, 500]
+    fdc: {description: "Fish, cod, Atlantic, raw"}
+
+  - slug: tuna-canned-water
+    name: {en: "Tuna in water, canned, drained", pl: "Tuńczyk w sosie własnym, odsączony"}
+    aliases: {en: [tuna, canned tuna, tuna in water], pl: [tuńczyk, tuńczyk w sosie własnym, tuńczyk z puszki]}
+    category: meat_fish
+    origin: fish
+    allergens: [fish]
+    culinary_roles: [main_protein]
+    substitution_groups: [canned_fish]
+    portions: {can: 120}
+    packages_g: [120]
+    fdc: {description: "Fish, tuna, light, canned in water, drained solids"}
+
+  - slug: shrimp-raw
+    name: {en: "Shrimp, raw", pl: "Krewetki, surowe"}
+    aliases: {en: [shrimp, prawns], pl: [krewetki, krewetka]}
+    category: meat_fish
+    origin: shellfish
+    allergens: [crustaceans]
+    culinary_roles: [main_protein]
+    substitution_groups: [seafood]
+    packages_g: [200, 400]
+    fdc: {description: "Crustaceans, shrimp, raw"}
+
+  # ── Eggs ──────────────────────────────────────────────────────────────────
+  - slug: egg-whole-raw
+    name: {en: "Egg, whole, raw", pl: "Jajko kurze całe, surowe"}
+    aliases: {en: [egg, eggs, whole egg], pl: [jajko, jajka, jaja, jajo]}
+    category: dairy_eggs
+    origin: egg
+    allergens: [eggs]
+    culinary_roles: [main_protein, binder]
+    substitution_groups: [egg]
+    portions: {piece: 50}
+    packages_g: [500]  # 10 × M
+    fdc: {description: "Egg, whole, raw, fresh"}
+
+  - slug: egg-white-raw
+    name: {en: "Egg white, raw", pl: "Białko jaja kurzego, surowe"}
+    aliases: {en: [egg white, egg whites], pl: [białko jaja, białka jaj, białko z jajka]}
+    category: dairy_eggs
+    origin: egg
+    allergens: [eggs]
+    culinary_roles: [main_protein, binder]
+    substitution_groups: [egg]
+    density_g_per_ml: 1.03
+    portions: {piece: 33}
+    packages_g: [500, 1000]
+    fdc: {description: "Egg, white, raw, fresh"}
+
+  # ── Dairy ─────────────────────────────────────────────────────────────────
+  - slug: milk-2
+    name: {en: "Milk 2% fat", pl: "Mleko 2%"}
+    aliases: {en: [milk, reduced fat milk, 2% milk], pl: [mleko, mleko 2%, mleko krowie]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [liquid, creamy_base]
+    substitution_groups: [milk]
+    density_g_per_ml: 1.03
+    packages_g: [1030]
+    fdc: {description: "Milk, reduced fat, fluid, 2% milkfat, with added vitamin A and vitamin D"}
+
+  - slug: milk-skim
+    name: {en: "Skim milk", pl: "Mleko odtłuszczone 0,5%"}
+    aliases: {en: [skim milk, skimmed milk, fat free milk], pl: [mleko odtłuszczone, mleko 0,5%, mleko chude]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [liquid]
+    substitution_groups: [milk]
+    density_g_per_ml: 1.03
+    packages_g: [1030]
+    fdc: {description: "Milk, nonfat, fluid, with added vitamin A and vitamin D (fat free or skim)"}
+
+  - slug: greek-yogurt-nonfat
+    name: {en: "Greek yogurt, plain, nonfat", pl: "Jogurt grecki naturalny 0%"}
+    aliases: {en: [greek yogurt, nonfat greek yogurt, fat free greek yogurt], pl: [jogurt grecki, jogurt grecki 0%, jogurt typu greckiego]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [creamy_base, main_protein]
+    substitution_groups: [creamy_dairy]
+    density_g_per_ml: 1.05
+    packages_g: [150, 400]
+    fdc: {description: "Yogurt, Greek, plain, nonfat"}
+
+  - slug: yogurt-plain-lowfat
+    name: {en: "Natural yogurt, low fat", pl: "Jogurt naturalny"}
+    aliases: {en: [plain yogurt, natural yogurt, yogurt], pl: [jogurt naturalny, jogurt]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [creamy_base]
+    substitution_groups: [creamy_dairy]
+    density_g_per_ml: 1.04
+    packages_g: [180, 370, 400]
+    fdc: {description: "Yogurt, plain, low fat, 12 grams protein per 8 ounce"}
+
+  - slug: skyr-natural
+    name: {en: "Skyr, natural", pl: "Skyr naturalny"}
+    aliases: {en: [skyr, icelandic yogurt], pl: [skyr, skyr naturalny, jogurt islandzki]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [creamy_base, main_protein]
+    substitution_groups: [creamy_dairy]
+    density_g_per_ml: 1.05
+    packages_g: [150, 450]
+    # pending: add `nutrition` from a Polish product label
+
+  - slug: twarog-poltlusty
+    name: {en: "Quark / tvorog, half-fat", pl: "Twaróg półtłusty"}
+    aliases: {en: [quark, tvorog, farmer cheese], pl: [twaróg, twaróg półtłusty, biały ser]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [main_protein, creamy_base, cheese]
+    substitution_groups: [fresh_cheese]
+    packages_g: [200, 250]
+    # pending: add `nutrition` from a Polish product label
+
+  - slug: kefir
+    name: {en: "Kefir", pl: "Kefir"}
+    aliases: {en: [kefir], pl: [kefir]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [liquid, creamy_base]
+    substitution_groups: [fermented_milk]
+    density_g_per_ml: 1.03
+    packages_g: [400, 1000]
+    # pending: add `nutrition` from a Polish product label
+
+  - slug: cottage-cheese-lowfat
+    name: {en: "Cottage cheese, low fat", pl: "Serek wiejski lekki"}
+    aliases: {en: [cottage cheese, low fat cottage cheese], pl: [serek wiejski, serek wiejski lekki, ser twarogowy ziarnisty]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [main_protein, creamy_base]
+    substitution_groups: [fresh_cheese]
+    packages_g: [150, 200]
+    fdc: {description: "Cheese, cottage, lowfat, 2% milkfat"}
+
+  - slug: mozzarella-part-skim
+    name: {en: "Mozzarella, part skim", pl: "Mozzarella light"}
+    aliases: {en: [mozzarella, light mozzarella], pl: [mozzarella, mozzarella light, ser mozzarella]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [cheese]
+    substitution_groups: [soft_cheese]
+    portions: {piece: 125, slice: 20}
+    packages_g: [125]
+    fdc: {description: "Cheese, mozzarella, part skim milk"}
+
+  - slug: parmesan
+    name: {en: "Parmesan", pl: "Parmezan"}
+    aliases: {en: [parmesan, parmigiano, grated parmesan], pl: [parmezan, ser parmezan, grana padano]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [cheese, topping, seasoning]
+    substitution_groups: [hard_cheese]
+    portions: {tbsp: 5}
+    packages_g: [100, 200]
+    fdc: {description: "Cheese, parmesan, hard"}
+
+  - slug: feta
+    name: {en: "Feta cheese", pl: "Ser feta"}
+    aliases: {en: [feta, feta cheese], pl: [feta, ser feta, ser typu feta, ser sałatkowy]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [cheese, topping]
+    substitution_groups: [brined_cheese]
+    packages_g: [200, 270]
+    fdc: {description: "Cheese, feta"}
+
+  - slug: cheddar
+    name: {en: "Cheddar cheese", pl: "Ser cheddar"}
+    aliases: {en: [cheddar, cheddar cheese], pl: [cheddar, ser cheddar, ser żółty]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [cheese, topping]
+    substitution_groups: [hard_cheese]
+    portions: {slice: 20}
+    packages_g: [150, 200]
+    fdc: {description: "Cheese, cheddar"}
+
+  - slug: cream-cheese
+    name: {en: "Cream cheese", pl: "Serek śmietankowy"}
+    aliases: {en: [cream cheese], pl: [serek śmietankowy, serek kremowy, ser kremowy, serek do smarowania]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [creamy_base, cheese]
+    substitution_groups: [creamy_dairy]
+    portions: {tbsp: 15}
+    packages_g: [135, 150, 200]
+    fdc: {description: "Cheese, cream"}
+
+  - slug: butter
+    name: {en: "Butter, unsalted", pl: "Masło"}
+    aliases: {en: [butter, unsalted butter], pl: [masło, masło extra]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [cooking_fat]
+    substitution_groups: [cooking_fat]
+    density_g_per_ml: 0.91
+    portions: {tbsp: 14, tsp: 5}
+    packages_g: [200]
+    fdc: {description: "Butter, without salt"}
+
+  - slug: cream-heavy
+    name: {en: "Heavy cream", pl: "Śmietanka 30–36%"}
+    aliases: {en: [heavy cream, whipping cream, double cream, cream], pl: [śmietanka, śmietanka 30%, śmietanka 36%, śmietanka kremówka]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [creamy_base, sauce_base]
+    substitution_groups: [creamy_dairy]
+    density_g_per_ml: 1.0
+    packages_g: [200, 330, 500]
+    fdc: {description: "Cream, fluid, heavy whipping"}
+
+  - slug: sour-cream
+    name: {en: "Sour cream", pl: "Śmietana 18%"}
+    aliases: {en: [sour cream], pl: [śmietana, śmietana 18%, kwaśna śmietana]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    culinary_roles: [creamy_base, sauce_base]
+    substitution_groups: [creamy_dairy]
+    density_g_per_ml: 1.01
+    packages_g: [200, 400]
+    fdc: {description: "Cream, sour, cultured"}
+
+  # ── Plant protein & legumes ───────────────────────────────────────────────
+  - slug: tofu-firm
+    name: {en: "Tofu, firm", pl: "Tofu naturalne"}
+    aliases: {en: [tofu, firm tofu], pl: [tofu, tofu naturalne, tofu kostka]}
+    category: legumes
+    origin: plant
+    allergens: [soy]
+    culinary_roles: [main_protein]
+    substitution_groups: [plant_protein]
+    packages_g: [180, 200]
+    fdc: {description: "Tofu, raw, firm, prepared with calcium sulfate"}
+
+  - slug: tempeh
+    name: {en: "Tempeh", pl: "Tempeh"}
+    aliases: {en: [tempeh], pl: [tempeh]}
+    category: legumes
+    origin: plant
+    allergens: [soy]
+    culinary_roles: [main_protein]
+    substitution_groups: [plant_protein]
+    packages_g: [180, 200]
+    fdc: {description: "Tempeh"}
+
+  - slug: lentils-red-dry
+    name: {en: "Red lentils, dry", pl: "Soczewica czerwona, sucha"}
+    aliases: {en: [red lentils, lentils], pl: [soczewica czerwona, soczewica]}
+    category: legumes
+    origin: plant
+    culinary_roles: [main_protein, carb_base]
+    substitution_groups: [legume_dry]
+    portions: {szklanka: 200, cup: 190}
+    packages_g: [400, 500]
+    fdc: {description: "Lentils, pink or red, raw"}
+
+  - slug: chickpeas-canned-drained
+    name: {en: "Chickpeas, canned, drained", pl: "Ciecierzyca z puszki, odsączona"}
+    aliases: {en: [chickpeas, garbanzo beans, canned chickpeas], pl: [ciecierzyca, ciecierzyca z puszki, cieciorka]}
+    category: legumes
+    origin: plant
+    culinary_roles: [main_protein, carb_base]
+    substitution_groups: [legume_canned]
+    portions: {can: 240}
+    packages_g: [240]
+    fdc: {description: "Chickpeas (garbanzo beans, bengal gram), mature seeds, canned, drained, rinsed in tap water"}
+
+  - slug: kidney-beans-canned-drained
+    name: {en: "Red kidney beans, canned, drained", pl: "Czerwona fasola z puszki, odsączona"}
+    aliases: {en: [kidney beans, red beans, canned beans], pl: [czerwona fasola, fasola czerwona, fasola z puszki]}
+    category: legumes
+    origin: plant
+    culinary_roles: [main_protein, carb_base]
+    substitution_groups: [legume_canned]
+    portions: {can: 240}
+    packages_g: [240]
+    fdc: {description: "Beans, kidney, red, mature seeds, canned, drained solids"}
+
+  - slug: whey-protein-isolate
+    name: {en: "Whey protein isolate powder", pl: "Odżywka białkowa (izolat serwatki)"}
+    aliases: {en: [whey protein, protein powder, whey isolate, protein scoop], pl: [odżywka białkowa, białko serwatkowe, izolat białka, wpi, wpc]}
+    category: other
+    origin: dairy
+    # milk comes from `derived_from`; the allergen engine inherits it
+    derived_from: [milk-skim]
+    culinary_roles: [main_protein]
+    substitution_groups: [protein_powder]
+    portions: {scoop: 30}
+    packages_g: [700, 900, 2000]
+    fdc: {description: "Beverages, Whey protein powder isolate"}
+
+  # ── Grains, pasta, bread, potatoes ────────────────────────────────────────
+  - slug: rice-white-dry
+    name: {en: "White rice, dry", pl: "Ryż biały, suchy"}
+    aliases: {en: [rice, white rice, long grain rice, basmati rice, jasmine rice], pl: [ryż, ryż biały, ryż basmati, ryż jaśminowy, ryż długoziarnisty]}
+    category: grains_pasta
+    origin: plant
+    culinary_roles: [carb_base]
+    substitution_groups: [grain]
+    portions: {szklanka: 200, cup: 185, tbsp: 12}
+    packages_g: [400, 1000]
+    fdc: {description: "Rice, white, long-grain, regular, raw, enriched"}
+
+  - slug: rice-brown-dry
+    name: {en: "Brown rice, dry", pl: "Ryż brązowy, suchy"}
+    aliases: {en: [brown rice], pl: [ryż brązowy, ryż pełnoziarnisty]}
+    category: grains_pasta
+    origin: plant
+    culinary_roles: [carb_base]
+    substitution_groups: [grain]
+    portions: {szklanka: 195, cup: 185}
+    packages_g: [400, 1000]
+    fdc: {description: "Rice, brown, long-grain, raw"}
+
+  - slug: oats-rolled
+    name: {en: "Rolled oats", pl: "Płatki owsiane"}
+    aliases: {en: [oats, rolled oats, oatmeal, porridge oats], pl: [płatki owsiane, owsianka, płatki górskie]}
+    category: grains_pasta
+    origin: plant
+    allergens: [gluten]
+    culinary_roles: [carb_base, binder]
+    substitution_groups: [breakfast_grain]
+    portions: {szklanka: 90, cup: 80, tbsp: 6}
+    packages_g: [500, 1000]
+    fdc: {description: "Cereals, oats, regular and quick, not fortified, dry"}
+
+  - slug: pasta-dry
+    name: {en: "Pasta, dry", pl: "Makaron pszenny, suchy"}
+    aliases: {en: [pasta, spaghetti, penne, fusilli, macaroni], pl: [makaron, spaghetti, penne, świderki, makaron pszenny]}
+    category: grains_pasta
+    origin: plant
+    allergens: [gluten]
+    culinary_roles: [carb_base]
+    substitution_groups: [pasta]
+    packages_g: [400, 500]
+    fdc: {description: "Pasta, dry, enriched"}
+
+  - slug: pasta-wholewheat-dry
+    name: {en: "Whole-wheat pasta, dry", pl: "Makaron pełnoziarnisty, suchy"}
+    aliases: {en: [whole wheat pasta, wholegrain pasta], pl: [makaron pełnoziarnisty, makaron razowy]}
+    category: grains_pasta
+    origin: plant
+    allergens: [gluten]
+    culinary_roles: [carb_base]
+    substitution_groups: [pasta]
+    packages_g: [400, 500]
+    fdc: {description: "Pasta, whole-wheat, dry (Includes foods for USDA's Food Distribution Program)"}
+
+  - slug: buckwheat-groats
+    name: {en: "Buckwheat groats, roasted, dry", pl: "Kasza gryczana prażona, sucha"}
+    aliases: {en: [buckwheat, buckwheat groats, kasha], pl: [kasza gryczana, gryczana]}
+    category: grains_pasta
+    origin: plant
+    culinary_roles: [carb_base]
+    substitution_groups: [grain]
+    portions: {szklanka: 180, cup: 170}
+    packages_g: [400, 1000]
+    fdc: {description: "Buckwheat groats, roasted, dry"}
+
+  - slug: millet-dry
+    name: {en: "Millet, dry", pl: "Kasza jaglana, sucha"}
+    aliases: {en: [millet], pl: [kasza jaglana, jaglanka, proso]}
+    category: grains_pasta
+    origin: plant
+    culinary_roles: [carb_base]
+    substitution_groups: [grain]
+    portions: {szklanka: 210, cup: 200}
+    packages_g: [400, 1000]
+    fdc: {description: "Millet, raw"}
+
+  - slug: bulgur-dry
+    name: {en: "Bulgur, dry", pl: "Kasza bulgur, sucha"}
+    aliases: {en: [bulgur, bulgur wheat], pl: [bulgur, kasza bulgur]}
+    category: grains_pasta
+    origin: plant
+    allergens: [gluten]
+    culinary_roles: [carb_base]
+    substitution_groups: [grain]
+    portions: {szklanka: 150, cup: 140}
+    packages_g: [400]
+    fdc: {description: "Bulgur, dry"}
+
+  - slug: couscous-dry
+    name: {en: "Couscous, dry", pl: "Kuskus, suchy"}
+    aliases: {en: [couscous], pl: [kuskus, kasza kuskus]}
+    category: grains_pasta
+    origin: plant
+    allergens: [gluten]
+    culinary_roles: [carb_base]
+    substitution_groups: [grain]
+    portions: {szklanka: 180, cup: 175}
+    packages_g: [400, 500]
+    fdc: {description: "Couscous, dry"}
+
+  - slug: quinoa-dry
+    name: {en: "Quinoa, dry", pl: "Komosa ryżowa, sucha"}
+    aliases: {en: [quinoa], pl: [komosa ryżowa, quinoa, kinoa]}
+    category: grains_pasta
+    origin: plant
+    culinary_roles: [carb_base]
+    substitution_groups: [grain]
+    portions: {szklanka: 180, cup: 170}
+    packages_g: [250, 500]
+    fdc: {description: "Quinoa, uncooked"}
+
+  - slug: flour-wheat
+    name: {en: "Wheat flour, all-purpose", pl: "Mąka pszenna"}
+    aliases: {en: [flour, all-purpose flour, plain flour, wheat flour], pl: [mąka, mąka pszenna, mąka tortowa]}
+    category: sweets_baking
+    origin: plant
+    allergens: [gluten]
+    culinary_roles: [binder]
+    substitution_groups: [flour]
+    portions: {szklanka: 160, cup: 125, tbsp: 8}
+    packages_g: [1000]
+    fdc: {description: "Wheat flour, white, all-purpose, enriched, bleached"}
+
+  - slug: bread-wholewheat
+    name: {en: "Whole-wheat bread", pl: "Chleb pełnoziarnisty"}
+    aliases: {en: [whole wheat bread, wholemeal bread, bread], pl: [chleb pełnoziarnisty, chleb razowy, chleb, pieczywo]}
+    category: bakery
+    origin: plant
+    allergens: [gluten]
+    culinary_roles: [carb_base]
+    substitution_groups: [bread]
+    portions: {slice: 35}
+    packages_g: [500]
+    fdc: {description: "Bread, whole-wheat, commercially prepared"}
+
+  - slug: bread-rye
+    name: {en: "Rye bread", pl: "Chleb żytni"}
+    aliases: {en: [rye bread], pl: [chleb żytni, żytni]}
+    category: bakery
+    origin: plant
+    allergens: [gluten]
+    culinary_roles: [carb_base]
+    substitution_groups: [bread]
+    portions: {slice: 35}
+    packages_g: [500]
+    fdc: {description: "Bread, rye"}
+
+  - slug: tortilla-wheat
+    name: {en: "Wheat tortilla", pl: "Tortilla pszenna"}
+    aliases: {en: [tortilla, wrap, flour tortilla], pl: [tortilla, tortilla pszenna, wrap, placek tortilla]}
+    category: bakery
+    origin: plant
+    allergens: [gluten]
+    culinary_roles: [carb_base]
+    substitution_groups: [bread]
+    portions: {piece: 60}
+    packages_g: [240, 370]
+    fdc: {description: "Tortillas, ready-to-bake or -fry, flour"}
+
+  - slug: rice-cakes
+    name: {en: "Rice cakes", pl: "Wafle ryżowe"}
+    aliases: {en: [rice cakes, rice crackers], pl: [wafle ryżowe, wafel ryżowy]}
+    category: bakery
+    origin: plant
+    culinary_roles: [carb_base]
+    substitution_groups: [bread]
+    portions: {piece: 9}
+    packages_g: [100, 130]
+    fdc: {description: "Snacks, rice cakes, brown rice, plain"}
+
+  - slug: potatoes
+    name: {en: "Potatoes, raw", pl: "Ziemniaki, surowe"}
+    aliases: {en: [potato, potatoes], pl: [ziemniak, ziemniaki, kartofle]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [carb_base]
+    substitution_groups: [potato]
+    portions: {piece: 150}
+    packages_g: [1000, 2000, 2500]
+    fdc: {description: "Potatoes, flesh and skin, raw"}
+
+  - slug: sweet-potato
+    name: {en: "Sweet potato, raw", pl: "Batat, surowy"}
+    aliases: {en: [sweet potato, sweet potatoes, yam], pl: [batat, bataty, słodki ziemniak]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [carb_base]
+    substitution_groups: [potato]
+    portions: {piece: 250}
+    fdc: {description: "Sweet potato, raw, unprepared"}
+
+  # ── Vegetables ────────────────────────────────────────────────────────────
+  - slug: tomato
+    name: {en: "Tomato", pl: "Pomidor"}
+    aliases: {en: [tomato, tomatoes], pl: [pomidor, pomidory]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [salad_vegetable]
+    portions: {piece: 120}
+    fdc: {description: "Tomatoes, red, ripe, raw, year round average"}
+
+  - slug: cherry-tomatoes
+    name: {en: "Cherry tomatoes", pl: "Pomidorki koktajlowe"}
+    aliases: {en: [cherry tomatoes, cherry tomato], pl: [pomidorki koktajlowe, pomidorki cherry, pomidorki]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [salad_vegetable]
+    portions: {piece: 15, handful: 90}
+    packages_g: [250, 500]
+    fdc: {description: "Tomatoes, red, ripe, raw, year round average"}
+
+  - slug: cucumber
+    name: {en: "Cucumber", pl: "Ogórek"}
+    aliases: {en: [cucumber], pl: [ogórek, ogórek zielony, ogórek szklarniowy]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [salad_vegetable]
+    portions: {piece: 300}
+    fdc: {description: "Cucumber, with peel, raw"}
+
+  - slug: bell-pepper-red
+    name: {en: "Red bell pepper", pl: "Papryka czerwona"}
+    aliases: {en: [bell pepper, red pepper, red bell pepper, pepper], pl: [papryka, papryka czerwona, papryka słodka]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [pepper]
+    portions: {piece: 180}
+    fdc: {description: "Peppers, sweet, red, raw"}
+
+  - slug: onion
+    name: {en: "Onion", pl: "Cebula"}
+    aliases: {en: [onion, onions, yellow onion, red onion], pl: [cebula, cebule, czerwona cebula]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [aromatic, vegetable]
+    substitution_groups: [allium]
+    portions: {piece: 110}
+    packages_g: [1000]
+    fdc: {description: "Onions, raw"}
+
+  - slug: garlic
+    name: {en: "Garlic", pl: "Czosnek"}
+    aliases: {en: [garlic, garlic clove], pl: [czosnek, ząbek czosnku]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [aromatic, seasoning]
+    substitution_groups: [allium]
+    portions: {clove: 4, piece: 50}
+    fdc: {description: "Garlic, raw"}
+
+  - slug: carrot
+    name: {en: "Carrot", pl: "Marchew"}
+    aliases: {en: [carrot, carrots], pl: [marchew, marchewka, marchewki]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [root_vegetable]
+    portions: {piece: 70}
+    packages_g: [1000]
+    fdc: {description: "Carrots, raw"}
+
+  - slug: broccoli
+    name: {en: "Broccoli", pl: "Brokuł"}
+    aliases: {en: [broccoli], pl: [brokuł, brokuły, różyczki brokuła]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [brassica]
+    portions: {piece: 400, handful: 60}
+    packages_g: [450]
+    fdc: {description: "Broccoli, raw"}
+
+  - slug: cauliflower
+    name: {en: "Cauliflower", pl: "Kalafior"}
+    aliases: {en: [cauliflower], pl: [kalafior, różyczki kalafiora]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable, carb_base]
+    substitution_groups: [brassica]
+    portions: {piece: 600}
+    packages_g: [450]
+    fdc: {description: "Cauliflower, raw"}
+
+  - slug: spinach
+    name: {en: "Spinach, fresh", pl: "Szpinak świeży"}
+    aliases: {en: [spinach, baby spinach], pl: [szpinak, szpinak baby, młody szpinak]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [leafy_green]
+    portions: {handful: 30}
+    packages_g: [100, 150]
+    fdc: {description: "Spinach, raw"}
+
+  - slug: arugula
+    name: {en: "Arugula", pl: "Rukola"}
+    aliases: {en: [arugula, rocket], pl: [rukola, rukiew]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable, topping]
+    substitution_groups: [leafy_green]
+    portions: {handful: 20}
+    packages_g: [100]
+    fdc: {description: "Arugula, raw"}
+
+  - slug: romaine-lettuce
+    name: {en: "Romaine lettuce", pl: "Sałata rzymska"}
+    aliases: {en: [romaine, romaine lettuce, lettuce], pl: [sałata rzymska, sałata, sałata lodowa]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [leafy_green]
+    portions: {piece: 400, handful: 25}
+    fdc: {description: "Lettuce, cos or romaine, raw"}
+
+  - slug: zucchini
+    name: {en: "Zucchini", pl: "Cukinia"}
+    aliases: {en: [zucchini, courgette], pl: [cukinia, cukinie]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [squash]
+    portions: {piece: 250}
+    fdc: {description: "Squash, summer, zucchini, includes skin, raw"}
+
+  - slug: eggplant
+    name: {en: "Eggplant", pl: "Bakłażan"}
+    aliases: {en: [eggplant, aubergine], pl: [bakłażan, oberżyna]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [squash]
+    portions: {piece: 300}
+    fdc: {description: "Eggplant, raw"}
+
+  - slug: mushrooms-white
+    name: {en: "White mushrooms", pl: "Pieczarki"}
+    aliases: {en: [mushrooms, white mushrooms, button mushrooms, champignons], pl: [pieczarki, pieczarka, grzyby]}
+    category: vegetables
+    origin: fungi
+    culinary_roles: [vegetable]
+    substitution_groups: [mushroom]
+    portions: {piece: 18}
+    packages_g: [250, 500]
+    fdc: {description: "Mushrooms, white, raw"}
+
+  - slug: cabbage-white
+    name: {en: "White cabbage", pl: "Kapusta biała"}
+    aliases: {en: [cabbage, white cabbage], pl: [kapusta, kapusta biała, kapusta słodka]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [brassica]
+    portions: {piece: 1500}
+    fdc: {description: "Cabbage, raw"}
+
+  - slug: green-beans
+    name: {en: "Green beans", pl: "Fasolka szparagowa"}
+    aliases: {en: [green beans, string beans], pl: [fasolka szparagowa, fasolka zielona]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [green_vegetable]
+    packages_g: [450]
+    fdc: {description: "Beans, snap, green, raw"}
+
+  - slug: peas-frozen
+    name: {en: "Green peas, frozen", pl: "Groszek zielony mrożony"}
+    aliases: {en: [peas, green peas, frozen peas], pl: [groszek, groszek zielony, groszek mrożony]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [green_vegetable]
+    portions: {szklanka: 140, cup: 135}
+    packages_g: [450]
+    fdc: {description: "Peas, green, frozen, unprepared"}
+
+  - slug: sweet-corn-canned-drained
+    name: {en: "Sweet corn, canned, drained", pl: "Kukurydza konserwowa, odsączona"}
+    aliases: {en: [corn, sweet corn, canned corn], pl: [kukurydza, kukurydza konserwowa, kukurydza z puszki]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable, carb_base]
+    substitution_groups: [sweet_vegetable]
+    portions: {can: 285, tbsp: 15}
+    packages_g: [285]
+    fdc: {description: "Corn, sweet, yellow, canned, whole kernel, drained solids"}
+
+  - slug: tomatoes-canned
+    name: {en: "Canned chopped tomatoes", pl: "Pomidory krojone z puszki"}
+    aliases: {en: [canned tomatoes, chopped tomatoes, diced tomatoes], pl: [pomidory z puszki, pomidory krojone, pomidory w puszce]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [sauce_base, vegetable]
+    substitution_groups: [tomato_base]
+    density_g_per_ml: 1.03
+    portions: {can: 400}
+    packages_g: [400]
+    fdc: {description: "Tomatoes, red, ripe, canned, packed in tomato juice"}
+
+  - slug: tomato-passata
+    name: {en: "Tomato passata / purée", pl: "Passata pomidorowa"}
+    aliases: {en: [passata, tomato puree, tomato sauce], pl: [passata, przecier pomidorowy, passata pomidorowa]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [sauce_base]
+    substitution_groups: [tomato_base]
+    density_g_per_ml: 1.04
+    packages_g: [500, 690]
+    fdc: {description: "Tomato products, canned, puree, without salt added"}
+
+  - slug: tomato-paste
+    name: {en: "Tomato paste", pl: "Koncentrat pomidorowy"}
+    aliases: {en: [tomato paste, tomato concentrate], pl: [koncentrat pomidorowy, koncentrat]}
+    category: condiments
+    origin: plant
+    culinary_roles: [sauce_base, seasoning]
+    substitution_groups: [tomato_base]
+    portions: {tbsp: 16, tsp: 5}
+    packages_g: [80, 200]
+    fdc: {description: "Tomato products, canned, paste, without salt added"}
+
+  - slug: avocado
+    name: {en: "Avocado", pl: "Awokado"}
+    aliases: {en: [avocado, avocados], pl: [awokado]}
+    category: fruit
+    origin: plant
+    culinary_roles: [cooking_fat, creamy_base, topping]
+    substitution_groups: [creamy_fat]
+    portions: {piece: 150}  # flesh of one medium fruit
+    fdc: {description: "Avocados, raw, all commercial varieties"}
+
+  - slug: celery-stalk
+    name: {en: "Celery", pl: "Seler naciowy"}
+    aliases: {en: [celery, celery stalk], pl: [seler naciowy, łodyga selera, seler]}
+    category: vegetables
+    origin: plant
+    allergens: [celery]
+    culinary_roles: [aromatic, vegetable]
+    substitution_groups: [aromatic_vegetable]
+    portions: {stalk: 40, bunch: 400}
+    fdc: {description: "Celery, raw"}
+
+  - slug: leek
+    name: {en: "Leek", pl: "Por"}
+    aliases: {en: [leek, leeks], pl: [por, pory]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [aromatic, vegetable]
+    substitution_groups: [allium]
+    portions: {piece: 180}
+    fdc: {description: "Leeks, (bulb and lower leaf-portion), raw"}
+
+  - slug: beetroot
+    name: {en: "Beetroot", pl: "Burak"}
+    aliases: {en: [beetroot, beet, beets], pl: [burak, buraki, burak czerwony]}
+    category: vegetables
+    origin: plant
+    culinary_roles: [vegetable]
+    substitution_groups: [root_vegetable]
+    portions: {piece: 130}
+    fdc: {description: "Beets, raw"}
+
+  # ── Fruit ─────────────────────────────────────────────────────────────────
+  - slug: banana
+    name: {en: "Banana", pl: "Banan"}
+    aliases: {en: [banana, bananas], pl: [banan, banany]}
+    category: fruit
+    origin: plant
+    culinary_roles: [fruit, sweetener]
+    substitution_groups: [sweet_fruit]
+    portions: {piece: 120}  # peeled, medium
+    fdc: {description: "Bananas, raw"}
+
+  - slug: apple
+    name: {en: "Apple", pl: "Jabłko"}
+    aliases: {en: [apple, apples], pl: [jabłko, jabłka]}
+    category: fruit
+    origin: plant
+    culinary_roles: [fruit]
+    substitution_groups: [crunchy_fruit]
+    portions: {piece: 180}
+    fdc: {description: "Apples, raw, with skin"}
+
+  - slug: blueberries
+    name: {en: "Blueberries", pl: "Borówki amerykańskie"}
+    aliases: {en: [blueberries, blueberry], pl: [borówki, borówka amerykańska, borówki amerykańskie, jagody]}
+    category: fruit
+    origin: plant
+    culinary_roles: [fruit, topping]
+    substitution_groups: [berries]
+    portions: {handful: 50, szklanka: 150, cup: 148}
+    packages_g: [125, 250]
+    fdc: {description: "Blueberries, raw"}
+
+  - slug: strawberries
+    name: {en: "Strawberries", pl: "Truskawki"}
+    aliases: {en: [strawberries, strawberry], pl: [truskawki, truskawka]}
+    category: fruit
+    origin: plant
+    culinary_roles: [fruit, topping]
+    substitution_groups: [berries]
+    portions: {piece: 15, handful: 80}
+    packages_g: [250, 500]
+    fdc: {description: "Strawberries, raw"}
+
+  - slug: raspberries
+    name: {en: "Raspberries", pl: "Maliny"}
+    aliases: {en: [raspberries, raspberry], pl: [maliny, malina]}
+    category: fruit
+    origin: plant
+    culinary_roles: [fruit, topping]
+    substitution_groups: [berries]
+    portions: {handful: 50}
+    packages_g: [125, 250]
+    fdc: {description: "Raspberries, raw"}
+
+  - slug: lemon
+    name: {en: "Lemon", pl: "Cytryna"}
+    aliases: {en: [lemon, lemons], pl: [cytryna, cytryny]}
+    category: fruit
+    origin: plant
+    culinary_roles: [acid]
+    substitution_groups: [citrus]
+    portions: {piece: 60}  # flesh
+    fdc: {description: "Lemons, raw, without peel"}
+
+  - slug: lemon-juice
+    name: {en: "Lemon juice", pl: "Sok z cytryny"}
+    aliases: {en: [lemon juice], pl: [sok z cytryny, sok cytrynowy]}
+    category: fruit
+    origin: plant
+    culinary_roles: [acid, seasoning]
+    substitution_groups: [citrus_juice]
+    density_g_per_ml: 1.03
+    fdc: {description: "Lemon juice, raw"}
+
+  # ── Oils, nuts, seeds ─────────────────────────────────────────────────────
+  - slug: olive-oil
+    name: {en: "Olive oil", pl: "Oliwa z oliwek"}
+    aliases: {en: [olive oil, extra virgin olive oil, evoo], pl: [oliwa, oliwa z oliwek, oliwa extra virgin]}
+    category: oils_fats
+    origin: plant
+    culinary_roles: [cooking_fat]
+    substitution_groups: [cooking_oil]
+    density_g_per_ml: 0.91
+    packages_g: [460, 910]
+    fdc: {description: "Oil, olive, salad or cooking"}
+
+  - slug: rapeseed-oil
+    name: {en: "Rapeseed (canola) oil", pl: "Olej rzepakowy"}
+    aliases: {en: [rapeseed oil, canola oil, vegetable oil, oil], pl: [olej rzepakowy, olej, olej roślinny]}
+    category: oils_fats
+    origin: plant
+    culinary_roles: [cooking_fat]
+    substitution_groups: [cooking_oil]
+    density_g_per_ml: 0.92
+    packages_g: [920]
+    fdc: {description: "Oil, canola"}
+
+  - slug: peanut-butter
+    name: {en: "Peanut butter, smooth", pl: "Masło orzechowe"}
+    aliases: {en: [peanut butter], pl: [masło orzechowe, masło z orzechów arachidowych, krem orzechowy]}
+    category: nuts_seeds
+    origin: plant
+    allergens: [peanuts]
+    culinary_roles: [cooking_fat, topping, sauce_base]
+    substitution_groups: [nut_butter]
+    portions: {tbsp: 16, tsp: 5}
+    packages_g: [340, 500, 1000]
+    fdc: {description: "Peanut butter, smooth style, without salt"}
+
+  - slug: almonds
+    name: {en: "Almonds", pl: "Migdały"}
+    aliases: {en: [almonds, almond], pl: [migdały, migdał, płatki migdałowe]}
+    category: nuts_seeds
+    origin: plant
+    allergens: [tree_nuts]
+    culinary_roles: [topping, cooking_fat]
+    substitution_groups: [nuts]
+    portions: {handful: 30, piece: 1.2, tbsp: 9}
+    packages_g: [100, 200]
+    fdc: {description: "Nuts, almonds"}
+
+  - slug: walnuts
+    name: {en: "Walnuts", pl: "Orzechy włoskie"}
+    aliases: {en: [walnuts, walnut], pl: [orzechy włoskie, orzech włoski]}
+    category: nuts_seeds
+    origin: plant
+    allergens: [tree_nuts]
+    culinary_roles: [topping, cooking_fat]
+    substitution_groups: [nuts]
+    portions: {handful: 30, piece: 4}
+    packages_g: [100, 200]
+    fdc: {description: "Nuts, walnuts, english"}
+
+  - slug: chia-seeds
+    name: {en: "Chia seeds", pl: "Nasiona chia"}
+    aliases: {en: [chia, chia seeds], pl: [chia, nasiona chia, szałwia hiszpańska]}
+    category: nuts_seeds
+    origin: plant
+    culinary_roles: [topping, binder]
+    substitution_groups: [seeds]
+    portions: {tbsp: 12, tsp: 4}
+    packages_g: [200, 250]
+    fdc: {description: "Seeds, chia seeds, dried"}
+
+  - slug: sunflower-seeds
+    name: {en: "Sunflower seeds", pl: "Pestki słonecznika"}
+    aliases: {en: [sunflower seeds], pl: [słonecznik, pestki słonecznika, łuskany słonecznik]}
+    category: nuts_seeds
+    origin: plant
+    culinary_roles: [topping]
+    substitution_groups: [seeds]
+    portions: {tbsp: 9, handful: 25}
+    packages_g: [100, 200]
+    fdc: {description: "Seeds, sunflower seed kernels, dried"}
+
+  - slug: sesame-seeds
+    name: {en: "Sesame seeds", pl: "Sezam"}
+    aliases: {en: [sesame, sesame seeds], pl: [sezam, ziarna sezamu, nasiona sezamu]}
+    category: nuts_seeds
+    origin: plant
+    allergens: [sesame]
+    culinary_roles: [topping]
+    substitution_groups: [seeds]
+    portions: {tbsp: 9, tsp: 3}
+    packages_g: [100]
+    fdc: {description: "Seeds, sesame seeds, whole, dried"}
+
+  - slug: tahini
+    name: {en: "Tahini", pl: "Pasta tahini"}
+    aliases: {en: [tahini, tahina, sesame paste], pl: [tahini, pasta tahini, pasta sezamowa]}
+    category: nuts_seeds
+    origin: plant
+    allergens: [sesame]
+    culinary_roles: [sauce_base, cooking_fat]
+    substitution_groups: [nut_butter]
+    portions: {tbsp: 15, tsp: 5}
+    packages_g: [250, 300]
+    fdc: {description: "Seeds, sesame butter, tahini, from roasted and toasted kernels (most common type)"}
+
+  - slug: coconut-milk-canned
+    name: {en: "Coconut milk, canned", pl: "Mleczko kokosowe"}
+    aliases: {en: [coconut milk], pl: [mleczko kokosowe, mleko kokosowe]}
+    category: oils_fats
+    origin: plant
+    culinary_roles: [creamy_base, sauce_base]
+    substitution_groups: [creamy_plant]
+    density_g_per_ml: 0.98
+    portions: {can: 400}
+    packages_g: [400]
+    fdc: {description: "Nuts, coconut milk, canned (liquid expressed from grated meat and water)"}
+
+  # ── Plant drinks ──────────────────────────────────────────────────────────
+  - slug: almond-drink-unsweetened
+    name: {en: "Almond drink, unsweetened", pl: "Napój migdałowy niesłodzony"}
+    aliases: {en: [almond milk, almond drink], pl: [mleko migdałowe, napój migdałowy]}
+    category: beverages
+    origin: plant
+    allergens: [tree_nuts]
+    culinary_roles: [liquid]
+    substitution_groups: [milk]
+    density_g_per_ml: 1.01
+    packages_g: [1000]
+    fdc: {description: "Beverages, almond milk, unsweetened, shelf stable"}
+
+  - slug: soy-drink
+    name: {en: "Soy drink", pl: "Napój sojowy"}
+    aliases: {en: [soy milk, soya milk, soy drink], pl: [mleko sojowe, napój sojowy]}
+    category: beverages
+    origin: plant
+    allergens: [soy]
+    culinary_roles: [liquid]
+    substitution_groups: [milk]
+    density_g_per_ml: 1.03
+    packages_g: [1000]
+    fdc: {description: "Soymilk, original and vanilla, unfortified"}
+
+  - slug: water
+    name: {en: "Water", pl: "Woda"}
+    aliases: {en: [water], pl: [woda]}
+    category: beverages
+    origin: other
+    culinary_roles: [liquid]
+    density_g_per_ml: 1.0
+    fdc: {description: "Beverages, water, tap, drinking"}
+
+  # ── Sweeteners & baking ───────────────────────────────────────────────────
+  - slug: honey
+    name: {en: "Honey", pl: "Miód"}
+    aliases: {en: [honey], pl: [miód, miód płynny]}
+    category: sweets_baking
+    origin: other
+    culinary_roles: [sweetener]
+    substitution_groups: [liquid_sweetener]
+    density_g_per_ml: 1.42
+    packages_g: [250, 400]
+    fdc: {description: "Honey"}
+
+  - slug: maple-syrup
+    name: {en: "Maple syrup", pl: "Syrop klonowy"}
+    aliases: {en: [maple syrup], pl: [syrop klonowy]}
+    category: sweets_baking
+    origin: plant
+    culinary_roles: [sweetener]
+    substitution_groups: [liquid_sweetener]
+    density_g_per_ml: 1.33
+    packages_g: [250]
+    fdc: {description: "Syrups, maple"}
+
+  - slug: sugar-white
+    name: {en: "Sugar, white", pl: "Cukier biały"}
+    aliases: {en: [sugar, white sugar, granulated sugar], pl: [cukier, cukier biały, cukier kryształ]}
+    category: sweets_baking
+    origin: plant
+    culinary_roles: [sweetener]
+    substitution_groups: [dry_sweetener]
+    portions: {szklanka: 220, cup: 200, tbsp: 12.5, tsp: 4.2}
+    packages_g: [1000]
+    fdc: {description: "Sugars, granulated"}
+
+  - slug: cocoa-powder
+    name: {en: "Cocoa powder, unsweetened", pl: "Kakao naturalne"}
+    aliases: {en: [cocoa, cocoa powder], pl: [kakao, kakao naturalne, kakao gorzkie]}
+    category: sweets_baking
+    origin: plant
+    culinary_roles: [seasoning]
+    substitution_groups: [cocoa]
+    portions: {tbsp: 5.4, tsp: 1.8}
+    packages_g: [80, 150]
+    fdc: {description: "Cocoa, dry powder, unsweetened"}
+
+  - slug: dark-chocolate-70
+    name: {en: "Dark chocolate 70–85%", pl: "Czekolada gorzka 70–85%"}
+    aliases: {en: [dark chocolate], pl: [gorzka czekolada, czekolada gorzka]}
+    category: sweets_baking
+    origin: plant
+    culinary_roles: [topping, sweetener]
+    substitution_groups: [chocolate]
+    portions: {piece: 5}  # one square
+    packages_g: [90, 100]
+    fdc: {description: "Chocolate, dark, 70-85% cacao solids"}
+
+  - slug: baking-powder
+    name: {en: "Baking powder", pl: "Proszek do pieczenia"}
+    aliases: {en: [baking powder], pl: [proszek do pieczenia]}
+    category: sweets_baking
+    origin: other
+    culinary_roles: [leavening]
+    portions: {tsp: 4.6, pack: 15}
+    packages_g: [15, 30]
+    fdc: {description: "Leavening agents, baking powder, double-acting, sodium aluminum sulfate"}
+
+  # ── Condiments ────────────────────────────────────────────────────────────
+  - slug: soy-sauce
+    name: {en: "Soy sauce", pl: "Sos sojowy"}
+    aliases: {en: [soy sauce, soya sauce, shoyu], pl: [sos sojowy]}
+    category: condiments
+    origin: plant
+    allergens: [soy, gluten]
+    culinary_roles: [seasoning, sauce_base]
+    substitution_groups: [umami_sauce]
+    density_g_per_ml: 1.15
+    packages_g: [150, 500]
+    fdc: {description: "Soy sauce made from soy and wheat (shoyu)"}
+
+  - slug: mustard
+    name: {en: "Mustard, prepared", pl: "Musztarda"}
+    aliases: {en: [mustard, yellow mustard, dijon mustard], pl: [musztarda, musztarda dijon, musztarda sarepska]}
+    category: condiments
+    origin: plant
+    allergens: [mustard]
+    culinary_roles: [seasoning, sauce_base]
+    substitution_groups: [mustard]
+    portions: {tsp: 5, tbsp: 15}
+    packages_g: [180, 190]
+    fdc: {description: "Mustard, prepared, yellow"}
+
+  - slug: mayonnaise
+    name: {en: "Mayonnaise", pl: "Majonez"}
+    aliases: {en: [mayonnaise, mayo], pl: [majonez]}
+    category: condiments
+    origin: other
+    allergens: [eggs]
+    derived_from: [egg-whole-raw]
+    culinary_roles: [sauce_base, creamy_base]
+    substitution_groups: [creamy_sauce]
+    portions: {tbsp: 14, tsp: 5}
+    packages_g: [310, 400]
+    fdc: {description: "Salad dressing, mayonnaise, regular"}
+
+  - slug: ketchup
+    name: {en: "Ketchup", pl: "Ketchup"}
+    aliases: {en: [ketchup, catsup], pl: [ketchup, keczup]}
+    category: condiments
+    origin: plant
+    culinary_roles: [sauce_base, seasoning]
+    substitution_groups: [tomato_base]
+    portions: {tbsp: 17, tsp: 6}
+    packages_g: [450, 480]
+    fdc: {description: "Catsup"}
+
+  # ── Spices ────────────────────────────────────────────────────────────────
+  - slug: salt
+    name: {en: "Salt", pl: "Sól"}
+    aliases: {en: [salt, table salt, sea salt], pl: [sól, sól morska, sól kuchenna]}
+    category: spices
+    origin: other
+    culinary_roles: [seasoning]
+    portions: {tsp: 6, pinch: 0.4}
+    packages_g: [1000]
+    fdc: {description: "Salt, table"}
+
+  - slug: black-pepper
+    name: {en: "Black pepper, ground", pl: "Pieprz czarny mielony"}
+    aliases: {en: [black pepper, pepper, ground pepper], pl: [pieprz, pieprz czarny, pieprz mielony]}
+    category: spices
+    origin: plant
+    culinary_roles: [seasoning]
+    portions: {tsp: 2.3, pinch: 0.1}
+    packages_g: [20, 50]
+    fdc: {description: "Spices, pepper, black"}
+
+  - slug: paprika-sweet
+    name: {en: "Paprika", pl: "Papryka słodka mielona"}
+    aliases: {en: [paprika, sweet paprika, smoked paprika], pl: [papryka mielona, papryka słodka mielona, papryka wędzona]}
+    category: spices
+    origin: plant
+    culinary_roles: [seasoning]
+    portions: {tsp: 2.3, pinch: 0.2}
+    packages_g: [20, 50]
+    fdc: {description: "Spices, paprika"}
+
+  - slug: cinnamon
+    name: {en: "Cinnamon, ground", pl: "Cynamon mielony"}
+    aliases: {en: [cinnamon], pl: [cynamon]}
+    category: spices
+    origin: plant
+    culinary_roles: [seasoning]
+    portions: {tsp: 2.6, pinch: 0.2}
+    packages_g: [15, 50]
+    fdc: {description: "Spices, cinnamon, ground"}
+
+  - slug: cumin
+    name: {en: "Cumin", pl: "Kmin rzymski"}
+    aliases: {en: [cumin, ground cumin], pl: [kmin rzymski, kumin]}
+    category: spices
+    origin: plant
+    culinary_roles: [seasoning]
+    portions: {tsp: 2.1, pinch: 0.2}
+    packages_g: [20]
+    fdc: {description: "Spices, cumin seed"}

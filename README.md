@@ -4,11 +4,13 @@ Intelligent meal planning for iOS: import any recipe (social media, link, PDF) a
 
 - [Product Requirements (PRD)](docs/PRD.md)
 - [Development Plan: architecture, stack, infrastructure costs, sprints](docs/DEVELOPMENT_PLAN.md)
+- [Backend: running locally, checks, API](backend/README.md)
+- [Food data: loading USDA FoodData Central](data/README.md)
 
-## Planned repository layout
+## Repository layout
 
 ```
-ios/        SwiftUI app + Share Extension + local Swift packages
+ios/        SwiftUI app + Share Extension + local Swift packages (not started)
 backend/    Python / FastAPI modular monolith + arq worker
 infra/      Docker Compose, Caddy, backup scripts
 data/       Food database seeds and import scripts

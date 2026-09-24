@@ -1,0 +1,48 @@
+# Local development stack.
+#   docker compose -f infra/docker-compose.yml up --build
+# API: http://localhost:8000/docs
+name: fitmeal
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: fitmeal
+      POSTGRES_PASSWORD: fitmeal
+      POSTGRES_DB: fitmeal
+    ports: ["5432:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./postgres/create-test-db.sql:/docker-entrypoint-initdb.d/create-test-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fitmeal -d fitmeal"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+
+  api:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    environment:
+      FITMEAL_DATABASE_URL: postgresql+asyncpg://fitmeal:fitmeal@postgres:5432/fitmeal
+      FITMEAL_REDIS_URL: redis://redis:6379/0
+    ports: ["8000:8000"]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_started}
+    # live reload: mount the code, keep the image's virtualenv
+    volumes:
+      - ../backend/app:/app/backend/app
+      - ../backend/alembic:/app/backend/alembic
+      - ../data:/app/data
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+volumes:
+  pgdata:
