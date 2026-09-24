@@ -1,0 +1,38 @@
+// FitMeal design system — React 18, window.FitMeal. Types are documentation.
+import * as React from 'react';
+type Tone = 'neutral' | 'basil' | 'paprika' | 'warning' | 'danger' | 'premium' | 'solid';
+type Macro = 'protein' | 'carbs' | 'fat';
+export interface DeltaItem { value: number; unit: 'kcal' | 'g' | 'PLN'; letter?: 'P' | 'C' | 'F'; tone?: 'good' | 'bad' | 'neutral' }
+export declare const Icon: React.FC<{ name: string; size?: number; weight?: number; label?: string; className?: string }> & { names: string[] };
+export declare const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'quiet' | 'danger' | 'premium' | 'accent'; size?: 'lg' | 'md' | 'sm'; icon?: string; trailingIcon?: string; block?: boolean }>;
+export declare const IconButton: React.FC<{ icon: string; label: string; variant?: 'sunken' | 'raised'; size?: number; onClick?: () => void; disabled?: boolean }>;
+export declare const Chip: React.FC<{ selected?: boolean; onChange?: (v: boolean) => void; icon?: string; disabled?: boolean; children: React.ReactNode }>;
+export declare const SegmentedControl: React.FC<{ options: (string | { value: string; label: string })[]; value?: string; onChange?: (v: string) => void; label?: string }>;
+export declare const SelectCard: React.FC<{ title: string; description?: string; icon?: string; meta?: string; selected?: boolean; multiple?: boolean; onChange?: (v: boolean) => void }>;
+export declare const Toggle: React.FC<{ label: string; description?: string; checked?: boolean; onChange?: (v: boolean) => void; disabled?: boolean }>;
+export declare const Checkbox: React.FC<{ label: string; checked?: boolean; onChange?: (v: boolean) => void }>;
+export declare const NumberField: React.FC<{ label?: string; value?: string; unit?: string; hint?: string; error?: string; large?: boolean; placeholder?: string }>;
+export declare const ExclusionRow: React.FC<{ name: string; examples?: string; severity?: 'allergy' | 'intolerance' | 'dislike' | 'prefer-not' | null; onChange?: (v: string | null) => void }>;
+export declare const DistributionEditor: React.FC<{ kcal: number; meals: { name: string; pct: number }[] }>;
+export declare const MacroRing: React.FC<{ value: number; target: number; macros?: Partial<Record<Macro, { share: number }>>; size?: number; stroke?: number; label?: string }>;
+export declare const MacroBar: React.FC<{ macro: Macro; value: number; target: number; mode?: 'min' | 'exact'; compact?: boolean }>;
+export declare const MacroLine: React.FC<{ kcal?: number; protein?: number; carbs?: number; fat?: number; size?: 'lg' }>;
+export declare const Delta: React.FC<{ items: DeltaItem[] }>;
+export declare const Badge: React.FC<{ tone?: Tone; icon?: string; children: React.ReactNode }>;
+export declare const MealCard: React.FC<{ slot: string; time?: string; title: string; kcal: number; protein: number; carbs?: number; fat?: number; badges?: { label: string; tone?: Tone; icon?: string }[]; status?: 'planned' | 'eaten'; swappable?: boolean; actions?: boolean; onToggleEaten?: false }>;
+export declare const DayStrip: React.FC<{ days: { name: string; num: number; state?: 'planned' | 'done' | 'prep' }[]; selected?: number }>;
+export declare const RebalanceBanner: React.FC<{ title?: string; body: string; before: { kcal: number; protein: number }; after: { kcal: number; protein: number }; cta?: string }>;
+export declare const IngredientRow: React.FC<{ name: string; amount: string; was?: string; role?: string; excluded?: string; checkable?: boolean; checked?: boolean; swappable?: boolean }>;
+export declare const SwapOption: React.FC<{ title: string; amount?: string; delta?: DeltaItem[]; best?: boolean; note?: string; selected?: boolean; blocked?: string }>;
+export declare const ChangeItem: React.FC<{ what: string; effect: string; icon?: string }>;
+export declare const CompareCard: React.FC<{ original: { kcal: number; protein: number }; yours: { kcal: number; protein: number }; target?: string; found?: boolean; foundLabel?: string; originalLabel?: string; yoursLabel?: string }>;
+export declare const ConfidencePrompt: React.FC<{ raw: string; question: string; options: string[]; selected?: string }>;
+export declare const ShoppingItem: React.FC<{ name: string; qty: string; packages?: string; pantry?: string; price?: string; checked?: boolean }>;
+export declare const StatTile: React.FC<{ value: string; unit?: string; label: string; note?: string }>;
+export declare const PlanCard: React.FC<{ tier?: 'free' | 'standard' | 'premium'; name: string; flag?: string; promise?: string; price: string; period?: string; subprice?: string; features?: string[]; selected?: boolean; soon?: boolean }>;
+export declare const LockedPreview: React.FC<{ kicker: string; stats: { label: string; from: string; to: string }[]; note?: string; cta: string; tier?: 'standard' | 'premium' }>;
+export declare const SectionHeader: React.FC<{ title: string; meta?: string; action?: string }>;
+export declare const NavBar: React.FC<{ title: string; large?: boolean; subtitle?: string; back?: string; trailing?: React.ReactNode }>;
+export declare const OnboardingProgress: React.FC<{ step: number; total?: number }>;
+export declare const TabBar: React.FC<{ active?: 'today' | 'plan' | 'shopping' | 'profile' }>;
+export declare const PhoneFrame: React.FC<{ caption?: string; footer?: React.ReactNode; theme?: 'light' | 'dark'; children?: React.ReactNode }>;

@@ -1,0 +1,13 @@
+<!-- @dsCard group="Meals" height=96 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>DayStrip — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {style:{padding:16, maxWidth:360}}, h(F.DayStrip, {selected:2, days:[{name:'Mon',num:22,state:'done'},{name:'Tue',num:23,state:'done'},{name:'Wed',num:24,state:'prep'},{name:'Thu',num:25},{name:'Fri',num:26,state:'prep'},{name:'Sat',num:27},{name:'Sun',num:28}]})));
+</script>
+</body>
+</html>

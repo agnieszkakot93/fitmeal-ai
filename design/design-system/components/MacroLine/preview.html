@@ -1,0 +1,14 @@
+<!-- @dsCard group="Nutrition" height=90 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>MacroLine — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-stack', style:{padding:16}},
+  h(F.MacroLine, {kcal:520, protein:44, carbs:52, fat:12}), h(F.MacroLine, {kcal:1497, protein:118, carbs:132, fat:55, size:'lg'}), h(F.MacroLine, {kcal:548, protein:49})));
+</script>
+</body>
+</html>

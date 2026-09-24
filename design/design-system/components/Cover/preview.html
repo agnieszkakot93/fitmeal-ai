@@ -1,0 +1,39 @@
+<!-- @dsCard height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>FitMeal — cover</title>
+<style>
+  html, body { margin: 0; height: 100%; background: var(--surface); }
+  .cv { position: relative; width: 960px; height: 300px; overflow: hidden; background: var(--surface); }
+  .cv svg { position: absolute; left: 480px; top: 0; }
+  .basil { fill: var(--basil); } .paprika { fill: var(--paprika); } .carbs { fill: var(--macro-carbs); }
+  .fat { fill: var(--macro-fat); } .soft { fill: var(--basil-soft); } .ink { fill: var(--ink); }
+  .tile { rx: var(--radius-lg); } .sheet { rx: var(--radius-xl); }
+  .arc { fill: none; stroke-linecap: round; }
+  .arc-on { stroke: var(--on-basil); } .arc-carbs { stroke: var(--macro-carbs); } .arc-soft { stroke: var(--basil-soft); }
+  .name { position: absolute; left: 40px; bottom: 64px; margin: 0; font: 700 104px/0.92 var(--font-display); letter-spacing: -0.035em; color: var(--ink); }
+  .tag { position: absolute; left: 44px; bottom: 32px; margin: 0; max-width: 440px; font: 400 14px/20px var(--font-text); color: var(--ink-muted); }
+</style></head>
+<body>
+<div class="cv">
+  <!--
+    blocks: basil 240×220 slab (radius-xl), paprika disc r=72 (pill = half side), macro-carbs 200×128 tile (radius-lg), macro-fat 96×96 (radius-lg), basil-soft 224×72 (radius-lg)
+    arrangement: one tall basil slab bleeding off the top with satellites stepping down to the bottom-right edge
+    pattern: literal motif (the macro ring) — three round-capped ring arcs from the MacroRing, because the ring is what people remember the app by
+    scales: gaps space-4 (16) / space-6 (24); radii radius-lg 20, radius-xl 28, radius-pill; ring stroke 14 = size-ring / 12
+  -->
+  <svg width="480" height="300" viewBox="0 0 480 300" aria-hidden="true">
+    <rect class="basil sheet" x="24" y="-28" width="240" height="220"/>
+    <circle class="arc arc-soft" cx="144" cy="82" r="62" stroke-width="14" opacity="0.35"/>
+    <circle class="arc arc-on" cx="144" cy="82" r="62" stroke-width="14" stroke-dasharray="300 390" transform="rotate(-90 144 82)"/>
+    <circle class="arc arc-carbs" cx="144" cy="82" r="38" stroke-width="8" stroke-dasharray="150 239" transform="rotate(-90 144 82)"/>
+    <circle class="paprika" cx="368" cy="72" r="72"/>
+    <rect class="soft tile" x="24" y="208" width="224" height="72"/>
+    <rect class="carbs tile" x="280" y="168" width="220" height="152"/>
+    <rect class="fat tile" x="304" y="192" width="72" height="72"/>
+  </svg>
+  <p class="name">FitMeal</p>
+  <p class="tag">Your favorite food. Your macros. Less waste.</p>
+</div>
+</body>
+</html>

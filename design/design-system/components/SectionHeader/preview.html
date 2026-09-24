@@ -1,0 +1,13 @@
+<!-- @dsCard group="Navigation" height=90 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SectionHeader — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:360}}, h(F.SectionHeader, {title:'Protein', meta:'3 items · ~52 PLN', action:'Edit'}), h(F.SectionHeader, {title:'Dairy'})));
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!-- @dsCard group="Inputs" height=270 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SelectCard — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.FitMeal, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:360, gap:8}},
+  h(F.SelectCard, {icon:'flame', title:'Lose fat', description:'About 400–500 kcal under maintenance', selected:true}),
+  h(F.SelectCard, {icon:'target', title:'Maintain', description:'Eat at maintenance, keep protein high'}),
+  h(F.SelectCard, {icon:'plus', title:'Build muscle', description:'Small surplus with a protein minimum'}),
+  h(F.SelectCard, {icon:'edit', title:'Custom target', description:'Type your own calories and macros'})));
+</script>
+</body>
+</html>
