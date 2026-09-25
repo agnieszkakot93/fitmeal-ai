@@ -61,6 +61,8 @@ def test_inherited_allergen_satisfies_origin() -> None:
         ("Couscous", "Kuskus", "gluten"),
         ("Peanut butter", "Masło", "peanuts"),
         ("Snack", "Orzeszki ziemne", "peanuts"),
+        ("Grana Padano", "Ser", "eggs"),
+        ("Hard cheese", "Ser grana padano", "eggs"),
         ("Firm tofu", "Tofu", "soy"),
         ("Drink", "Napój sojowy", "soy"),
         ("Tahini", "Pasta", "sesame"),
@@ -93,11 +95,13 @@ def test_alias_counts_like_a_name() -> None:
         ("Coconut milk", "Mleczko kokosowe"),
         ("Nutmeg", "Gałka muszkatołowa"),
         ("Eggplant", "Bakłażan"),
+        ("Parmesan", "Parmezan"),
         # explicitly free from it
         ("Gluten-free rolled oats", "Płatki owsiane bezglutenowe"),
         ("Soy free spread", "Pasta bez soi"),
         ("Nut-free granola", "Granola"),
         ("Almond-flavour, nut free", "Ciastka"),
+        ("Grana Padano, lysozyme-free", "Grana Padano bez lizozymu"),
     ],
 )
 def test_no_false_alarms(en: str, pl: str) -> None:

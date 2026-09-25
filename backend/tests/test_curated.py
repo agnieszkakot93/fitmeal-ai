@@ -71,12 +71,23 @@ def test_real_file_policy_traces_cite_a_rule_of_the_policy(curated: CuratedFile)
         ("oats-rolled", Allergen.GLUTEN),
         ("celery-stalk", Allergen.CELERY),
         ("tahini", Allergen.SESAME),
+        ("grana-padano", Allergen.EGGS),
     ],
 )
 def test_known_allergens(
     effective: dict[str, frozenset[Allergen]], slug: str, allergen: Allergen
 ) -> None:
     assert allergen in effective[slug]
+
+
+def test_parmesan_is_egg_free_and_does_not_claim_grana_padano(
+    curated: CuratedFile, effective: dict[str, frozenset[Allergen]]
+) -> None:
+    # Parmigiano Reggiano has no egg lysozyme; Grana Padano normally does, so
+    # a recipe line saying "grana padano" must not resolve to parmesan.
+    parmesan = next(f for f in curated.foods if f.slug == "parmesan")
+    assert Allergen.EGGS not in effective["parmesan"]
+    assert not any("grana" in a for a in (*parmesan.aliases.en, *parmesan.aliases.pl))
 
 
 def test_real_file_traces_never_repeat_contained_allergens(

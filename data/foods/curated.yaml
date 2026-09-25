@@ -331,10 +331,26 @@ foods:
 
   - slug: parmesan
     name: {en: "Parmesan", pl: "Parmezan"}
-    aliases: {en: [parmesan, parmigiano, grated parmesan], pl: [parmezan, ser parmezan, grana padano]}
+    aliases: {en: [parmesan, parmigiano, grated parmesan], pl: [parmezan, ser parmezan]}
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
+    traces: {status: unknown}
+    culinary_roles: [cheese, topping, seasoning]
+    substitution_groups: [hard_cheese]
+    portions: {tbsp: 5}
+    packages_g: [100, 200]
+    fdc: {description: "Cheese, parmesan, hard"}
+    review: {status: draft}
+
+  # Kept apart from parmesan: Grana Padano normally contains lysozyme from egg
+  # ("lizozym z jaja"), a contained allergen, while Parmigiano Reggiano does not.
+  - slug: grana-padano
+    name: {en: "Grana Padano", pl: "Grana Padano"}
+    aliases: {en: [grana padano, grana padano cheese], pl: [grana padano, ser grana padano]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk, eggs]
     traces: {status: unknown}
     culinary_roles: [cheese, topping, seasoning]
     substitution_groups: [hard_cheese]
