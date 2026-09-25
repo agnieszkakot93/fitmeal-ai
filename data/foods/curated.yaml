@@ -32,7 +32,7 @@ foods:
     aliases: {en: [chicken breast, chicken fillet, chicken breast fillet], pl: [pierś z kurczaka, filet z kurczaka, filet z piersi kurczaka, kurczak]}
     category: meat_fish
     origin: poultry
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
     culinary_roles: [main_protein]
     substitution_groups: [lean_poultry]
     portions: {piece: 200}
@@ -45,7 +45,7 @@ foods:
     aliases: {en: [chicken thigh, boneless chicken thigh], pl: [udo z kurczaka, udko z kurczaka, filet z uda kurczaka, mięso z ud]}
     category: meat_fish
     origin: poultry
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
     culinary_roles: [main_protein]
     substitution_groups: [poultry]
     portions: {piece: 110}
@@ -58,7 +58,7 @@ foods:
     aliases: {en: [turkey breast, turkey fillet], pl: [pierś z indyka, filet z indyka, indyk]}
     category: meat_fish
     origin: poultry
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
     culinary_roles: [main_protein]
     substitution_groups: [lean_poultry]
     packages_g: [500, 1000]
@@ -70,7 +70,7 @@ foods:
     aliases: {en: [ground turkey, minced turkey, turkey mince], pl: [mielony indyk, mięso mielone z indyka, indyk mielony]}
     category: meat_fish
     origin: poultry
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
     culinary_roles: [main_protein]
     substitution_groups: [ground_meat]
     packages_g: [400, 500]
@@ -82,7 +82,7 @@ foods:
     aliases: {en: [ground beef, minced beef, beef mince, lean ground beef], pl: [mielona wołowina, wołowina mielona, mięso mielone wołowe]}
     category: meat_fish
     origin: meat
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
     culinary_roles: [main_protein]
     substitution_groups: [ground_meat, red_meat]
     packages_g: [400, 500]
@@ -94,7 +94,7 @@ foods:
     aliases: {en: [pork tenderloin, pork fillet], pl: [polędwiczka wieprzowa, polędwica wieprzowa, schab]}
     category: meat_fish
     origin: meat
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
     culinary_roles: [main_protein]
     substitution_groups: [lean_pork, red_meat]
     portions: {piece: 450}
@@ -122,7 +122,8 @@ foods:
     category: meat_fish
     origin: fish
     allergens: [fish]
-    traces: {status: unknown}
+    may_contain: [crustaceans, molluscs]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-fish-seafood"}}
     culinary_roles: [main_protein]
     substitution_groups: [oily_fish]
     portions: {piece: 125}
@@ -136,7 +137,8 @@ foods:
     category: meat_fish
     origin: fish
     allergens: [fish]
-    traces: {status: unknown}
+    may_contain: [crustaceans, molluscs]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-fish-seafood"}}
     culinary_roles: [main_protein]
     substitution_groups: [white_fish]
     portions: {piece: 150}
@@ -164,7 +166,8 @@ foods:
     category: meat_fish
     origin: shellfish
     allergens: [crustaceans]
-    traces: {status: unknown}
+    may_contain: [fish, molluscs]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-fish-seafood"}}
     culinary_roles: [main_protein]
     substitution_groups: [seafood]
     packages_g: [200, 400]
@@ -178,7 +181,7 @@ foods:
     category: dairy_eggs
     origin: egg
     allergens: [eggs]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
     culinary_roles: [main_protein, binder]
     substitution_groups: [egg]
     portions: {piece: 50}
@@ -192,7 +195,7 @@ foods:
     category: dairy_eggs
     origin: egg
     allergens: [eggs]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
     culinary_roles: [main_protein, binder]
     substitution_groups: [egg]
     density_g_per_ml: 1.03
@@ -208,7 +211,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [liquid, creamy_base]
     substitution_groups: [milk]
     density_g_per_ml: 1.03
@@ -222,7 +225,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [liquid]
     substitution_groups: [milk]
     density_g_per_ml: 1.03
@@ -236,7 +239,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [creamy_base, main_protein]
     substitution_groups: [creamy_dairy]
     density_g_per_ml: 1.05
@@ -250,7 +253,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [creamy_base]
     substitution_groups: [creamy_dairy]
     density_g_per_ml: 1.04
@@ -264,7 +267,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [creamy_base, main_protein]
     substitution_groups: [creamy_dairy]
     density_g_per_ml: 1.05
@@ -278,7 +281,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [main_protein, creamy_base, cheese]
     substitution_groups: [fresh_cheese]
     packages_g: [200, 250]
@@ -291,7 +294,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [liquid, creamy_base]
     substitution_groups: [fermented_milk]
     density_g_per_ml: 1.03
@@ -305,7 +308,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [main_protein, creamy_base]
     substitution_groups: [fresh_cheese]
     packages_g: [150, 200]
@@ -318,7 +321,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [cheese]
     substitution_groups: [soft_cheese]
     portions: {piece: 125, slice: 20}
@@ -346,7 +349,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [cheese, topping]
     substitution_groups: [brined_cheese]
     packages_g: [200, 270]
@@ -359,7 +362,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [cheese, topping]
     substitution_groups: [hard_cheese]
     portions: {slice: 20}
@@ -373,7 +376,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [creamy_base, cheese]
     substitution_groups: [creamy_dairy]
     portions: {tbsp: 15}
@@ -387,7 +390,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [cooking_fat]
     substitution_groups: [cooking_fat]
     density_g_per_ml: 0.91
@@ -402,7 +405,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [creamy_base, sauce_base]
     substitution_groups: [creamy_dairy]
     density_g_per_ml: 1.0
@@ -416,7 +419,7 @@ foods:
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
     culinary_roles: [creamy_base, sauce_base]
     substitution_groups: [creamy_dairy]
     density_g_per_ml: 1.01
@@ -511,7 +514,8 @@ foods:
     aliases: {en: [rice, white rice, long grain rice, basmati rice, jasmine rice], pl: [ryż, ryż biały, ryż basmati, ryż jaśminowy, ryż długoziarnisty]}
     category: grains_pasta
     origin: plant
-    traces: {status: unknown}
+    may_contain: [gluten]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#gluten-free-grains"}}
     culinary_roles: [carb_base]
     substitution_groups: [grain]
     portions: {szklanka: 200, cup: 185, tbsp: 12}
@@ -524,7 +528,8 @@ foods:
     aliases: {en: [brown rice], pl: [ryż brązowy, ryż pełnoziarnisty]}
     category: grains_pasta
     origin: plant
-    traces: {status: unknown}
+    may_contain: [gluten]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#gluten-free-grains"}}
     culinary_roles: [carb_base]
     substitution_groups: [grain]
     portions: {szklanka: 195, cup: 185}
@@ -577,7 +582,8 @@ foods:
     aliases: {en: [buckwheat, buckwheat groats, kasha], pl: [kasza gryczana, gryczana]}
     category: grains_pasta
     origin: plant
-    traces: {status: unknown}
+    may_contain: [gluten]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#gluten-free-grains"}}
     culinary_roles: [carb_base]
     substitution_groups: [grain]
     portions: {szklanka: 180, cup: 170}
@@ -590,7 +596,8 @@ foods:
     aliases: {en: [millet], pl: [kasza jaglana, jaglanka, proso]}
     category: grains_pasta
     origin: plant
-    traces: {status: unknown}
+    may_contain: [gluten]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#gluten-free-grains"}}
     culinary_roles: [carb_base]
     substitution_groups: [grain]
     portions: {szklanka: 210, cup: 200}
@@ -631,7 +638,8 @@ foods:
     aliases: {en: [quinoa], pl: [komosa ryżowa, quinoa, kinoa]}
     category: grains_pasta
     origin: plant
-    traces: {status: unknown}
+    may_contain: [gluten]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#gluten-free-grains"}}
     culinary_roles: [carb_base]
     substitution_groups: [grain]
     portions: {szklanka: 180, cup: 170}
@@ -700,7 +708,8 @@ foods:
     aliases: {en: [rice cakes, rice crackers], pl: [wafle ryżowe, wafel ryżowy]}
     category: bakery
     origin: plant
-    traces: {status: unknown}
+    may_contain: [gluten]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#gluten-free-grains"}}
     culinary_roles: [carb_base]
     substitution_groups: [bread]
     portions: {piece: 9}
@@ -713,7 +722,7 @@ foods:
     aliases: {en: [potato, potatoes], pl: [ziemniak, ziemniaki, kartofle]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [carb_base]
     substitution_groups: [potato]
     portions: {piece: 150}
@@ -726,7 +735,7 @@ foods:
     aliases: {en: [sweet potato, sweet potatoes, yam], pl: [batat, bataty, słodki ziemniak]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [carb_base]
     substitution_groups: [potato]
     portions: {piece: 250}
@@ -739,7 +748,7 @@ foods:
     aliases: {en: [tomato, tomatoes], pl: [pomidor, pomidory]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [salad_vegetable]
     portions: {piece: 120}
@@ -751,7 +760,7 @@ foods:
     aliases: {en: [cherry tomatoes, cherry tomato], pl: [pomidorki koktajlowe, pomidorki cherry, pomidorki]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [salad_vegetable]
     portions: {piece: 15, handful: 90}
@@ -764,7 +773,7 @@ foods:
     aliases: {en: [cucumber], pl: [ogórek, ogórek zielony, ogórek szklarniowy]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [salad_vegetable]
     portions: {piece: 300}
@@ -776,7 +785,7 @@ foods:
     aliases: {en: [bell pepper, red pepper, red bell pepper, pepper], pl: [papryka, papryka czerwona, papryka słodka]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [pepper]
     portions: {piece: 180}
@@ -788,7 +797,7 @@ foods:
     aliases: {en: [onion, onions, yellow onion, red onion], pl: [cebula, cebule, czerwona cebula]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [aromatic, vegetable]
     substitution_groups: [allium]
     portions: {piece: 110}
@@ -801,7 +810,7 @@ foods:
     aliases: {en: [garlic, garlic clove], pl: [czosnek, ząbek czosnku]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [aromatic, seasoning]
     substitution_groups: [allium]
     portions: {clove: 4, piece: 50}
@@ -813,7 +822,7 @@ foods:
     aliases: {en: [carrot, carrots], pl: [marchew, marchewka, marchewki]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [root_vegetable]
     portions: {piece: 70}
@@ -826,7 +835,7 @@ foods:
     aliases: {en: [broccoli], pl: [brokuł, brokuły, różyczki brokuła]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [brassica]
     portions: {piece: 400, handful: 60}
@@ -839,7 +848,7 @@ foods:
     aliases: {en: [cauliflower], pl: [kalafior, różyczki kalafiora]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable, carb_base]
     substitution_groups: [brassica]
     portions: {piece: 600}
@@ -852,7 +861,7 @@ foods:
     aliases: {en: [spinach, baby spinach], pl: [szpinak, szpinak baby, młody szpinak]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [leafy_green]
     portions: {handful: 30}
@@ -865,7 +874,7 @@ foods:
     aliases: {en: [arugula, rocket], pl: [rukola, rukiew]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable, topping]
     substitution_groups: [leafy_green]
     portions: {handful: 20}
@@ -878,7 +887,7 @@ foods:
     aliases: {en: [romaine, romaine lettuce, lettuce], pl: [sałata rzymska, sałata, sałata lodowa]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [leafy_green]
     portions: {piece: 400, handful: 25}
@@ -890,7 +899,7 @@ foods:
     aliases: {en: [zucchini, courgette], pl: [cukinia, cukinie]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [squash]
     portions: {piece: 250}
@@ -902,7 +911,7 @@ foods:
     aliases: {en: [eggplant, aubergine], pl: [bakłażan, oberżyna]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [squash]
     portions: {piece: 300}
@@ -914,7 +923,7 @@ foods:
     aliases: {en: [mushrooms, white mushrooms, button mushrooms, champignons], pl: [pieczarki, pieczarka, grzyby]}
     category: vegetables
     origin: fungi
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [mushroom]
     portions: {piece: 18}
@@ -927,7 +936,7 @@ foods:
     aliases: {en: [cabbage, white cabbage], pl: [kapusta, kapusta biała, kapusta słodka]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [brassica]
     portions: {piece: 1500}
@@ -939,7 +948,7 @@ foods:
     aliases: {en: [green beans, string beans], pl: [fasolka szparagowa, fasolka zielona]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [green_vegetable]
     packages_g: [450]
@@ -1017,7 +1026,7 @@ foods:
     aliases: {en: [avocado, avocados], pl: [awokado]}
     category: fruit
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [cooking_fat, creamy_base, topping]
     substitution_groups: [creamy_fat]
     portions: {piece: 150}  # flesh of one medium fruit
@@ -1030,7 +1039,7 @@ foods:
     category: vegetables
     origin: plant
     allergens: [celery]
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [aromatic, vegetable]
     substitution_groups: [aromatic_vegetable]
     portions: {stalk: 40, bunch: 400}
@@ -1042,7 +1051,7 @@ foods:
     aliases: {en: [leek, leeks], pl: [por, pory]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [aromatic, vegetable]
     substitution_groups: [allium]
     portions: {piece: 180}
@@ -1054,7 +1063,7 @@ foods:
     aliases: {en: [beetroot, beet, beets], pl: [burak, buraki, burak czerwony]}
     category: vegetables
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [root_vegetable]
     portions: {piece: 130}
@@ -1067,7 +1076,7 @@ foods:
     aliases: {en: [banana, bananas], pl: [banan, banany]}
     category: fruit
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [fruit, sweetener]
     substitution_groups: [sweet_fruit]
     portions: {piece: 120}  # peeled, medium
@@ -1079,7 +1088,7 @@ foods:
     aliases: {en: [apple, apples], pl: [jabłko, jabłka]}
     category: fruit
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [fruit]
     substitution_groups: [crunchy_fruit]
     portions: {piece: 180}
@@ -1091,7 +1100,7 @@ foods:
     aliases: {en: [blueberries, blueberry], pl: [borówki, borówka amerykańska, borówki amerykańskie, jagody]}
     category: fruit
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [fruit, topping]
     substitution_groups: [berries]
     portions: {handful: 50, szklanka: 150, cup: 148}
@@ -1104,7 +1113,7 @@ foods:
     aliases: {en: [strawberries, strawberry], pl: [truskawki, truskawka]}
     category: fruit
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [fruit, topping]
     substitution_groups: [berries]
     portions: {piece: 15, handful: 80}
@@ -1117,7 +1126,7 @@ foods:
     aliases: {en: [raspberries, raspberry], pl: [maliny, malina]}
     category: fruit
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [fruit, topping]
     substitution_groups: [berries]
     portions: {handful: 50}
@@ -1130,7 +1139,7 @@ foods:
     aliases: {en: [lemon, lemons], pl: [cytryna, cytryny]}
     category: fruit
     origin: plant
-    traces: {status: unknown}
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [acid]
     substitution_groups: [citrus]
     portions: {piece: 60}  # flesh
@@ -1182,7 +1191,8 @@ foods:
     category: nuts_seeds
     origin: plant
     allergens: [peanuts]
-    traces: {status: unknown}
+    may_contain: [tree_nuts]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#peanuts"}}
     culinary_roles: [cooking_fat, topping, sauce_base]
     substitution_groups: [nut_butter]
     portions: {tbsp: 16, tsp: 5}
@@ -1196,7 +1206,8 @@ foods:
     category: nuts_seeds
     origin: plant
     allergens: [tree_nuts]
-    traces: {status: unknown}
+    may_contain: [peanuts]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#tree-nuts"}}
     culinary_roles: [topping, cooking_fat]
     substitution_groups: [nuts]
     portions: {handful: 30, piece: 1.2, tbsp: 9}
@@ -1210,7 +1221,8 @@ foods:
     category: nuts_seeds
     origin: plant
     allergens: [tree_nuts]
-    traces: {status: unknown}
+    may_contain: [peanuts]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#tree-nuts"}}
     culinary_roles: [topping, cooking_fat]
     substitution_groups: [nuts]
     portions: {handful: 30, piece: 4}
@@ -1223,7 +1235,8 @@ foods:
     aliases: {en: [chia, chia seeds], pl: [chia, nasiona chia, szałwia hiszpańska]}
     category: nuts_seeds
     origin: plant
-    traces: {status: unknown}
+    may_contain: [peanuts, tree_nuts, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#seeds"}}
     culinary_roles: [topping, binder]
     substitution_groups: [seeds]
     portions: {tbsp: 12, tsp: 4}
@@ -1236,7 +1249,8 @@ foods:
     aliases: {en: [sunflower seeds], pl: [słonecznik, pestki słonecznika, łuskany słonecznik]}
     category: nuts_seeds
     origin: plant
-    traces: {status: unknown}
+    may_contain: [peanuts, tree_nuts, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#seeds"}}
     culinary_roles: [topping]
     substitution_groups: [seeds]
     portions: {tbsp: 9, handful: 25}
@@ -1250,7 +1264,8 @@ foods:
     category: nuts_seeds
     origin: plant
     allergens: [sesame]
-    traces: {status: unknown}
+    may_contain: [peanuts, tree_nuts]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#seeds"}}
     culinary_roles: [topping]
     substitution_groups: [seeds]
     portions: {tbsp: 9, tsp: 3}
@@ -1479,7 +1494,8 @@ foods:
     aliases: {en: [black pepper, pepper, ground pepper], pl: [pieprz, pieprz czarny, pieprz mielony]}
     category: spices
     origin: plant
-    traces: {status: unknown}
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
     portions: {tsp: 2.3, pinch: 0.1}
     packages_g: [20, 50]
@@ -1491,7 +1507,8 @@ foods:
     aliases: {en: [paprika, sweet paprika, smoked paprika], pl: [papryka mielona, papryka słodka mielona, papryka wędzona]}
     category: spices
     origin: plant
-    traces: {status: unknown}
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
     portions: {tsp: 2.3, pinch: 0.2}
     packages_g: [20, 50]
@@ -1503,7 +1520,8 @@ foods:
     aliases: {en: [cinnamon], pl: [cynamon]}
     category: spices
     origin: plant
-    traces: {status: unknown}
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
     portions: {tsp: 2.6, pinch: 0.2}
     packages_g: [15, 50]
@@ -1515,7 +1533,8 @@ foods:
     aliases: {en: [cumin, ground cumin], pl: [kmin rzymski, kumin]}
     category: spices
     origin: plant
-    traces: {status: unknown}
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
     portions: {tsp: 2.1, pinch: 0.2}
     packages_g: [20]

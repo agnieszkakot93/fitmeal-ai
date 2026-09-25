@@ -35,14 +35,15 @@ review: {status: draft}            # draft | auto_checked | verified
 
   `source` is `{type: label, ref: "<brand, product>"}` for a product label or
   `{type: policy, ref: "TRACE_POLICY.md#<rule-id>"}` for a rule of the generic
-  food policy in [docs/data/TRACE_POLICY.md](../docs/data/TRACE_POLICY.md).
-  That policy is still a **draft**: until the product owner approves it, no
-  entry may use a `policy` source (a test enforces this).
+  food policy in [docs/data/TRACE_POLICY.md](../docs/data/TRACE_POLICY.md)
+  (approved 2026-09-25). A test checks that every `policy` ref names a rule
+  of that policy.
 
   Trace status is inherited through `derived_from`: if a food or anything it
   is derived from is `unknown`, the food's effective status is `unknown`.
 
-Today all entries are `review: draft` and `traces: unknown`.
+Today all entries are `review: draft`. Generic foods covered by a rule of the
+trace policy cite it; everything else is `traces: unknown`.
 
 ### Allergen lint
 

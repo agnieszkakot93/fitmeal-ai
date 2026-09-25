@@ -94,7 +94,7 @@ async def test_food_detail(imported: importer.ImportReport, client: AsyncClient)
     body = res.json()
     assert body["allergens"] == ["eggs"]
     assert body["may_contain"] == []
-    assert body["trace_status"] == "unknown"  # every curated entry is unknown for now
+    assert body["trace_status"] == "none_declared"  # TRACE_POLICY.md#raw-meat-eggs
     assert body["portions_g"] == {"piece": 50}
     assert body["source"] == "usda_fdc"
     assert body["source_ref"] == "748967"  # foundation record preferred
