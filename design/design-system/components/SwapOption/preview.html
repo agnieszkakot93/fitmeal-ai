@@ -1,4 +1,4 @@
-<!-- @dsCard group="Recipes" height=280 -->
+<!-- @dsCard group="Recipes" height=220 -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>SwapOption — preview</title></head>
@@ -8,9 +8,8 @@
 var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:360, gap:8}},
-  h(F.SwapOption, {title:'Turkey breast', amount:'155 g', best:true, selected:true, delta:[{value:4, unit:'kcal'},{value:-2, unit:'g', letter:'P'},{value:1.2, unit:'PLN'}]}),
-  h(F.SwapOption, {title:'Lean beef', amount:'135 g', delta:[{value:38, unit:'kcal', tone:'bad'},{value:1, unit:'g', letter:'P', tone:'good'},{value:3.4, unit:'PLN'}]}),
-  h(F.SwapOption, {title:'Tofu, firm', amount:'220 g', blocked:'Contains soy — your allergy'})));
+  h(F.SwapOption, {title:'Turkey breast', amount:'155 g', best:true, selected:true, delta:[{value:4, unit:'kcal'},{value:-2, unit:'g', letter:'P'}]}),
+  h(F.SwapOption, {title:'Lean beef', amount:'135 g', delta:[{value:38, unit:'kcal', tone:'bad'},{value:1, unit:'g', letter:'P', tone:'good'}], note:'Already on your list'})));
 </script>
 </body>
 </html>

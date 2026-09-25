@@ -1,7 +1,7 @@
-<!-- @dsCard group="Screens" height=900 width=1748 page subtitle="Rebalance after a swap, Recipe, Why did FitMeal change this?, Ingredient swap" -->
+<!-- @dsCard group="Screens" height=900 width=2179 page subtitle="Rebalance proposal (per-meal, eaten meals locked), the can't-restore case, Recipe, Why did FitMeal change this? with keep/undo, Ingredient swap" -->
 <!doctype html>
 <html>
-<head><meta charset="utf-8"><title>Recipe and changes</title></head>
+<head><meta charset="utf-8"><title>Rebalance and recipe</title></head>
 <body>
 <div id="root"></div>
 <script>
@@ -10,19 +10,23 @@ function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(e
 function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
 function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
 function scroll(){ return h.apply(null, ['div', {className:'fm-screen-scroll'}].concat([].slice.call(arguments))); }
-function cta(label, extra){ return h('div', {className:'fm-sticky'}, extra || null, h(F.Button, {variant:'primary', size:'lg', block:true}, label)); }
-function q(title, sub){ return h('div', {style:{display:'flex', flexDirection:'column', gap:8, paddingTop:8}}, h('h1', {className:'fm-hxl', style:{fontSize:32, lineHeight:'36px'}}, title), sub ? h('p', {className:'fm-callout'}, sub) : null); }
+function cta(label, extra, disabled){ return h('div', {className:'fm-sticky'}, extra || null, h(F.Button, {variant:'primary', size:'lg', block:true, disabled:!!disabled}, label)); }
+function q(title, sub){ return h('div', {style:{display:'flex', flexDirection:'column', gap:8, paddingTop:8}}, h('h1', {className:'fm-hxl', style:{fontSize:30, lineHeight:'34px'}}, title), sub ? h('p', {className:'fm-callout'}, sub) : null); }
 function card(){ return h.apply(null, ['div', {style:{background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-lg)', padding:16, display:'flex', flexDirection:'column', gap:12}}].concat([].slice.call(arguments))); }
-function row(label, value, icon){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
-  icon ? h('span', {style:{color:'var(--ink-muted)'}}, h(F.Icon, {name:icon, size:20})) : null,
-  h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)'}}, label),
-  h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value),
+function row(label, value, icon, danger){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
+  icon ? h('span', {style:{color: danger ? 'var(--danger)' : 'var(--ink-muted)'}}, h(F.Icon, {name:icon, size:20})) : null,
+  h('span', {style:{flex:1, font:'500 16px/22px var(--font-text)', color: danger ? 'var(--danger)' : 'var(--ink)'}}, label),
+  value ? h('span', {style:{font:'500 15px/20px var(--font-text)', color:'var(--ink-muted)'}}, value) : null,
   h('span', {style:{color:'var(--ink-faint)'}}, h(F.Icon, {name:'chevron-right', size:18}))); }
+function label(t){ return h('span', {className:'fm-cap'}, t); }
+function sheet(){ return h('div', {key:'s', className:'fm-scrim'}, h.apply(null, ['div', {className:'fm-sheet'}, h('span', {className:'fm-sheet-grab'})].concat([].slice.call(arguments)))); }
+function sheetHead(title){ return h('div', {style:{display:'flex', justifyContent:'space-between', alignItems:'center'}}, h('h2', {className:'fm-h2'}, title), h(F.IconButton, {icon:'close', label:'Close'})); }
 var AV = h(F.Avatar, {initials:'OL', label:'Profile'});
+var PREP = {portion:'1/2', cook:'Wed', eatBy:'Thu'};
 var TODAY_MEALS = [
-  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', swappable:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
-  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
-  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]})
+  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', badges:[{label:'Prepare fresh', icon:'clock'}]}),
+  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, status:'cooked', prep:PREP}),
+  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, prep:PREP})
 ];
 function daySummary(){ return card(
   h('div', {style:{display:'flex', alignItems:'center', gap:16}},
@@ -31,23 +35,30 @@ function daySummary(){ return card(
       h(F.MacroBar, {macro:'protein', value:125, target:115, mode:'min', compact:true}),
       h(F.MacroBar, {macro:'carbs', value:150, target:140, compact:true}),
       h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
+var UP_NEXT = h(F.BottomAccessory, {icon:'clock', title:'Up next · Dinner 19:00', subtitle:'Turkey Pasta Bake · meal prep 1/2', action:'Eat'});
 show([
- Ph('16 Rebalance after swap', [
+ Ph('20 Rebalance proposal', [
    h(F.NavBar, {key:'n', large:true, title:'Today', subtitle:'Wednesday, 24 September', avatar:AV}),
    scroll(
-     h(F.RebalanceBanner, {title:'Your day is 70 kcal over', body:'The new lunch is a little bigger. Make dinner 8% smaller to land back on target.', before:{kcal:1570, protein:123}, after:{kcal:1500, protein:120}, cta:'Adjust dinner \u221270 kcal'}),
-     h(F.MealCard, {slot:'Lunch', time:'13:30', title:'Creamy Chicken Pasta', kcal:545, protein:51, carbs:54, fat:14, badges:[{label:'Swapped', tone:'basil', icon:'swap'},{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]}),
-     h(F.MealCard, {slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, badges:[{label:'Meal prep \u00b7 1/2', tone:'paprika', icon:'repeat'}]})),
+     h(F.RebalanceProposal, {title:'Your day is 90 kcal over', body:'The new lunch is bigger. Rebalance the meal you haven’t eaten yet?', adjustments:[{meal:'Dinner', portion:'\u221216%', kcal:'\u221270 kcal'}], locked:[{meal:'Breakfast', reason:'eaten'}], before:{kcal:1590, protein:129}, after:{kcal:1520, protein:124}, cta:'Apply'}),
+     h(F.MealCard, {slot:'Lunch', time:'13:30', title:'Chicken Katsu Curry', kcal:641, protein:53, carbs:70, fat:18, badges:[{label:'Swapped', tone:'basil', icon:'swap'}], prep:PREP})),
    h(F.TabBar, {key:'t', active:'today'})
  ]),
- Ph('17 Recipe', [
+ Ph('21 Rebalance can’t restore', [
+   h(F.NavBar, {key:'n', large:true, title:'Today', subtitle:'Wednesday, 24 September', avatar:AV}),
+   scroll(
+     h(F.RebalanceProposal, {unreachable:true, title:'Today will be about 140 kcal over', body:'Even −20% on dinner can’t bring your day back to target. Breakfast and lunch are already eaten.', before:{kcal:1760, protein:131}, after:{kcal:1638, protein:123}}),
+     h(F.MealCard, {slot:'Dinner', time:'19:00', title:'Beef Ragu Gnocchi', kcal:612, protein:38, carbs:66, fat:20, badges:[{label:'Swapped', tone:'basil', icon:'swap'}]})),
+   h(F.TabBar, {key:'t', active:'today'})
+ ]),
+ Ph('22 Recipe', [
    h(F.RecipeHero, {key:'hero', className:'fm-hero-top', height:270, macros:{protein:.37, carbs:.40, fat:.23}}),
    h(F.NavBar, {key:'n', overlay:true, back:'Today', title:'', trailing:[h(F.IconButton, {key:1, icon:'heart', label:'Save'}), h(F.IconButton, {key:2, icon:'more', label:'More'})]}),
    scroll(
      h('div', {className:'fm-stack', style:{gap:8, paddingTop:16}},
        h('h1', {className:'fm-h2'}, 'Creamy Chicken Pasta'),
        h(F.MacroLine, {kcal:545, protein:51, carbs:54, fat:14, size:'lg'}),
-       h('div', {className:'fm-row', style:{gap:6}}, h(F.Badge, {icon:'clock'}, '25 min'), h(F.Badge, {icon:'repeat', tone:'paprika'}, '2 portions'), h(F.Badge, {icon:'wallet'}, '~12 PLN'), h(F.Badge, {icon:'fridge', tone:'basil'}, '2 days'))),
+       h('div', {className:'fm-row', style:{gap:6}}, h(F.Badge, {icon:'clock'}, '25 min'), h(F.Badge, {icon:'repeat', tone:'paprika'}, '2 portions'), h(F.Badge, {icon:'fridge', tone:'basil'}, 'Fridge 2 days'))),
      h('button', {type:'button', style:{display:'flex', alignItems:'center', gap:10, padding:'12px 14px', borderRadius:'var(--radius-pill)', border:0, background:'var(--paprika-soft)', color:'var(--paprika-ink)', font:'600 15px/20px var(--font-text)', textAlign:'left', cursor:'pointer'}},
        h(F.Icon, {name:'edit', size:20}), h('span', {style:{flex:1}}, 'Fitted to your lunch · 4 changes'), h(F.Icon, {name:'chevron-right', size:18})),
      h('div', {className:'fm-group'},
@@ -58,32 +69,29 @@ show([
      h(F.Button, {variant:'glass', size:'lg', icon:'play'}, 'Cook'),
      h('div', {style:{flex:1}}, h(F.Button, {variant:'glass-prominent', size:'lg', block:true, icon:'check'}, 'Mark as cooked'))))
  ]),
- Ph('18 Why did FitMeal change this?', [
+ Ph('23 Why did FitMeal change this?', [
    h(F.NavBar, {key:'n', back:'Recipe', title:'Changes'}),
    scroll(
      h('h1', {className:'fm-h2'}, 'Why did FitMeal change this?'),
-     h(F.CompareCard, {found:false, original:{kcal:684, protein:31}, yours:{kcal:545, protein:51}, target:'Lunch target: 555 kcal \u00b7 45+ g protein'}),
+     h(F.CompareCard, {found:false, original:{kcal:684, protein:31}, yours:{kcal:545, protein:51}, target:'Lunch target: 555 kcal · 45+ g protein'}),
      h('ul', {className:'fm-changes'},
-       h(F.ChangeItem, {what:'Replaced cream with skyr', effect:'saves 96 kcal \u00b7 adds 8 g protein', icon:'swap'}),
+       h(F.ChangeItem, {what:'Replaced cream with skyr', effect:'saves 96 kcal · adds 8 g protein', icon:'swap'}),
        h(F.ChangeItem, {what:'Increased chicken by 100 g', effect:'adds 23 g protein', icon:'plus'}),
        h(F.ChangeItem, {what:'Reduced pasta by 80 g', effect:'saves 118 kcal', icon:'minus'}),
        h(F.ChangeItem, {what:'Reduced oil by 8 g', effect:'saves 72 kcal', icon:'minus'})),
-     h('p', {className:'fm-foot'}, 'Numbers come from our nutrition database, not from AI. Tap a change to undo it.')),
-   h('div', {key:'c'}, cta('Keep changes'))
+     h('p', {className:'fm-foot'}, 'Numbers come from our nutrition database, not from AI. Undo any change and FitMeal re-solves without it.')),
+   h('div', {key:'c', className:'fm-sticky'}, h(F.Button, {variant:'primary', size:'lg', block:true}, 'Save my version'), h(F.Button, {variant:'quiet', size:'md', block:true}, 'Discard changes'))
  ]),
- Ph('19 Ingredient swap', [
+ Ph('24 Ingredient swap', [
    h(F.NavBar, {key:'n', back:'Recipe', title:''}),
-   h('div', {key:'s', className:'fm-scrim'},
-     h('div', {className:'fm-sheet'},
-       h('span', {className:'fm-sheet-grab'}),
-       h('div', {style:{display:'flex', justifyContent:'space-between', alignItems:'center'}}, h('h2', {className:'fm-h2'}, 'Swap chicken breast'), h(F.IconButton, {icon:'close', label:'Close'})),
-       h('p', {className:'fm-callout'}, '300 g \u00b7 amounts are converted by protein, not 1:1'),
-       h('div', {className:'fm-stack', style:{gap:8}},
-         h(F.SwapOption, {title:'Turkey breast', amount:'310 g', best:true, selected:true, delta:[{value:4, unit:'kcal'},{value:-2, unit:'g', letter:'P'},{value:1.2, unit:'PLN'}]}),
-         h(F.SwapOption, {title:'Lean beef', amount:'270 g', delta:[{value:76, unit:'kcal', tone:'bad'},{value:1, unit:'g', letter:'P', tone:'good'},{value:6.8, unit:'PLN'}]}),
-         h(F.SwapOption, {title:'Tempeh', amount:'340 g', delta:[{value:190, unit:'kcal', tone:'bad'},{value:-4, unit:'g', letter:'P', tone:'bad'},{value:4.1, unit:'PLN'}]}),
-         h(F.SwapOption, {title:'Tofu, firm', blocked:'Contains soy \u2014 your allergy'})),
-       h(F.Button, {variant:'primary', size:'lg', block:true}, 'Use turkey breast')))
+   sheet(sheetHead('Swap chicken breast'),
+     h('p', {className:'fm-callout'}, '300 g · amounts are converted by protein, not 1:1'),
+     h('div', {className:'fm-stack', style:{gap:8}},
+       h(F.SwapOption, {title:'Turkey breast', amount:'310 g', best:true, selected:true, delta:[{value:4, unit:'kcal'},{value:-2, unit:'g', letter:'P'}]}),
+       h(F.SwapOption, {title:'Lean beef', amount:'270 g', delta:[{value:76, unit:'kcal', tone:'bad'},{value:1, unit:'g', letter:'P', tone:'good'}]}),
+       h(F.SwapOption, {title:'Tempeh', amount:'340 g', delta:[{value:190, unit:'kcal', tone:'bad'},{value:-4, unit:'g', letter:'P', tone:'bad'}]})),
+     h('p', {className:'fm-foot'}, 'Only options that are safe for your allergies and intolerances are shown.'),
+     h(F.Button, {variant:'primary', size:'lg', block:true}, 'Use turkey breast'))
  ])
 ]);
 </script>

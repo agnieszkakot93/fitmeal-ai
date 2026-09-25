@@ -1,7 +1,7 @@
-<!-- @dsCard group="Screens" height=900 width=1317 page subtitle="Today, Recipe, and the allergen notice with a rebalance proposal in the dark theme" -->
+<!-- @dsCard group="Screens" height=900 width=2179 page subtitle="Optional body data, suggested calories, the 1,200 kcal floor, Macros, Meals and distribution" -->
 <!doctype html>
 <html>
-<head><meta charset="utf-8"><title>Dark theme</title></head>
+<head><meta charset="utf-8"><title>Onboarding 2 — body data and targets</title></head>
 <body>
 <div id="root"></div>
 <script>
@@ -37,30 +37,50 @@ function daySummary(){ return card(
       h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
 var UP_NEXT = h(F.BottomAccessory, {icon:'clock', title:'Up next · Dinner 19:00', subtitle:'Turkey Pasta Bake · meal prep 1/2', action:'Eat'});
 show([
- Ph('Today · dark', [
-   h(F.NavBar, {key:'n', large:true, title:'Today', subtitle:'Wednesday, 24 September', avatar:AV}),
-   scroll(daySummary(), h(F.SectionHeader, {title:'Meals', meta:'1 of 3 eaten'}), TODAY_MEALS),
-   h(F.TabBar, {key:'t', active:'today', accessory:UP_NEXT})
- ], null, 'dark'),
- Ph('Recipe · dark', [
-   h(F.RecipeHero, {key:'hero', className:'fm-hero-top', height:250}),
-   h(F.NavBar, {key:'n', overlay:true, back:'Today', title:'', trailing:[h(F.IconButton, {key:1, icon:'heart', label:'Save'}), h(F.IconButton, {key:2, icon:'more', label:'More'})]}),
-   scroll(
-     h('h1', {className:'fm-h2', style:{paddingTop:16}}, 'Creamy Chicken Pasta'),
-     h(F.MacroLine, {kcal:545, protein:51, carbs:54, fat:14, size:'lg'}),
-     h(F.CompareCard, {original:{kcal:684, protein:31}, yours:{kcal:545, protein:51}}),
-     h('div', {className:'fm-group'},
-       h(F.IngredientRow, {name:'Chicken breast', amount:'300 g', was:'200 g', role:'protein'}),
-       h(F.IngredientRow, {name:'Skyr, natural', amount:'150 g', was:'Cream 150 g', role:'sauce'}))),
-   h('div', {key:'c', className:'fm-sticky'}, h(F.Button, {variant:'glass-prominent', size:'lg', block:true, icon:'check'}, 'Mark as cooked'))
- ], null, 'dark'),
- Ph('Safety · dark', [
-   h(F.NavBar, {key:'n', large:true, title:'Today', avatar:AV}),
-   scroll(
-     h(F.Notice, {tone:'danger', title:'Contains peanuts (peanut butter)', body:'Peanuts are your allergy. Swap or remove it to plan this recipe.', actions:[{label:'Swap it', icon:'swap'}, {label:'Remove it'}]}),
-     h(F.RebalanceProposal, {title:'Your day is 90 kcal over', adjustments:[{meal:'Dinner', portion:'\u221216%', kcal:'\u221270 kcal'}], locked:[{meal:'Breakfast', reason:'eaten'}], before:{kcal:1590, protein:129}, after:{kcal:1520, protein:124}, cta:'Apply'})),
-   h(F.TabBar, {key:'t', active:'today'})
- ], null, 'dark')
+ Ph('05 Body data (optional)', [
+   h(F.OnboardingProgress, {key:'p', step:5}),
+   scroll(q('Want suggested targets?', 'Optional. Add a few details and we’ll suggest calories and macros.'),
+     h('div', {className:'fm-fieldrow'}, h(F.NumberField, {label:'Age', value:'29', unit:'years'}), h(F.NumberField, {label:'Weight', value:'68', unit:'kg'})),
+     h('div', {className:'fm-fieldrow'}, h(F.NumberField, {label:'Height', value:'170', unit:'cm'}),
+       h('div', {className:'fm-stack', style:{gap:6, flex:1}}, h('span', {className:'fm-field-label'}, 'Sex'), h(F.SegmentedControl, {options:['Female','Male'], value:'Female'}))),
+     h('div', {className:'fm-stack', style:{gap:6}}, h('span', {className:'fm-field-label'}, 'Activity'), h(F.SegmentedControl, {options:['Low','Light','Active','Very'], value:'Light'}),
+       h('p', {className:'fm-foot'}, 'Light: desk job, 2–3 workouts a week.'))),
+   h('div', {key:'c', className:'fm-sticky'},
+     h(F.Button, {variant:'primary', size:'lg', block:true}, 'Suggest my targets'),
+     h(F.Button, {variant:'quiet', size:'md', block:true}, 'Skip, I’ll enter my own'))
+ ]),
+ Ph('06 Calories', [
+   h(F.OnboardingProgress, {key:'p', step:6}),
+   scroll(q('How many calories a day?', 'Suggested from your body data and goal.'),
+     h(F.NumberField, {large:true, value:'1500', unit:'kcal', hint:'Suggested: about 480 kcal under your maintenance. Change it anytime.'}),
+     h(F.Notice, {tone:'offline', icon:'shield', body:'FitMeal never plans below 1,200 kcal a day.'})),
+   h('div', {key:'c'}, cta('Continue'))
+ ]),
+ Ph('06b Below the 1,200 kcal floor', [
+   h(F.OnboardingProgress, {key:'p', step:6}),
+   scroll(q('How many calories a day?'),
+     h(F.NumberField, {large:true, value:'1100', unit:'kcal', error:'FitMeal doesn’t build plans below 1,200 kcal a day. Very low intakes need supervision from a doctor or dietitian.'})),
+   h('div', {key:'c'}, cta('Continue', null, true))
+ ]),
+ Ph('07 Macros · Advanced', [
+   h(F.OnboardingProgress, {key:'p', step:7}),
+   scroll(q('Set your macros'),
+     h(F.SegmentedControl, {options:['Simple','Advanced'], value:'Advanced', label:'Macro mode'}),
+     h('div', {className:'fm-stack'},
+       h(F.NumberField, {label:'Protein', value:'115', unit:'g minimum', hint:'Hit at least this. More is fine.'}),
+       h('div', {className:'fm-fieldrow'}, h(F.NumberField, {label:'Fat', value:'50', unit:'g'}), h(F.NumberField, {label:'Carbs', value:'145', unit:'g'}))),
+     card(label('Adds up to'), h(F.MacroLine, {kcal:1490, protein:115, carbs:145, fat:50, size:'lg'}), h('p', {className:'fm-foot'}, 'Within 10 kcal of your 1,500 kcal target.'))),
+   h('div', {key:'c'}, cta('Continue'))
+ ]),
+ Ph('08–09 Meals & distribution', [
+   h(F.OnboardingProgress, {key:'p', step:9}),
+   scroll(q('How do you eat?'),
+     h('div', {className:'fm-stack', style:{gap:8}}, label('Meals per day'), h(F.SegmentedControl, {options:['2','3','4','5'], value:'3'})),
+     h('div', {className:'fm-stack', style:{gap:8}}, label('Biggest meal'),
+       h('div', {className:'fm-row', style:{gap:8}}, h(F.Chip, null, 'Even'), h(F.Chip, {selected:true}, 'Breakfast'), h(F.Chip, null, 'Lunch'), h(F.Chip, null, 'Dinner'))),
+     h(F.DistributionEditor, {kcal:1500, meals:[{name:'Breakfast', pct:37},{name:'Lunch', pct:36},{name:'Dinner', pct:27}]})),
+   h('div', {key:'c'}, cta('Continue'))
+ ])
 ]);
 </script>
 </body>

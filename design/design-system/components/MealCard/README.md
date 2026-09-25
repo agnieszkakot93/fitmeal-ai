@@ -1,8 +1,13 @@
 # MealCard
 
-One planned meal on Today or the Plan: slot, time, name, macros, meal-prep state and the Recipe / Swap actions.
+One planned meal on Today or the Plan: slot, time, name, macros, meal-prep state, status and the Recipe and Swap actions.
 
-**Props:** `slot` (*Lunch*), `time`, `title`, `kcal`, `protein`, `carbs`, `fat`, `badges` (`[{label, tone, icon}]`), `status` (`planned` | `eaten`), `swappable`, `actions` (false hides the buttons).
+**Props:** `slot` (*Lunch*), `time`, `title`, `kcal`, `protein`, `carbs`, `fat`, `status`, `prep`, `badges` (`[{label, tone, icon}]`), `swappable`, `actions` (false hides the buttons).
+- `status`:
+  - `planned`
+  - `cooked`: adds a *Cooked* badge.
+  - `eaten` or `skipped`: **locked**. The pill shows a lock, Swap disappears, and later swaps and rebalances never change the meal.
+- `prep`: `{portion: '1/2', cook: 'Wed', eatBy: 'Thu'}`. Every prepped meal shows its cook day and "eat by" day.
 
-- The *Eat* pill feeds the North Star metric — keep it on every card on Today.
-- Meal-prep portions read *Meal prep · 1/2*; a shake reads *Prepare fresh*.
+- The *Eat* pill is the North Star event. Keep it on every card on Today and on Weekly Plan, and let it work offline.
+- A meal that stays fresh reads *Prepare fresh*.

@@ -8,7 +8,7 @@
 var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 root(h('div', {className:'fm-stack', style:{padding:16}},
-  h(F.Delta, {items:[{value:4, unit:'kcal'},{value:-2, unit:'g', letter:'P', tone:'bad'},{value:1.2, unit:'PLN'}]}),
+  h(F.Delta, {items:[{value:4, unit:'kcal'},{value:-2, unit:'g', letter:'P', tone:'bad'}]}),
   h(F.Delta, {items:[{value:-96, unit:'kcal', tone:'good'},{value:8, unit:'g', letter:'P', tone:'good'}]})));
 </script>
 </body>

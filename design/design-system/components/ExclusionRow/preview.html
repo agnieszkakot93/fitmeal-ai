@@ -1,4 +1,4 @@
-<!-- @dsCard group="Inputs" height=210 -->
+<!-- @dsCard group="Inputs" height=330 -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>ExclusionRow — preview</title></head>
@@ -8,8 +8,9 @@
 var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:360, gap:8}},
-  h(F.ExclusionRow, {name:'Fish', examples:'salmon, tuna, cod', severity:'dislike'}),
-  h(F.ExclusionRow, {name:'Peanuts', examples:'incl. peanut butter', severity:'allergy'})));
+  h(F.ExclusionRow, {name:'Peanuts', examples:'incl. peanut butter, peanut oil', severity:'allergy'}),
+  h(F.ExclusionRow, {name:'Milk', examples:'incl. whey, skyr, butter', severity:'intolerance'}),
+  h(F.ExclusionRow, {name:'Fish', examples:'salmon, tuna, cod', severity:'dislike'})));
 </script>
 </body>
 </html>

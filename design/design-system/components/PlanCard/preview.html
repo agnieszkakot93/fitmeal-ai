@@ -8,8 +8,8 @@
 var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 root(h('div', {style:{display:'grid', gridTemplateColumns:'repeat(2, 300px)', gap:12, padding:16}},
-  h(F.PlanCard, {tier:'standard', name:'Standard', flag:'Most popular', selected:true, promise:'Plan my week for me', price:'199.99 zł', period:'/ year', subprice:'16.67 zł / month · save 33%', features:['Full 7-day plans','~30 link imports / month','Automatic daily rebalancing','Economy Mode']}),
-  h(F.PlanCard, {tier:'premium', name:'Premium', flag:'Coming soon', soon:true, promise:'Optimize my food and shopping', price:'329.99 zł', period:'/ year', subprice:'27.50 zł / month', features:['14–30 day plans','Pantry First','Package-size optimization']})));
+  h(F.PlanCard, {tier:'standard', name:'Standard', flag:'Most popular', selected:true, promise:'Plan my week for me', price:'199.99 z\u0142', period:'/ year', subprice:'16.67 z\u0142 / month \u00b7 save 33%', features:['5- and 7-day plans with meal prep','~30 link imports / month + PDF','Swaps with daily rebalancing proposals','Economy Mode']}),
+  h(F.PlanCard, {tier:'premium', name:'Premium', flag:'Coming soon', soon:true, promise:'Optimize my food and shopping', price:'329.99 z\u0142', period:'/ year', subprice:'27.50 z\u0142 / month', features:['14\u201330 day plans','Pantry Mode and pricing','Package-size optimization']})));
 </script>
 </body>
 </html>

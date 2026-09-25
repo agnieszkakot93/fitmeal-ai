@@ -1,7 +1,7 @@
-<!-- @dsCard group="Screens" height=900 width=1317 page subtitle="Today, Recipe, and the allergen notice with a rebalance proposal in the dark theme" -->
+<!-- @dsCard group="Screens" height=900 width=1317 page subtitle="No valid plan (what blocked it and what to change), a plan with a relaxed soft goal, and offline behaviour" -->
 <!doctype html>
 <html>
-<head><meta charset="utf-8"><title>Dark theme</title></head>
+<head><meta charset="utf-8"><title>Plan states — no plan, relaxed goals, offline</title></head>
 <body>
 <div id="root"></div>
 <script>
@@ -37,30 +37,35 @@ function daySummary(){ return card(
       h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
 var UP_NEXT = h(F.BottomAccessory, {icon:'clock', title:'Up next · Dinner 19:00', subtitle:'Turkey Pasta Bake · meal prep 1/2', action:'Eat'});
 show([
- Ph('Today · dark', [
-   h(F.NavBar, {key:'n', large:true, title:'Today', subtitle:'Wednesday, 24 September', avatar:AV}),
-   scroll(daySummary(), h(F.SectionHeader, {title:'Meals', meta:'1 of 3 eaten'}), TODAY_MEALS),
-   h(F.TabBar, {key:'t', active:'today', accessory:UP_NEXT})
- ], null, 'dark'),
- Ph('Recipe · dark', [
-   h(F.RecipeHero, {key:'hero', className:'fm-hero-top', height:250}),
-   h(F.NavBar, {key:'n', overlay:true, back:'Today', title:'', trailing:[h(F.IconButton, {key:1, icon:'heart', label:'Save'}), h(F.IconButton, {key:2, icon:'more', label:'More'})]}),
+ Ph('31 No plan possible', [
+   h(F.NavBar, {key:'n', back:'Plan', title:'New week'}),
    scroll(
-     h('h1', {className:'fm-h2', style:{paddingTop:16}}, 'Creamy Chicken Pasta'),
-     h(F.MacroLine, {kcal:545, protein:51, carbs:54, fat:14, size:'lg'}),
-     h(F.CompareCard, {original:{kcal:684, protein:31}, yours:{kcal:545, protein:51}}),
+     h(F.Notice, {tone:'warning', title:'We couldn’t build a 7-day plan', body:'Nothing fits all your hard rules. We never relax allergies, strict intolerances or the 1,200 kcal floor.', items:['Too few breakfasts fit your exclusions and the 15-minute limit']}),
+     label('Change one thing'),
      h('div', {className:'fm-group'},
-       h(F.IngredientRow, {name:'Chicken breast', amount:'300 g', was:'200 g', role:'protein'}),
-       h(F.IngredientRow, {name:'Skyr, natural', amount:'150 g', was:'Cream 150 g', role:'sauce'}))),
-   h('div', {key:'c', className:'fm-sticky'}, h(F.Button, {variant:'glass-prominent', size:'lg', block:true, icon:'check'}, 'Mark as cooked'))
- ], null, 'dark'),
- Ph('Safety · dark', [
-   h(F.NavBar, {key:'n', large:true, title:'Today', avatar:AV}),
+       row('Allow 30-minute breakfasts', '', 'clock'),
+       row('Plan 3 days instead', '', 'plan'),
+       row('Add or import breakfasts', '', 'plus'),
+       row('Milk: avoid when possible', 'intolerance', 'alert')),
+     h('p', {className:'fm-foot'}, 'Your peanut allergy always stays a hard rule.')),
+   h('div', {key:'x'})
+ ]),
+ Ph('32 Plan with a relaxed goal', [
+   h(F.NavBar, {key:'n', large:true, title:'Plan', subtitle:'22–28 Sep · on target 7 of 7 days', avatar:AV}),
    scroll(
-     h(F.Notice, {tone:'danger', title:'Contains peanuts (peanut butter)', body:'Peanuts are your allergy. Swap or remove it to plan this recipe.', actions:[{label:'Swap it', icon:'swap'}, {label:'Remove it'}]}),
-     h(F.RebalanceProposal, {title:'Your day is 90 kcal over', adjustments:[{meal:'Dinner', portion:'\u221216%', kcal:'\u221270 kcal'}], locked:[{meal:'Breakfast', reason:'eaten'}], before:{kcal:1590, protein:129}, after:{kcal:1520, protein:124}, cta:'Apply'})),
+     h(F.Notice, {tone:'info', title:'Plan ready, with 1 goal relaxed', items:['Ingredient reuse: 29 unique items instead of about 24'], actions:[{label:'Keep plan'}, {label:'Change settings'}]}),
+     h(F.MealCard, {slot:'Breakfast', title:'Overnight Oats with Skyr', kcal:512, protein:41, actions:false, onToggleEaten:false, badges:[{label:'Prepare fresh', icon:'clock'}]}),
+     h(F.MealCard, {slot:'Lunch', title:'Chicken Teriyaki', kcal:548, protein:49, actions:false, onToggleEaten:false, prep:PREP})),
+   h(F.TabBar, {key:'t', active:'plan'})
+ ]),
+ Ph('33 Offline', [
+   h(F.NavBar, {key:'n', large:true, title:'Today', subtitle:'Wednesday, 24 September', avatar:AV}),
+   scroll(
+     h(F.Notice, {tone:'offline', title:'You’re offline', body:'Your plan, recipes and shopping list work. Meals you mark eaten sync later. Swaps and new plans need a connection.'}),
+     h(F.MealCard, {slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, status:'eaten', badges:[{label:'Saved on this phone · syncs later', icon:'wifi-off'}]}),
+     h(F.MealCard, {slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, prep:PREP, swappable:false})),
    h(F.TabBar, {key:'t', active:'today'})
- ], null, 'dark')
+ ])
 ]);
 </script>
 </body>

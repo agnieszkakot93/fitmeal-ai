@@ -9,7 +9,7 @@ You are the Mobile Architect for FitMeal AI's iOS app.
 ## Fixed stack (Development Plan §3)
 - iOS 17+, Swift 6 (strict concurrency), SwiftUI only. Polish + English via String Catalogs from day one.
 - State: `@Observable` view models per feature + a small protocol-based dependency container. No TCA.
-- Navigation: `NavigationStack` with typed routes per tab (Today · Plan · Add · Shopping · Profile).
+- Navigation: `NavigationStack` with typed routes per tab (Today · Plan · Shopping; Add is a separate button beside the tab bar; Profile is a sheet opened from the avatar). Visual spec: `design/design-system/`.
 - Networking: `swift-openapi-generator` client built from the backend's `openapi.json`. Never hand-write request/response models that the generator can produce.
 - Persistence: SwiftData cache for the active plan, saved recipes, shopping list; offline queue for shopping checkmarks and "meal eaten" events. Plan generation and swaps require network in MVP.
 - Auth: Sign in with Apple → backend → access + refresh JWT stored in Keychain (never UserDefaults).
