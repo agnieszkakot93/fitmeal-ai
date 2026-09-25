@@ -131,7 +131,7 @@ Estimates (~4 zł/USD):
 
 - Standard user with ~10 imports and 1 PDF per month: **≈ 1.2 zł/month**, under the PRD target of 3–4 zł.
 - **Import cache:** key by normalized URL for public links, shared across users: a viral recipe imported by 500 users costs one LLM call. Private text imports, including text extracted from PDFs, are cached per user only (content hash scoped to the user), never shared. The per-user personalization is deterministic and free.
-- **Quotas** are enforced in Redis per entitlement (Free: 3 links + 1 PDF per month; Standard: ~30; Premium: fair use) with hard daily caps for abuse.
+- **Quotas** are enforced in Redis per entitlement (Free: 3 links + 1 PDF per month; Standard: ~30; Premium: fair use) with hard daily caps for abuse. Each recipe imported from a PDF counts as one import; the PDF picker shows the remaining quota.
 - **Privacy:** only recipe content goes to the LLM, never the user's profile, allergies or identity (the server does not store the profile at all, D8).
 
 ---
@@ -281,7 +281,7 @@ Allergies, intolerances, body data and diet goals are treated as **health data (
 
 **Not at launch:** marketing email or push (D9). Adding it later needs a separate, optional consent.
 
-Proof of consent: the `ConsentRecord` history (what text version, when, withdrawn when) is what demonstrates consent under Art. 7(1).
+Proof of consent: the `ConsentRecord` history (what text version, when, withdrawn when) is what demonstrates consent under Art. 7(1). On a new phone the 18+ confirmation and the consent screen are shown again, and the new answer is recorded.
 
 ### 7.2 Health profile and recipe imports
 
@@ -403,7 +403,7 @@ Before S7 ships: cache-key tests (canonical tag ignored, query string kept, Shar
 - A legal basis for third parties' health data in uploads (a dietitian's client) and for users' own diagnoses, given that PRD §12.2 says no medical conditions are collected.
 - Whether one user-requested fetch counts as TDM under DSM Art. 4, and whether offering paste-text after an opt-out is acceptable (§7.3).
 - How the DSA Art. 16 notice mechanism applies to private stored imports.
-- Premium fair-use numbers, whether cache hits count against the quota, and how PDF text with many recipes is counted.
+- Premium fair-use numbers and whether cache hits count against the quota. (Decided: each recipe imported from a PDF counts as one import.)
 - Whether Phase 0 testers' uploads need a consent and privacy notice before the go/no-go test.
 - Storing golden-set IG captions in the repo raises copyright and personal-data questions.
 
