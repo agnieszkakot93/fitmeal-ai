@@ -8,7 +8,7 @@ class Settings(BaseSettings):
 
     env: str = "dev"
     database_url: str = "postgresql+asyncpg://fitmeal:fitmeal@localhost:5432/fitmeal"
-    redis_url: str = "redis://localhost:6379/0"
+    redis_url: str = "redis://:fitmeal@localhost:6379/0"
 
 
 @lru_cache
