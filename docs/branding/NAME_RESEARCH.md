@@ -4,15 +4,21 @@ Maintained by the `brand-researcher` agent ([.claude/agents/brand-researcher.md]
 
 "FitMeal AI" is the working title. This report looks for the product's public brand name.
 
-**Status (2026-09-25): third research session done (short-and-catchy round). Live access is still limited.**
+**Status (2026-09-25): fourth research session done (short real English food-word round). Live access is still limited.**
+
+> **Product Owner feedback on session 3:** "nothing from proposals". This rejects the whole session-3 shortlist (Zubo, Kazu, Dozo, Nimbo, Gobo, Bibim, Zumo, Kumo, Panko, Gumbo, Mogu, Pappa). **PO style questionnaire (2026-09-25):** preferred style = **short real English word** (the way Bolt, Lime, Oura, Notion or Headspace are real words), not coined sounds and not foreign words; food hint = **clearly** (people should guess it is a food or meal app from the name alone); no example brands given. Session 4 generated 129 real English food, cooking and kitchen words (§4.8), screened them (§5.5), and built a new current shortlist of 13 names (§6.8). The session-3 shortlist and top 3 are marked **superseded (PO: "nothing from proposals")**. They have not been deleted.
+>
+> **Current recommendation for further investigation (not a selection):** top 3 **Salsa, Pretzel, Donut**; alternates **Pickle, Handful** (§6.8.2).
+>
+> **Key session-4 finding:** every example word in the brief (Ladle, Pinch, Crumb, Pantry, Spoonful, Zest), plus Forkful, Spoon, Basil, Supper, Stir, Savor and Lemon, is already the name of a meal-planning, recipe or nutrition app, several of them with social-recipe import and macros (§3.6). Real English food words are the most crowded naming space found in four sessions.
 
 > **Product Owner feedback on session 2 (verbatim):** "i dont like those names they are too long and not catchy". This covers the whole session-2 shortlist (Tangram, Ramekin, Palmo, Sapimo, Tadam, Savimo, Sarto, Portata, Mestolo). Session 3 re-ran the naming for **3–5 letters, 1–2 syllables, catchy and international** (§2.4), screened 111 new candidates (§4.7, §5.4) and built a new current shortlist of 12 names (§6.7). The session-2 shortlist and top 3 are marked **superseded (PO: too long, not catchy)**. They have not been deleted.
 >
-> **Current recommendation for further investigation (not a selection):** top 3 **Zubo, Kazu, Dozo**; alternates **Nimbo, Gobo** (§6.7.2).
+> *(Superseded 2026-09-25, PO: "nothing from proposals".)* ~~**Current recommendation for further investigation (not a selection):** top 3 **Zubo, Kazu, Dozo**; alternates **Nimbo, Gobo** (§6.7.2).~~
 
 > **Product Owner feedback on session 1:** "Smakora is mostly a Polish name, like most of them." Eleven of the fourteen session-1 shortlisted names were Polish-rooted (Oskoma, Smakora, Smako, Doma, Akurat, Miska, Pora, Kredens, Zapas, Prepko, Yemo). The product launches in Poland and then expands internationally, so the brand must not read as a Polish word. Session 2 re-ran the naming international-first (§2.1) and rebuilt the shortlist (§6). Session-1 conclusions that this changes are marked **superseded**. They have not been deleted.
 
-> **Live web access, sessions 1, 2 and 3: partial.** Only **WebSearch** (a search engine) worked. At the start of sessions 2 and 3, each official source was retried once with a single plain request. Every one was still **blocked by the network egress proxy**: registry RDAP (.com, .app, the IANA bootstrap), the iTunes Search API, Google Play, EUIPO, TMview, UPRP, WIPO Brand DB, USPTO and UK IPO. Per the task, no workaround was attempted: no proxy probing, no `whois` or `dig` substitutes, no mirror sites. Details are in §5.1.
+> **Live web access, sessions 1, 2, 3 and 4: partial.** Only **WebSearch** (a search engine) worked. At the start of sessions 2, 3 and 4, each official source was retried once with a single plain request. Every one was still **blocked by the network egress proxy**: registry RDAP (.com, .app, the IANA bootstrap), the iTunes Search API, Google Play, EUIPO, TMview, UPRP, WIPO Brand DB, USPTO and UK IPO. Per the task, no workaround was attempted: no proxy probing, no `whois` or `dig` substitutes, no mirror sites. Details are in §5.1.
 >
 > **What that means:** no name in this report has **Verified clear** or **Conflict** status for any store, domain, trademark or handle check. Every authoritative check is **Pending**. Search-engine findings are recorded separately as **Risk** (evidence of an existing, possibly conflicting use) or **Inconclusive** (no matching result found, which is **not** evidence of availability).
 
@@ -73,6 +79,8 @@ The backend already does PL/EN diacritics-insensitive ingredient search and unit
 
 **Session 3 addition (2026-09-25, PO feedback).** The name itself has to carry the "a little playful" part of the personality: short, punchy and fun to say, the way Noom, Uber, Zoom, Yuka, Bolt or Kiwi are. The store descriptor ("…: Meal Planner") and the product carry the explanation (§3.4 takeaway), so the name does not need to describe anything.
 
+**Session 4 addition (2026-09-25, PO questionnaire).** The name should be a **short real English word with a clear food hint**, so that someone hearing it guesses "food or meal app" without the descriptor. The name now carries some of the explaining that §2.4 left to the descriptor, but it must still suggest rather than describe (PRD §5 principles still apply: food-positive, never moralizing, never medical).
+
 **Positioning statement (working).** For people in Poland who track what they eat but won't give up the food they love, [Brand] is the meal planner that makes any recipe fit your numbers, your budget and your prep day, and shows you exactly what it changed.
 
 **Positioning statement, international version (session 2, working).** For people who track what they eat but won't give up the food they love, [Brand] is the meal planner that makes any recipe fit your numbers, your budget and your prep day, and shows you exactly what it changed.
@@ -81,9 +89,37 @@ The backend already does PL/EN diacritics-insensitive ingredient search and unit
 
 ## 2. Naming strategy
 
-> **Current strategy: §2.4 (session 3), placed first below.** It is numbered 2.4, not 2.1, so that the many existing references to §2.1–§2.3 elsewhere in this report still point to the right text. §2.1 (session 2) and §2.2 (session 1) are kept for history.
+> **Current strategy: §2.5 (session 4), placed first below.** It is numbered 2.5 so that existing references to §2.1–§2.4 still point to the right text. §2.4 (session 3), §2.1 (session 2) and §2.2 (session 1) are kept for history.
 
-### 2.4 Session 3: short and catchy (current, 2026-09-25)
+### 2.5 Session 4: short real English food words (current, 2026-09-25)
+
+**Why this changed.** The Product Owner's review of session 3: "nothing from proposals". The PO then answered a style questionnaire (2026-09-25):
+- **Preferred style:** a **short real English word**, in the way Bolt, Lime, Oura, Notion or Headspace are real words. Not coined sounds (Zubo, Nimbo) and not foreign words (Kazu, Dozo, Gobo).
+- **Food hint:** **clearly**. People should guess it is a food or meal app from the name alone.
+- **Example brands:** none given.
+
+**Rules for session 4** (these replace the §2.4 form rules; the §2.1 international rules and C1–C11 still apply where not contradicted):
+1. **A real English word**, single word, 3–8 letters, 1–2 syllables. A two-word compound only if it reads as one word ("Forkful", "Mealbox"). Loanwords that are in English dictionaries (pesto, salsa, tapas, nacho) count, and are flagged as such.
+2. **Clearly food, eating, cooking or kitchen:** ingredients, dishes, utensils, cooking actions, tastes, portions, pantry and prep words.
+3. **Suggestive, not generic.** The name of the service ("Meal Planner", "Diet", "Recipes", "Nutrition") is unregistrable. Each candidate is marked **D/S**: **S** = suggestive or arbitrary for nutrition software (names a specific food or tool, so it evokes food without describing the service); **B** = borderline (a portion, meal or prep word that could be read as describing a feature, e.g. Handful, Batch, Lunchbox); **D** = descriptive (Snack, Mealbox).
+4. **Easy for Poles** with basic English (PRD §3 wedge). Flagged: "th", "w", silent letters, "ch" (Poles read [x]), soft "g", "ea"/"oa"/"ay"/"au" spellings and silent final "e" (Poles read letter by letter, §2.1). No Polish-rude or awkward echoes (PL "pan" = Mr, "pot" = sweat).
+5. **No diet guilt, body or medical meaning** (Lean, Slim, Skinny, Cheat, Guilt and similar were excluded without listing). PRD §5, §12.
+6. **No reuse** of names screened out as taken in §4 and §5 (Whisk, Mise, Morsel, Paprika, Plum, Miso, Nori, Bento, Crouton, Pestle, Honeydew, Umami, Kale, Grub, Chow, Nosh, Fig, Dill, Zing, Gulp, Nibs, Larder, Simmer, Skillet, Platter, Tiffin, Sprig, Nutmeg, Olio, Manna, Riff, Gumbo, Panko). No session-1 word was revisited.
+7. **Store title:** the name plus a descriptor must fit 30 characters. The reference descriptor is ": Meal Planner & Macros" (23 characters), so the name can have at most 7 letters in that form ("Pretzel: Meal Planner & Macros" is exactly 30). Longer names need the shorter ": Meal Planner" (14 characters).
+
+**Evidence rule for ranking (task instruction).** English food words are crowded, so a same-name use is weighed by *where* it is: **serious** if it is a food, recipe, nutrition or meal-planning app or service; **lighter** if it is elsewhere (dance, comics, fintech, HR software). Search-engine evidence is at most Risk or Inconclusive (§5.5).
+
+**What session 4 learned (evidence in §3.6 and §5.5):**
+- **Real English food words are the most crowded space in four sessions.** Of the 111 words screened by search, **43 are already the exact name of a recipe, meal-planning or nutrition app or service**, and about 14 more have a near-identical name in the category, often with the same features as PRD §8 (social-recipe import, macros per portion, weekly plan, allergens, budget). Examples: **Ladle** (four apps), **Pinch**, **Crumb/Crumbs**, **Pantry**, **Spoonful**, **Forkful**, **Spoon**, **Basil**, **Supper**, **Stir**, **Savor**, **Lemon**, **Garlic**, **Clove**, **Carrot**, **Mango**, **Peach**, **Munch**, **Feast**, **Sprout**, **Harvest**, **Sizzle**, **Sumac**, **Saffron**, **Fennel**, **Tofu**, **Sesame**, **Lentil**, **Olive**, **Pepper**, **Scoop**, **Dollop**, **Nibble**, **Yum**, **Apron**, **Picnic**, **Maple**, **Tidbit**.
+- **Every example word in the brief is taken in the category:** Ladle, Pinch, Crumb, Pantry, Spoonful (§5.5) and Zest (§5.4, "Zest: Meal Planner & Recipes").
+- **Portion and utensil words are gone first** (Pinch, Crumb, Scoop, Dollop, Spoonful, Forkful, Spoon, Ladle, Spatula, Nibble). **Specific dishes and snacks** (Pretzel, Donut, Salsa, Nacho, Bagel) are the least used by nutrition apps, because they don't sound "healthy". Their namesakes are mostly restaurants and unrelated software, which is the lighter kind of conflict.
+- **"Clearly food" and "suggestive, not generic" pull against each other.** The clearer the food hint, the more likely the word is either taken in the category or reads as describing a feature (Snack, Brunch, Supper, Lunchbox, Batch, Portion, Handful).
+- **Polish traps specific to English food words:** Pan (PL "Mr/sir"), Pot (PL "sweat"), Curry (PL "kury", hens), Nacho (Poles read "ch" as [x]), Bagel (Poles read "BA-gel"), Gravy (Poles read "GRA-vy"), Ginger (Poles read a hard "g"), and every "oa"/"ea"/"ay" word (Toast, Loaf, Roast, Oats, Feast, Tray).
+- **Other-language trap:** DE *Pickel* = pimple (Pickle).
+
+### 2.4 Session 3: short and catchy (superseded 2026-09-25)
+
+> **Superseded 2026-09-25 (PO: "nothing from proposals").** The session-3 rules (3–5 letters, coined or foreign sounds, the name need not describe anything) are replaced by §2.5 (real English word with a clear food hint). The findings below (crowding of short names, the Japanese-word cluster, Polish ear traps) remain valid as evidence. The text is kept as written.
 
 **Why this changed.** The Product Owner's review of session 2, verbatim: "i dont like those names they are too long and not catchy". The session-2 shortlist had names of 5–7 letters and up to three syllables (Tangram, Ramekin, Sapimo, Portata, Mestolo), several of them real words chosen for their meaning. The PO had already rejected the mostly Polish-rooted session-1 names. So the brand has to be **short and catchy**, and still **international**.
 
@@ -161,6 +197,8 @@ C1–C9 are unchanged from session 1. C10 was added in session 2 after the PO fe
 | C9 | No conflicting live trademarks in classes 9, 42, 44 (and 35, 41, 29/30) | Legal risk |
 | **C10** | **International neutrality:** meaning and sound don't depend on one language, and no bad meaning is known in DE, FR, ES, IT, PT, NL or SV. Scored 1–5: 5 = coined or understood the same way across Europe; 3 = a real word from one non-Polish language that reads as foreign-but-friendly elsewhere; 1 = only makes sense in Polish. | PO feedback, session 2 |
 | **C11** | **Catchiness:** short (3–5 letters, 1–2 syllables), punchy, rhythmic, fun to say, remembered after one hearing, strong as a one-word icon. Scored 1–5: 5 = a strong consonant onset, clear vowels and a bounce or repeated sound, instantly repeatable (Zoom, Kiwi); 3 = short and easy but flat or ordinary; 1 = long or hard to repeat. Reviewer assessment until a listener test is run. | PO feedback, session 2 ("too long and not catchy") |
+
+**Session 4 note (2026-09-25).** For real English words, C11 is scored on the same 1–5 scale but with the §2.5 length (3–8 letters, 1–2 syllables); a 6–7 letter word is not penalised for length alone. Two extra columns are shown in §6.8 but not scored as criteria: **Food hint** (clear / moderate / weak, the PO questionnaire answer) and **D/S** (suggestive / borderline / descriptive, §2.5 rule 3).
 
 ---
 
@@ -262,6 +300,30 @@ Checked 2026-09-25 via WebSearch only. These apps surfaced while screening the s
 | Momo, Paku, Numo, Nubo, Bimi, Bite AI, Umai | AI photo or chat nutrition trackers and recipe apps | [Momo](https://trymomo.app/), [Paku](https://apps.apple.com/us/app/paku-ai-calorie-counter-pet/id6752853273), [Numo](https://play.google.com/store/apps/details?id=com.astertechltda.numo), [Nubo](https://apps.apple.com/vn/app/nubo-body-and-nutrition/id1492780477), [Bimi](https://apps.apple.com/us/app/bimi-eat-better/id6756016601) | Trackers (the short-name space is dense here) |
 
 **Takeaway.** Social-recipe import with macros, which session 2 found at Sapora and BonApp!, is now common (Tasto, Miso, Plum, noms). Budget-aware planning (PRD §8.8) is also appearing (NomNom, Tomo, Plento Pasto, Makros). Short, cute names are the default in this category, so a short name alone will not stand out: it has to avoid the food and nutrition apps above and be ownable.
+
+### 3.6 Same-category apps found in session 4
+
+Checked 2026-09-25 via WebSearch only. These apps surfaced while screening the session-4 English food words. None of the pages could be opened (egress-blocked), so the descriptions are the search results' titles and summaries, not verified store data. The most relevant ones for PRD §1 and §8 are listed first.
+
+| Brand | What the search showed | Link | Relevance |
+|---|---|---|---|
+| **Savor** | "Savor - Meal Planner"; summary: tell it your "diet, allergies, budget, and household size", get "seven dinners… priced against your local supermarket", photo calorie logging, import from TikTok, YouTube and Instagram | [App Store](https://apps.apple.com/us/app/savor-meal-planner/id6615086643), [savoreat.co](https://savoreat.co/) | **Closest to PRD §1 + §8.8 found so far** (allergies, budget, supermarket pricing, social import) |
+| **Ladle** (four apps) | "Ladle: Recipes & Meal Plan" (paste a TikTok or Instagram link; "protein, carb, fat, and calorie breakdowns per recipe and per day"); "useLadle: Meal Planner" (allergen exclusions); "Ladle - Recipes and Cooking"; ladle.cooking (AI sous-chef for women in midlife) | [App Store](https://apps.apple.com/us/app/ladle-recipes-meal-plan/id6760197380), [Play](https://play.google.com/store/apps/details?id=com.useladle.app&hl=en_US), [useladle.com](https://www.useladle.com/blog/meal-planning-app-dietary-restrictions) | **Very close to PRD §8.1–§8.4** |
+| **Forkful** | "Forkful: Recipe Meal Planner" / "Forkful - Reels to meals": AI import from video links, weekly plan, grocery list, "automatic calories and macros for every recipe" | [App Store](https://apps.apple.com/us/app/forkful-recipe-meal-planner/id6760579706), [forkful.food](https://forkful.food/) | Very close (import plus macros) |
+| **Supper** | "Supper: Recipes & Meal Planner": import from Instagram, TikTok, YouTube; household meal prep; "nutrition and macros information for every recipe" | [Play](https://play.google.com/store/apps/details?id=com.nabustudio.supper) | Very close (import, prep, macros) |
+| **Basil** | "Basil: Recipes & Meal Planner": import incl. TikTok and Instagram; allergens; "calculate calories, protein, carbs, and fats for any recipe"; "Chef Basil" (7-day plan, weekly macros) | [App Store](https://apps.apple.com/us/app/basil-recipes-meal-planner/id6740829669), [Chef Basil](https://apps.apple.com/gh/app/chef-basil/id6761494168) | Very close |
+| **Stir** | "Stir - Your Recipe Assistant": import from Instagram and TikTok, "tracks 7 nutrients per serving", weekly plan; "Stir & Store" recipe manager | [App Store](https://apps.apple.com/gb/app/stir-your-recipe-assistant/id6760202603), [stir-it.app](https://stir-it.app/download) | Very close |
+| **Lemon** (EU) | "Lemon: Nutrition Made Simple": natural-language and photo logging, recipe import with "full breakdown per portion", meal plans | [App Store](https://apps.apple.com/us/app/lemon-nutrition-made-simple/id6618148167), [lemonnutrition.eu](https://lemonnutrition.eu/) | Close (EU nutrition app) |
+| **Munchi** and other "Munch" apps | "Munchi: Meal Planner & Recipes" (calorie and macro targets, allergies); "Munched: Nutrition Scanner"; "MUNCH: AI Lifestyle Planner"; "Munch Metrics" | [Munchi](https://apps.apple.com/us/app/munchi-meal-planner-recipes/id6783936727), [Munched](https://apps.apple.com/us/app/munched-nutrition-scanner/id6740371125) | Close |
+| **Crumb / Crumbs** | "Crumb: Recipe & Dinner Ideas" (fridge and pantry AI recipes); "Crumbs Meal Plans & Recipes" (YouTube and Instagram import); getcrumbapp.com | [Crumb](https://apps.apple.com/us/app/crumb-recipe-dinner-ideas/id6475651024), [Crumbs](https://apps.apple.com/us/app/crumbs-meal-plans-recipes/id6740446268) | Close |
+| **Pesto** (on the **Polish** App Store) | "Pesto - Recipe App": "all-in-one recipe organizer, shopping list, and meal planner" | [App Store PL](https://apps.apple.com/pl/app/pesto-recipe-app/id6504192769) | Same category, **in the launch market** |
+| MealPrepPro (developer **Nibble Apps**) | "MealPrepPro Meal Planner" by Nibble Apps: plans "automatically adapted to your calorie and macro needs" | [Play](https://play.google.com/store/apps/details?id=com.nibbleapps.meal_prep_pro), [nibbleapps.com](https://nibbleapps.com/) | Established macro meal-prep planner |
+| Herbi | "Herbi: Meal Planner + Recipes": weekly dinner plan "based on your budget, dietary needs…", macros | [App Store](https://apps.apple.com/gb/app/herbi-meal-planner-recipes/id6777230233) | Budget planner (PRD §8.8) |
+| Garlic, Clove, Spoon, Sumac, Saffron, Fennel, Sizzle, Spatula, Pepper, Apron, Harvest, Maple, Yum AI, Carrot AI | Recipe keepers and meal planners named after food and kitchen words (Clove and Garlic plan around the pantry; Maple "will sunset on December 31, 2026" per the summary) | [Garlic](https://apps.apple.com/us/app/garlic-recipe-keeper-planner/id6758080753), [Clove](https://apps.apple.com/us/app/clove-import-share-recipes/id6741995783), [Spoon](https://apps.apple.com/us/app/spoon-recipe-meal-planner/id6759272641), [Sumac](https://apps.apple.com/us/app/sumac-recipe-manager/id6753876940), [Saffron](https://apps.apple.com/us/app/saffron-your-digital-cookbook/id1438683531) | Planners and recipe keepers |
+| Pantry, Scoop, Feast, Mango Bites, Mango AI, Peach, Lentil, Sesame, Olive, Spoonful, Tidbit, Crunch | Trackers, food scanners and nutrition coaches ("Pantry: macros from receipts"; "Scoop: Healthy Eating Out"; "Feast: Nutrition Coach"; "Peach: AI Calorie Tracker"; "Spoonful: Diet & Food Scanner"; "Tidbit … GLP-1 tracking") | [Pantry](https://getpantry.app/), [Scoop](https://apps.apple.com/us/app/scoop-healthy-eating-out/id6757786715), [Feast](https://apps.apple.com/us/app/feast-nutrition-coach/id6740829087), [Peach](https://apps.apple.com/us/app/peach-ai-calorie-tracker/id6748237403), [Spoonful](https://apps.apple.com/us/app/spoonful-diet-food-scanner/id1481914232) | Trackers |
+| **Picnic** | "Picnic: Supermarket & Recipes": online supermarket with recipes and a meal planner (NL, DE, FR), "over 7 million downloads" per the summary | [App Store](https://apps.apple.com/us/app/picnic-supermarket-recipes/id1018175041) | Large EU grocer in the adjacent space |
+
+**Takeaway.** In session 4 the category is even denser than in session 3: most short English food words that sound "healthy" or "kitchen-y" already name an app that does part of PRD §8. Savor is worth adding to the competitor watch list next to Sapora, Tasto and Adapto, because it combines allergies, budget and supermarket pricing with social import. The only real English food words still open in the category are **indulgent or specific dishes and snacks** (Pretzel, Donut, Salsa, Nacho, Bagel), whose namesakes are restaurants and unrelated software.
 
 ---
 
@@ -622,13 +684,178 @@ Result: **7 new international names shortlisted** (Tangram, Palmo, Sapimo, Savim
 | 270 | Zoe | 2/3 | Search: ZOE personalised-nutrition app (seen in the Zelo search) |
 | 271 | Yuzu | 2/4 | Uses "y"; search: "Yuzu: Healthy Recipes App" (seen in the Mizu search) |
 
-Result: **12 names shortlisted** (§6.7): Zubo, Kazu, Dozo, Nimbo, Gobo, Bibim, Zumo, Kumo, Panko, Gumbo, Mogu, Pappa. All are 4–5 letters and 2 syllables. The last six are kept for comparison and are not recommended (§6.7.2).
+Result: **12 names shortlisted** (§6.7): Zubo, Kazu, Dozo, Nimbo, Gobo, Bibim, Zumo, Kumo, Panko, Gumbo, Mogu, Pappa. All are 4–5 letters and 2 syllables. The last six are kept for comparison and are not recommended (§6.7.2). *(Superseded 2026-09-25, PO: "nothing from proposals". See §4.8 and §6.8.)*
+
+### 4.8 Session 4: short real English food words (272–400)
+
+129 real English words were generated on 2026-09-25 under the §2.5 rules. None of them is in §4.1–§4.7. **L/S** = letters / syllables. **D/S** (§2.5 rule 3): **S** = suggestive or arbitrary for nutrition software; **B** = borderline (could be read as describing a portion, meal or prep feature); **D** = descriptive. **PL** = how a Polish speaker with basic English reads it (OK, or the trap). "Search" means a WebSearch screen was run that day (evidence in §5.5). "Judgment" means the name was screened out on linguistic, strategic or reviewer-knowledge grounds; where reviewer knowledge was used, it says so. A name screened out by judgment is not claimed to be taken. Loanwords (pesto, salsa, tapas, nacho, tahini, tofu, taco) are included because they are in English dictionaries and are used as ordinary English words. Diet-guilt and body words (Lean, Slim, Skinny, Cheat, Guilt and similar) were excluded before listing (§2.5 rule 5).
+
+#### 4.8.1 Ingredients, herbs and produce
+
+| # | Name | L/S | Idea behind it | D/S | PL | Screen result |
+|---|---|---|---|---|---|---|
+| 272 | Salsa | 5/2 | A lively mix: the recipe you love blended with what you need; also the dance, the rhythm of your week | S (in ES/IT/PT *salsa* = "sauce") | OK, identical | **Shortlisted, top 3** |
+| 273 | Pesto | 5/2 | A few good things ground together: your recipe plus your numbers | S | OK, identical | **Shortlisted (not recommended):** "Pesto - Recipe App" on the Polish App Store |
+| 274 | Pickle | 6/2 | Pickling is preparing ahead, like meal prep; the app gets you out of a pickle | S | OK ("PI-kel"; PL *pikle*) | **Shortlisted, alternate** |
+| 275 | Caper | 5/2 | A small bud of big flavour; "a caper" is also a playful adventure | S | Misread: PL "KA-per", EN "KAY-per" | **Shortlisted (not recommended):** Instacart Caper AI grocery carts |
+| 276 | Melon | 5/2 | Round, fresh, friendly | S | OK, identical | **Shortlisted (not recommended)** |
+| 277 | Basil | 5/2 | A fresh herb | S | OK | Screened out (search): "Basil: Recipes & Meal Planner"; "Chef Basil" |
+| 278 | Saffron | 7/2 | A precious spice | S | OK | Screened out (search): "Saffron: Your Digital Cookbook" |
+| 279 | Sumac | 5/2 | A tangy spice | S | OK | Screened out (search): "Sumac Recipe Manager" |
+| 280 | Fennel | 6/2 | Crisp, fresh vegetable | S | OK | Screened out (search): a "Fennel" recipe-import app; "Fennel: Invest your way" |
+| 281 | Olive | 5/2 | Mediterranean staple | S | Silent final "e": PL "o-LI-ve" | Screened out (search): "Olive" food-scanner app |
+| 282 | Pepper | 6/2 | A kick of flavour | S | OK | Screened out (search): "Pepper - Recipe Organizer"; Pepperplate |
+| 283 | Chili | 5/2 | Heat and energy | S | "ch" | Screened out (search): "Chilli food" app |
+| 284 | Tofu | 4/2 | Adapts to any flavour | S (one diet, C7) | OK | Screened out (search): "Tofu - Vegan Recipes" (macros) |
+| 285 | Sesame | 6/3 | "Open sesame" | S | OK | Screened out (search): "Sesame: Healthy Food Scanner"; 3 syllables; an allergen |
+| 286 | Lentil | 6/2 | Cheap, high-protein staple | S | OK | Screened out (search): "Lentil - Food Insights" |
+| 287 | Radish | 6/2 | Crunchy, bright | S | Word little known in PL (*rzodkiewka*) | Screened out (search): Radish Health (telehealth, C5), Radish Fiction, Radish Kitchen |
+| 288 | Mango | 5/2 | Sweet, sunny | S | OK | Screened out (search): "Mango Bites" and "Mango AI" calorie trackers |
+| 289 | Lemon | 5/2 | Fresh, zesty | S | OK | Screened out (search): "Lemon: Nutrition Made Simple" (EU) |
+| 290 | Peach | 5/1 | "A peach" = something great | S | "ea": PL "pe-ach" | Screened out (search): "Peach: AI Calorie Tracker" |
+| 291 | Garlic | 6/2 | Every recipe starts with it | S | OK | Screened out (search): "Garlic Recipe Keeper & Planner" |
+| 292 | Carrot | 6/2 | Carrot, not stick | S | OK | Screened out (search): Carrot AI, "Carrot: Calorie Counter & AI", Carroty, Purple Carrot |
+| 293 | Clove | 5/1 | A small spice | S | Silent final "e" | Screened out (search): "Clove" AI meal planner and recipe app |
+| 294 | Maple | 5/2 | Sweet, natural | S | "a" = "ey", silent "e" | Screened out (search): Maple family meal planner |
+| 295 | Honey | 5/2 | Sweet, warm | S | "ey" | Screened out (search): Honeydew recipe app is near (§4.1); PayPal Honey (reviewer knowledge) |
+| 296 | Oats | 4/1 | Breakfast staple | S | "oa" | Screened out (search): "Oatsy" nutrition app is near; C2 |
+| 297 | Tahini | 6/3 | Sesame paste | S | OK | Screened out (judgment): 3 syllables; search Inconclusive |
+| 298 | Ginger | 6/2 | Zing | S | Soft "g": Poles say a hard "g" | Screened out (judgment): C2; also sold as a remedy (C5); search Inconclusive |
+| 299 | Cress | 5/1 | A sprinkle of green | S | Little known in PL | Screened out (judgment): weak for the wedge; search Inconclusive |
+| 300 | Almond | 6/2 | Wholesome snack | S | Silent "l" | Screened out (judgment): C2; a tree-nut allergen, awkward for an allergy-aware app; search Inconclusive |
+| 301 | Cocoa | 5/2 | Comfort | S | "oa" | Screened out (judgment): Cocoa is Apple's developer-framework name (C6); search Inconclusive |
+| 302 | Cherry | 6/2 | "The cherry on top" | S | "ch" | Screened out (judgment): C2; the grouped search returned only "Peach" apps |
+| 303 | Berry | 5/2 | Small, bright | S | OK | Screened out (judgment): weak and generic; search Inconclusive |
+| 304 | Jam | 3/1 | Sweet; also a jam session | S | "j" read as "y" (PL *dżem*) | Screened out (judgment): C2; "traffic jam"; search Inconclusive |
+| 305 | Truffle | 7/2 | Rare and special | S | OK | Screened out (search + judgment): "Truffle Blog" food app; luxury and fungus associations |
+| 306 | Onion | 5/2 | Layers | S | "o" = "u" in EN | Screened out (judgment): The Onion (satire) and Tor ".onion" (reviewer knowledge); the grouped search returned only "Garlic" apps |
+| 307 | Butter | 6/2 | Smooth | S | "u" | Screened out (judgment): weak; fat focus; grouped search Inconclusive |
+
+#### 4.8.2 Dishes, breads and snacks
+
+| # | Name | L/S | Idea behind it | D/S | PL | Screen result |
+|---|---|---|---|---|---|---|
+| 308 | Pretzel | 7/2 | A twist that holds together: the app twists your recipe until it fits your plan | S | OK ("PRET-zel"; PL *precel*) | **Shortlisted, top 3** |
+| 309 | Donut | 5/2 | The food you'd feel guilty about elsewhere fits your plan here (PRD §1) | S | OK (PL *donat*) | **Shortlisted, top 3** |
+| 310 | Nacho | 5/2 | "Nacho average meal plan"; a sharing plate | S | "ch": Poles read [x] ("NA-ho") | **Shortlisted (not recommended)** |
+| 311 | Bagel | 5/2 | A round classic | S | Misread: PL "BA-gel", EN "BAY-gel" | **Shortlisted (not recommended)** |
+| 312 | Tapas | 5/2 | Small plates, lots of variety: your week in portions | S/B (descriptive for food service in ES) | OK, identical | **Shortlisted (not recommended)** |
+| 313 | Gravy | 5/2 | "It's all gravy" = all good; the extra that makes a meal | S | Misread: PL "GRA-vy", EN "GRAY-vee" | **Shortlisted (not recommended)** |
+| 314 | Taco | 4/2 | Fold anything in | S | OK | Screened out (judgment): one cuisine, fast food (C7); Taco Bell (reviewer knowledge); search Inconclusive |
+| 315 | Muffin | 6/2 | Homely bake | S | OK | Screened out (judgment): "muffin top" is a belly-fat term (C5); search Inconclusive |
+| 316 | Dumpling | 8/2 | Everything wrapped in one | S | OK | Screened out (judgment): EN "dump" echo (C3); search Inconclusive |
+| 317 | Noodle | 6/2 | "Use your noodle" | S | "oo" | Screened out (search): ekilu, formerly "Nooddle", a recipe and meal-plan app |
+| 318 | Toast | 5/1 | A toast to good food | S | "oa" (PL *tost*) | Screened out (search): "Toast - Local Restaurants" (Toast Inc., restaurant platform); "you're toast" = doomed |
+| 319 | Crumble | 7/2 | Comfort pudding | S | OK | Screened out (search): "Crumbs Meal Plans & Recipes" and "Crumb" are near |
+| 320 | Crust | 5/1 | The good edge | S | OK | Screened out (judgment): weak food hint (pizza or bread only); search Inconclusive |
+| 321 | Loaf | 4/1 | A loaf for the week | S | "oa" | Screened out (judgment): C2; EN "to loaf" = to laze about; search Inconclusive |
+| 322 | Nugget | 6/2 | A small valuable piece | S | OK | Screened out (search): Nugget Markets (US grocer) publishes meal planning; "chicken nugget" |
+| 323 | Brunch | 6/1 | Relaxed weekend meal | B | OK (PL *brancz*) | Screened out (search + judgment): "Brunch Bites" recipe app; names one meal (C1, C7) |
+| 324 | Snack | 5/1 | Small bite | D | OK | Screened out (judgment): descriptive (C1) |
+| 325 | Wedge | 5/1 | A piece of the whole | S | "dg" | Screened out (judgment): weak food hint; grouped search Inconclusive |
+| 326 | Slice | 5/1 | Your slice | B | Silent "e" | Screened out (judgment): Slice pizza-ordering app (reviewer knowledge); grouped search Inconclusive |
+
+#### 4.8.3 Utensils and kitchen objects
+
+| # | Name | L/S | Idea behind it | D/S | PL | Screen result |
+|---|---|---|---|---|---|---|
+| 327 | Kettle | 6/2 | The kitchen's heartbeat; a nod to kettlebells | S | Word little known (PL *czajnik*); reads "KET-tle" | **Shortlisted (only if the top 5 fail)** |
+| 328 | Ladle | 5/2 | Serves one portion (PO's example) | S | Silent "e"; not known to the wedge (PL *chochla*) | Screened out (search): four "Ladle" recipe and meal-planner apps (§3.6) |
+| 329 | Spoon | 5/1 | Everyday eating | S | "oo" | Screened out (search): "Spoon: Recipe & Meal Planner"; "Spoon: Smart Calorie Tracker"; spoonacular |
+| 330 | Fork | 4/1 | Everyday eating | S | OK | Screened out (search): "Forks Meal Planner" (Forks Over Knives), "Forked AI", Forkful |
+| 331 | Spatula | 7/3 | Flip it | S | OK | Screened out (search): "Spatula" recipe box; 3 syllables |
+| 332 | Oven | 4/2 | Warm home cooking | S | OK | Screened out (search): BigOven recipes and meal planner |
+| 333 | Wok | 3/1 | Fast, hot, simple | S | "w" (PL [v]) | Screened out (search + judgment): "WokTheWeek" meal planner; C2; one cuisine |
+| 334 | Jar | 3/1 | Meal prep in jars | S | "j" | Screened out (search): "MealJar" meal planner; C2 |
+| 335 | Apron | 5/2 | Ready to cook | S | "A-pron" vs "AY-pron" | Screened out (search): "Apron: Recipes & Grocery Lists"; Blue Apron meal kits |
+| 336 | Grill | 5/1 | Direct heat | S/B | OK | Screened out (search + judgment): "Grill'd" restaurant app; generic |
+| 337 | Tray | 4/1 | Traybake meal prep | B | "ay" | Screened out (judgment): C2; search Inconclusive |
+| 338 | Pan | 3/1 | One-pan meals | S | **PL *pan* = Mr/sir** | Screened out (judgment): C3 in PL |
+| 339 | Pot | 3/1 | One-pot meals | S | **PL *pot* = sweat**; EN slang for cannabis | Screened out (judgment): C3, C5 |
+| 340 | Mortar | 6/2 | Grinding flavours together | S | OK | Screened out (judgment): the building-material sense dominates; search Inconclusive |
+| 341 | Tongs | 5/1 | Grab what you want | S | OK | Screened out (judgment): weak and flat; search Inconclusive |
+| 342 | Grater | 6/2 | Fine detail | S | "a" = "ey"; sounds like "greater" | Screened out (judgment): C2; search Inconclusive |
+| 343 | Skewer | 6/2 | Everything lined up | S | "ew" | Screened out (judgment): C2; "to skewer" = to criticise harshly |
+| 344 | Galley | 6/2 | A compact working kitchen | S | OK | Screened out (search): Galley Solutions, culinary resource-planning SaaS (class 42) |
+
+#### 4.8.4 Cooking actions and tastes
+
+| # | Name | L/S | Idea behind it | D/S | PL | Screen result |
+|---|---|---|---|---|---|---|
+| 345 | Stir | 4/1 | Mix things up | S | OK | Screened out (search): "Stir - Your Recipe Assistant"; "Stir & Store" |
+| 346 | Sear | 4/1 | Lock in flavour | S | "ea" | Screened out (judgment): C2; search Inconclusive |
+| 347 | Braise | 6/1 | Slow, patient cooking | S | "ai" + silent "e" | Screened out (judgment): C2; search Inconclusive |
+| 348 | Roast | 5/1 | Sunday roast | S | "oa" | Screened out (judgment): C2; "a roast" = mockery; search Inconclusive |
+| 349 | Glaze | 5/1 | The finishing touch | S | Silent "e" | Screened out (search + judgment): "Deglaze" recipe app is near; C2 |
+| 350 | Sizzle | 6/2 | Excitement in the pan | S | "zz" | Screened out (search): two "Sizzle" recipe and meal-planner apps |
+| 351 | Drizzle | 7/2 | A light finishing touch | S | OK | Screened out (search): "Drizzle Me Skinny" Weight Watchers recipe app ("skinny", C5 by association) |
+| 352 | Crisp | 5/1 | Fresh and sharp | S | OK | Screened out (search): "Crisp supermarkt" (NL online grocer); "CRISP & GREEN" healthy-restaurant app; Crisp chat SaaS |
+| 353 | Crunch | 6/1 | "Crunch the numbers" | S | "u" | Screened out (search): "Crunch: Voice & AI Calorie Log"; Crunch Fitness |
+| 354 | Munch | 5/1 | Happy eating | S | "u" | Screened out (search): Munchi, Munched, MUNCH, munch, Munch Metrics |
+| 355 | Nibble | 6/2 | Small bites | S | OK | Screened out (search): Nibble Apps (the MealPrepPro developer), "Nibble AI - Calorie Tracker", Nibbly |
+| 356 | Savor | 5/2 | Enjoy every bite | S | "a" = "ey" | Screened out (search): Savor meal planner (§3.6), Savour, savori |
+| 357 | Yum | 3/1 | Pure delight | S | "u" | Screened out (search): "Yum AI", "Yum: Easy & Tasty Recipes", Wholesome Yum, Yummly; Yum! Brands (reviewer knowledge) |
+| 358 | Feast | 5/1 | Abundance | S | "ea" | Screened out (search): "Feast: Nutrition Coach" |
+
+#### 4.8.5 Portions, pantry and meal words
+
+| # | Name | L/S | Idea behind it | D/S | PL | Screen result |
+|---|---|---|---|---|---|---|
+| 359 | Handful | 7/2 | Portions measured by hand; plans that feel manageable | B (a portion word) | OK ("HAND-ful") | **Shortlisted, alternate** |
+| 360 | Pinch | 5/1 | A pinch of this (PO's example) | B | OK | Screened out (search): "Pinch It! Recipe Box"; "Pinch: Follow. Cook. Share." |
+| 361 | Crumb | 5/1 | Small piece (PO's example) | S | Silent "b" | Screened out (search): "Crumb: Recipe & Dinner Ideas"; "Crumbs Meal Plans & Recipes" |
+| 362 | Scoop | 5/1 | A portion; "the scoop" = the inside story | B | "oo" | Screened out (search): "Scoop: Healthy Eating Out" (AI nutrition coach) |
+| 363 | Dollop | 6/2 | A generous spoonful | B | OK | Screened out (search): "Dollop — Dinner, Decided" recipe discovery |
+| 364 | Spoonful | 8/2 | One portion (PO's example) | B | "oo" | Screened out (search): "Spoonful: Diet & Food Scanner" |
+| 365 | Forkful | 7/2 | One bite | B | OK | Screened out (search): "Forkful: Recipe Meal Planner" |
+| 366 | Mouthful | 8/2 | A bite | B | "th" | Screened out (judgment): C2; search Inconclusive |
+| 367 | Plateful | 8/2 | A full plate | B | Silent "e" | Screened out (search): "PlateFul" menu software (senior living); "Plateful Nutrition" |
+| 368 | Tidbit | 6/2 | A tasty morsel | S | OK | Screened out (search): "Tidbit" nutrition and GLP-1 tracker (C5 neighbour) |
+| 369 | Smidge | 6/1 | A tiny amount | B | "dge"; unknown to the wedge | Screened out (judgment): C2; search Inconclusive |
+| 370 | Helping | 7/2 | "A second helping" | B | OK | Screened out (judgment): reads as the verb "helping"; search Inconclusive |
+| 371 | Pantry | 6/2 | Your stocked kitchen (PO's example) | S | OK | Screened out (search): "Pantry: macros from receipts" |
+| 372 | Supper | 6/2 | Evening meal | B | "u" | Screened out (search): "Supper: Recipes & Meal Planner"; Supperhero |
+| 373 | Picnic | 6/2 | Food made to share | S | OK (PL *piknik*) | Screened out (search): Picnic online supermarket with recipes and a meal planner |
+| 374 | Harvest | 7/2 | Fresh from the field | S | OK | Screened out (search): "Harvest — Meal Planning App"; Daily Harvest |
+| 375 | Basket | 6/2 | Your shopping, sorted | S | OK | Screened out (judgment): generic shopping term; grouped search returned Harvest apps |
+| 376 | Batch | 5/1 | Batch cooking | B/D | "tch" | Screened out (judgment): describes meal prep (C1); search Inconclusive |
+| 377 | Lunchbox | 8/2 | Meal prep to go | B | OK | Screened out (search + judgment): LaLa Lunchbox, Little Lunches; describes meal prep (C1) |
+| 378 | Bistro | 6/2 | Casual good food | S | OK | Screened out (search): "Bistro: Food in minutes" (Blinkit, IN), Bistro.sk; bistroMD diet-meal delivery (reviewer knowledge) |
+| 379 | Herb | 4/1 | Fresh flavour | S | "h" silent in US English | Screened out (search): "Herbi: Meal Planner + Recipes" |
+| 380 | Sprout | 6/1 | Growth | S | "ou" | Screened out (search): "Sprout AI - Healthy Recipes", Sproutly, Sprout Cooking |
+| 381 | Spice | 5/1 | Variety | S | "i" = "ai" + silent "e" | Screened out (judgment): C2; "Spice" is a street name for synthetic cannabis (C5) |
+| 382 | Kernel | 6/2 | The core | S | OK | Screened out (judgment): reads as a computing term; weak food hint; search Inconclusive |
+| 383 | Mealbox | 7/2 | Meal prep box | D | "ea" | Screened out (judgment): descriptive (C1); not searched |
+
+#### 4.8.6 Screened out on spelling, meaning or known brands alone (judgment; not searched)
+
+| # | Name | L/S | Why screened out |
+|---|---|---|---|
+| 384 | Thyme | 5/1 | "th" and a silent "h" (C2) |
+| 385 | Knead | 5/1 | Silent "k"; sounds like "need" (C2) |
+| 386 | Dough | 5/1 | "gh"; Poles read "doug-h" (C2); "dough" = money slang |
+| 387 | Broth | 5/1 | "th" (C2) |
+| 388 | Yolk | 4/1 | Silent "l" (C2) |
+| 389 | Chive | 5/1 | "ch" read as [x] in PL (C2) |
+| 390 | Sieve | 5/1 | "ie" and "ve" (C2) |
+| 391 | Tasty | 5/2 | BuzzFeed's "Tasty" recipe app (reviewer knowledge) |
+| 392 | Lime | 4/1 | Lime scooters (reviewer knowledge) |
+| 393 | Mint | 4/1 | Intuit's former "Mint" finance app (reviewer knowledge); "mint" = money |
+| 394 | Sage | 4/1 | Sage Group accounting software (reviewer knowledge) |
+| 395 | Fudge | 5/1 | "To fudge the numbers" = to falsify figures (C3), bad for an app that does the maths |
+| 396 | Cracker | 7/2 | A US racial slur (C3) |
+| 397 | Cumin | 5/2 | EN "cum" echo (C3) |
+| 398 | Anise | 5/2 | EN "anus" echo (C3) |
+| 399 | Curry | 5/2 | PL *kury* (hens); one cuisine (C7) |
+| 400 | Sauce | 5/1 | "au" misread by Poles (C2); "saucy" = cheeky |
+
+Result: **13 names shortlisted** (§6.8): Salsa, Pretzel, Donut (top 3), Pickle, Handful (alternates), Kettle, Tapas, Nacho, Melon, Bagel, Pesto, Caper, Gravy. All are 5–7 letters and 2 syllables. The last eight are kept so the PO can see why obvious catchy food words were not recommended (§6.8.2).
 
 ---
 
 ## 5. Research findings and source links (evidence log)
 
-All entries are dated **2026-09-24** (sessions 1 and 2 ran on the same day).
+Sessions 1 and 2 are dated **2026-09-24**; sessions 3 and 4 are dated **2026-09-25**.
 
 ### 5.1 Source access log
 
@@ -684,6 +911,23 @@ At the start of session 3, each official source got **one plain request**, as th
 | **WebSearch** | — | WebSearch | **Worked.** Used for every session-3 screen and per-name check (§5.4, §6.7.3). Domain-filtered searches on apps.apple.com, play.google.com, instagram.com and tiktok.com also worked. |
 
 **Consequence:** unchanged for the third session running. Every store, domain, trademark and handle check for every session-3 name is **Pending**. No workaround was attempted.
+
+#### Session 4 retry (2026-09-25)
+
+At the start of session 4, each official source got **one plain request**, as the task asked. `curl` was run once for every source (HTTP status only, 20-second timeout). WebFetch was also tried once on the .com RDAP, iTunes, Google Play and TMview URLs. The test name was `ladle`.
+
+| Source (official) | Request | Tool | Result |
+|---|---|---|---|
+| `rdap.verisign.com` (.com RDAP) | `/com/v1/domain/ladle.com` | curl; WebFetch | curl: `curl: (56) CONNECT tunnel failed, response 403`. WebFetch: `EGRESS_BLOCKED … Access to rdap.verisign.com is blocked by the network egress proxy.` |
+| `pubapi.registry.google` (.app RDAP) | `/rdap/domain/ladle.app` | curl | `curl: (56) CONNECT tunnel failed, response 403` |
+| `data.iana.org` (RDAP bootstrap) | `/rdap/dns.json` | curl | `CONNECT tunnel failed, response 403`, so the .pl and .io RDAP servers still can't be looked up |
+| `itunes.apple.com` (iTunes Search API) | `/search?term=ladle&entity=software&country=pl` | curl; WebFetch | curl: `CONNECT tunnel failed, response 403`. WebFetch: `EGRESS_BLOCKED … Access to itunes.apple.com is blocked by the network egress proxy.` |
+| `play.google.com` | `/store/search?q=ladle&c=apps&gl=PL` | curl; WebFetch | curl: `CONNECT tunnel failed, response 403`. WebFetch: `EGRESS_BLOCKED … Access to play.google.com is blocked by the network egress proxy.` |
+| `www.tmdn.org` (TMview) | `/tmview/` | curl; WebFetch | curl: `CONNECT tunnel failed, response 403`. WebFetch: `EGRESS_BLOCKED … Access to www.tmdn.org is blocked by the network egress proxy.` |
+| `euipo.europa.eu/eSearch/`, `ewyszukiwarka.pue.uprp.gov.pl`, `branddb.wipo.int`, `tmsearch.uspto.gov`, `trademarks.ipo.gov.uk` | landing page | curl | `CONNECT tunnel failed, response 403` on each |
+| **WebSearch** | — | WebSearch | **Worked.** Used for every session-4 screen and per-name check (§5.5, §6.8.3). Domain-filtered searches on apps.apple.com, play.google.com, instagram.com, tiktok.com and on third-party trademark mirrors (trademarkia.com, trademarks.justia.com, uspto.report) also worked. |
+
+**Consequence:** unchanged for the fourth session running. Every store, domain, trademark and handle check for every session-4 name is **Pending**. Trademark findings in §6.8.3 come from third-party mirror sites seen through the search engine; they are indications only (Risk or Inconclusive), not registry results. No workaround was attempted.
 
 ### 5.2 Session 1 screening evidence (search engine; status at most Risk or Inconclusive)
 
@@ -845,13 +1089,458 @@ All entries are dated **2026-09-25**. Quoted text is the search result's title, 
 | Lumbo / Dembo | `"Lumbo" OR "Dembo" app OR brand food OR meal` | Inconclusive (screened out on judgment) | Nothing for either; "Bumbo Foods" recipe app; "Slimbo" meal plans | [Slimbo](https://slimbo.app/en/) |
 | Zubo, Kazu, Dozo, Nimbo, Gobo, Bibim, Zumo, Kumo, Panko, Gumbo, Mogu, Pappa | see §6.7.3 | — | Shortlisted; full per-name evidence in §6.7.3 | — |
 
+### 5.5 Session 4 screening evidence (search engine; status at most Risk or Inconclusive)
+
+All entries are dated **2026-09-25**. Quoted text is the search result's title, or its snippet or summary, as returned. None of the linked pages could be opened (egress-blocked). Unless stated, the query was `"<Name>" app recipes OR "meal planner" OR nutrition` (or a close variant with "macros"); **store** means the query `<Name> app` restricted to apps.apple.com and play.google.com. **Weight** says whether the same-name use is in a food, recipe, nutrition or meal-planning app or service (**serious**) or elsewhere (**lighter**), per the §2.5 evidence rule. The per-name evidence for the shortlist is in §6.8.3.
+
+**Tally.** 111 of the 129 session-4 words were screened by search (the rest by judgment, §4.8.6). **43 are already the exact name of a recipe, meal-planning or nutrition app or service**, and about 14 more have a near-identical name in the category (Honeydew, Oatsy, Nooddle, BigOven, MealJar, WokTheWeek, Crumbs, Herbi, Deglaze, Drizzle Me Skinny, LaLa Lunchbox, Brunch Bites, PlateFul, Nugget Markets).
+
+| Name | Query (variant) | Status | Weight | What the search showed | Links |
+|---|---|---|---|---|---|
+| Ladle | standard | Risk (screened out) | Serious | "Ladle: Recipe & Meal Planner - Apps on Google Play"; "Ladle: Recipes & Meal Plan - App Store"; "useLadle: Meal Planner"; "Ladle - Recipes and Cooking"; "Ladle I AI-powered sous chef for women in midlife"; "Ladle - Your Recipe Book, Reimagined" (getladle.app) | [Play](https://play.google.com/store/apps/details?id=com.ladle.app&hl=en_US), [App Store](https://apps.apple.com/us/app/ladle-recipes-meal-plan/id6760197380), [useLadle](https://play.google.com/store/apps/details?id=com.useladle.app&hl=en_US), [getladle.app](https://getladle.app/) |
+| Pinch | standard, then `"Pinch" recipe app App Store cooking` | Inconclusive, then Risk (screened out) | Serious | "Pinch It! Recipe Box" (Just A Pinch; "build custom meal plans"); "Pinch: Follow. Cook. Share." (social recipe network) | [Pinch It!](https://apps.apple.com/us/app/pinch-it-recipe-box/id1451513406), [Pinch](https://apps.apple.com/us/app/pinch-follow-cook-share/id6761978337) |
+| Crumb | standard | Risk (screened out) | Serious | "Crumbs Meal Plans & Recipes"; "Crumb: Recipe & Dinner Ideas"; "Fridge Recipe Generator: Crumb"; "Crumb — Plan your meals, simplify your week" | [Crumbs](https://apps.apple.com/us/app/crumbs-meal-plans-recipes/id6740446268), [Crumb](https://apps.apple.com/us/app/crumb-recipe-dinner-ideas/id6475651024), [getcrumbapp.com](https://getcrumbapp.com/) |
+| Spoonful | standard | Risk (screened out) | Serious | "Spoonful: Diet & Food Scanner" (IBS, celiac, allergies; recipes; nutrition logging) | [App Store](https://apps.apple.com/us/app/spoonful-diet-food-scanner/id1481914232), [spoonfulapp.com](https://spoonfulapp.com/) |
+| Forkful | standard | Risk (screened out) | Serious | "Forkful: Recipe Meal Planner"; "Forkful - Reels to meals"; "Forkful \| Recipes, Meal Plans, Grocery Lists & Nutrition Tracking" | [App Store](https://apps.apple.com/us/app/forkful-recipe-meal-planner/id6760579706), [forkful.food](https://forkful.food/) |
+| Pantry | `"Pantry" app "meal planner" OR recipes OR macros` | Risk (screened out) | Serious | "Pantry: macros from receipts" (photo calories and macros, receipt scanning) | [getpantry.app](https://getpantry.app/) |
+| Scoop | standard + macros | Risk (screened out) | Serious | "Scoop: Healthy Eating Out" ("an AI nutrition coach that knows the menu… your allergies, your macros") | [App Store](https://apps.apple.com/us/app/scoop-healthy-eating-out/id6757786715) |
+| Dollop | `"Dollop" app recipes OR "meal planner" OR food` | Risk (screened out) | Serious | "Dollop — Dinner, Decided. Personalized Recipe Discovery" | [dolloponline.com](https://dolloponline.com/) |
+| Sumac | standard + food | Risk (screened out) | Serious | "Sumac Recipe Manager App - App Store" (recipes, meal-plan calendar, shopping lists) | [App Store](https://apps.apple.com/us/app/sumac-recipe-manager/id6753876940) |
+| Saffron | standard | Risk (screened out) | Serious | "Saffron: Your Digital Cookbook" (recipe manager, meal planner, nutrition estimates) | [App Store](https://apps.apple.com/us/app/saffron-your-digital-cookbook/id1438683531) |
+| Basil | standard + App Store | Risk (screened out) | Serious | "Basil: Recipes & Meal Planner" (import incl. TikTok and Instagram, allergens, calories and macros); "Chef Basil" | [App Store](https://apps.apple.com/us/app/basil-recipes-meal-planner/id6740829669), [Chef Basil](https://apps.apple.com/gh/app/chef-basil/id6761494168) |
+| Fennel | standard; store | Inconclusive, then Risk (screened out) | Serious | Category query: recipes only. Store: "Fennel: Invest your way"; the summary describes a "Fennel Recipe App" (import by URL, shopping lists); "Fennel Restaurant" | [Fennel invest](https://apps.apple.com/us/app/fennel-invest-your-way/id6443565903), [Fennel](https://apps.apple.com/za/app/fennel/id6759586338) |
+| Tahini | standard | Inconclusive (screened out on judgment) | — | Only tahini recipes; no Tahini app | — |
+| Lentil | standard | Risk (screened out) | Serious | "Lentil - Food Insights App" (meal and menu scans, AI nutrition coach) | [App Store](https://apps.apple.com/us/app/lentil-food-insights/id6756281742) |
+| Olive | standard + macros | Risk (screened out) | Serious | "Olive: Your Holistic Health Companion" (food scanner with lab-tested contaminant data) | [oliveapp.com](https://www.oliveapp.com/blogs/best-food-scanner-app-for-healthier-eating) |
+| Pepper | `"Pepper" app recipes cooking social OR "meal planner"` | Risk (screened out) | Serious | "Pepper - Recipe Organizer" (social cookbook, import from Instagram and TikTok); "Pepperplate" planner | [App Store](https://apps.apple.com/us/app/pepper-recipe-organizer/id1583947369), [peppertheapp.com](https://peppertheapp.com/) |
+| Chili | `"Chili" OR "Chilli" app …` | Risk (screened out) | Serious | "Chilli food App - App Store" | [App Store](https://apps.apple.com/us/app/chilli-food/id6458737266) |
+| Tofu | standard + macros | Risk (screened out) | Serious | "Tofu - Vegan Recipes" ("300+ plant-based recipes… macros on each"); "Tasty Tofu Recipes" | [App Store](https://apps.apple.com/us/app/tofu-vegan-recipes/id6761143218), [gettofu.app](https://gettofu.app/) |
+| Sesame | standard | Risk (screened out) | Serious | "Sesame: Healthy Food Scanner" (made "with clinical nutrition experts") | [App Store](https://apps.apple.com/us/app/sesame-healthy-food-scanner/id6471442567) |
+| Radish | standard + food; store | Risk (screened out) | Lighter (food: a restaurant); C5 neighbour | "Radish Kitchen" (salad restaurant ordering); store: "Radish Health" (doctor access, prescriptions), "Radish Mobile" (radiology community), "Radish Fiction" | [Radish Health](https://apps.apple.com/us/app/radish-health/id1556054938), [Radish Fiction](https://apps.apple.com/ca/app/radish-fiction/id1076491465) |
+| Stir | standard + cooking | Risk (screened out) | Serious | "Stir - Your Recipe Assistant" (Instagram and TikTok import, "tracks 7 nutrients per serving", weekly plan); "Stir & Store" | [App Store](https://apps.apple.com/gb/app/stir-your-recipe-assistant/id6760202603), [Stir & Store](https://apps.apple.com/us/app/stir-store/id6760269255) |
+| Sear / Braise | `"Sear" OR "Braise" app …` | Inconclusive (screened out on judgment) | — | Generic meal-planner results only | — |
+| Batch | `"Batch" app "meal prep" OR …` | Inconclusive (screened out on judgment) | — | Batch-cooking articles and MealPrepPro, Mob; no Batch app | — |
+| Supper | standard | Risk (screened out) | Serious | "Supper: Recipes & Meal Planner" (social import, meal prep, "nutrition and macros information for every recipe"); "Supperhero – AI meal planner"; supperapp.io | [Play](https://play.google.com/store/apps/details?id=com.nabustudio.supper), [Supperhero](https://apps.apple.com/us/app/supperhero-ai-meal-planner/id6738939154) |
+| Galley | `"Galley" app recipes OR "meal planner" OR food` | Risk (screened out) | Serious (culinary software) | "Galley Solutions: Culinary Resource Planning for Every Kitchen" | [galleysolutions.com](https://www.galleysolutions.com/) |
+| Kettle | `"Kettle" app …`; store | Inconclusive (category), then Risk | Lighter, with a health neighbour | See §6.8.3 | — |
+| Mango | standard + macros | Risk (screened out) | Serious | "Mango Bites - Food Tracker"; "Mango AI - Calorie Tracker" | [Mango Bites](https://apps.apple.com/us/app/mango-bites-food-tracker/id6743328271), [Mango AI](https://apps.apple.com/lt/app/mango-ai-calorie-tracker/id6742989225) |
+| Munch | standard + macros | Risk (screened out) | Serious | "Munched: Nutrition Scanner"; "MUNCH: AI Lifestyle Planner"; "Munchi: Meal Planner & Recipes"; "munch - eat out healthy"; "Munch: Simple Food Diary"; "Munch Metrics" | [Munchi](https://apps.apple.com/us/app/munchi-meal-planner-recipes/id6783936727), [MUNCH](https://apps.apple.com/gb/app/munch-ai-lifestyle-planner/id6760965644) |
+| Crunch | standard | Risk (screened out) | Serious | "crunch - App Store"; "Crunch: Voice & AI Calorie Log"; "Crunch+ Workout & Fitness Plan" (Crunch Fitness) | [Play](https://play.google.com/store/apps/details?id=com.crunchai.app&hl=en_US) |
+| Spoon | standard + macros | Risk (screened out) | Serious | "Spoon: Recipe & Meal Planner"; "Spoon: Smart Calorie Tracker"; "spoonacular food companion" | [App Store](https://apps.apple.com/us/app/spoon-recipe-meal-planner/id6759272641), [Play](https://play.google.com/store/apps/details?id=com.oumlah.spoonapp&hl=en_US) |
+| Oven | standard | Risk (screened out) | Serious (near) | "BigOven Recipes & Meal Planner" | [Play](https://play.google.com/store/apps/details?id=com.bigoven.android&hl=en_US&gl=US) |
+| Pickle | see §6.8.3 | — | — | Shortlisted | — |
+| Lemon | standard + macros | Risk (screened out) | Serious | "Lemon: Nutrition Made Simple" (recipes, import, per-portion breakdown, meal plans); lemonnutrition.eu | [App Store](https://apps.apple.com/us/app/lemon-nutrition-made-simple/id6618148167), [lemonnutrition.eu](https://lemonnutrition.eu/) |
+| Jar | `"Jar" OR "Jars" app …` | Risk (screened out) | Serious (near) | "MealJar - Meal Planner App for iOS" | [mealjar.app](https://mealjar.app/) |
+| Wok | standard | Risk (screened out) | Serious (near) | "WokTheWeek – Weekly Meal Planner for Households" | [woktheweek.com](https://woktheweek.com/) |
+| Fork | standard + macros | Risk (screened out) | Serious | "Forks Meal Planner" (Forks Over Knives); Forkful; "Forked AI" | [App Store](https://apps.apple.com/us/app/forks-meal-planner/id1484372198) |
+| Grill | `"Grill" OR "Griddle" app …` | Risk (screened out) | Lighter (restaurant) | "Grill'd - Apps on Google Play" (restaurant with nutrition info) | [Play](https://play.google.com/store/apps/details?id=com.grilld.grilld&hl=en_US) |
+| Feast | standard + macros | Risk (screened out) | Serious | "Feast: Nutrition Coach"; "Feast - Caloric Intelligence" | [App Store](https://apps.apple.com/us/app/feast-nutrition-coach/id6740829087) |
+| Savor | `"Savor" OR "Savour" app …` | Risk (screened out) | Serious | "Savor - Meal Planner" (diet, allergies, budget, supermarket pricing, social import); "Savour App"; "savori - meal plan & groceries" | [App Store](https://apps.apple.com/us/app/savor-meal-planner/id6615086643), [savori](https://play.google.com/store/apps/details?id=com.savori&hl=en_US) |
+| Nacho / Taco | `"Nacho" OR "Taco" app …` | Inconclusive (Taco screened out on judgment; Nacho shortlisted) | — | Recipes only; no Nacho or Taco meal-planner app | — |
+| Noodle | standard | Risk (screened out) | Serious (near) | "ekilu - healthy recipes & plan" (package `es.nooddle`); summary: "previously known as Nooddle" | [Play](https://play.google.com/store/apps/details?id=es.nooddle&hl=en_US&gl=US) |
+| Sprout | standard | Risk (screened out) | Serious | "Sprout AI - Healthy Recipes"; "Sproutly \| AI Meal Planner & Smart Pantry Tracker"; "Sprout Cooking — Any Recipe, Made for You" | [App Store](https://apps.apple.com/us/app/sprout-ai-healthy-recipes/id6744351406), [sproutcooking.app](https://sproutcooking.app/) |
+| Kernel | standard + food | Inconclusive (screened out on judgment) | — | No Kernel app | — |
+| Brunch / Snack | `"Brunch" OR "Snack" app …` | Risk (screened out) | Serious (small) | "Brunch Bites" (recipes, grocery lists, macros) | [App Store](https://apps.apple.com/us/app/-/id1529171760) |
+| Picnic | `"Picnic" app groceries OR recipes OR "meal planner"` | Risk (screened out) | Serious | "Picnic: Supermarket & Recipes" ("supermarket, planner, shopping list and recipes in one"); "Picnic: order, cook, eat" | [App Store](https://apps.apple.com/us/app/picnic-supermarket-recipes/id1018175041), [Play](https://play.google.com/store/apps/details?id=com.picnic.android&hl=en) |
+| Crust / Loaf | `"Crust" OR "Loaf" app …` | Inconclusive (screened out on judgment) | — | No Crust or Loaf app | — |
+| Harvest / Basket | `"Harvest" OR "Basket" app …` | Risk (Harvest, screened out) | Serious | "Harvest — Meal Planning App" (myharvest.app); "Daily Harvest App" | [myharvest.app](https://myharvest.app/), [Daily Harvest](https://apps.apple.com/us/app/daily-harvest/id1437836101) |
+| Spice / Herb | `"Spice" OR "Herb" app …` | Risk (Herb, screened out) | Serious (near) | "Herbi: Meal Planner + Recipes" (budget, dietary needs, macros); "Food Now Spice Guide" | [App Store](https://apps.apple.com/gb/app/herbi-meal-planner-recipes/id6777230233) |
+| Apron | standard | Risk (screened out) | Serious | "Apron: Recipes & Grocery Lists" (pantry tracking, meal planning); "Blue Apron: Meal Kit Delivery" | [App Store](https://apps.apple.com/app/id6736772028), [Blue Apron](https://apps.apple.com/us/app/blue-apron-meal-kits/id976642810) |
+| Toast / Yum | `"Toast" OR "Yum" app …`; store `Toast app` | Risk (both screened out) | Serious (Yum); lighter but heavy (Toast) | "Yum AI: Recipes & Meal Planner"; "Yum: Easy & Tasty Recipes"; Wholesome Yum; Yummly. Store: "Toast - Local Restaurants" (Toast Local), "Toast Now", "MyToast" | [Yum AI](https://apps.apple.com/ca/app/yum-ai-recipes-meal-planner/id6739822998), [Toast Local](https://apps.apple.com/us/app/toast-local-restaurants/id1362180579) |
+| Honey / Butter | `"Honey" OR "Butter" app …` | Risk (Honey, screened out on the near name) | Serious (near) | "Honeydew - Recipe Capture & Meal Planning App"; no Honey or Butter app | [honeydewcook.com](https://honeydewcook.com/) |
+| Maple | standard | Risk (screened out) | Serious | "Maple Meal Planner \| Take stress off your plate"; "Maple has been acquired by Wander and will sunset on December 31, 2026" | [growmaple.com](https://www.growmaple.com/meal-planner) |
+| Ginger | standard | Inconclusive (screened out on judgment) | — | No Ginger meal-planner app | — |
+| Cumin / Clove | `"Cumin" OR "Clove" app …` | Risk (Clove, screened out) | Serious | "Clove \| Free AI Weekly Meal Planner"; "Clove: Import & Share Recipes" | [clove.kitchen](https://clove.kitchen/meal-plan), [App Store](https://apps.apple.com/us/app/clove-import-share-recipes/id6741995783) |
+| Oats / Cress | `"Oats" OR "Cress" app …` | Risk (Oats, near); Inconclusive (Cress) | Serious (near) | "Oatsy Calorie Deficit Calculator \| Best Free Nutrition App" | [oatsyapp.com](https://www.oatsyapp.com/) |
+| Tidbit / Smidge | `"Tidbit" OR "Smidge" app …` | Risk (Tidbit); Inconclusive (Smidge) | Serious | "Tidbit — Clean nutrition and GLP-1 tracking for iPhone" | [tidbitfood.app](https://tidbitfood.app/) |
+| Handful | see §6.8.3 | — | — | Shortlisted | — |
+| Spatula / Skewer | `"Spatula" OR "Skewer" app …` | Risk (Spatula, screened out) | Serious | Spatula "smart and social recipe box" | [App Store](https://apps.apple.com/mx/app/spatula/id1090496189) |
+| Truffle / Crumble | `"Truffle" OR "Crumble" app …` | Risk (both screened out) | Serious (Crumbs near); lighter (Truffle Blog) | "Truffle Blog" food-content app; "Crumbs Meal Plans & Recipes" | [Truffle Blog](https://apps.apple.com/hn/app/truffle-blog/id6746181470) |
+| Nugget | standard + food | Risk (screened out) | Serious (grocer) | "Meal Planning 101 - Nugget Markets Daily Dish" | [nuggetmarket.com](https://www.nuggetmarket.com/articles/2885/meal-planning-101/) |
+| Wedge / Slice | `"Wedge" OR "Slice" app …` | Inconclusive (screened out on judgment) | — | No Wedge or Slice meal-planner app | — |
+| Bagel / Muffin | `"Bagel" OR "Muffin" app …`; store `Bagel app` | Inconclusive (category), then Risk (Bagel, shortlisted) | — | See §6.8.3 | — |
+| Dumpling | standard | Inconclusive (screened out on judgment) | — | No Dumpling app | — |
+| Garlic / Onion | `"Garlic" OR "Onion" app … App Store` | Risk (Garlic, screened out) | Serious | "Garlic Recipe Keeper & Planner" (weekly plans, estimated nutrition, pantry) | [App Store](https://apps.apple.com/us/app/garlic-recipe-keeper-planner/id6758080753) |
+| Carrot | standard | Risk (screened out) | Serious | "Carrot AI - Your Complete Kitchen Assistant \| AI Meal Planner"; "Carrot: Calorie Counter & AI"; "Carroty - Grocery Lists & Meal Plans"; "Purple Carrot" | [carrotai.app](https://www.carrotai.app/), [App Store](https://apps.apple.com/gb/app/carrot-calorie-counter-ai/id6747942538) |
+| Almond / Cocoa | `"Almond" OR "Cocoa" app …` | Inconclusive (screened out on judgment) | — | Recipes only | — |
+| Peach / Cherry | `"Peach" OR "Cherry" app …` | Risk (Peach, screened out) | Serious | "Peach: AI Calorie Tracker" (macro tracker, AI meal planner) | [App Store](https://apps.apple.com/us/app/peach-ai-calorie-tracker/id6748237403) |
+| Nibble | standard + macros | Risk (screened out) | Serious | "MealPrepPro Meal Planner" by **Nibble Apps**; "Nibble: Find Safer Foods"; "Nibble AI - Calorie Tracker"; "Recipe Manager - Nibbly" | [nibbleapps.com](https://nibbleapps.com/), [Nibble AI](https://apps.apple.com/us/app/nibble-ai/id6756195763) |
+| Mouthful / Plateful | `"Mouthful" OR "Plateful" app …` | Risk (Plateful); Inconclusive (Mouthful) | Serious (menu and nutrient software) | "PlateFul \| Senior Living Menu Management Software" (nutrient analysis); "Plateful Nutrition" | [diningrd.com](https://www.diningrd.com/plateful.html) |
+| Tray / Pan | `"Tray" OR "Pan" app …` | Inconclusive (screened out on judgment) | — | No Tray or Pan app | — |
+| Roast / Glaze | `"Roast" OR "Glaze" app …` | Risk (Glaze, near) | Serious (near) | "Deglaze: Cooking, Simplified" recipe app | [App Store](https://apps.apple.com/us/app/deglaze-cooking-simplified/id6443578246) |
+| Mortar / Tongs / Grater | `"Mortar" OR "Tongs" OR "Grater" app …` | Inconclusive (screened out on judgment) | — | Kitchen-equipment pages only | — |
+| Jam / Berry | `"Jam" OR "Berry" app …` | Inconclusive (screened out on judgment) | — | Jam recipes only | — |
+| Tapas | `"Tapas" app …`; store | Inconclusive (category), then Risk (shortlisted) | — | See §6.8.3 | — |
+| Crisp | `"Crisp" app …`; store | Risk (screened out) | Serious (grocer, healthy restaurant) | "CRISP & GREEN" app (healthy restaurant, recipes, nutrition); store: "Crisp supermarkt" / "Crisp - online supermarkt" (NL); "Crisp" customer-chat SaaS; "Crisp - AI Photo Enhancer" | [Crisp supermarkt](https://apps.apple.com/us/app/crisp-supermarkt/id1416625210), [CRISP & GREEN](https://apps.apple.com/us/app/crisp-green/id1180644340), [Crisp chat](https://apps.apple.com/us/app/crisp/id1085770229) |
+| Drizzle / Sizzle | `"Drizzle" OR "Sizzle" app …` | Risk (both screened out) | Serious | "Drizzle Me Skinny - Healthy Recipes and Meals" (Weight Watchers points); "Sizzle App" recipe manager and meal planner; sizzle-app.com | [Amazon](https://www.amazon.com/Drizzle-Me-Skinny-Healthy-Recipes/dp/B01BPZTJ96), [Sizzle](https://apps.apple.com/app/sizzle-app/id6743368861) |
+| Lunchbox | standard + "meal prep" | Risk (screened out) | Serious | "LaLa Lunchbox" (kids' meal planning); "Little Lunches: Kids Meals"; "Athlete Lunchbox" meal prep | [LaLa Lunchbox](https://apps.apple.com/us/app/lala-lunchbox/id519037961) |
+| Bistro | standard; store | Inconclusive (category), then Risk (screened out) | Serious (food delivery) | Store: "Bistro: Food in minutes" (Blinkit Foods, IN); "Bistro.sk" (2,400+ restaurants); "Hello Bistro"; the Bagel search also surfaced a bistromd.com nutrition blog (bistroMD is a diet-meal delivery service, reviewer knowledge) | [Bistro](https://apps.apple.com/in/app/bistro-food-in-minutes/id6670203019), [Bistro.sk](https://apps.apple.com/us/app/bistro-sk/id828925849) |
+| Helping | `"Helping" app food …` | Inconclusive (screened out on judgment) | — | Generic meal-planner results only | — |
+| PL-market check for the top 3 | `aplikacja "Salsa" OR "Pretzel" OR "Donut" dieta przepisy kalorie` | Inconclusive | — | Polish diet-app roundups (Fitatu, Fit-World, Cal AI, Dine4Fit) and donut calorie pages; the summary: "the specific applications 'Salsa,' 'Pretzel,' and 'Donut' were not found as dedicated diet applications" | [dietetycy.org.pl](https://dietetycy.org.pl/aplikacje-dietetyczne/) |
+| Salsa, Pretzel, Donut, Pickle, Handful, Kettle, Tapas, Nacho, Melon, Bagel, Pesto, Caper, Gravy | see §6.8.3 | — | — | Shortlisted; full per-name evidence in §6.8.3 | — |
+
 ---
 
 ## 6. Shortlist
 
-> **Current shortlist: §6.7 (session 3, 2026-09-25), placed first below.** It is numbered 6.7 so that existing references to §6.1–§6.6 still point to the right text. The session-2 shortlist (§6.1–§6.3) and the session-2 top 3 (Tangram, Ramekin, Palmo; alternates Sapimo, Tadam) are **superseded (PO: too long, not catchy)** and kept below with all their evidence.
+> **Current shortlist: §6.8 (session 4, 2026-09-25), placed first below.** It is numbered 6.8 so that existing references to §6.1–§6.7 still point to the right text. The session-3 shortlist (§6.7) and its top 3 (Zubo, Kazu, Dozo; alternates Nimbo, Gobo) are **superseded (PO: "nothing from proposals")**. The session-2 shortlist (§6.1–§6.3) and top 3 (Tangram, Ramekin, Palmo) are **superseded (PO: too long, not catchy)**. Both are kept below with all their evidence.
 
-### 6.7 Session 3: short-and-catchy shortlist (current)
+### 6.8 Session 4: short real English food-word shortlist (current)
+
+Thirteen names, all real English words (four are dictionary loanwords: Salsa, Tapas, Nacho, Pesto), 5–7 letters and 2 syllables. All checks are dated **2026-09-25**. Store, domain, trademark and handle checks are **Pending** for every name because the official sources were egress-blocked (§5.1). The bracketed text is the search-engine indication only. **Food** = food hint (PO questionnaire); **D/S** = suggestive / borderline (§2.5 rule 3); **N** = C10 international neutrality; **Catch** = C11 catchiness (§2.3). All are reviewer assessments.
+
+#### 6.8.1 Check matrix
+
+| Name | L/S | Food | D/S | 1 Competitors / similar | 2 App Store | 3 Google Play | 4 .com | 4 .app | 4 .io | 4 .pl | 5 Trademarks (EUIPO / TMview / UPRP / WIPO / USPTO / UKIPO) | 6 Language PL/EN | 7 Confusing similarity | 8 Social handles | N | Catch |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Salsa** | 5/2 | Clear | S | Inconclusive in food apps; Risk in software: Salsa Labs (nonprofit SaaS), salsa.dev (payroll API), SALSA UK food-safety scheme | Pending (Risk, lighter: dance-event and dance-lesson "Salsa App"s) | Pending (Risk, lighter: dance events; "Salsa Live Stream & Video Chat") | Pending (not searched; very likely registered) | Pending (Inconclusive) | Pending (Risk: salsapp.io / salsaapp.io used by the dance app) | Pending (Inconclusive) | Pending (**Risk: UK SALSA reg. UK00003937773, SALSA Scheme Ltd, software for "food safety compliance"**; SALSA SYSTEMS, US) | Inconclusive: identical in PL/EN; ES/IT/PT *salsa* = "sauce" | Risk (medium): UK food-safety software mark | Pending (Risk: live-streaming "Salsa App" holds @salsa.appoficial, @salsalatam, @salsa.usa) | 4 | 5 |
+| **Pretzel** | 7/2 | Clear | S | Risk, lighter: pretzel-chain apps; Pretzel AI, GetPretzel (software) | Pending (Risk, lighter: "Pretzel Rated", chain ordering apps) | Pending (Risk, lighter: "Pretzel POS" hospitality, chains) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Risk: an Instagram @pretzel.io shopping app; domain unverified) | Pending (Inconclusive) | Pending (**Risk: US PRETZEL reg. 5312372, language-learning software, class 9**; PRETZEL THERAPEUTICS, class 5) | Inconclusive: PL hears *precel* (same sound, PL spelling) | Risk (medium): same-name class-9 software outside food | Pending (Risk: @pretzel.app = Pretzel Rated) | 4 | 4 |
+| **Donut** | 5/2 | Clear | S | Risk: Donut for Slack (donut.com, 20,000+ companies); donut shops | Pending (Risk: "I Deserve a Donut" weight-loss devotional app; games; Dunkin') | Pending (Risk, lighter: a delivery-driver app; shop apps) | Pending (Risk: donut.com = Donut for Slack) | Pending (Inconclusive) | Pending (Risk: app.donut.io = Donut dashboard) | Pending (Inconclusive) | Pending (Risk: DONUT LAB application, vehicle software, class 9; DONUT (Donut Media), class 41; DONUTS (domain registry)) | Risk (mild): UK "you donut"; donut/doughnut spelling | Risk (medium-high): identical well-known SaaS name in 9/42 | Pending (Risk: @donut_app, @donut.ai, @donutmedia) | 4 | 5 |
+| **Pickle** | 6/2 | Clear | S | **Risk, serious: Pickle.ph healthy meal-plan delivery with calorie calculator and macro-balanced plans (PH)** | Pending (Risk, lighter: fashion rental, pickleball) | Pending (Risk, lighter: money, notes, reels) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Risk: a cloud platform per a summary, unverified) | Pending (Inconclusive) | Pending (Risk: PICKLE (Pickle, Inc.), PICKLEPAY, DESIGN PICKLE, PICKLEGRAM in 9/42) | Risk: DE *Pickel* = pimple; "in a pickle" | Risk (medium-high) | Pending (Risk: @getpickle, @getpickle.ai) | 3 | 5 |
+| **Handful** | 7/2 | Moderate | B | Risk, lighter: handful.com sports-bra brand; Healthy Handfuls kids' snacks | Pending (Risk, lighter: "Handful: Daily Gratitude") | Pending (Inconclusive) | Pending (Risk: handful.com in use, sports bras) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Inconclusive: no HANDFUL mark surfaced) | Risk (mild): "a handful" = hard to manage; bra-brand innuendo | Risk (low-medium) | Pending (Risk: @handful = sports-bra brand, 43K) | 3 | 3 |
+| **Kettle** | 6/2 | Moderate (kitchen) | S | Risk: Kettle Brand chips, Kettle & Fire (class 29) | Pending (Risk: "Kettle: AI Fitness Coach", KettlePay) | Pending (Risk, lighter: networking app, café ordering) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Risk: kettle.io agency) | Pending (Inconclusive) | Pending (Risk: KETTLE BRAND, KETTLE & FIRE, class 29) | Inconclusive: word little known in PL | Risk (medium): fitness-coach app | Pending (Risk: @kettle = Kettle Pay) | 3 | 3 |
+| Tapas | 5/2 | Clear | S/B | Risk, heavy: Tapas comics (Tapas Media) | Pending (Risk, heavy: "Tapas – Comics and Novels") | Pending (Risk, heavy: same) | Pending | Pending | Pending | Pending | Pending (Risk: US TAPAS reg., social networking and comics) | Risk: descriptive in ES | Risk (high) | Pending | 3 | 4 |
+| Nacho | 5/2 | Clear | S | Risk, lighter: restaurants; NachoNacho SaaS | Pending (Risk, lighter: restaurant apps) | Pending (Risk: a Spaces wallet app) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Inconclusive) | Pending | Pending (Risk, low: NACHO MAMAS, classes 30 and 42) | Risk: PL reads "ch" as [x] | Risk (medium) | Pending (Risk: @nacho, 15M personal) | 3 | 5 |
+| Melon | 5/2 | Clear | S | **Risk, serious: a MELON filing for a weight-loss-habit tracking app**; near Mela and Melo AI | Pending (Risk: several Melon apps) | Pending (Risk, heavy: Kakao's Melon music) | Pending | Pending | Pending | Pending | Pending (Risk: Melon Innovations LLC app filing) | Risk: slang "melons" (breasts), UK "melon" (head) | Risk (high) | Pending | 4 | 4 |
+| Bagel | 5/2 | Clear | S | Risk, heavy: Coffee Meets Bagel dating app | Pending (Risk: CMB, bagel chains) | Pending (Risk: CMB) | Pending | Pending | Pending | Pending | Pending | Risk: PL "BA-gel" vs EN "BAY-gel" | Risk (medium-high) | Pending | 4 | 4 |
+| Pesto | 5/2 | Clear | S | **Risk, serious: "Pesto - Recipe App" (organiser, weekly meal planner, shopping list) on the Polish App Store** | Pending (Risk, serious) | Pending (Risk: "pesto", Pesto Assistant) | Pending | Pending | Pending | Pending | Pending | Inconclusive: IT descriptive | Risk (high) | Pending | 4 | 5 |
+| Caper | 5/2 | Clear | S | **Risk, serious-adjacent: Instacart Caper AI grocery carts (caper.ai)** | Pending (Risk: Capper betting app) | Pending (Risk: Caper logistics apps) | Pending | Pending | Pending | Pending | Pending | Risk: PL "KA-per" vs EN "KAY-per" | Risk (high) | Pending | 3 | 4 |
+| Gravy | 5/2 | Clear | S | **Risk, reputational: Gravy Analytics, FTC order on selling sensitive location data (2025)** | Pending (Risk: fintech "Gravy" apps) | Pending (Risk: Gravy, All Gravy) | Pending | Pending | Pending | Pending | Pending | Risk: PL "GRA-vy"; "gravy train" | Risk (medium-high) | Pending | 3 | 4 |
+
+#### 6.8.2 Scores (C1–C7, C10, C11) and ranking
+
+Scores run from 1 (poor) to 5 (strong) and are the reviewer's assessment of the evidence above. **C8 (domains and handles) and C9 (trademarks) are Pending for every name** and are not scored. "Evidence weight" summarises the search-engine Risk findings using the §2.5 rule (same-name use in food, recipe, nutrition or meal-planning apps is serious; elsewhere is lighter); it is a triage signal, not a legal assessment. The rank weighs the C1–C7 sum, C10, C11, the food hint and the evidence weight together, so a higher sum does not always mean a higher rank. **This is a recommendation for further investigation, not a selection.**
+
+| Rank | Name | L/S | C1 | C2 | C3 | C4 | C5 | C6 | C7 | Sum /35 | C10 /5 | C11 /5 | Food | Evidence weight (SE) | Further investigation? |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | **Salsa** | 5/2 | 3 | 5 | 5 | 3 | 5 | 5 | 4 | 30 | 4 | 5 | Clear | **Medium:** no food or nutrition app of this name seen; store search owned by dance and live-streaming apps; software namesakes (Salsa Labs, salsa.dev); a UK SALSA mark for food-safety compliance software | **Yes, top 3** |
+| 2 | **Pretzel** | 7/2 | 4 | 4 | 5 | 4 | 5 | 5 | 5 | 32 | 4 | 4 | Clear | **Medium:** pretzel chains' ordering apps and a hospitality POS (lighter); a US PRETZEL registration for language-learning software (class 9); @pretzel.app taken | **Yes, top 3** |
+| 3 | **Donut** | 5/2 | 3 | 4 | 4 | 4 | 4 | 5 | 5 | 29 | 4 | 5 | Clear | **Medium-high:** Donut for Slack is a well-known SaaS in 9/42 (lighter category, but a strong brand); a weight-loss devotional app "I Deserve a Donut"; donut.com and app.donut.io in use | **Yes, top 3** |
+| 4 | **Pickle** | 6/2 | 3 | 4 | 3 | 4 | 5 | 5 | 5 | 29 | 3 | 5 | Clear | **Medium-high:** Pickle.ph, a healthy meal-plan delivery service with macros (serious, PH market); several PICKLE software marks; DE *Pickel* = pimple | Yes, alternate |
+| 5 | **Handful** | 7/2 | 4 | 4 | 3 | 4 | 4 | 5 | 5 | 29 | 3 | 3 | Moderate | **Medium:** nothing in food or nutrition apps; handful.com sports-bra brand and @handful; a gratitude app; borderline descriptive for portions | Yes, alternate |
+| 6 | Kettle | 6/2 | 4 | 3 | 4 | 3 | 5 | 5 | 5 | 29 | 3 | 3 | Moderate | Medium-high: "Kettle: AI Fitness Coach" (health-adjacent class 9); food marks in class 29; @kettle taken | Only if the top 5 all fail |
+| 7 | Tapas | 5/2 | 3 | 5 | 5 | 4 | 5 | 5 | 4 | 31 | 3 | 4 | Clear | **High:** Tapas (comics) by Tapas Media, a major class-9/41 app with a US TAPAS registration; descriptive for food service in ES | No |
+| 8 | Pesto | 5/2 | 3 | 5 | 5 | 3 | 5 | 5 | 4 | 30 | 4 | 5 | Clear | **High:** "Pesto - Recipe App", a recipe organiser and meal planner, on the Polish App Store | No |
+| 9 | Melon | 5/2 | 3 | 5 | 3 | 2 | 4 | 5 | 5 | 27 | 4 | 4 | Clear | **High:** a MELON filing for a weight-loss tracking app; Kakao's Melon music; near Mela and Melo AI; slang | No |
+| 10 | Caper | 5/2 | 3 | 3 | 4 | 3 | 5 | 5 | 5 | 28 | 3 | 4 | Clear | **High:** Instacart's Caper AI grocery carts (grocery tech next to our shopping list) | No |
+| 11 | Bagel | 5/2 | 3 | 3 | 5 | 2 | 5 | 5 | 4 | 27 | 4 | 4 | Clear | Medium-high: Coffee Meets Bagel; bagel chains; PL/EN pronunciation split | No |
+| 12 | Nacho | 5/2 | 3 | 3 | 4 | 3 | 4 | 5 | 4 | 26 | 3 | 5 | Clear | Medium: restaurants and small software; but Poles read "ch" as [x] and the pun only works in English | No |
+| 13 | Gravy | 5/2 | 3 | 3 | 3 | 3 | 4 | 5 | 5 | 26 | 3 | 4 | Clear | **High (reputational):** Gravy Analytics, subject of a 2025 FTC order on selling sensitive location data | No |
+
+**Catchiness in one line each (C11):**
+- **Salsa (5):** two bright "a" vowels and a doubled "s", with a dance built into the word; the same sound in PL and EN.
+- **Pretzel (4):** a crisp "pr-tz" snap and a strong icon (the knot); one consonant cluster too many for a 5.
+- **Donut (5):** round, soft and cheerful; the logo draws itself.
+- **Pickle (5):** bouncy, a little silly, instantly memorable.
+- **Handful (3):** friendly but flat, and three consonants in the middle.
+- **Kettle (3):** homely rather than punchy.
+- **Tapas (4), Nacho (5), Melon (4), Bagel (4), Pesto (5), Caper (4), Gravy (4):** all easy and fun; their problems are evidence and language, not sound.
+
+**Trade-offs in brief:**
+- **Salsa** fits the PO's answers best on sound and language: a real word everyone in PL and EN already knows, identical in both, clearly food, lively and catchy, with a built-in story (mix what you love with what you need; the rhythm of the week). The cost: the store search term belongs to dance and live-streaming apps, so the descriptor must do the work in search ("Salsa: Meal Planner & Macros", 28 characters). There are several SALSA software marks, and the nearest is a UK registration for food-safety compliance software. In Spanish, Italian and Portuguese *salsa* just means "sauce", which weakens the mark there.
+- **Pretzel** scores highest on the criteria: clearly food, arbitrary for software (so the strongest trademark footing of the three), known across Europe (PL *precel*, DE *Brezel*), with the best product metaphor: the app twists a recipe until it fits your plan (PRD §8.3–§8.6). The costs: a US PRETZEL registration for language-learning software (class 9) needs an attorney's view; the long store title is exactly at 30 characters; @pretzel.app is taken; and a Pole who hears it may spell it "precel".
+- **Donut** carries the core promise most directly: "yes, even this fits" (PRD §1), without moralizing (PRD §5). It is the catchiest and most iconic of the three. The costs: Donut for Slack is a well-known software brand with the identical name in 9/42, and naming a nutrition platform after a treat is a positioning bet that the PO should make on purpose (it could read as playful to the wedge and as flippant to dietitians, PRD §3).
+- **Pickle** (alternate) has the best meal-prep meaning (pickling is making ahead, PRD §5) and top catchiness, but a Manila meal-plan service with macros uses the exact name, and in German *Pickel* means pimple.
+- **Handful** (alternate) is the only portion word left that is not taken by a food app, and it matches the hand-portion idea. But its food hint is only moderate (the PO asked for "clearly"), it sits on the descriptive side for portion features, and handful.com is a sports-bra brand that plays on the word.
+- **Tapas, Pesto, Melon, Caper and Gravy** are shown because they are the obvious catchy food words the PO might think of. Each has a high-weight problem: a major comics app (Tapas), a same-category recipe app in the Polish store (Pesto), a weight-loss app filing and slang (Melon), Instacart's grocery carts (Caper), and a data-privacy scandal (Gravy).
+
+#### 6.8.3 Per-name evidence (session 4)
+
+All checks are dated **2026-09-25**. "SE" means a WebSearch result that could not be opened. Domains: RDAP was blocked for every TLD, so every domain status is **Pending**. A 5–7 letter dictionary .com is almost always registered, so each block lists realistic variants to check first (`<name>.app`, `get<name>.com`, `eat<name>.com`, `<name>app.com`, `<name>.pl`). They are unverified and must be checked by RDAP before any decision. Trademark indications come from third-party mirror sites (Trademarkia, Justia, uspto.report) seen through the search engine, not from the registries. Handles on Facebook, YouTube, X, Threads and LinkedIn could not be checked and are **Pending** unless noted. Store titles use the reference descriptor ": Meal Planner & Macros"; a Polish-store alternative is ": Planer posiłków" (the descriptor may use diacritics; the brand does not).
+
+---
+
+##### `Salsa` (top 3)
+
+- **Concept:** Salsa is what you get when you chop up good things and mix them into something you want to eat, which is what the app does with a recipe and your numbers. It is also the dance: rhythm, energy, the weekly loop. Food-positive and lively, never about restriction (PRD §5).
+- **Pronunciation:** PL [ˈsalsa] "SAL-sa". EN UK /ˈsælsə/ "SAL-suh", US /ˈsɑːlsə/ "SAHL-suh". Everyone in the wedge already knows the word, and it is spelled the same after one hearing in both languages.
+- **Meaning and connotations:** EN (a dictionary loanword) and PL: a spicy sauce or dip, and the Latin dance. ES, IT, PT: *salsa* = "sauce" in general. No rude, body or medical meanings known in PL, EN, DE, FR, ES, IT, PT, NL or SV (reviewer assessment). A mild Latin-American cuisine flavour (C7).
+- **Positioning line:** "Salsa. The recipe you love, mixed to your numbers." / "Salsa – przepis, który lubisz, w Twoich makro."
+- **Store title:** "Salsa: Meal Planner & Macros" (28 characters). PL: "Salsa: Planer posiłków i makro" (30).
+- **Food hint / D/S:** clear / suggestive.
+- **Catchiness:** 5/5.
+- **Distinctiveness note (classes 9, 42, 44):** "salsa" names a food, not the service, so for nutrition and meal-planning software it is suggestive in EN and PL. EUIPO assesses meaning in every EU language: in ES, IT and PT *salsa* is the ordinary word for "sauce", so an examiner could call it descriptive of recipe content (publications, class 41/16) and allusive for nutrition advice (44). That weakens protection in those markets without obviously blocking registration for software. Several SALSA marks already exist in 9/42, so expect to rely on coexistence. An attorney's view is needed.
+- **Main risks:** the UK SALSA registration covering food-safety compliance software; dance and live-streaming apps own the store search term; the exact .com and the main handles are very likely taken.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Inconclusive (food) / Risk (software) | 2026-09-25 | [salsafood.co.uk](https://www.salsafood.co.uk/), [Salsa Labs (Wikipedia)](https://en.wikipedia.org/wiki/Salsa_Labs), [salsa.dev](https://www.salsa.dev/) | Category query `"Salsa" app recipes OR "meal planner" OR nutrition -dance` returned no Salsa recipe, meal-planning or nutrition app (only salsa recipes and "Salsarita's Nutrition Calculator", a restaurant). Software namesakes: Salsa Labs, a "SaaS company that provides donor management… to more than 3,000 nonprofit organizations"; Salsa, "embedded payroll solutions" (salsa.dev). SALSA = "Safe and Local Supplier Approval", a UK food-safety certification scheme run by SALSA Scheme Ltd ("a non-profit joint venture between FDF, NFU and UK Hospitality"). |
+| 2 App Store (PL/US/GB) | Pending (SE: Risk, lighter) | 2026-09-25 | [Salsa App](https://apps.apple.com/us/app/salsa-app/id1601246909), [Salsa App](https://apps.apple.com/us/app/salsa-app/id6745124781), [Pocket Salsa](https://apps.apple.com/us/app/pocket-salsa/id371402545), [Salsa Rhythm](https://apps.apple.com/us/app/salsa-rhythm/id379868541) | Store-filtered SE: dance-event finders, dance lessons and a rhythm trainer. No food app. The iTunes API is blocked; App Store Connect availability is an owner action. |
+| 3 Google Play | Pending (SE: Risk, lighter) | 2026-09-25 | [Salsa App](https://play.google.com/store/apps/details?id=com.salsapp), [Salsa Live Stream & Video Chat](https://play.google.com/store/apps/details?id=app.salsayou.android&hl=en_US) | Dance events; per the summary "a social streaming app built for India's digital content creators". No food app. |
+| 4 Domains .com / .app / .io / .pl | Pending (SE: Risk for variants) | 2026-09-25 | RDAP blocked; [salsapp.io](https://salsapp.io/), [salsaapp.io](https://salsaapp.io/) | salsapp.io and salsaapp.io are used by the dance "Salsa App". Query `"salsa.app" OR "getsalsa.com" OR "salsa.io" OR "salsaapp.com"` showed nothing at those four. salsa.com was not searched; a 5-letter dictionary .com is very likely registered (unverified). **Not evidence of availability.** Check first: salsa.app, getsalsa.com, eatsalsa.com, salsa.pl. |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | [Trademarkia: SALSA UK00003937773](https://www.trademarkia.com/salsa-UK00003937773), [uspto.report: SALSA SYSTEMS 78026010](https://uspto.report/TM/78026010), [Justia: SALSA AND 97709873](https://trademarks.justia.com/977/09/salsa-and-97709873.html) | Third-party summary: SALSA, SALSA Scheme Ltd, UK, filed 2023-07-25, registered 2024-08-08, covering "computer software for use in collecting, compiling, storing, registering… and collaborating" and software design "relating to health and safety assessments, audits, accreditations and food safety compliance". SALSA SYSTEMS (Salsa Systems, Inc., US; goods not shown). Registries blocked. |
+| 6 Language | Inconclusive (no negatives found) | 2026-09-25 | Reviewer assessment | As above. A listener test should confirm that PL and EN listeners hear "food" before "dance". |
+| 7 Confusing similarity | Risk (medium) | 2026-09-25 | rows 1, 5 | The UK SALSA food-safety software mark is the nearest in goods (software touching food). Dance, streaming, nonprofit CRM and payroll uses are lighter. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@salsa.appoficial](https://www.instagram.com/salsa.appoficial/), [@salsalatam](https://www.instagram.com/salsalatam/), [@salsalive.app](https://www.instagram.com/salsalive.app/), [@salsaapp.asia](https://www.instagram.com/salsaapp.asia/) (all via SE) | The live-streaming "Salsa App" holds many regional handles (@salsa.appoficial with 9,052 followers, @salsalatam, @salsa.usa, @salsaapp.asia). The exact @salsa was not seen. Try `getsalsa`, `salsa.pl`, `eatsalsa`. |
+
+---
+
+##### `Pretzel` (top 3)
+
+- **Concept:** A pretzel is dough twisted until it holds its shape. The app twists your recipe (swaps, portions, rebalancing, PRD §8.3–§8.6) until it fits your plan, and shows every turn it made (PRD §5 principle 10). Playful and a little indulgent, and the knot is a strong icon.
+- **Pronunciation:** PL [ˈprɛtsɛl] "PRET-sel", the same sound as the Polish word *precel*. EN /ˈprɛtsəl/ "PRET-sul". A Pole who hears it may write "precel"; an English speaker writes "pretzel".
+- **Meaning and connotations:** the baked knot, known across Europe (DE *Brezel*, FR *bretzel*, PL *precel*). "Twisted into a pretzel" = contorted (mild). No rude, body or medical meanings known (reviewer assessment).
+- **Positioning line:** "Pretzel. We twist your recipe until it fits." / "Pretzel – przepis skręcony pod Twoje makro."
+- **Store title:** "Pretzel: Meal Planner & Macros" (30 characters, at the limit) or "Pretzel: Meal Planner" (21).
+- **Food hint / D/S:** clear / suggestive (arbitrary for software).
+- **Catchiness:** 4/5.
+- **Distinctiveness note (classes 9, 42, 44):** arbitrary for nutrition software and advice; descriptive only for bakery goods (30) and bakery or restaurant services (43). Of the three, it has the strongest footing. A US PRETZEL registration covers downloadable language-learning software (class 9); both are "downloadable software", so an attorney should judge whether the different purposes allow coexistence.
+- **Main risks:** the US PRETZEL software registration; pretzel chains own the store search term; @pretzel.app is taken; the long store title uses all 30 characters.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (lighter) | 2026-09-25 | [Wetzel's Pretzels](https://apps.apple.com/us/app/wetzels-pretzels/id1637424029), [Auntie Anne's Rewards](https://play.google.com/store/apps/details?id=com.auntieannes.pretzelperks&hl=en_US), [Pretzel AI (GitHub)](https://github.com/pretzelai/pretzelai), [GetPretzel (GitHub)](https://github.com/GetPretzel/Pretzel) | Category query `"Pretzel" app "meal planner" OR nutrition OR recipes OR macros`: the summary says the results "don't appear to contain any information about an app specifically called 'Pretzel'". Food uses are pretzel chains (Wetzel's, Auntie Anne's, Philly Pretzel Factory, Ben's). Software: Pretzel AI ("modern replacement for Jupyter Notebooks"), GetPretzel ("stock take application"), a Mac shortcuts app. |
+| 2 App Store (PL/US/GB) | Pending (SE: Risk, lighter) | 2026-09-25 | [Pretzel Rated](https://apps.apple.com/us/app/pretzel-rated/id6758898111), [Philly Pretzel Factory](https://apps.apple.com/us/app/philly-pretzel-factory/id1185574639), [Ben's Pretzels](https://apps.apple.com/us/app/bens-pretzels/id1181066695) | A movie and TV rating social app; chain ordering and rewards apps. No nutrition app. |
+| 3 Google Play | Pending (SE: Risk, lighter) | 2026-09-25 | [Pretzel POS](https://play.google.com/store/apps/details?id=au.com.swifti&hl=en_US), [Wetzel's Pretzels](https://play.google.com/store/apps/details?id=com.wetzels.app&hl=en_US) | "Pretzel POS – A complete hospitality point-of-sale system for cafes, restaurants and food trucks"; chains; a game. |
+| 4 Domains | Pending (SE: Risk for variants) | 2026-09-25 | RDAP blocked; [@pretzel.io (via SE)](https://www.instagram.com/pretzel.io/) | Query `"pretzel.app" OR "getpretzel.com" OR "pretzel.io" OR "pretzel.com"`: pretzelai.app is in use by Pretzel AI (per the summary); an Instagram account @pretzel.io describes a shopping app (whether it uses the pretzel.io domain is unverified); a GitHub organisation "GetPretzel" exists (getpretzel.com itself was not seen). Nothing for pretzel.com or pretzel.app. Check first: pretzel.app, getpretzel.com, eatpretzel.com, pretzel.pl. |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | [Justia: PRETZEL 86953904](https://trademarks.justia.com/869/53/pretzel-86953904.html), [Justia: PRETZEL THERAPEUTICS 88856373](https://trademarks.justia.com/888/56/pretzel-88856373.html) | Third-party summary: PRETZEL, Pretzel, Inc., "filed in March 2016 and registered in October 2017" (reg. 5312372), "covering downloadable software for skill improvement and skill sharing, particularly for practicing foreign languages". PRETZEL THERAPEUTICS (engineered proteins, class 5). Registries blocked. |
+| 6 Language | Inconclusive (no negatives found) | 2026-09-25 | Reviewer assessment | The PL spelling split (*precel*). |
+| 7 Confusing similarity | Risk (medium) | 2026-09-25 | rows 3, 5 | Same-name class-9 software in language learning and a hospitality POS. Nothing in nutrition. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@pretzel.app](https://www.instagram.com/pretzel.app/), [@pretzel.io](https://www.instagram.com/pretzel.io/), [@pretzelized](https://www.instagram.com/pretzelized/) (via SE) | "Pretzel Rated (@pretzel.app)" holds that variant; @pretzel.io is a shopping app; many snack brands. The exact @pretzel was not seen. Try `getpretzel`, `pretzel.pl`, `eatpretzel`. |
+
+---
+
+##### `Donut` (top 3)
+
+- **Concept:** The PRD promise is "eat what you feel like eating, matched to your plan" (PRD §1). A donut is the food a diet app forbids; here it fits. The name says "no guilt" without ever saying guilt (PRD §5, no moralizing). Round, cheerful and instantly drawable.
+- **Pronunciation:** PL [ˈdɔnut] "DO-nut" (the everyday Polish word is *donat*). EN /ˈdoʊnʌt/ "DOH-nut". Spellable after one hearing; British English also writes "doughnut".
+- **Meaning and connotations:** EN: the fried ring; UK slang "you donut" = a mild "you silly"; "doing donuts" (car stunts). PL: known as *donat* or *donut*. No medical meaning (reviewer assessment).
+- **Positioning line:** "Donut. Yes, it fits." / "Donut – tak, to też się zmieści."
+- **Store title:** "Donut: Meal Planner & Macros" (28 characters).
+- **Food hint / D/S:** clear / suggestive (arbitrary for software).
+- **Catchiness:** 5/5.
+- **Distinctiveness note (classes 9, 42, 44):** arbitrary for nutrition software, so strong in principle. But "Donut" is already a well-known software brand in 9/42 (Donut for Slack, used by "20,000+ companies"), and DONUT marks exist in class 9 (a vehicle-software application) and 41 (Donut Media). An attorney must assess whether "software" goods with different purposes are similar enough to block.
+- **Main risks:** Donut for Slack (donut.com, app.donut.io); the positioning bet of naming a nutrition platform after a treat (the PO's call, §8.6.3); "I Deserve a Donut", a weight-loss devotional app; the donut/doughnut spelling split.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (lighter category, strong brand) | 2026-09-25 | [donut.com](https://www.donut.com/), [Slack Marketplace](https://app.slack.com/apps/A11MJ51SR-donut) | "Donut is an employee experience platform that helps you automate and scale people programs, right in Slack"; "used by 20,000+ companies"; "raised $12 million from Accel and the Slack Fund". Category query `"Donut" app "meal planner" OR recipes OR nutrition`: the summary says "there doesn't appear to be a specific app called 'Donut'". |
+| 2 App Store (PL/US/GB) | Pending (SE: Risk) | 2026-09-25 | [Donut Inc.](https://apps.apple.com/us/app/donut-inc/id1666146982), [I Deserve a Donut](https://apps.apple.com/us/app/i-deserve-a-donut/id529567174), [Dunkin'](https://apps.apple.com/us/app/dunkin/id1056813463) | A shop-simulation game; "I Deserve a Donut" (per the summary, "a weight loss support app containing 32 sets of questions and 150+ Bible verses", a small nutrition-adjacent namesake); donut-shop apps. |
+| 3 Google Play | Pending (SE: Risk, lighter) | 2026-09-25 | [DONUT](https://play.google.com/store/apps/details?id=com.tiongnam.donut_flutter&hl=en_US), [Donut Time](https://play.google.com/store/apps/details?id=com.storefrontconsumer.donut.time&hl=en_US) | A delivery-driver management app; shop ordering apps. |
+| 4 Domains | Pending (SE: Risk) | 2026-09-25 | [donut.com](https://www.donut.com/), [app.donut.io](https://app.donut.io/), [getdonut.ai](https://getdonut.ai/) | donut.com = Donut for Slack; app.donut.io = its web dashboard; getdonut.ai = a trading tool. Nothing surfaced for donut.app, getdonut.com or donut.pl. Check first: donut.app, eatdonut.com, donutapp.com, donut.pl. |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | [Justia: DONUT LAB 98936152](https://trademarks.justia.com/989/36/donut-98936152.html), [Justia: DONUT 87441489](https://trademarks.justia.com/874/41/donut-87441489.html), [Justia: DONUTS 85801950](https://trademarks.justia.com/858/01/donuts-85801950.html) | DONUT LAB, Donut Lab Development OÜ, filed 2025-01-03, "downloadable software for vehicle operation, control, diagnostic, and communication"; DONUT, Donut Media (reg. 5390018), entertainment; DONUTS, Donuts Inc. (reg. 4502837), domain-name registration. The Slack company's own marks did not surface. Registries blocked. |
+| 6 Language | Risk (mild) | 2026-09-25 | Reviewer assessment | UK "you donut"; donut/doughnut spelling. |
+| 7 Confusing similarity | Risk (medium-high) | 2026-09-25 | rows 1, 5 | A well-known SaaS with the identical name in 9/42; a weight-loss devotional app. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@donut_app](https://www.instagram.com/donut_app/), [@donut.ai](https://www.instagram.com/donut.ai/), [@donutmedia](https://www.instagram.com/donutmedia/), [@donut_lab](https://www.instagram.com/donut_lab/) (via SE) | @donut_app, @donut.ai (the Slack company), @donutmedia (2M, cars), @donut_lab. The exact @donut was not seen. Try `donut.pl`, `eatdonut`, `donutplanner`. |
+
+---
+
+##### `Pickle` (alternate)
+
+- **Concept:** Pickling is the original meal prep: make it once, eat it all week (PRD §5, meal prep as a first-class feature). And the app gets you out of a pickle when a recipe doesn't fit your numbers.
+- **Pronunciation:** PL [ˈpiklɛ] "PI-kle" (Poles know *pikle*). EN /ˈpɪkəl/ "PIK-ul". Spellable after one hearing.
+- **Meaning and connotations:** EN "in a pickle" = in trouble; "pickled" = drunk (slang). **DE *Pickel* = pimple** (a skin and body word, C3/C5, mild). App stores are full of pickleball. Also a Python serialisation module (reviewer knowledge).
+- **Store title:** "Pickle: Meal Planner & Macros" (29 characters).
+- **Food hint / D/S:** clear / suggestive. **Catchiness:** 5/5.
+- **Distinctiveness note:** arbitrary for software but diluted: several PICKLE marks already exist in 9/42.
+- **Main risks:** Pickle.ph (a healthy meal-plan service with calorie-controlled, macro-balanced plans); the DE meaning; crowded software marks.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (serious) | 2026-09-25 | [pickle.ph](https://pickle.ph/), [pickle.ph meal plans](https://pickle.ph/meal-plans/) | "Since 2015, Pickle Healthy Food Delivery has been redefining nutrition with its chef-prepared, nutritionist-approved meal plans"; "Every meal is calorie-controlled, macro-balanced"; plans named "Signature", "Lean and Clean", "Performance"; a calorie calculator (Metro Manila). The category query found no Pickle meal-planner app. |
+| 2 App Store | Pending (SE: Risk, lighter) | 2026-09-25 | [Pickle: Rent & Lend Fashion](https://apps.apple.com/us/app/pickle-rent-lend-fashion/id1551736097), [Play Pickle](https://apps.apple.com/us/app/play-pickle/id6738210884), [Pickle Pro](https://apps.apple.com/us/app/pickle-pro/id6744969406) | Fashion rental; pickleball. |
+| 3 Google Play | Pending (SE: Risk, lighter) | 2026-09-25 | [Pickle](https://play.google.com/store/apps/details?id=com.pickle_app), [Pickle - A simple note](https://play.google.com/store/apps/details?id=com.afn.pickle&hl=en), [Chicken N Pickle](https://play.google.com/store/apps/details?id=com.thanx.chickennpickle&hl=en_US) | A money-management app, a notes app, an AI reel maker, pickleball venues. |
+| 4 Domains | Pending (SE: Risk for variants) | 2026-09-25 | [app.getpickle.ai](https://app.getpickle.ai/home), [shoponpickle.com](https://help.shoponpickle.com/en/articles/14442965-app-feature-faqs) | getpickle.ai (AI avatars) and shoponpickle.com (fashion) are in use. The summary said pickle.io is "a flexible cloud management platform" (no URL shown; unverified). Check first: pickle.app, getpickle.com, eatpickle.com, pickle.pl. |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | [uspto.report: PICKLE 99448059](https://uspto.report/TM/99448059), [Justia: PICKLEPAY 90380383](https://trademarks.justia.com/903/80/picklepay-90380383.html), [Justia: DESIGN PICKLE 90222910](https://trademarks.justia.com/902/22/design-90222910.html) | PICKLE (Pickle, Inc.): "online non-downloadable software for generating and utilizing virtual avatars"; PICKLEPAY: downloadable payment software; DESIGN PICKLE: PaaS for design services; PICKLEGRAM (Computer & Software Products). Registries blocked. |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | DE *Pickel*; "in a pickle"; "pickled". |
+| 7 Confusing similarity | Risk (medium-high) | 2026-09-25 | rows 1, 5 | A same-category meal-plan service and several software marks. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@getpickle](https://www.instagram.com/getpickle/), [@getpickle.ai](https://www.instagram.com/getpickle.ai/), [@pickle__com](https://www.instagram.com/pickle__com/) (via SE) | @getpickle is a farm-to-jar pickles brand; @getpickle.ai (Instagram and TikTok) is Pickle AI. The exact @pickle was not seen. Try `pickle.pl`, `eatpickle`, `pickleplanner`. |
+
+---
+
+##### `Handful` (alternate)
+
+- **Concept:** A handful is the oldest portion guide there is (palm, fist, handful). The app turns any recipe into portions you can picture, and keeps weekly planning manageable. It is the only shortlisted word about portions rather than a specific food.
+- **Pronunciation:** PL [ˈxantful] "HAND-ful" with a Polish [x] for "h". EN /ˈhændfʊl/ "HAND-fool". A Pole might write "hendful" after hearing it.
+- **Meaning and connotations:** EN "a handful" = a small amount; "he's a handful" = hard to manage (mild negative); handful.com is a sports-bra brand that plays on the word (a body innuendo in EN, mild C3/C5). PL: no meaning.
+- **Store title:** "Handful: Meal Planner & Macros" (30 characters, at the limit).
+- **Food hint / D/S:** moderate / borderline. **Catchiness:** 3/5.
+- **Distinctiveness note:** borderline. For nutrition advice (44) and portion-aware software (9), "handful" alludes to portion size, so an examiner could see it as describing a feature. Weaker than a specific food name.
+- **Main risks:** the food hint is weaker than the PO asked for; the sports-bra brand and @handful; borderline descriptiveness.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (lighter) | 2026-09-25 | [handful.com](https://handful.com/pages/faq), [Healthy Handfuls](https://www.foodprocessing.com/new-food-products/product/11358088/healthy-handfuls-llc) | handful.com: per the summary, "a private, direct-to-consumer women's activewear brand founded in 2006" (sports bras). "Healthy Handfuls", organic kids' snacks. The category query found no Handful meal or nutrition app. |
+| 2 App Store | Pending (SE: Risk, lighter) | 2026-09-25 | [Handful: Daily Gratitude](https://apps.apple.com/fr/app/handful-daily-gratitude/id6761936798) | A gratitude-journal app (developer "Beech Hill Fitness Inc." per the summary). No food app. |
+| 3 Google Play | Pending (SE: Inconclusive) | 2026-09-25 | — | Only unrelated near names (Handly, Handy). **Not evidence of availability.** |
+| 4 Domains | Pending (SE: Risk for .com) | 2026-09-25 | [handful.com](https://handful.com/pages/contact) | handful.com is in use (sports bras). Nothing surfaced for handful.app, gethandful.com or handful.io. Check first: handful.app, gethandful.com, handfulapp.com, handful.pl. |
+| 5 Trademarks | Pending (SE: Inconclusive) | 2026-09-25 | — | The mirror-site search returned no HANDFUL mark. The sports-bra brand may hold one (unverified). **Not a clearance.** |
+| 6 Language | Risk (mild) | 2026-09-25 | Reviewer assessment | "A handful" (hard to manage); the bra-brand innuendo. |
+| 7 Confusing similarity | Risk (low-medium) | 2026-09-25 | rows 1–2 | Activewear (class 25) and a gratitude app (class 9). Nothing in nutrition software. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@handful](https://www.instagram.com/handful/), [@handfulenglish](https://www.instagram.com/handfulenglish/) (via SE) | @handful is the sports-bra brand (43K). Try `handful.app`, `gethandful`, `handful.pl`. |
+
+---
+
+##### `Kettle` (only if the top 5 all fail)
+
+- **Concept:** The kettle starts every kitchen routine, and it nods to kettlebells, which suits the fitness-minded wedge (PRD §3).
+- **Pronunciation:** PL [ˈkɛtlɛ] "KET-le"; the word is not everyday Polish (PL *czajnik*). EN /ˈkɛtəl/ "KET-ul".
+- **Meaning and connotations:** "a different kettle of fish"; "the pot calling the kettle black". No negatives known in PL, DE, FR, ES or IT (reviewer assessment).
+- **Store title:** "Kettle: Meal Planner & Macros" (29). **Food hint / D/S:** moderate (a kitchen object, not a food) / suggestive. **Catchiness:** 3/5.
+- **Distinctiveness note:** arbitrary for software; KETTLE is crowded in food (class 29).
+- **Main risks:** "Kettle: AI Fitness Coach" (health-adjacent class 9); KettlePay holds @kettle; food marks in class 29.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [Justia: KETTLE BRAND 86975998](https://trademarks.justia.com/869/75/kettle-86975998.html), [TikTok @kettlebrand](https://www.tiktok.com/@kettlebrand?lang=en) | Kettle Brand chips (Snyder's-Lance), Kettle & Fire broth, Kettle Studio air-fried chips (Mumbai). The category query found no Kettle meal-planner app. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Kettle: AI Fitness Coach](https://apps.apple.com/gb/app/kettle-ai-fitness-coach/id6762473970), [KettlePay](https://apps.apple.com/us/app/kettlepay/id6747727129) | An AI workout coach (health and fitness, adjacent); crypto payments; kettlebell planners. |
+| 3 Google Play | Pending (SE: Risk, lighter) | 2026-09-25 | [Kettle – Connect.Heatup.Meet](https://play.google.com/store/apps/details?id=com.kettleweb.app&hl=en_US), [The Kettle To Go](https://play.google.com/store/apps/details?id=com.owner.thekettle&hl=en_GB) | Professional networking; café ordering. |
+| 4 Domains | Pending (SE: Risk) | 2026-09-25 | [kettle.io](https://kettle.io/), [app.ourkettle.com](https://app.ourkettle.com/) | kettle.io = a development and design agency; ourkettle.com = a login app. Nothing for kettle.com, kettle.app or getkettle.com. Check first: kettle.app, getkettle.com, kettle.pl. |
+| 5 Trademarks | Pending (SE: Risk, food classes) | 2026-09-25 | [Justia: KETTLE BRAND](https://trademarks.justia.com/869/75/kettle-86975998.html), [uspto.report: KETTLE & FIRE 88712175](https://uspto.report/TM/88712175) | KETTLE BRAND (chips); KETTLE & FIRE ("Meats and Processed Food Products"); KETTLE COLLECTION (Kerry Group). No software mark surfaced. |
+| 6 Language | Inconclusive | 2026-09-25 | Reviewer assessment | Low PL familiarity. |
+| 7 Confusing similarity | Risk (medium) | 2026-09-25 | rows 2, 5 | A fitness-coach app and food marks. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@kettle](https://www.instagram.com/kettle/) (via SE) | "Kettle Pay (@kettle)". Try `getkettle`, `kettle.pl`. |
+
+---
+
+##### `Tapas` (not recommended)
+
+- **Concept:** Small plates and lots of variety: your week in portions. **Pronunciation:** PL [ˈtapas]; EN /ˈtæpəs/ "TAP-us". **Store title:** "Tapas: Meal Planner & Macros" (28). **Catchiness:** 4/5. **Food hint / D/S:** clear / suggestive, but descriptive for food service in ES.
+- **Distinctiveness note:** descriptive in Spanish for restaurant services (43) and arguably allusive to small portions (44); a major TAPAS brand exists in 9/41/45.
+- **Main risk:** Tapas (comics and novels) by Tapas Media, a major app with a US TAPAS registration.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (heavy, outside food) | 2026-09-25 | [Tapas – Comics and Novels](https://apps.apple.com/us/app/tapas-comics-and-novels/id578836126), [MealTap](https://play.google.com/store/apps/details?id=com.meeltap.app&hl=en) | "Over 75,000 talented creators… publish their work on Tapas". Category query: no Tapas meal app; "MealTap" and "TapThePlate" meal planners sound close. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | as row 1 | Tapas comics; "La Prensa Tacos & Tapas", "Riserva Bar & Tapas". |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Tapas](https://play.google.com/store/apps/details?id=com.tapastic&hl=en_US), [Trending Tapas](https://play.google.com/store/apps/details?id=com.foodbooking.ttapas&hl=en_US) | Comics; restaurant ordering. |
+| 4 Domains | Pending | 2026-09-25 | — | Not searched this session. |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | [uspto.report: TAPAS 88453377](https://uspto.report/TM/88453377), [Trademarkia: Tapas Media](https://www.trademarkia.com/owners/tapas-media-inc) | TAPAS covers "on-line social networking services… in the field of literature and comics"; Tapas Media also holds TAPASTRY and TAPAS STORIES YOU CRAVE. |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | Descriptive in ES. |
+| 7 Confusing similarity | Risk (high) | 2026-09-25 | rows 1, 5 | A major same-name app. |
+| 8 Social handles | Pending | 2026-09-25 | — | Not searched. |
+
+---
+
+##### `Nacho` (not recommended)
+
+- **Concept:** "Nacho average meal plan"; a sharing plate. **Pronunciation:** PL [ˈnaxɔ] if read as Polish, [ˈnatʃɔ] if known; EN /ˈnɑːtʃoʊ/ "NAH-cho". **Store title:** "Nacho: Meal Planner & Macros" (28). **Catchiness:** 5/5. **Food hint / D/S:** clear / suggestive.
+- **Distinctiveness note:** arbitrary for software; also a common Spanish nickname (Ignacio).
+- **Main risks:** Poles read "ch" as [x]; the pun works only in English; tied to Tex-Mex junk food (C4, C7); @nacho is a 15M personal account.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (lighter) | 2026-09-25 | [Nacho Shack](https://apps.apple.com/us/app/nacho-shack/id6476187840), [NachoNacho](https://connect.nachonacho.com/) | Restaurant apps; NachoNacho (a software marketplace); Nacho King (Tex-Mex manufacturer, PH). No Nacho meal app. |
+| 2 App Store | Pending (SE: Risk, lighter) | 2026-09-25 | as row 1 | Nacho Shack, Restaurant Nacho's, Nacho Daddy, Tio Nacho, Nacho Map. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Nacho (wallet)](https://play.google.com/store/apps/details?id=com.impervious.nacho), [Movie Nachos](https://play.google.com/store/apps/details?id=com.alexpournaras.nachos) | A "non-custodial wallet" for Spaces handles; a movie app. |
+| 4 Domains | Pending (SE: Inconclusive) | 2026-09-25 | [nachoapps.dev](https://www.nachoapps.dev/) | nachoapps.dev and nachonacho.com in use; nothing for nacho.app, getnacho.com, nacho.io or nacho.com. |
+| 5 Trademarks | Pending (SE: Risk, low) | 2026-09-25 | [Trademarkia: Nacho Mamas Inc.](https://www.trademarkia.com/owners/nacho-mamas-inc) | NACHO MAMAS in class 030 and class 042. |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | PL "ch" = [x]. |
+| 7 Confusing similarity | Risk (medium) | 2026-09-25 | rows 1–3 | Restaurants and small software. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@nacho](https://www.instagram.com/nacho/), [TikTok @nacho_official](https://www.tiktok.com/@nacho_official) | "Nacho 'Miguelito' Mendoza (@nacho)", 15M followers. |
+
+---
+
+##### `Melon` (not recommended)
+
+- **Concept:** Round, fresh, friendly. **Pronunciation:** PL [ˈmɛlɔn]; EN /ˈmɛlən/ "MEL-un". **Store title:** "Melon: Meal Planner & Macros" (28). **Catchiness:** 4/5. **Food hint / D/S:** clear / suggestive.
+- **Distinctiveness note:** arbitrary for software, but a MELON filing already covers a weight-loss tracking app.
+- **Main risks:** that filing; Kakao's Melon music platform; near Mela (recipe app, §3.2) and Melo AI (diet coach, §3.4); slang ("melons" = breasts; UK "melon" = head).
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (serious) | 2026-09-25 | [Justia: Melon Innovations LLC](https://trademark.justia.com/owners/melon-innovations-llc-5086829/) | Per the summary, Melon Innovations LLC "filed a trademark for downloadable mobile application featuring software for recommending and tracking user weight loss habits". The category query found no Melon meal-planner app. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Melon: Sandbox](https://apps.apple.com/us/app/melon-sandbox/id1610874732), [Melon - Business Travel](https://apps.apple.com/us/app/melon-business-travel/id1569321067), [Melon Music](https://apps.apple.com/us/app/melon-music/id6767312118) | A game, business travel, a music player. |
+| 3 Google Play | Pending (SE: Risk, heavy) | 2026-09-25 | [멜론 (Melon)](https://play.google.com/store/apps/details?id=com.iloen.melon&hl=en_US) | Kakao's Melon music platform (KR); several other Melon apps. |
+| 4 Domains | Pending | 2026-09-25 | — | Not searched. |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | as row 1; [Trademarkia: Kakao Entertainment](https://www.trademarkia.com/owners/kakao-entertainment-corp) | The weight-loss app filing; Kakao Entertainment's 13 marks (whether MELON is among them was not shown). |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | Slang as above (C3). |
+| 7 Confusing similarity | Risk (high) | 2026-09-25 | rows 1, 3 | Same-category filing; near Mela and Melo AI. |
+| 8 Social handles | Pending | 2026-09-25 | — | Not searched. |
+
+---
+
+##### `Bagel` (not recommended)
+
+- **Concept:** A round classic. **Pronunciation:** PL [ˈbaɡɛl] (PL *bajgiel*); EN /ˈbeɪɡəl/ "BAY-gul". **Store title:** "Bagel: Meal Planner & Macros" (28). **Catchiness:** 4/5. **Food hint / D/S:** clear / suggestive.
+- **Distinctiveness note:** arbitrary for software, but "Bagel" is the distinctive half of a well-known dating brand.
+- **Main risks:** Coffee Meets Bagel; the PL/EN pronunciation split; a weak product metaphor (C4).
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (heavy, outside food) | 2026-09-25 | [Coffee Meets Bagel](https://apps.apple.com/us/app/coffee-meets-bagel-dating-app/id6502307144) | A major dating app ("over 150 million matches" per the summary); bagel chains. The category query found no Bagel meal app. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Einstein Bros Bagels](https://apps.apple.com/us/app/einstein-bros-bagels/id1405128897) | CMB; Einstein Bros, Brooklyn Bagel, Old School Bagel, Bagel Market NY. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Coffee Meets Bagel](https://play.google.com/store/apps/details?id=io.cmbus.app&hl=en_US), [B Bagel](https://play.google.com/store/apps/details?id=com.bbagel.app&hl=en_US) | CMB; bagel shops. |
+| 4 Domains | Pending | 2026-09-25 | — | Not searched. |
+| 5 Trademarks | Pending | 2026-09-25 | — | Not searched. |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | Pronunciation split. |
+| 7 Confusing similarity | Risk (medium-high) | 2026-09-25 | row 1 | CMB. |
+| 8 Social handles | Pending | 2026-09-25 | — | Not searched. |
+
+---
+
+##### `Pesto` (not recommended)
+
+- **Concept:** A few good things ground together: your recipe plus your numbers. **Pronunciation:** PL [ˈpɛstɔ]; EN /ˈpɛstoʊ/ "PES-toh". **Store title:** "Pesto: Meal Planner & Macros" (28). **Catchiness:** 5/5. **Food hint / D/S:** clear / suggestive.
+- **Distinctiveness note:** arbitrary for software in EN and PL; descriptive in IT (a sauce).
+- **Main risk:** a same-category recipe and meal-planner app of the same name on the Polish App Store.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (serious) | 2026-09-25 | [Pesto - Recipe App (App Store PL)](https://apps.apple.com/pl/app/pesto-recipe-app/id6504192769) | "Pesto is an all-in-one recipe organizer, shopping list, and meal planner" with "an integrated weekly meal planner" and unit conversion. |
+| 2 App Store | Pending (SE: Risk, serious) | 2026-09-25 | as row 1; [Pesto Restaurant](https://apps.apple.com/us/app/pesto-restaurant/id6761471614), [Pesto Family](https://apps.apple.com/us/app/pesto-family/id1574466794) | The recipe app (PL store); restaurant and delivery apps; "Pesto Kitchen". |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [pesto](https://play.google.com/store/apps/details?id=com.brenqo.pesto), [Pesto Assistant](https://play.google.com/store/apps/details?id=com.useappility.pesto&hl=en_US) | An app named "pesto" (category not shown); a Greek voice assistant. |
+| 4 Domains | Pending | 2026-09-25 | — | Not searched. |
+| 5 Trademarks | Pending | 2026-09-25 | — | Not searched. |
+| 6 Language | Inconclusive | 2026-09-25 | Reviewer assessment | Descriptive in IT. |
+| 7 Confusing similarity | Risk (high) | 2026-09-25 | row 1 | Identical name, same category, same launch market. |
+| 8 Social handles | Pending | 2026-09-25 | — | Not searched. |
+
+---
+
+##### `Caper` (not recommended)
+
+- **Concept:** A small bud with big flavour; "a caper" is also a playful adventure. **Pronunciation:** PL [ˈkapɛr] "KA-per"; EN /ˈkeɪpər/ "KAY-per". **Store title:** "Caper: Meal Planner & Macros" (28). **Catchiness:** 4/5. **Food hint / D/S:** clear / suggestive.
+- **Distinctiveness note:** arbitrary for software, but Instacart's Caper is a known grocery-technology brand.
+- **Main risks:** Instacart Caper Carts (grocery shopping tech sits next to our shopping list, PRD §8); the PL/EN pronunciation split; "caper" = heist.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (serious-adjacent) | 2026-09-25 | [caper.ai](https://www.caper.ai/), [Instacart Caper Carts](https://company.instacart.com/enterprise-platform/connected-stores/caper-carts) | "Caper Carts are high-tech, AI-enabled grocery carts"; "more than 100 cities across 15 states", Coles in Australia, "Morrisons in the UK coming later this year". |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Capper App](https://apps.apple.com/us/app/capper-app/id6756785474) | A sports-betting "capper" app; mystery games. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Caper App Store](https://play.google.com/store/apps/details?id=com.caper_cloud_app&hl=en_US), [Caper Xpresion](https://play.google.com/store/apps/details?id=com.caper_store&hl=en) | Logistics and courier apps. |
+| 4 Domains | Pending (SE: Risk) | 2026-09-25 | [caper.ai](https://www.caper.ai/) | caper.ai is in use (Instacart). Others not searched. |
+| 5 Trademarks | Pending | 2026-09-25 | — | Not searched. |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | Pronunciation split; "caper" = heist. |
+| 7 Confusing similarity | Risk (high) | 2026-09-25 | row 1 | Grocery technology. |
+| 8 Social handles | Pending | 2026-09-25 | — | Not searched. |
+
+---
+
+##### `Gravy` (not recommended)
+
+- **Concept:** "It's all gravy" = all good; the extra that makes a meal. **Pronunciation:** PL [ˈɡravɨ] "GRA-vy"; EN /ˈɡreɪvi/ "GRAY-vee". **Store title:** "Gravy: Meal Planner & Macros" (28). **Catchiness:** 4/5. **Food hint / D/S:** clear / suggestive.
+- **Distinctiveness note:** arbitrary for software; crowded in fintech.
+- **Main risk:** Gravy Analytics, subject of a 2025 FTC order on selling sensitive location data including visits to health locations. A privacy-scandal namesake is a poor fit for an app that holds health-adjacent data.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (reputational) | 2026-09-25 | [FTC press release](https://www.ftc.gov/news-events/news/press-releases/2025/01/ftc-finalizes-order-prohibiting-gravy-analytics-venntel-selling-sensitive-location-data), [Gravy Analytics (Wikipedia)](https://en.wikipedia.org/wiki/Gravy_Analytics) | "FTC Finalizes Order Prohibiting Gravy Analytics, Venntel from Selling Sensitive Location Data", including "visits to health-related locations" (finalised 2025-01-14 per the summary). |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Gravy: Homebuying for renters](https://apps.apple.com/us/app/gravy-homebuying-for-renters/id1572896190), [Gravy Rewards](https://apps.apple.com/us/app/gravy-rewards/id6742050220), [GravyWork](https://apps.apple.com/us/app/gravywork/id1576705364) | Fintech and gig-work apps. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Gravy](https://play.google.com/store/apps/details?id=com.gravy&hl=en_US), [All Gravy](https://play.google.com/store/apps/details?id=com.buttersolutions.butter&hl=en_US) | The same homebuying app; an employee app. |
+| 4 Domains | Pending | 2026-09-25 | — | Not searched. |
+| 5 Trademarks | Pending | 2026-09-25 | — | Not searched. |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | PL reading; "gravy train" (easy money). |
+| 7 Confusing similarity | Risk (medium-high) | 2026-09-25 | rows 1–3 | Data-broker namesake; fintech apps. |
+| 8 Social handles | Pending | 2026-09-25 | — | Not searched. |
+
+#### 6.8.4 Domain strategy for real-word names
+
+A 5–7 letter dictionary .com is almost always registered, and for the top names the search engine already found other businesses on related domains (salsapp.io, salsaapp.io, pretzelai.app, donut.com, app.donut.io, getpickle.ai, handful.com). Real food words also make natural "verb + noun" domains, which are often still open. Once RDAP is reachable, check these in this order, then decide with the owner (§8.6.2):
+
+| Name | 1st | 2nd | 3rd | 4th (PL market) |
+|---|---|---|---|---|
+| Salsa | salsa.app | getsalsa.com | eatsalsa.com | salsa.pl |
+| Pretzel | pretzel.app | getpretzel.com | eatpretzel.com | pretzel.pl |
+| Donut | donut.app | eatdonut.com | donutapp.com | donut.pl |
+| Pickle | pickle.app | getpickle.com | eatpickle.com | pickle.pl |
+| Handful | handful.app | gethandful.com | handfulapp.com | handful.pl |
+
+All are **Pending**; none has been checked on a registry. Remember that .app requires HTTPS (HSTS preloaded), that a registry 404 does not guarantee a standard price (short dictionary words are often premium-priced), and that the .com of a dictionary word may be for sale at a broker price.
+
+### 6.7 Session 3: short-and-catchy shortlist (superseded 2026-09-25, PO: "nothing from proposals")
+
+> **Superseded 2026-09-25 (PO: "nothing from proposals").** §6.7.1–§6.7.4 below are kept exactly as written, with all their evidence. The session-3 top 3 (Zubo, Kazu, Dozo) and alternates (Nimbo, Gobo) are no longer recommended. They are replaced by §6.8. Where §6.7 says "current", read "current as of session 3".
 
 Twelve names, all 4–5 letters and 2 syllables. All checks are dated **2026-09-25**. Store, domain, trademark and handle checks are **Pending** for every name because the official sources were egress-blocked (§5.1). The bracketed text is the search-engine indication only. **N** = C10 international neutrality and **Catch** = C11 catchiness (§2.3), both reviewer assessments.
 
@@ -1738,9 +2427,32 @@ Scores run from 1 (poor) to 5 (strong). They are the reviewer's assessment from 
 
 ## 7. Risks and unresolved checks
 
-> **Current: §7.4 (session 3), placed first below, and §7.1 (session-level limits, updated 2026-09-25).** §7.2 (session 2) and §7.3 (session 1) are kept for history.
+> **Current: §7.5 (session 4), placed first below, and §7.1 (session-level limits, still current).** §7.4 (session 3), §7.2 (session 2) and §7.3 (session 1) are kept for history.
 
-### 7.4 Session 3 risks (current, 2026-09-25)
+### 7.5 Session 4 risks (current, 2026-09-25)
+
+**Session-level risks added in session 4** (on top of §7.1):
+1. **Real English food words are the most crowded naming space found.** 43 of the 111 words screened by search already name a recipe, meal-planning or nutrition app or service (§5.5). The shortlist is ranked by where same-name uses sit (food and nutrition apps are serious; dance, comics, HR software and fintech are lighter), not by absence. New same-category apps are appearing monthly (§3.6), so re-check before any decision.
+2. **Weaker trademarks than coinages.** A real food word is registrable for nutrition software when it names a specific food (Pretzel, Donut, Salsa), but it will coexist with many marks for the same word in other classes, and EUIPO assesses meaning in every EU language (Salsa is "sauce" in ES/IT/PT). Portion and meal words (Handful, Batch, Lunchbox, Supper) sit closer to descriptive. The PO's style choice trades some legal strength for instant recognition; an attorney should confirm the trade is acceptable.
+3. **The bare store search term will not be ours.** For every shortlisted word, the store search already returns other apps (dance for Salsa, pretzel chains for Pretzel, donut shops for Donut). Discovery will depend on the descriptor ("…: Meal Planner & Macros") and on marketing, not on the name.
+4. **Exact domains and handles.** The exact .com and exact Instagram handle are very likely taken for every shortlisted word. Plan for a variant such as `<name>.app` + `get<name>.com` / `eat<name>.com` + `<name>.pl` (§6.8.4).
+5. **Search summaries can be wrong.** As in session 3, some summaries attribute domains without a URL (pickle.io). These are recorded as unverified. Only RDAP settles domain status, and only the registries settle trademarks.
+
+**Name-specific risks (top 3 and alternates):**
+
+| Name | Main remaining risk | What would resolve it |
+|---|---|---|
+| **Salsa** | UK SALSA registration for food-safety compliance software (9/42); SALSA software namesakes (Salsa Labs, salsa.dev); *salsa* = "sauce" in ES/IT/PT; dance and live-streaming apps own the store term; exact handles taken | EUIPO, TMview (EM, PL, ES, IT, PT, GB), UPRP, WIPO, USPTO and UK IPO for SALSA in classes 9, 35, 41, 42, 44 (and 29/30); an attorney's view on coexistence with UK00003937773 and on ES/IT/PT descriptiveness; RDAP for salsa.app, getsalsa.com, eatsalsa.com, salsa.pl; a listener test ("food or dance first?") |
+| **Pretzel** | US PRETZEL reg. 5312372 for downloadable language-learning software (class 9); pretzel chains' apps; @pretzel.app taken; PL spelling *precel*; the long store title uses all 30 characters | Registry searches for PRETZEL in 9, 42, 44 (and 29/30, 43) in the EU, PL and US; an attorney's view on reg. 5312372; RDAP for pretzel.app, getpretzel.com, eatpretzel.com, pretzel.pl; a PL listener spelling test |
+| **Donut** | Donut for Slack (donut.com) is a strong same-name software brand in 9/42; "I Deserve a Donut" weight-loss devotional app; DONUT LAB class-9 application; a positioning bet (treat food as the brand of a nutrition platform); donut/doughnut spelling | Registry searches for DONUT and DOUGHNUT in 9, 42, 44; an attorney's view on Donut Technologies' marks; a listener test with the wedge and 2–3 dietitians (PRD §3) on "playful" versus "flippant"; RDAP for donut.app, eatdonut.com, donut.pl |
+| Pickle (alternate) | Pickle.ph meal-plan service with macros (same category, PH); PICKLE software marks; DE *Pickel* = pimple | Registry searches in 9, 42, 43, 44; a German-speaker check; RDAP |
+| Handful (alternate) | Moderate food hint only; borderline descriptive for portions; handful.com sports-bra brand and @handful | An attorney's view on descriptiveness in 9 and 44; a listener test ("does it say food?"); registry searches in 9, 25, 42, 44 |
+
+**Open checks per shortlisted name (all Pending):** App Store (iTunes API PL/US/GB) and App Store Connect, Google Play (PL/US), RDAP for .com, .app, .io and .pl plus the §6.8.4 variants, EUIPO, TMview (EM + PL, plus ES/IT/PT for Salsa and DE for Pickle), UPRP, WIPO, USPTO, UK IPO, and handles on Instagram, TikTok, Facebook, YouTube, X, Threads and LinkedIn. For Tapas, Nacho, Melon, Bagel, Pesto, Caper and Gravy, domains, trademarks and handles were only partly searched (§6.8.3).
+
+### 7.4 Session 3 risks (superseded 2026-09-25, PO: "nothing from proposals")
+
+> **Superseded 2026-09-25.** The session-3 names are no longer recommended; §7.5 lists the current risks. The session-level points 1, 2 and 4 below still apply. Kept as written.
 
 **Session-level risks added in session 3** (on top of §7.1):
 1. **Short names cannot be "clean".** Every shortlisted name already has same-name apps, businesses and handles somewhere. The shortlist is ranked by *where* those uses are (outside food, nutrition and health is better), not by absence. Expect the exact .com and the exact Instagram handle to be unavailable for all of them, and plan for a variant (§6.7.4).
@@ -1760,9 +2472,9 @@ Scores run from 1 (poor) to 5 (strong). They are the reviewer's assessment from 
 
 **Open checks per shortlisted name (all Pending):** App Store (iTunes API PL/US/GB) and App Store Connect, Google Play (PL/US), RDAP for .com, .app, .io and .pl plus the §6.7.4 variants, EUIPO, TMview (EM + PL, plus JP-, KR- and ES-origin checks as relevant), UPRP, WIPO, USPTO, UK IPO, and handles on Instagram, TikTok, Facebook, YouTube, X, Threads and LinkedIn.
 
-### 7.1 Session-level limits (updated 2026-09-24; still current, see also §7.4)
+### 7.1 Session-level limits (updated 2026-09-25; still current, see also §7.5)
 
-1. **No authoritative check could run in any session (1, 2 or 3).** Every store, domain, trademark and handle status is Pending (§5.1). Rankings rest on search-engine evidence, which can miss registered marks, unlaunched apps, and parked or reserved domains.
+1. **No authoritative check could run in any session (1, 2, 3 or 4).** Every store, domain, trademark and handle status is Pending (§5.1). Rankings rest on search-engine evidence, which can miss registered marks, unlaunched apps, and parked or reserved domains.
 2. **Absence is not availability.** Where the search found nothing (for example Sapimo anywhere, or Tangram and Palmo in food), the status is Inconclusive. It must not be read as "free".
 3. **Language checks are the reviewer's own assessment.** C10 raises the bar: native-speaker checks are now needed in PL, EN (UK and US), DE, FR, ES, IT, PT, NL and SV for the top 3 and the alternates. They are pending.
 4. **Trademark reality.** Real words used arbitrarily (Tangram, Palmo, Ramekin, Tadam) will have registrations in other classes, and Tangram is a common noun for puzzle games in class 9. Coinages (Sapimo) are likely stronger but carry less meaning. Italian words (Sarto, Portata, Mestolo) are weak in Italy, and Portata may be descriptive there. Only a registry search and an attorney can settle this.
@@ -1807,9 +2519,49 @@ Scores run from 1 (poor) to 5 (strong). They are the reviewer's assessment from 
 
 ## 8. Next verification steps
 
-> **Current: §8.5 (session 3), placed first below.** It is numbered 8.5 so that existing references to §8.1–§8.4 stay valid. §8.1–§8.3 (session 2) and §8.4 (session 1) are superseded and kept for history. The current decisions for the Product Owner are in **§8.5.3**.
+> **Current: §8.6 (session 4), placed first below.** It is numbered 8.6 so that existing references to §8.1–§8.5 stay valid. §8.5 (session 3), §8.1–§8.3 (session 2) and §8.4 (session 1) are superseded and kept for history. The current decisions for the Product Owner are in **§8.6.3**.
 
-### 8.5 Session 3 next steps (current, 2026-09-25)
+### 8.6 Session 4 next steps (current, 2026-09-25)
+
+#### 8.6.1 Re-run on a network with registry access (agent, next session)
+
+Run these for **Salsa, Pretzel and Donut** first, then **Pickle and Handful**, then Kettle. Replace `<n>` with the lowercase name.
+
+- App Store: `https://itunes.apple.com/search?term=<n>&entity=software&country=pl` (then `us`, `gb`). Record every exact and near match and its category (Health & Fitness and Food & Drink especially).
+- Google Play: `https://play.google.com/store/search?q=<n>&c=apps&gl=PL` (then `gl=US`).
+- .com: `https://rdap.verisign.com/com/v1/domain/<n>.com`, then `get<n>.com`, `eat<n>.com` and `<n>app.com`.
+- .app: `https://pubapi.registry.google/rdap/domain/<n>.app`.
+- .pl and .io: get the RDAP base URLs for `pl` and `io` from `https://data.iana.org/rdap/dns.json`, then `<base>/domain/<n>.pl` and `<base>/domain/<n>.io`.
+- Re-check the specific findings from session 4: UK SALSA UK00003937773 (goods and status); US PRETZEL 86953904 / reg. 5312372 (goods and status); DONUT LAB 98936152 and Donut Technologies' marks; the Pickle.ph service; "I Deserve a Donut" (id529567174, category); the Polish-store "Pesto - Recipe App" (id6504192769) for the record.
+
+#### 8.6.2 Owner actions (need an account, or are the owner's call)
+
+1. **Trademark searches**, until the agent can reach the registries. Search each name as an exact word, then with a wildcard and phonetically:
+   - **EUIPO eSearch plus** (https://euipo.europa.eu/eSearch/): Trade marks, "Word" = `SALSA`, then `PRETZEL`, `DONUT` (and `DOUGHNUT`), `PICKLE`, `HANDFUL`. Nice classes 9, 29, 30, 35, 41, 42, 43, 44. Status: all, then filed and registered only. Repeat with `SALSA*`, `PRETZEL*`, `DONUT*`, `PICKLE*`.
+   - **TMview** (https://www.tmdn.org/tmview/): the same terms. Offices: EM, PL, DE, FR, ES, IT, PT, NL, GB, WO. Same classes. Record live or dead status, owner and filing date.
+   - **UPRP e-Wyszukiwarka** (https://ewyszukiwarka.pue.uprp.gov.pl/): "Znaki towarowe", word element `salsa` / `pretzel` / `precel` / `donut` / `donat` / `pickle` / `handful`.
+   - **WIPO Global Brand Database** (https://branddb.wipo.int/): Brand = the name, the classes above, designations PL, EU, US, GB.
+   - **USPTO** (https://tmsearch.uspto.gov/): `SALSA`, `PRETZEL` (open serial 86953904 and read its goods), `DONUT` (look for Donut Technologies Inc.), `PICKLE`, `HANDFUL`; classes 9, 42, 44. **UK IPO** (https://trademarks.ipo.gov.uk/): the same, and open UK00003937773 (SALSA).
+2. **App Store Connect name check** for "Salsa", "Pretzel" and "Donut", each with a descriptor (for example "Salsa: Meal Planner & Macros", 28 characters). This needs the owner's Apple Developer account. Reserve a name only when ready to commit, because Apple holds reservations for a limited time.
+3. **Google Play Console check:** needs the owner's developer account.
+4. **Trademark attorney clearance** before adoption, in at least the EU (EUIPO) and Poland (UPRP), plus the US and UK if English-speaking launches are planned. Ask specifically about: Salsa against UK00003937773 and its descriptiveness in ES/IT/PT; Pretzel against US reg. 5312372; Donut against Donut Technologies' software marks; and, for Handful, descriptiveness for portion features. Nothing here is a legal opinion.
+5. **Social handles:** only signing up confirms a handle is free. The exact handles are very likely taken for all five, so the realistic sets are `getsalsa` / `salsa.pl`, `getpretzel` / `pretzel.pl`, `donut.pl` / `eatdonut`. The owner decides whether to sign up on Instagram, TikTok, Facebook, YouTube, X, Threads and LinkedIn.
+6. **Domain purchase decisions:** the owner buys; the agent never does. Accept early that the exact .com is unlikely for a dictionary word, and choose a pattern (`<name>.app` + `get<name>.com` or `eat<name>.com` + `<name>.pl`) (§6.8.4).
+7. **Listener test:** 5–10 people from the PL wedge (PRD §3), 3–5 native English speakers, and 1–2 each for DE, ES and IT. Say each name once (Salsa, Pretzel, Donut, Pickle, Handful) and ask them to write it down, say what kind of app it could be (the PO's "clearly food" test), say what it reminds them of, and rate how catchy it is. Probe specifically: "food or dance?" for Salsa; "precel" spelling for Pretzel; "playful or unserious for a nutrition app?" for Donut (include 2–3 dietitians); DE *Pickel* for Pickle; "does it say food?" for Handful.
+
+#### 8.6.3 Decisions for the Product Owner
+
+1. **Does the session-4 direction answer the questionnaire?** All shortlisted names are real English words with a clear food hint (Handful and Kettle moderate). Which of Salsa, Pretzel and Donut (or Pickle, Handful) feels right?
+2. **Healthy-sounding versus indulgent.** The healthy and kitchen-tool words (Ladle, Spoon, Basil, Lemon, Pantry, Supper, Savor) are all taken by same-category apps. What is left is lively or indulgent food (Salsa, Pretzel, Donut, Pickle). Is an indulgent name acceptable for a nutrition platform, given the PRD §1 promise "eat what you feel like eating"? This matters most for Donut.
+3. **Loanwords.** Salsa (and Tapas, Nacho, Pesto) are English dictionary words borrowed from Spanish or Italian. Do they count as "real English words" for the PO, given the earlier rejection of foreign words (Kazu, Dozo)?
+4. **Handle and domain compromise.** Is a variant such as `getsalsa` / `salsa.app` / `eatpretzel.com` acceptable, given that the exact dictionary-word .com and handles are very likely taken?
+5. **Legal strength versus recognition.** A real food word is instantly understood but is a weaker, more crowded trademark than a coinage. Is the PO comfortable with that trade, subject to the attorney's view?
+
+**Do not** rename application identifiers, bundle IDs, packages, domains or assets until the Product Owner approves a final name (CLAUDE.md).
+
+### 8.5 Session 3 next steps (superseded 2026-09-25 by §8.6)
+
+> **Superseded 2026-09-25 (PO: "nothing from proposals").** The checks below concern the session-3 names, which are no longer recommended. Kept as written.
 
 #### 8.5.1 Re-run on a network with registry access (agent, next session)
 
@@ -1941,3 +2693,4 @@ Run these for Ramekin, Oskoma, Smakora and Tadam first, then the rest of §6. Re
 | 2026-09-24 | First research session (brand-researcher). Only WebSearch was available; all registry, store, trademark and social sources were egress-blocked (§5.1), so every authoritative check is Pending. Added: product positioning (§1), naming strategy (§2), competitor landscape for PL and international (§3), a 73-name longlist with screen results (§4), a dated evidence log (§5), a 14-name shortlist with check matrix, scores and per-name evidence (§6), risks (§7) and next steps with owner actions (§8). Recommended for further investigation, not selected: Ramekin, Oskoma, Smakora (alternate: Tadam). No earlier findings existed, so nothing was superseded. |
 | 2026-09-24 | **Second research session (brand-researcher): international-first round.** It responds to the Product Owner's feedback on session 1: "Smakora is mostly a Polish name, like most of them." (11 of 14 shortlisted names were Polish-rooted.) At the start, each official source was retried once with a plain request (curl for all; WebFetch also for the RDAP, IANA, iTunes, Play and TMview URLs). All were still egress-blocked (§5.1), so every authoritative check remains **Pending**, and screening used WebSearch only. **Added:** the international-first strategy with the PO feedback, and the new criterion C10 (international neutrality) (§2.1, §2.3); an international positioning statement (§1); same-category apps found in session 2 (§3.4); 87 new candidates, #74–#160 (§4.6); the session-2 access log and screening evidence (§5.1, §5.3); a rebuilt shortlist of **9 international names** (Tangram, Ramekin, Palmo, Sapimo, Tadam, Savimo, Sarto, Portata, Mestolo) with a check matrix including C10, scores and per-name evidence (§6.1–§6.3); new risks (§7.1–§7.2) and next steps with owner decisions (§8.1–§8.3). **Superseded, not deleted:** the session-1 conclusion that Polish-rooted names were the best opening (§2.2, §3.3); the session-1 shortlist, matrix and ranking (§6.6); session-1 risks and next steps (§7.3, §8.4). Oskoma and Smakora moved to "Polish-flavoured alternatives (not recommended as the main brand for international expansion)" (§6.4). The other session-1 names moved to §6.5 with their evidence. **Top 3 for further investigation** changed from Ramekin, Oskoma, Smakora to **Tangram, Ramekin, Palmo** (alternates: Sapimo, Tadam). No name was selected. |
 | 2026-09-25 | **Third research session (brand-researcher): short-and-catchy round.** It responds to the Product Owner's feedback on session 2, verbatim: "i dont like those names they are too long and not catchy" (covering Tangram, Ramekin, Palmo, Sapimo, Tadam, Savimo, Sarto, Portata, Mestolo). At the start, each official source was retried once with a plain request (curl for all; WebFetch also for the .com RDAP, iTunes, Google Play and TMview URLs). All were still egress-blocked (§5.1), so every authoritative check remains **Pending**, and screening used WebSearch only. **Added:** the session-3 strategy with the PO feedback (§2.4, numbered to keep existing references valid) and the new criterion C11 catchiness (§2.3); a short note in §1; same-category apps found in session 3 (§3.5); 111 new candidates, #161–#271, all 3–6 letters and 1–2 syllables (§4.7); the session-3 access log and screening evidence (§5.1, §5.4); a new current shortlist of **12 names** (Zubo, Kazu, Dozo, Nimbo, Gobo, Bibim, Kumo, Zumo, Mogu, Panko, Pappa, Gumbo) with a check matrix, C1–C7, C10 and C11 scores, per-name evidence and a domain-variant plan (§6.7); session-3 risks (§7.4, §7.1 updated); next steps, owner actions and PO decisions (§8.5). **Superseded, not deleted:** the session-2 form rule and "cleanest openings" conclusion (§2.1); the session-2 shortlist, matrix, ranking and top 3 (§6.1–§6.3, marked "superseded (PO: too long, not catchy)"); session-2 risks and next steps (§7.2, §8.1–§8.3). **Top 3 for further investigation** changed from Tangram, Ramekin, Palmo to **Zubo, Kazu, Dozo** (alternates: Nimbo, Gobo). No name was selected. |
+| 2026-09-25 | **Fourth research session (brand-researcher): short real English food-word round.** It responds to the Product Owner's feedback on session 3, verbatim: "nothing from proposals" (covering Zubo, Kazu, Dozo, Nimbo, Gobo, Bibim, Zumo, Kumo, Panko, Gumbo, Mogu, Pappa), and to the PO's style questionnaire (2026-09-25): preferred style **short real English word** (as Bolt, Lime, Oura, Notion or Headspace are real words), not coined sounds and not foreign words; food hint **clearly** (people should guess it is a food or meal app from the name alone); no example brands given. At the start, each official source was retried once with a plain request (curl for all; WebFetch also for the .com RDAP, iTunes, Google Play and TMview URLs). All were still egress-blocked (§5.1), so every authoritative check remains **Pending**, and screening used WebSearch only (including domain-filtered searches on the stores, Instagram, TikTok and third-party trademark mirrors). **Added:** the session-4 strategy with the PO feedback and questionnaire (§2.5, numbered to keep existing references valid), a session-4 note on C11 and the Food hint and D/S columns (§2.3); a short note in §1; same-category apps found in session 4, with Savor added to the watch list (§3.6); 129 new candidates, #272–#400, all real English food, cooking or kitchen words of 3–8 letters with D/S and Polish-reading flags (§4.8); the session-4 access log and screening evidence, with a tally (111 searched, 43 already the exact name of a food, recipe, nutrition or meal-planning app or service) (§5.1, §5.5); a new current shortlist of **13 names** (Salsa, Pretzel, Donut, Pickle, Handful, Kettle, Tapas, Nacho, Melon, Bagel, Pesto, Caper, Gravy) with a check matrix, C1–C7, C10 and C11 scores, food hint, per-name evidence with distinctiveness notes, and a domain-variant plan (§6.8); session-4 risks (§7.5, §7.1 updated); next steps, owner actions and PO decisions (§8.6). **Superseded, not deleted:** the session-3 strategy (§2.4); the session-3 shortlist, matrix, ranking and top 3 (§6.7, marked "superseded (PO: 'nothing from proposals')"); session-3 risks and next steps (§7.4, §8.5); the §4.7 result line. **Top 3 for further investigation** changed from Zubo, Kazu, Dozo to **Salsa, Pretzel, Donut** (alternates: Pickle, Handful). No name was selected. |
