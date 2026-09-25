@@ -27,8 +27,8 @@ Branches are deleted (on GitHub and locally) once their PR is merged; `main` and
 
 - **iOS:** Swift 6, SwiftUI (iOS 17+), SwiftData, StoreKit 2, Sign in with Apple
 - **Backend:** Python 3.12, FastAPI, PostgreSQL 16, Redis, arq, SciPy/HiGHS + OR-Tools
-- **AI:** Claude API (Haiku 4.5 for extraction, Sonnet 5 for PDFs/hard cases). Used for import only; nutrition math is deterministic.
-- **Hosting:** Hetzner Cloud VPS (EU) + Docker Compose, Cloudflare (DNS/CDN/R2), Sentry, PostHog EU
+- **AI:** Claude on AWS Bedrock, EU region (Haiku 4.5 for extraction, Sonnet 5 for long texts/hard cases). Used for import only; nutrition math is deterministic.
+- **Hosting:** Hetzner Cloud VPS (EU) + Docker Compose, Cloudflare (DNS/CDN/R2), Sentry (EU). No analytics SDK; the health profile stays on the phone.
 
 ## Claude Code agent team
 

@@ -1,4 +1,4 @@
-<!-- @dsCard group="Screens" height=900 width=1317 page subtitle="Today, Recipe, and the allergen notice with a rebalance proposal in the dark theme" -->
+<!-- @dsCard group="Screens" height=900 width=2610 page subtitle="Today, Recipe, the allergen notice with a rebalance proposal, No profile on this phone, an import fallback with the no-profile block, and Where your data lives in the dark theme" -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Dark theme</title></head>
@@ -60,6 +60,39 @@ show([
      h(F.Notice, {tone:'danger', title:'Contains peanuts (peanut butter)', body:'Peanuts are your allergy. Swap or remove it to plan this recipe.', actions:[{label:'Swap it', icon:'swap'}, {label:'Remove it'}]}),
      h(F.RebalanceProposal, {title:'Your day is 90 kcal over', adjustments:[{meal:'Dinner', portion:'\u221216%', kcal:'\u221270 kcal'}], locked:[{meal:'Breakfast', reason:'eaten'}], before:{kcal:1590, protein:129}, after:{kcal:1520, protein:124}, cta:'Apply'})),
    h(F.TabBar, {key:'t', active:'today'})
+ ], null, 'dark'),
+ Ph('01c No profile on this phone · dark', [
+   h(F.NavBar, {key:'n', back:'Consent', title:''}),
+   scroll(
+     h('div', {style:{display:'flex', flexDirection:'column', gap:12, paddingTop:8}},
+       h('span', {style:{display:'grid', placeItems:'center', width:56, height:56, borderRadius:999, background:'var(--surface-sunken)', color:'var(--ink)'}}, h(F.Icon, {name:'user', size:28})),
+       h('h1', {className:'fm-h2'}, 'Set up your profile'),
+       h('p', {className:'fm-body', style:{fontSize:15, lineHeight:'21px'}}, 'Your plans are back. Your profile isn’t on this phone. Restore it from iCloud or set it up again.')),
+     h(F.Notice, {tone:'offline', icon:'lock', title:'Paused until your profile is set up', items:['Building plans', 'Swapping meals and ingredients', 'Checking imported recipes for your allergens']}),
+     h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'0 16px', background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-md)'}},
+       h('span', {style:{color:'var(--ink-muted)'}}, h(F.Icon, {name:'cloud', size:20})),
+       h('div', {style:{flex:1, minWidth:0}}, h(F.Toggle, {label:'Sync with iCloud', description:'Only in your private iCloud. We can’t read it.', checked:true})))),
+   h('div', {key:'c', className:'fm-sticky'},
+     h(F.Button, {variant:'primary', size:'lg', block:true}, 'Set up my profile'),
+     h(F.Button, {variant:'quiet', size:'md', block:true, icon:'cloud'}, 'Restore from iCloud'))
+ ], null, 'dark'),
+ Ph('25d Import fallback · dark', [
+   h(F.NavBar, {key:'n', back:'Cancel', title:'Add a recipe'}),
+   scroll(
+     h(F.NumberField, {label:'Paste a link', value:'https://blog.example.pl/zupa-dyniowa'}),
+     h(F.Notice, {tone:'info', title:'We can’t read a recipe on this page', body:'Paste the recipe text and we’ll keep the link as the source.', actions:[{label:'Paste recipe text', icon:'text'}, {label:'Try another link'}]}),
+     h(F.Notice, {tone:'warning', icon:'lock', title:'We can’t check this recipe for your allergens', body:'Your profile isn’t on this phone, so we don’t know your allergies. You can save it now.', actions:[{label:'Set up my profile'}]}))
+ ], null, 'dark'),
+ Ph('37b Where your data lives · dark', [
+   h(F.NavBar, {key:'n', large:true, title:'Today', avatar:AV}),
+   sheet(
+     sheetHead('Where your data lives'),
+     h('p', {className:'fm-h3'}, 'On this phone'),
+     h('p', {style:{margin:0, font:'400 14px/20px var(--font-text)'}}, 'Your nutrition profile. It syncs to your private iCloud, which we can’t read, unless you turn sync off.'),
+     h('p', {className:'fm-h3'}, 'On our servers in the EU'),
+     h('p', {style:{margin:0, font:'400 14px/20px var(--font-text)'}}, 'Your account, plans, recipes, shopping lists and the record of your consents.'),
+     h('p', {className:'fm-h3'}, 'Never collected'),
+     h('p', {style:{margin:0, font:'400 14px/20px var(--font-text)'}}, 'Medical conditions, your date of birth, device or advertising identifiers, and your PDF files.'))
  ], null, 'dark')
 ]);
 </script>

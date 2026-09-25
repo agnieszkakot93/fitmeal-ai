@@ -1,4 +1,4 @@
-<!-- @dsCard group="Screens" height=900 width=2179 page subtitle="The 14 EU allergens with severity tiers, diet and free-text exclusions, Preferences, Cooking and budget, Sign in with Apple" -->
+<!-- @dsCard group="Screens" height=900 width=2179 page subtitle="The 14 EU allergens with severity tiers, diet and free-text exclusions, Preferences, Cooking and budget with the Thursday plan reminder, Sign in with Apple" -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Onboarding 3 — exclusions, preferences, cooking, sign-in</title></head>
@@ -71,7 +71,7 @@ show([
        h('div', {className:'fm-row', style:{gap:8}}, h(F.Chip, {selected:true}, 'Oven'), h(F.Chip, {selected:true}, 'Air fryer'), h(F.Chip, {selected:true}, 'Blender'), h(F.Chip, null, 'Microwave'), h(F.Chip, null, 'Thermomix')))),
    h('div', {key:'c'}, cta('Continue'))
  ]),
- Ph('13–14 Budget, meal prep & cooking', [
+ Ph('13–14 Budget, meal prep & cooking · plan reminder', [
    h(F.OnboardingProgress, {key:'p', step:14}),
    scroll(q('How do you cook?'),
      h('div', {className:'fm-stack', style:{gap:8}}, label('Max cooking time'), h(F.SegmentedControl, {options:['15','30','45','60+'], value:'30'})),
@@ -79,7 +79,16 @@ show([
        h('p', {className:'fm-foot'}, 'Lunch and dinner are batched; shakes stay fresh. A batch never outlasts its fridge life.')),
      h('div', {className:'fm-stack', style:{gap:8}}, label('Budget'),
        h(F.SegmentedControl, {options:['Economy','Standard','Flexible'], value:'Economy'}),
-       h('p', {className:'fm-foot'}, 'Economy repeats ingredients across meals, so your list gets shorter.'))),
+       h('p', {className:'fm-foot'}, 'Economy repeats ingredients across meals, so your list gets shorter.')),
+     card(
+       h('div', {style:{display:'flex', gap:12, alignItems:'flex-start'}},
+         h('span', {style:{display:'grid', placeItems:'center', width:36, height:36, borderRadius:999, background:'var(--basil-soft)', color:'var(--basil-ink)', flex:'none'}}, h(F.Icon, {name:'plan', size:20})),
+         h('div', {className:'fm-stack', style:{gap:2}},
+           h('p', {style:{margin:0, font:'650 16px/22px var(--font-text)'}}, 'Plan reminder'),
+           h('p', {className:'fm-foot', style:{fontSize:14, lineHeight:'20px'}}, 'Get a reminder on Thursdays to plan next week. It’s the only notification we send.'))),
+       h('div', {className:'fm-row', style:{gap:8, paddingLeft:48}},
+         h(F.Button, {variant:'secondary', size:'sm'}, 'Remind me on Thursdays'),
+         h(F.Button, {variant:'quiet', size:'sm'}, 'Not now')))),
    h('div', {key:'c'}, cta('Create my plan'))
  ]),
  Ph('15 Sign in to save your plan', [
@@ -87,7 +96,7 @@ show([
    scroll(daySummary()),
    sheet(
      h('h2', {className:'fm-h2'}, 'Save your plan'),
-     h('p', {className:'fm-callout', style:{color:'var(--ink)'}}, 'Sign in to keep your plan and sync it across your devices. Hiding your email is fine.'),
+     h('p', {className:'fm-callout', style:{color:'var(--ink)'}}, 'Sign in to keep your plans and recipes. Your profile stays on this phone. Hiding your email is fine.'),
      h(F.Button, {variant:'premium', size:'lg', block:true}, ' Sign in with Apple'),
      h('p', {className:'fm-foot', style:{textAlign:'center'}}, 'By continuing you accept the Terms and Privacy policy.'))
  ])
