@@ -1,9 +1,7 @@
 # Trace policy for generic foods
 
-> **DRAFT – awaiting product owner approval.**
-> No rule below may be applied to `data/foods/curated.yaml` until the product
-> owner approves it and this banner is removed. A test enforces this: while the
-> banner is here, no curated entry may use `source: {type: policy}`.
+Approved by the product owner on 2026-09-25, including the answers to the
+open questions of the draft (see "Decisions" below).
 
 ## Why
 
@@ -31,40 +29,52 @@ what Polish retail labels for that kind of product typically declare.
   through `derived_from`) are not repeated as traces.
 - Applying a rule does not make an entry `verified`. Only a named person sets
   `review: {status: verified, by: <initials>, date: ...}` after checking it.
-- Anything not covered by a rule stays `traces: {status: unknown}`.
+  The reviewer spot-checks the rule against current Polish retail labels and
+  records a `label` source instead wherever a label says otherwise.
+- Anything not covered by a rule stays `traces: {status: unknown}`. When in
+  doubt whether a food fits a rule, leave it `unknown`.
 
-## Proposed rules: declared traces
+## Rules: declared traces
 
-| Rule id | Applies to | `may_contain` | Curated foods today |
-|---|---|---|---|
-| `gluten-free-grains` | Buckwheat, millet, quinoa (groats, flakes, flour) | gluten | buckwheat-groats, millet-dry, quinoa-dry |
-| `tree-nuts` | Whole or chopped tree nuts (almonds, walnuts, hazelnuts, cashews, pistachios ...) | peanuts, and every other tree nut is already covered by the `tree_nuts` allergen | almonds, walnuts |
-| `seeds` | Whole seeds (sunflower, pumpkin, chia, flax, sesame) | peanuts, tree_nuts | chia-seeds, sunflower-seeds, sesame-seeds |
-| `peanuts` | Peanuts and 100 % peanut butter | tree_nuts | peanut-butter |
+| Rule id | Applies to | `may_contain` (minus what the food contains) |
+|---|---|---|
+| `gluten-free-grains` | Rice, buckwheat, millet, quinoa (grains, groats, flakes, flour) and plain rice cakes | gluten |
+| `tree-nuts` | Whole or chopped tree nuts (almonds, walnuts, hazelnuts, cashews, pistachios ...) | peanuts (every other tree nut is already covered by the `tree_nuts` allergen) |
+| `seeds` | Whole seeds (sunflower, pumpkin, chia, flax, sesame) | peanuts, tree_nuts, sesame |
+| `peanuts` | Peanuts and 100 % peanut butter | tree_nuts |
+| `ground-spices` | Dried ground or whole single spices (pepper, paprika, cinnamon, cumin ...), not salt or spice blends with other ingredients | celery, mustard, gluten, sesame |
+| `raw-fish-seafood` | Raw, unprocessed, unseasoned fish, crustaceans and molluscs (not canned, smoked or marinated) | fish, crustaceans, molluscs |
 
 Oats: EU Regulation 1169/2011 lists oats as a cereal containing gluten, so our
 oat entries already *contain* gluten and need no trace rule. Oats sold as
 gluten-free take their status from the label.
 
-## Proposed rules: none declared
+## Rules: none declared
 
-These decide how many foods stay available to users with an allergy, so they
-need an explicit decision.
+These decide how many foods stay available to users with an allergy.
 
-| Rule id | Applies to | Status | Curated foods today (approx.) |
-|---|---|---|---|
-| `fresh-produce` | Whole, raw fruit, vegetables and mushrooms with no added ingredient (not canned, frozen mixes, juices or pastes) | none_declared | about 30 |
-| `raw-meat-eggs` | Raw, unprocessed, unseasoned meat, poultry and shell eggs | none_declared | about 8 |
+| Rule id | Applies to | Status |
+|---|---|---|
+| `fresh-produce` | Whole, raw fruit, vegetables and mushrooms with no added ingredient (not canned, frozen, juices, purées or pastes) | none_declared |
+| `raw-meat-eggs` | Raw, unprocessed, unseasoned meat and poultry (whole cuts or plain mince), and shell eggs | none_declared |
+| `plain-dairy` | Plain, unflavoured milk, cream, butter, yogurt, kefir, skyr, twaróg and cheese with no ingredient beyond milk, cultures, rennet, salt and enzymes | none_declared |
 
-## Open questions for the product owner
+Not covered by `plain-dairy`: flavoured or sweetened products (fruit yogurts,
+desserts), and cheeses that may contain egg lysozyme (e.g. Grana Padano). Those
+stay `unknown` until a label is recorded.
 
-1. Rice and rice cakes: many Polish packs say "może zawierać gluten". Add rice
-   to `gluten-free-grains`?
-2. Ground spices: labels often declare celery, mustard, gluten and sesame.
-   Declare these for all ground spices, or leave spices `unknown` until
-   labelled?
-3. Raw fish and seafood: include in `raw-meat-eggs`, or declare crustaceans and
-   molluscs as traces for fish?
-4. Seeds: should non-sesame seeds also declare sesame?
-5. Plain dairy (milk, yogurt, cheese): leave `unknown` until labelled, or a
-   `none_declared` rule?
+## Decisions
+
+The product owner's answers to the open questions of the draft (2026-09-25):
+
+1. **Rice and rice cakes** declare gluten: rice joins `gluten-free-grains`.
+2. **Ground spices** declare celery, mustard, gluten and sesame: new rule
+   `ground-spices`.
+3. **Raw fish and seafood** declare crustaceans and molluscs as traces, and
+   shellfish declare fish: new rule `raw-fish-seafood` instead of
+   `raw-meat-eggs`.
+4. **Seeds** also declare sesame.
+5. **Plain dairy** is `none_declared`; flavoured dairy stays `unknown`: new
+   rule `plain-dairy`.
+
+The `fresh-produce` and `raw-meat-eggs` rules were approved as drafted.

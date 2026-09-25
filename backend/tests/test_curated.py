@@ -1,6 +1,7 @@
 """Safety checks on the real curated ingredient file, and its schema rules."""
 
 import datetime
+import re
 from pathlib import Path
 
 import pytest
@@ -46,15 +47,19 @@ def test_real_file_states_provenance_on_every_entry(curated: CuratedFile) -> Non
     assert implicit == []
 
 
-def test_real_file_uses_no_trace_policy_while_it_is_a_draft(curated: CuratedFile) -> None:
-    if "DRAFT" not in TRACE_POLICY.read_text(encoding="utf-8"):
-        pytest.skip("trace policy approved")
-    by_policy = [
-        f.slug
+def test_real_file_policy_traces_cite_a_rule_of_the_policy(curated: CuratedFile) -> None:
+    policy = TRACE_POLICY.read_text(encoding="utf-8")
+    rules = set(re.findall(r"^\| `([a-z0-9-]+)` \|", policy, re.M))
+    refs = {
+        f.slug: f.traces.source.ref
         for f in curated.foods
         if f.traces.source is not None and f.traces.source.type is TraceSourceType.POLICY
-    ]
-    assert by_policy == []
+    }
+    assert refs, "no entry applies the trace policy"
+    unknown = {
+        slug: ref for slug, ref in refs.items() if ref.removeprefix("TRACE_POLICY.md#") not in rules
+    }
+    assert unknown == {}
 
 
 @pytest.mark.parametrize(
