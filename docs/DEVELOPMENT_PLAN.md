@@ -17,7 +17,7 @@ This document fixes the architecture, the tool stack, the low-cost infrastructur
 | D5 | **Native StoreKit 2** with server-side verification through Apple's official App Store Server Library. | No 1% revenue share to a subscription SaaS. Revisit RevenueCat only if paywall A/B testing becomes a bottleneck. |
 | D6 | **Sign in with Apple** + our own JWTs. Onboarding works before sign-up and the account is created when the first plan is generated. | No paid auth provider. Sign in with Apple is also required by App Store rules when you offer other social logins. |
 | D7 | **Monorepo** (this repo): `ios/`, `backend/`, `infra/`, `data/`, `docs/`. | One place for the API contract, so iOS and backend change together. |
-| D8 | **The health profile stays on the phone.** Targets, optional body data and exclusions with their tiers live only in SwiftData on the device (optional sync through the user's private iCloud). The app sends the profile with each plan, transform, swap and rebalance request; the server uses it in memory and never stores or logs it. | Health data never sits in our database, logs or backups, so a breach can't expose it and deletion is simple (§7.2). D2 still holds: the math runs on the server. |
+| D8 | **The health profile stays on the phone.** Targets, optional body data and exclusions with their tiers live only in SwiftData on the device, synced through the user's private iCloud (on by default, can be turned off). The app sends the profile with each plan, transform, swap and rebalance request; the server uses it in memory and never stores or logs it. | Health data never sits in our database, logs or backups, so a breach can't expose it and deletion is simple (§7.2). D2 still holds: the math runs on the server. |
 | D9 | **No analytics SDK and no device identifiers.** Product metrics come from aggregated server data we already have and from App Store Connect. No marketing email or push at launch. | No analytics or marketing consent is needed and one processor fewer (§7.1). |
 | D10 | **Claude through AWS Bedrock in the EU**, not the Anthropic API directly. PDFs are parsed on the phone; link import uses only schema.org recipe data; imports never feed a public catalog. | Recipe text is processed in the EU, no PDF file reaches our servers, and the copyright surface stays small (§7.3, §7.4). |
 
@@ -167,11 +167,11 @@ ios/
 | State | `@Observable` view models per feature + a small dependency container (protocols for API, storage, store). No TCA. The app is mostly screens over server state, so extra framework weight doesn't pay off. |
 | Navigation | `NavigationStack` with typed routes per tab; tabs: Today · Plan · Shopping in a floating Liquid Glass tab bar, with Add as a separate round button beside it (`Tab(role: .search)`-style) and Profile opened as a sheet from the avatar on each tab root (see `design/design-system/`) |
 | Networking | `swift-openapi-generator` client from FastAPI's `openapi.json`, so the API contract is compile-checked |
-| Health profile | Targets, optional body data and exclusions with tiers are stored only in SwiftData on the phone (D8), optionally synced through the user's private iCloud (CloudKit private database, which we can't read). The suggested-targets calculator runs on the phone. The profile is sent with each plan, transform, swap and rebalance request. A new phone without iCloud sync means re-entering the profile; account deletion also clears it. |
+| Health profile | Targets, optional body data and exclusions with tiers are stored only in SwiftData on the phone (D8), synced through the user's private iCloud by default (CloudKit private database, which we can't read; the user can turn it off in Profile). The suggested-targets calculator runs on the phone. The profile is sent with each plan, transform, swap and rebalance request. A new phone restores it from iCloud; with sync off, the user re-enters it; account deletion also clears it. |
 | Offline | SwiftData cache of the active plan, saved recipes and shopping list. Shopping-list checkmarks and "meal eaten" events queue offline and sync later. Plan generation and swaps need network in MVP. |
 | Auth | `AuthenticationServices` (Sign in with Apple) → backend → access + refresh JWT in Keychain |
 | Payments | StoreKit 2 (`Product`, `Transaction.updates`), `SubscriptionStoreView` for the first paywall version; entitlements come from the backend |
-| Push | APNs directly from the backend (Thursday "plan next week" reminder drives the retention loop in PRD §4) |
+| Push | APNs directly from the backend (Thursday "plan next week" reminder drives the retention loop in PRD §4). The iOS permission is requested during onboarding, on an existing late step with a "Not now" option; no marketing pushes (D9). |
 | Analytics | **No analytics SDK and no device identifiers** (D9). Activation and North Star ("meal eaten") come from aggregated server data the app already syncs; installs and retention from App Store Connect. |
 | Crashes | Sentry Cocoa SDK (EU region, scrubbed of personal data) |
 | Tests | Swift Testing for view models and formatters; a few XCUITests covering the 12-step DoD flow |
@@ -277,7 +277,7 @@ Allergies, intolerances, body data and diet goals are treated as **health data (
 | Sending recipe text to Claude on AWS Bedrock (EU) | Same as import (AWS is a **processor**, not a separate purpose); no consent needed | Named in the privacy policy and the import notice | S3 (internal) / S7 (users) |
 | Product metrics | Legitimate interest, Art. 6(1)(f): aggregated counts from data the server already has. **No analytics SDK, nothing read from or stored on the device** for analytics, so no ePrivacy consent (D9) | Privacy policy | S9 |
 | Crash reports (Sentry, EU region) | Legitimate interest, Art. 6(1)(f), scrubbed of personal data | Privacy policy | S4 |
-| Weekly "plan next week" reminder | Transactional; uses the iOS notification permission | iOS permission prompt | S9 |
+| Weekly "plan next week" reminder | Transactional; uses the iOS notification permission | iOS permission prompt during onboarding, "Not now" allowed | S4 (prompt) / S9 (sending) |
 
 **Not at launch:** marketing email or push (D9). Adding it later needs a separate, optional consent.
 
@@ -285,7 +285,7 @@ Proof of consent: the `ConsentRecord` history (what text version, when, withdraw
 
 ### 7.2 Health profile and recipe imports
 
-**Health profile (D8).** Targets, optional body data and exclusions with tiers live only on the phone (SwiftData, optional sync through the user's private iCloud). Every request that needs them carries a snapshot; the server validates it, uses it in memory and never writes it to the database, logs, Sentry, Redis or the LLM. The server stores the account, consent records, plans, recipes and variants, imports, shopping lists, feedback and entitlements. Stored plans and variants reflect the targets they were built for, but not the exclusions or body data.
+**Health profile (D8).** Targets, optional body data and exclusions with tiers live only on the phone (SwiftData, synced through the user's private iCloud by default; the user can turn it off). Every request that needs them carries a snapshot; the server validates it, uses it in memory and never writes it to the database, logs, Sentry, Redis or the LLM. The server stores the account, consent records, plans, recipes and variants, imports, shopping lists, feedback and entitlements. Stored plans and variants reflect the targets they were built for, but not the exclusions or body data.
 
 **Imports.** Pasted text, PDF text and Share Extension captions can carry personal data we did not ask for, e.g. a dietitian's plan naming a client with her weight and allergies (health data of a third party). Import is covered by the contract basis, so the controls are about **keeping only the recipe**, not about asking for consent:
 

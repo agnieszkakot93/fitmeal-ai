@@ -108,7 +108,7 @@ First launch builds the user's `NutritionProfile`, which is stored only on the p
 
 - **Preferences:** e.g. high protein, vegetarian, vegan, Mediterranean, quick meals, sweet/savory breakfast, meal-prep friendly, low-cost.
 - **Budget:** tier selector (Economy / Standard / Flexible) drives Economy Mode weighting. An explicit weekly budget (e.g. 180 PLN) arrives with estimated pricing (Phase 2); the MVP does not ask for an amount it cannot enforce.
-- **Cooking constraints:** max cooking time (15/30/45/60+ min), "cook once for N days" (1–3), available equipment (air fryer, oven, blender, microwave, Thermomix, none).
+- **Cooking constraints:** max cooking time (15/30/45/60+ min), "cook once for N days" (1–3), available equipment (air fryer, oven, blender, microwave, Thermomix, none). This step also offers the Thursday "plan next week" reminder and triggers the iOS notification permission, with a "Not now" option (no new step; no marketing pushes, §12.2).
 
 ## 8. Core Functional Requirements
 
@@ -303,13 +303,13 @@ Freemium SaaS / iOS subscription, three tiers (PLN; prices are a starting point 
 ### 12.2 Privacy & data protection
 
 - **GDPR Art. 9:** allergies, intolerances, body data, and diet goals are treated as health data. Processing requires explicit, separate, unticked consent at onboarding (§7), recorded with consent version and timestamp. Consent can be withdrawn in Profile/Settings, which stops processing and leads to account deletion.
-- **Health profile on the phone:** targets, body data and exclusions are stored only on the user's phone (optionally synced through the user's own private iCloud). The server receives them with each request that needs them and never stores or logs them.
+- **Health profile on the phone:** targets, body data and exclusions are stored only on the user's phone and synced through the user's own private iCloud (on by default, can be turned off in Profile). The server receives them with each request that needs them and never stores or logs them.
 - **Data minimization:** no medical conditions are collected; body data is optional; age is confirmed as 18+ without storing a date of birth.
 - **Hosting & processors:** data is hosted in the EU. A DPA is in place with every processor (Hetzner, Cloudflare, AWS for Claude on Bedrock in an EU region, Sentry in its EU region) before it receives any data. A privacy policy and App Store privacy nutrition labels are kept up to date.
 - **Account deletion and data export:** in-app account deletion removes the account, plans and private imports on the server and the health profile on the phone; consent records are kept only as long as needed to prove consent (the App Store subscription itself is managed and cancelled through Apple, and the app says so). Data export gives the user their data in a machine-readable format.
 - **LLM prompts:** only recipe content goes to the LLM — never the user's profile, allergies, body data, or identity.
 - **Analytics and error reporting:** no analytics SDK and no device identifiers; product metrics are aggregated from server data and App Store Connect. Error reports are scrubbed of personal data.
-- **No marketing messages at launch:** only the weekly "plan next week" reminder, through the iOS notification permission.
+- **No marketing messages at launch:** only the weekly "plan next week" reminder, through the iOS notification permission, which is requested during onboarding with a "Not now" option.
 - **Import cache:** parsed imports from **public URLs** are cached and shared across users (the cache holds only the recipe parsed from the public page). **Private text imports (including PDF text) are cached per user only** and never reused for anyone else. PDF files never leave the phone.
 
 ## 13. Roadmap & Phases
