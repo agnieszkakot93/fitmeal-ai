@@ -5,8 +5,8 @@ inherited through ``derived_from``):
 
 * origin: a dairy food must contain milk, an egg food eggs, a fish food fish, a
   shellfish food crustaceans or molluscs;
-* name: a food whose name or alias names a plant source of an allergen
-  ("wheat", "tahini", "pszenne", "orzeszki ziemne" ...) must contain it.
+* name: a food whose name or alias names a source of an allergen ("wheat",
+  "tahini", "pszenne", "orzeszki ziemne", "grana padano" ...) must contain it.
 
 Name rules only list words that always mean the allergen. Ambiguous words
 ("milk" in almond milk, "butter" in peanut butter, "orzech" on its own) are
@@ -59,6 +59,8 @@ NAME_ALLERGENS: dict[Allergen, re.Pattern[str]] = {
         r"kasza manna",
     ),
     Allergen.PEANUTS: _words(r"peanuts?", r"orzesz\w* ziemn\w*", r"arachid\w*"),
+    # Grana Padano is normally made with lysozyme from egg ("lizozym z jaja").
+    Allergen.EGGS: _words(r"grana padano"),
     Allergen.SOY: _words(r"soy", r"soya", r"soybeans?", r"tofu", r"tempeh", r"edamame", r"soj\w*"),
     Allergen.SESAME: _words(r"sesame", r"tahini", r"sezam\w*"),
     Allergen.MUSTARD: _words(r"mustard", r"musztard\w*", r"gorczyc\w*"),
@@ -85,6 +87,7 @@ NAME_ALLERGENS: dict[Allergen, re.Pattern[str]] = {
 FREE_FROM: dict[Allergen, re.Pattern[str]] = {
     Allergen.GLUTEN: _words(r"gluten[- ]free", r"bezglutenow\w*", r"bez glutenu"),
     Allergen.PEANUTS: _words(r"peanut[- ]free", r"bez orzeszkow ziemnych"),
+    Allergen.EGGS: _words(r"egg[- ]free", r"lysozyme[- ]free", r"bez jaj", r"bez lizozymu"),
     Allergen.SOY: _words(r"soy[- ]free", r"bez soi"),
     Allergen.SESAME: _words(r"sesame[- ]free", r"bez sezamu"),
     Allergen.MUSTARD: _words(r"mustard[- ]free", r"bez gorczycy", r"bez musztardy"),
