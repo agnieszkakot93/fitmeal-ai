@@ -256,10 +256,63 @@ Hetzner, Cloudflare and SaaS free tiers change. Check current prices and limits 
 
 ## 7. Security, privacy and compliance
 
-- **GDPR:** allergies, intolerances and diet goals are arguably **health data (Art. 9)**. Get explicit consent at onboarding, keep a privacy policy, sign a DPA with every processor (Hetzner, Cloudflare, Anthropic, Sentry, PostHog), host in the EU, and keep PII out of LLM prompts and analytics events.
+This section is the engineering checklist, not legal advice. A Polish data-protection lawyer reviews the privacy policy, terms of use, DPIA and consent texts before launch (§7.6).
+
+### 7.1 GDPR: legal bases and consents
+
+Allergies, intolerances, body data and diet goals are treated as **health data (Art. 9)** (PRD §12.2). Each processing purpose has one legal basis:
+
+| Processing | Legal basis | What the user sees | When |
+|---|---|---|---|
+| Health data for personalization (allergies, intolerances, body data, goals) | **Explicit consent, Art. 9(2)(a)**: separate, unticked, not bundled with the terms; stored in `ConsentRecord` with text version and timestamp; withdrawable in Settings | Consent & health notice screen (PRD §7) | S4 |
+| Account, plans, recipe import, shopping list | **Contract, Art. 6(1)(b)** | Terms of use + privacy policy | S4 |
+| Sending recipe content to Anthropic | Same as import (Anthropic is a **processor**, not a separate purpose); no consent needed | Named in the privacy policy and the upload notice | S3 (internal) / S7 (users) |
+| Analytics (PostHog) that reads or stores an identifier on the device | **Consent** under the ePrivacy rules (Polish *Prawo komunikacji elektronicznej*) unless configured as strictly necessary; decide with the lawyer. No analytics before the answer is recorded | Optional toggle at onboarding, changeable in Settings | S4 |
+| Crash reports (Sentry) | Legitimate interest, Art. 6(1)(f), scrubbed of personal data | Privacy policy | S4 |
+| Marketing push or email | **Consent**, separate and optional; transactional pushes (Thursday "plan next week" reminder) use the iOS notification permission | Opt-in toggle, never pre-ticked | S8 |
+
+Proof of consent: the `ConsentRecord` history (what text version, when, withdrawn when) is what demonstrates consent under Art. 7(1).
+
+### 7.2 Recipe import: personal data in uploads
+
+Pasted text, links, PDFs (including scanned ones) and Share Extension text can carry personal data we did not ask for, e.g. a dietitian's plan naming a client with her weight and allergies (health data of a third party). Import is covered by the contract basis, so the controls are about **keeping only the recipe**, not about asking for consent:
+
+- **Extract, then discard.** Only recipe fields are kept: title, ingredients with amounts, servings, times, steps (re-written in our own words) and the source URL. The uploaded PDF, the raw pasted text and the fetched page are deleted as soon as parsing ends, success or failure. Nothing raw is kept for "debugging".
+- **Strip personal data before the LLM call.** Emails, phone numbers, postal addresses, PESEL-like numbers and URLs with personal parameters are removed from text before it is sent to Anthropic. The user's profile, allergies, body data and identity are never in a prompt (PRD §12.2). For scanned PDFs, where text cannot be stripped, only the pages detected as recipes are sent, with a page cap.
+- **Never log upload content.** Not in application logs, not in Sentry breadcrumbs or request bodies, not in PostHog events, not in the job payload left in Redis after the job ends. Logs record import id, type, size, duration and outcome only.
+- **Caches.** Public-URL parses may be shared across users because they hold only the recipe parsed from a public page. Private text and PDF imports are cached per user only (content hash scoped to the user) and deleted with the account (PRD §12.2).
+- **Upload notice** (PL/EN, next to the Import button): *"Import recipes only. Don't upload documents with other people's personal or health information. Files are deleted after reading. Recipe text is processed by our AI provider, Anthropic."*
+- **Terms of use** say imports are for personal use and that the user must have the right to use what they upload.
+- **Data subject rights.** Account deletion and data export include private imports (PRD §12.2).
+
+### 7.3 Copyright and platform terms
+
+- Ingredient lists and amounts are facts; instruction text, photos and layout are protected. Imports are `private_only`, the app shows its own generated instructions and never the source's photos or layout, and the source URL is kept as attribution (PRD §8.1). A public catalog is blocked until legal review.
+- **Text and data mining opt-outs** (EU DSM Directive, Art. 4): before a link import fetches a page, check `robots.txt` and TDM reservation signals (`tdm-reservation` header or meta tag, TDMRep). If the site opts out, don't fetch; ask the user to paste the recipe text instead.
+- **No server-side scraping of Instagram, TikTok or other platforms whose terms forbid it.** The Share Extension passes only the text the user shares.
+- The shared public-URL cache is the one place where we store third-party-derived content for many users. It holds only parsed facts and our own instructions; it is part of the legal review.
+- **Takedown contact** (EU Digital Services Act, Art. 16 for hosting services): an email address and a simple form, listed in the terms and on the website.
+
+### 7.4 Processors, transfers and records
+
+- **DPA with every processor before it receives any data:** Hetzner, Cloudflare, Anthropic, Sentry, PostHog (PRD §12.2). The Anthropic DPA is signed **before the first real user import** (S3 uses only the golden set and test data).
+- **Transfers outside the EU:** for each US processor (Anthropic, Cloudflare, Sentry) record the transfer mechanism, either EU–US Data Privacy Framework certification or Standard Contractual Clauses, plus a short transfer impact assessment. PostHog runs on its EU cloud.
+- **Anthropic retention:** check how long API inputs and outputs are kept and whether zero data retention is available for our account; record the answer. API data must not be used for model training.
+- **DPIA (Art. 35):** required in practice (health data at scale + AI processing). Written before the TestFlight beta (S9), updated when a processor or a data flow changes.
+- **Records of processing (Art. 30):** one table: purpose, data categories, legal basis, retention, processors, transfers. Kept next to the DPIA.
+- **Retention:** raw uploads, deleted after parsing; private imports, until the user deletes them or the account; consent history, for as long as the account exists and afterwards only as long as the lawyer advises for proving consent; backups, 30 days (§6.1).
+
+### 7.5 App Store and nutrition safety
+
 - **App Store requirements:** in-app **account deletion**, privacy nutrition labels, Sign in with Apple, restore purchases, and subscription terms on the paywall.
 - **Nutrition safety (PRD §12):** 18+ only, confirmed at onboarding. Sensitive conditions (pregnancy, eating disorders, kidney disease) are not collected; a general health notice tells affected users to consult a professional. Hard floor: targets and planned days below 1200 kcal are refused with an explanation.
-- **Copyright (PRD §8.1):** imports are `private_only`. The app shows its own generated instructions and never the source's photos. Public catalog is blocked until legal review.
+
+### 7.6 Legal review before launch
+
+Before the TestFlight beta (S9): privacy policy (PL/EN), terms of use, consent texts (health data, analytics, marketing), upload notice, DPIA, Art. 30 records, and the ePrivacy question for analytics. Before any public catalog: copyright, licensing and platform terms (PRD §8.1).
+
+### 7.7 API and import security
+
 - **API:** JWT access tokens (15 min) + rotating refresh tokens, per-user rate limits in Redis, request size limits (PDF ≤ 20 MB), and URL fetch SSRF protection (block private IP ranges, timeouts, size caps).
 
 ---
@@ -287,18 +340,18 @@ Assumes 1 full-time developer (with AI assistance) plus part-time design help, i
 |---|---|
 | **S1** (wk 1–2) | Monorepo skeleton, backend app factory, Docker Compose dev env, Alembic, CI (ruff, mypy, pytest). `foods` schema + importer for USDA FDC subset. Unit/culinary-unit tables. `nutrition` pure functions + tests. First 200 verified ingredients with PL aliases. |
 | **S2** (wk 3–4) | Recipe schema + 60 seed catalog recipes (own text). Allergen derivation graph. **Transformation engine v1** (LP + rounding + explanations). **Substitution engine v1** (groups, ratios, ranking, deltas). Property-based tests. |
-| **S3** (wk 5–6) | Import v1: JSON-LD + text extraction + Haiku structured parse + FoodItem matcher + confidence scores. Golden set (50 recipes) + eval harness. A small internal web/CLI tool to run "import → transform → show diff". **Go/no-go gate:** ≥ 80% of transformed recipes rated "I'd cook this" by 5–10 target users, macros within ±5% of target, ≥ 90% ingredient match rate. |
+| **S3** (wk 5–6) | Import v1: JSON-LD + text extraction + Haiku structured parse + FoodItem matcher + confidence scores. Golden set (50 recipes) + eval harness. A small internal web/CLI tool to run "import → transform → show diff". **Go/no-go gate:** ≥ 80% of transformed recipes rated "I'd cook this" by 5–10 target users, macros within ±5% of target, ≥ 90% ingredient match rate. Import security review against §7.2 and §7.7 passes before the import code merges; only golden-set and test data go to Anthropic until its DPA is signed (§7.4). |
 
 ### Phase 1 — MVP (weeks 7–20)
 
 | Sprint | Backend | iOS |
 |---|---|---|
-| **S4** (wk 7–8) | Auth (Sign in with Apple → JWT), users/profile API, OpenAPI published | Xcode project, SPM packages, DesignSystem v1, APIClient generation, **onboarding (14 screens, incl. 18+ confirmation and Art. 9 consent)** with Simple/Advanced macro modes |
+| **S4** (wk 7–8) | Auth (Sign in with Apple → JWT), users/profile API, OpenAPI published | Xcode project, SPM packages, DesignSystem v1, APIClient generation, **onboarding (14 screens, incl. 18+ confirmation, Art. 9 consent and the analytics choice, §7.1)** with Simple/Advanced macro modes |
 | **S5** (wk 9–10) | **Planner v1**: filtering, scoring, CP-SAT, meal-prep grouping, portion scaling; plan API | Today + Weekly Plan screens, SwiftData cache, "meal eaten" tracking |
 | **S6** (wk 11–12) | Meal swap + **daily rebalancing**, ingredient swap, "I don't have this", variant persistence, explanations API | Recipe screen, "Why did FitMeal change this?", Recipe Swap, Ingredient Swap flows |
-| **S7** (wk 13–14) | Async import jobs (arq), PDF import (text layer + Sonnet 5 fallback), import cache, quotas | Add Recipe, **Share Extension**, Import Preview with low-confidence clarification prompts |
+| **S7** (wk 13–14) | Async import jobs (arq), PDF import (text layer + Sonnet 5 fallback), import cache, quotas | Add Recipe (with the upload notice, §7.2), **Share Extension**, Import Preview with low-confidence clarification prompts |
 | **S8** (wk 15–16) | Shopping aggregation (sum, categories, package counts), Economy Mode v1 (unique-ingredient + reuse weighting), entitlements + App Store Server Notifications v2 | Shopping List (offline checkmarks), **Paywall** (value-first previews, PRD §11), StoreKit 2 purchase/restore |
-| **S9** (wk 17–18) | Production VPS, backups + restore test, monitoring, rate limits, account deletion/export, APNs weekly reminder | Settings/Profile, account deletion, disclaimers, PL/EN localization pass, analytics events, Sentry. **Closed TestFlight beta (50–200 users)** |
+| **S9** (wk 17–18) | Production VPS, backups + restore test, monitoring, rate limits, account deletion/export, APNs weekly reminder. DPIA, Art. 30 records and legal review done before the beta (§7.4, §7.6) | Settings/Profile, account deletion, disclaimers, PL/EN localization pass, analytics events, Sentry. **Closed TestFlight beta (50–200 users)** |
 | **S10** (wk 19–20) | Fixes from beta, performance (plan < 2 s p95) | Polish, accessibility (Dynamic Type, VoiceOver), App Store assets, privacy labels. **App Store submission.** |
 
 **MVP exit criteria:** the 12-step Definition of Done (PRD §14) passes as an automated E2E test and in a manual run on a real device. Crash-free sessions ≥ 99.5%. Activation and North Star events visible in PostHog.
