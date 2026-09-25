@@ -50,7 +50,7 @@ Metrics by category:
 - **Value/engagement:** meal swaps, ingredient swaps, rebalance proposals accepted/rejected, recipe imports, meal-prep usage, Economy Mode usage, Pantry usage (from Phase 2)
 - **Business/financial:** MRR, ARR, ARPU, ARPPU, CAC, LTV, churn, Free→Paid conversion, Standard→Premium conversion
 
-Analytics events never carry personal or health data (see §12.2).
+Metrics are computed from aggregated server data and App Store Connect; there is no analytics SDK and no device identifier, and no personal or health data is used (see §12.2).
 
 **Retention loop** (weekly cycle): Thu/Fri generate next week → shopping list → weekend shopping → meal prep → daily use → feedback → next plan. If this loop holds, the subscription has natural recurring value.
 
@@ -79,14 +79,14 @@ Analytics events never carry personal or health data (see §12.2).
 
 ## 7. Onboarding Requirements
 
-First launch builds the user's `NutritionProfile`. Simple Mode with sensible defaults is the default path; Advanced options are opt-in. No account is needed to complete onboarding; Sign in with Apple is requested when the first plan is generated, so the plan can be saved and synced.
+First launch builds the user's `NutritionProfile`, which is stored only on the phone (§12.2). Simple Mode with sensible defaults is the default path; Advanced options are opt-in. No account is needed to complete onboarding; Sign in with Apple is requested when the first plan is generated, so the plan can be saved and synced.
 
 - **Age confirmation (first step):** the user confirms they are 18 or older. Anyone who does not confirm cannot continue and sees a short explanation that FitMeal is designed for adults. If the user later enters an age under 18 in body data, the same block applies.
 - **Consent & health notice:**
-  - Explicit, separate, unticked consent to process health-related data (allergies, intolerances, body data, calorie/macro goals) under GDPR Art. 9 — not bundled with the terms of service. Without it the app cannot build a personalized profile (see §12.2).
+  - Explicit, separate, unticked consent to process health-related data (allergies, intolerances, body data, calorie/macro goals) under GDPR Art. 9 — not bundled with the terms of service. The consent text says that this data is stored only on the phone and is sent to FitMeal's servers only to compute plans and recipes, without being saved there. Without it the app cannot build a personalized profile (see §12.2).
   - General notice: FitMeal gives general nutrition planning, not medical advice. If you are pregnant or breastfeeding, have or have had an eating disorder, have kidney disease, diabetes or another medical condition, or follow a medically prescribed diet, consult a doctor or registered dietitian before using the app. The app does **not** ask about or store any of these conditions.
 - **Goal:** cut / maintain / bulk, or a fully custom calorie/macro target.
-- **Body data (optional):** age, sex, weight, height, and activity level. If provided, the app calculates suggested calorie and macro targets (standard energy-expenditure equation + goal adjustment) and pre-fills the next screens. The user can skip this step and enter targets directly, and can override any suggested value.
+- **Body data (optional):** age, sex, weight, height, and activity level. If provided, the app calculates suggested calorie and macro targets on the phone (standard energy-expenditure equation + goal adjustment) and pre-fills the next screens. The user can skip this step and enter targets directly, and can override any suggested value.
 - **Calories:** direct numeric input (e.g. 1500 kcal/day), pre-filled with the suggestion when body data was given. **Hard floor: 1200 kcal/day.** The app refuses any target below it (including a suggested value, which is clamped to 1200) and explains why: very low intakes need supervision from a doctor or dietitian, so FitMeal doesn't build plans below 1200 kcal a day.
 - **Macros — two modes:**
   1. Simple: standard / high protein / lower carb / balanced presets.
@@ -114,7 +114,7 @@ First launch builds the user's `NutritionProfile`. Simple Mode with sensible def
 
 ### 8.1 Recipe sources & import
 
-Four input sources: (1) the app's own recipe database, (2) link import (extracts name, ingredients, quantities, servings, instructions, available nutrition, prep time), (3) PDF import (parses individual recipes out of e-books, dietitian plans, personal documents), (4) manual text entry / free-form paste.
+Four input sources: (1) the app's own recipe database, (2) link import from pages that publish standard recipe data (schema.org `Recipe`: name, ingredients, quantities, servings, instructions, available nutrition, prep time); for other pages, or sites that opt out of text and data mining, the app asks the user to paste the recipe text, (3) PDF import from text-based PDFs (e-books, dietitian plans, personal documents): the text is extracted on the phone, the user picks the recipe pages, and only that text is sent; scanned PDFs are not supported at launch, (4) manual text entry / free-form paste, including captions shared from Instagram or TikTok (the post itself is never fetched).
 
 **Import pipeline:** URL/PDF/Text → extract content → detect recipes → parse ingredients → normalize units → match to FoodItems → detect servings → calculate nutrition → AI culinary interpretation → validation → user preview. Low-confidence extractions (e.g. "1 cup cheese") open a clarification prompt rather than silently guessing; every parsed ingredient carries a confidence score (0–1).
 
@@ -122,7 +122,7 @@ Four input sources: (1) the app's own recipe database, (2) link import (extracts
 
 **Allergens at import:** if an imported recipe contains an ingredient matching the user's ALLERGY or strict INTOLERANCE (directly, derived, or — for ALLERGY — as "may contain"), Import Preview shows a blocking notice at the top naming the ingredient and allergen. The recipe can be saved, but cannot be personalized or planned until that ingredient is substituted with a safe alternative or removed.
 
-**Public catalog vs. private import:** recipes sourced from the internet are re-expressed as an internal concept (ingredients, technique, dish type) with the app's own generated instructions and presentation — never a copy of a third party's text, photos, or layout. Imports are private to the user by default. Legal review of copyright/licensing/platform ToS is required before any public catalog feature ships (see Risks).
+**Public catalog vs. private import:** recipes sourced from the internet are re-expressed as an internal concept (ingredients, technique, dish type) with the app's own generated instructions and presentation — never a copy of a third party's text, photos, or layout. Imports are always private to the user and **never feed a public catalog**; the catalog contains only recipes FitMeal owns (see Risks).
 
 ### 8.2 Recipe Schema
 
@@ -195,7 +195,7 @@ Every planned meal can be marked cooked, eaten, or skipped from Today and Weekly
 
 ## 9. AI vs Deterministic Nutrition Engine
 
-**AI layer responsibilities:** understanding/interpreting recipe text, extracting ingredients, parsing PDFs, classifying ingredient culinary roles, writing the app's own preparation instructions, generating culinarily sensible recipe variants, proposing substitutions, recognizing dish style, tagging.
+**AI layer responsibilities:** understanding/interpreting recipe text, extracting ingredients, parsing recipe text (including text extracted from PDFs on the phone), classifying ingredient culinary roles, writing the app's own preparation instructions, generating culinarily sensible recipe variants, proposing substitutions, recognizing dish style, tagging.
 
 **Deterministic nutrition layer responsibilities:** calories, protein, fat, carbs, fiber, portion math, daily totals, allergen checks, constraint enforcement, optimization, tolerances (§8.3, §8.5, §8.6), and the 1200 kcal floor. The LLM is never the source of truth for nutrition values — all numeric outputs are computed and validated by the deterministic engine. Nutrition stated by an imported source is displayed for comparison only.
 
@@ -212,9 +212,9 @@ Every planned meal can be marked cooked, eaten, or skipped from Today and Weekly
 
 ## 10. Data Model & Architecture
 
-**Core entities:** User, ConsentRecord, NutritionProfile, DietaryRestriction, Allergy, FoodPreference, FoodItem, FoodPackage, Recipe, RecipeIngredient, RecipeVariant, RecipeSource, MealPlan, MealPlanDay, MealSlot, ShoppingList, ShoppingItem, RecipeFeedback. Phase 2: PantryItem, PriceObservation.
+**Core entities:** User, ConsentRecord, NutritionProfile, DietaryRestriction, Allergy (these three stored only on the phone, §12.2), FoodPreference, FoodItem, FoodPackage, Recipe, RecipeIngredient, RecipeVariant, RecipeSource, MealPlan, MealPlanDay, MealSlot, ShoppingList, ShoppingItem, RecipeFeedback. Phase 2: PantryItem, PriceObservation.
 
-**NutritionProfile** stores targets, whether each target is suggested or user-entered, optional body data, and exclusions with their severity tier (and, for intolerances, whether the user relaxed it to "avoid when possible"). It stores no medical conditions.
+**NutritionProfile** stores targets, whether each target is suggested or user-entered, optional body data, and exclusions with their severity tier (and, for intolerances, whether the user relaxed it to "avoid when possible"). It stores no medical conditions, and it lives only on the phone: the app sends it with each plan, personalization, swap or rebalance request, and the server uses it for that request without saving it.
 
 **MealSlot** carries a status (planned / cooked / eaten / skipped); eaten and skipped slots are locked.
 
@@ -246,7 +246,7 @@ flowchart TD
 
 **Backend:** Python, FastAPI, PostgreSQL, Redis, object storage, background workers — chosen for strength in optimization, nutrition data processing, parsers, and AI pipelines.
 
-**Backend services:** User Service (profile, preferences, exclusions, allergies, consent, feedback) · Recipe Service (recipes, ingredients, variants, tags) · Import Service (links, PDFs, text extraction, normalization) · Nutrition Service (food database, nutrition/portion calculations) · Planner Service (daily/weekly plan, swaps, rebalance proposals) · Optimization Service (macro/budget/package optimization) · Shopping Service (aggregation, package math; pantry subtraction from Phase 2).
+**Backend services:** User Service (account, preferences, consent, feedback; the health profile arrives with each request and is not stored) · Recipe Service (recipes, ingredients, variants, tags) · Import Service (schema.org links, text including PDF text, normalization) · Nutrition Service (food database, nutrition/portion calculations) · Planner Service (daily/weekly plan, swaps, rebalance proposals) · Optimization Service (macro/budget/package optimization) · Shopping Service (aggregation, package math; pantry subtraction from Phase 2).
 
 **AI-call efficiency:** architecture should minimize LLM calls — the target flow is Recipe import → AI interpretation → Recipe Schema → save, with the Nutrition Engine, Optimizer, Substitution Engine, and Planner then running most operations without any LLM call (not one LLM round-trip per user action). Parsed imports of public URLs are cached and shared across users; private imports are not (§12.2).
 
@@ -290,7 +290,7 @@ Freemium SaaS / iOS subscription, three tiers (PLN; prices are a starting point 
 | Onboarding too complex | Simple Mode with sensible defaults; Advanced mode is opt-in only; body data optional |
 | AI hallucination | AI never computes nutrition values; structured outputs; validation by the Nutrition Engine |
 | Health-data breach or misuse | GDPR Art. 9 consent, EU hosting, DPAs, no personal data in LLM prompts or analytics (§12.2) |
-| Copyright / platform terms | Own recipe text and instructions; controlled import; separate private import from any public catalog; store source/license metadata; legal review before public use of any scraped source |
+| Copyright / platform terms | Own recipe text and instructions; controlled import; imports never feed a public catalog; link import reads only schema.org recipe data and respects text-and-data-mining opt-outs; store source/license metadata |
 
 ### 12.1 Nutrition safety
 
@@ -303,12 +303,14 @@ Freemium SaaS / iOS subscription, three tiers (PLN; prices are a starting point 
 ### 12.2 Privacy & data protection
 
 - **GDPR Art. 9:** allergies, intolerances, body data, and diet goals are treated as health data. Processing requires explicit, separate, unticked consent at onboarding (§7), recorded with consent version and timestamp. Consent can be withdrawn in Profile/Settings, which stops processing and leads to account deletion.
+- **Health profile on the phone:** targets, body data and exclusions are stored only on the user's phone (optionally synced through the user's own private iCloud). The server receives them with each request that needs them and never stores or logs them.
 - **Data minimization:** no medical conditions are collected; body data is optional; age is confirmed as 18+ without storing a date of birth.
-- **Hosting & processors:** data is hosted in the EU. A DPA is signed with every processor (Hetzner, Cloudflare, Anthropic, Sentry, PostHog) before it receives any data. A privacy policy and App Store privacy nutrition labels are kept up to date.
-- **Account deletion and data export:** in-app account deletion removes the profile, plans, private imports, and consent records (the App Store subscription itself is managed and cancelled through Apple, and the app says so). Data export gives the user their data in a machine-readable format.
+- **Hosting & processors:** data is hosted in the EU. A DPA is in place with every processor (Hetzner, Cloudflare, AWS for Claude on Bedrock in an EU region, Sentry in its EU region) before it receives any data. A privacy policy and App Store privacy nutrition labels are kept up to date.
+- **Account deletion and data export:** in-app account deletion removes the account, plans and private imports on the server and the health profile on the phone; consent records are kept only as long as needed to prove consent (the App Store subscription itself is managed and cancelled through Apple, and the app says so). Data export gives the user their data in a machine-readable format.
 - **LLM prompts:** only recipe content goes to the LLM — never the user's profile, allergies, body data, or identity.
-- **Analytics and error reporting:** events use a pseudonymous ID and carry no personal or health data (no allergens, body data, or calorie targets); error reports are scrubbed of personal data.
-- **Import cache:** parsed imports from **public URLs** are cached and shared across users (the cache holds only the recipe parsed from the public page). **Private text and PDF imports are cached per user only** and never reused for anyone else. Uploaded PDFs are deleted after parsing.
+- **Analytics and error reporting:** no analytics SDK and no device identifiers; product metrics are aggregated from server data and App Store Connect. Error reports are scrubbed of personal data.
+- **No marketing messages at launch:** only the weekly "plan next week" reminder, through the iOS notification permission.
+- **Import cache:** parsed imports from **public URLs** are cached and shared across users (the cache holds only the recipe parsed from the public page). **Private text imports (including PDF text) are cached per user only** and never reused for anyone else. PDF files never leave the phone.
 
 ## 13. Roadmap & Phases
 
