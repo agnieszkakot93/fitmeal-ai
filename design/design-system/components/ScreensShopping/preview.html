@@ -1,4 +1,4 @@
-<!-- @dsCard group="Screens" height=900 width=2179 page subtitle="Shopping list (store-walk order, no prices), Economy Mode v1 preview, Paywall, Profile with consent and health notice, Delete account" -->
+<!-- @dsCard group="Screens" height=900 width=3472 page subtitle="Shopping list (store-walk order, no prices), Economy Mode v1 preview, Paywall, Profile with Privacy & health (profile on this phone, iCloud sync, plan reminder, export), Where your data lives, Delete account (and the iCloud-not-reachable case)" -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Shopping, paywall and profile</title></head>
@@ -36,6 +36,44 @@ function daySummary(){ return card(
       h(F.MacroBar, {macro:'carbs', value:150, target:140, compact:true}),
       h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
 var UP_NEXT = h(F.BottomAccessory, {icon:'clock', title:'Up next · Dinner 19:00', subtitle:'Turkey Pasta Bake · meal prep 1/2', action:'Eat'});
+/* Profile helpers */
+function row2(label, sub, icon, trailing){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'12px 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
+  h('span', {style:{color:'var(--ink-muted)', flex:'none'}}, h(F.Icon, {name:icon, size:20})),
+  h('span', {style:{flex:1, minWidth:0, display:'flex', flexDirection:'column', gap:2}},
+    h('span', {style:{font:'500 16px/22px var(--font-text)'}}, label),
+    h('span', {className:'fm-foot'}, sub)),
+  trailing || h('span', {style:{color:'var(--ink-faint)'}}, h(F.Icon, {name:'chevron-right', size:18}))); }
+function toggleRow(icon, label, desc, on){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'0 16px', borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
+  h('span', {style:{color:'var(--ink-muted)', flex:'none'}}, h(F.Icon, {name:icon, size:20})),
+  h('div', {style:{flex:1, minWidth:0}}, h(F.Toggle, {label:label, description:desc, checked:on}))); }
+function privacyGroup(reminder){ return h('div', {key:'pg', className:'fm-group'},
+  row('Nutrition profile', 'On this phone', 'user'),
+  toggleRow('cloud', 'Sync with iCloud', 'Only in your private iCloud. We can’t read it.', true),
+  reminder === 'denied'
+    ? row2('Plan reminder · Thursdays', 'Off in iOS Settings', 'plan', h('button', {type:'button', className:'fm-link', style:{minHeight:44}}, 'Open Settings'))
+    : row('Plan reminder · Thursdays', 'On', 'plan'),
+  row('Health notice', '', 'info'),
+  row('Health-data consent', 'Given 24 Sep', 'shield'),
+  row2('Export my data', 'Combines the profile from this phone with your data from our servers.', 'doc'),
+  row('Delete account', '', 'trash', true)); }
+function profileSheet(children){ return h('div', {key:'s', className:'fm-scrim'},
+  h('div', {className:'fm-sheet is-page'},
+    h('span', {className:'fm-sheet-grab'}),
+    h('div', {className:'fm-nav-row'}, h('span', {className:'fm-nav-spacer'}), h('span', {className:'fm-nav-title'}, 'Profile'), h(F.IconButton, {icon:'check', label:'Done', variant:'glass-prominent'})),
+    scroll.apply(null, children))); }
+function place(icon, title, body){ return h('div', {style:{display:'flex', gap:12, alignItems:'flex-start'}},
+  h('span', {style:{display:'grid', placeItems:'center', width:32, height:32, borderRadius:999, background:'var(--basil-soft)', color:'var(--basil-ink)', flex:'none'}}, h(F.Icon, {name:icon, size:18, weight:2})),
+  h('div', {className:'fm-stack', style:{gap:2}},
+    h('p', {style:{margin:0, font:'650 16px/22px var(--font-text)'}}, title),
+    h('p', {style:{margin:0, font:'400 14px/20px var(--font-text)', color:'var(--ink)'}}, body))); }
+function deleteSheet(icloudUnreachable){ return sheet(
+  h('span', {style:{display:'grid', placeItems:'center', width:48, height:48, borderRadius:999, background:'var(--danger-soft)', color:'var(--danger)'}}, h(F.Icon, {name:'trash', size:24})),
+  h('h2', {className:'fm-h2'}, 'Delete your account?'),
+  h('p', {className:'fm-body', style:{fontSize:15, lineHeight:'21px'}}, 'Permanently deletes your account, plans and private imports from our servers, and your profile from this phone and iCloud. We keep a record of your consents only as long as the law requires.'),
+  icloudUnreachable ? h(F.Notice, {tone:'offline', icon:'cloud', title:'We can’t reach your iCloud right now', body:'Your profile may stay in your iCloud. To remove it, open iOS Settings › your name › iCloud › Manage Storage › FitMeal and delete its data.'}) : null,
+  h(F.Notice, {tone:'offline', icon:'info', body:'Your App Store subscription isn’t cancelled automatically. Manage it in Settings › Apple ID › Subscriptions.'}),
+  h(F.Button, {variant:'danger', size:'lg', block:true}, 'Delete account'),
+  h(F.Button, {variant:'quiet', size:'md', block:true}, 'Export my data first')); }
 show([
  Ph('34 Shopping list', [
    h(F.NavBar, {key:'n', large:true, title:'Shopping', subtitle:'22–28 Sep · 23 items', trailing:h(F.IconButton, {icon:'more', label:'List options'}), avatar:AV}),
@@ -72,31 +110,45 @@ show([
  Ph('37 Profile (from the avatar)', [
    h(F.NavBar, {key:'n', large:true, title:'Today', avatar:AV}),
    scroll(daySummary()),
-   h('div', {key:'s', className:'fm-scrim'},
-     h('div', {className:'fm-sheet is-page'},
+   profileSheet([
+     h('div', {key:'me', style:{display:'flex', alignItems:'center', gap:14}},
+       h(F.Avatar, {initials:'OL', size:60, label:'Change photo'}),
+       h('div', {className:'fm-stack', style:{gap:4}}, h('p', {className:'fm-h3'}, 'Ola'), h(F.Badge, {tone:'basil', icon:'check'}, 'Standard · renews 24 Sep 2027'))),
+     h('div', {key:'st', style:{display:'grid', gridTemplateColumns:'1fr 1fr', gap:8}},
+       h(F.StatTile, {value:'17', label:'Meals eaten', note:'This week'}),
+       h(F.StatTile, {value:'96', unit:'%', label:'Protein target hit'})),
+     h(F.SectionHeader, {key:'th', title:'My targets'}),
+     h('div', {key:'tg', className:'fm-group'}, row('Calories & macros', '1,500 · 115 P', 'target'), row('Exclusions', 'Peanuts, milk +2', 'alert'), row('Meal prep', '2 days', 'repeat')),
+     h(F.SectionHeader, {key:'ph', title:'Privacy & health'}),
+     privacyGroup('on')])
+ ]),
+ Ph('37 Privacy & health · reminder off', [
+   h(F.NavBar, {key:'n', large:true, title:'Today', avatar:AV}),
+   scroll(daySummary()),
+   profileSheet([
+     h(F.SectionHeader, {key:'ph', title:'Privacy & health'}),
+     privacyGroup('denied'),
+     h('p', {key:'f', className:'fm-foot'}, 'Withdrawing health-data consent deletes your account and your profile.')])
+ ]),
+ Ph('37b Where your data lives', [
+   h(F.NavBar, {key:'n', large:true, title:'Today', avatar:AV}),
+   profileSheet([h(F.SectionHeader, {key:'ph', title:'Privacy & health'}), privacyGroup('on')]),
+   h('div', {key:'s2', className:'fm-scrim'},
+     h('div', {className:'fm-sheet'},
        h('span', {className:'fm-sheet-grab'}),
-       h('div', {className:'fm-nav-row'}, h('span', {className:'fm-nav-spacer'}), h('span', {className:'fm-nav-title'}, 'Profile'), h(F.IconButton, {icon:'check', label:'Done', variant:'glass-prominent'})),
-       scroll(
-         h('div', {style:{display:'flex', alignItems:'center', gap:14}},
-           h(F.Avatar, {initials:'OL', size:60, label:'Change photo'}),
-           h('div', {className:'fm-stack', style:{gap:4}}, h('p', {className:'fm-h3'}, 'Ola'), h(F.Badge, {tone:'basil', icon:'check'}, 'Standard · renews 24 Sep 2027'))),
-         h('div', {style:{display:'grid', gridTemplateColumns:'1fr 1fr', gap:8}},
-           h(F.StatTile, {value:'17', label:'Meals eaten', note:'This week'}),
-           h(F.StatTile, {value:'96', unit:'%', label:'Protein target hit'})),
-         h(F.SectionHeader, {title:'My targets'}),
-         h('div', {className:'fm-group'}, row('Calories & macros', '1,500 · 115 P', 'target'), row('Exclusions', 'Peanuts, milk +2', 'alert'), row('Meal prep', '2 days', 'repeat')),
-         h(F.SectionHeader, {title:'Privacy & health'}),
-         h('div', {className:'fm-group'}, row('Health notice', '', 'info'), row('Health-data consent', 'Given 24 Sep', 'shield'), row('Export my data', '', 'doc'), row('Delete account', '', 'trash', true)))))
+       sheetHead('Where your data lives'),
+       place('user', 'On this phone', 'Your nutrition profile: targets, allergies and other exclusions, and body data if you added it. It syncs to your private iCloud, which we can’t read, unless you turn sync off. We receive it only to build a plan or swap, and don’t keep it.'),
+       place('shield', 'On our servers in the EU', 'Your account, plans, meals you mark as eaten, saved and imported recipes, shopping lists and the record of your consents. Recipe text you import is read by our AI provider in the EU; we keep only the recipe.'),
+       place('close', 'Never collected', 'Medical conditions, your date of birth, device or advertising identifiers, and your PDF files.'),
+       h(F.Button, {variant:'quiet', size:'md', block:true}, 'Read the privacy policy')))
  ]),
  Ph('38 Delete account', [
    h(F.NavBar, {key:'n', back:'Profile', title:'Privacy & health'}),
-   sheet(
-     h('span', {style:{display:'grid', placeItems:'center', width:48, height:48, borderRadius:999, background:'var(--danger-soft)', color:'var(--danger)'}}, h(F.Icon, {name:'trash', size:24})),
-     h('h2', {className:'fm-h2'}, 'Delete your account?'),
-     h('p', {className:'fm-body', style:{fontSize:15, lineHeight:'21px'}}, 'This permanently deletes your profile, plans, private imports and consent records.'),
-     h(F.Notice, {tone:'offline', icon:'info', body:'Your App Store subscription isn’t cancelled automatically. Manage it in Settings › Apple ID › Subscriptions.'}),
-     h(F.Button, {variant:'danger', size:'lg', block:true}, 'Delete account'),
-     h(F.Button, {variant:'quiet', size:'md', block:true}, 'Export my data first'))
+   deleteSheet(false)
+ ]),
+ Ph('38 Delete account · iCloud not reachable', [
+   h(F.NavBar, {key:'n', back:'Profile', title:'Privacy & health'}),
+   deleteSheet(true)
  ])
 ]);
 </script>

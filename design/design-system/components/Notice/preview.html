@@ -1,4 +1,4 @@
-<!-- @dsCard group="Status" height=560 -->
+<!-- @dsCard group="Status" height=1100 -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Notice — preview</title></head>
@@ -9,9 +9,11 @@ var F = window.FitMeal, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:360, gap:10}},
   h(F.Notice, {tone:'danger', title:'Contains peanuts (peanut butter)', body:'Peanuts are your allergy. Swap or remove it to plan this recipe.', actions:[{label:'Swap peanut butter', icon:'swap'}, {label:'Remove it'}]}),
-  h(F.Notice, {tone:'warning', title:'We couldn\u2019t build a 7-day plan', body:'Too few breakfasts match your exclusions and the 15-minute limit.', actions:[{label:'Allow 30 min breakfasts'}, {label:'Plan 3 days'}]}),
+  h(F.Notice, {tone:'warning', title:'We couldn’t build a 7-day plan', body:'Too few breakfasts match your exclusions and the 15-minute limit.', actions:[{label:'Allow 30 min breakfasts'}, {label:'Plan 3 days'}]}),
+  h(F.Notice, {tone:'warning', icon:'lock', title:'We can’t check this recipe for your allergens', body:'Your profile isn’t on this phone, so we don’t know your allergies. You can save it now.', actions:[{label:'Set up my profile'}]}),
   h(F.Notice, {tone:'info', title:'Plan ready, with 1 goal relaxed', items:['Ingredient reuse: 29 unique items instead of your usual ~24']}),
-  h(F.Notice, {tone:'offline', title:'You\u2019re offline', body:'Swaps need a connection. Your plan, recipes and shopping list still work.'})));
+  h(F.Notice, {tone:'info', title:'We can’t read a recipe on this page', body:'Paste the recipe text and we’ll keep the link as the source.', actions:[{label:'Paste recipe text', icon:'text'}, {label:'Try another link'}]}),
+  h(F.Notice, {tone:'offline', title:'You’re offline', body:'Swaps need a connection. Your plan, recipes and shopping list still work.'})));
 </script>
 </body>
 </html>
