@@ -21,6 +21,8 @@ uv run alembic upgrade head
 uv run uvicorn app.main:app --reload
 ```
 
+Compose publishes Postgres and Redis on `127.0.0.1` only, and Redis requires a password (dev default `fitmeal`). The defaults work as they are; to override, copy `infra/.env.example` to `infra/.env` (Compose) and `backend/.env.example` to `backend/.env` (app settings), keeping the Redis password the same in both.
+
 To load ingredient data, see [../data/README.md](../data/README.md).
 
 ## Checks
