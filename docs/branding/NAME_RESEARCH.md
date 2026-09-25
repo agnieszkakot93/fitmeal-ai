@@ -4,11 +4,15 @@ Maintained by the `brand-researcher` agent ([.claude/agents/brand-researcher.md]
 
 "FitMeal AI" is the working title. This report looks for the product's public brand name.
 
-**Status (2026-09-24): second research session done (international-first round). Live access is still limited.**
+**Status (2026-09-25): third research session done (short-and-catchy round). Live access is still limited.**
+
+> **Product Owner feedback on session 2 (verbatim):** "i dont like those names they are too long and not catchy". This covers the whole session-2 shortlist (Tangram, Ramekin, Palmo, Sapimo, Tadam, Savimo, Sarto, Portata, Mestolo). Session 3 re-ran the naming for **3–5 letters, 1–2 syllables, catchy and international** (§2.4), screened 111 new candidates (§4.7, §5.4) and built a new current shortlist of 12 names (§6.7). The session-2 shortlist and top 3 are marked **superseded (PO: too long, not catchy)**. They have not been deleted.
+>
+> **Current recommendation for further investigation (not a selection):** top 3 **Zubo, Kazu, Dozo**; alternates **Nimbo, Gobo** (§6.7.2).
 
 > **Product Owner feedback on session 1:** "Smakora is mostly a Polish name, like most of them." Eleven of the fourteen session-1 shortlisted names were Polish-rooted (Oskoma, Smakora, Smako, Doma, Akurat, Miska, Pora, Kredens, Zapas, Prepko, Yemo). The product launches in Poland and then expands internationally, so the brand must not read as a Polish word. Session 2 re-ran the naming international-first (§2.1) and rebuilt the shortlist (§6). Session-1 conclusions that this changes are marked **superseded**. They have not been deleted.
 
-> **Live web access, sessions 1 and 2: partial.** Only **WebSearch** (a search engine) worked. At the start of session 2, each official source was retried once with a single plain request. Every one was still **blocked by the network egress proxy**: registry RDAP (.com, .app, the IANA bootstrap), the iTunes Search API, Google Play, EUIPO, TMview, UPRP, WIPO Brand DB, USPTO and UK IPO. Per the task, no workaround was attempted: no proxy probing, no `whois` or `dig` substitutes, no mirror sites. Details are in §5.1.
+> **Live web access, sessions 1, 2 and 3: partial.** Only **WebSearch** (a search engine) worked. At the start of sessions 2 and 3, each official source was retried once with a single plain request. Every one was still **blocked by the network egress proxy**: registry RDAP (.com, .app, the IANA bootstrap), the iTunes Search API, Google Play, EUIPO, TMview, UPRP, WIPO Brand DB, USPTO and UK IPO. Per the task, no workaround was attempted: no proxy probing, no `whois` or `dig` substitutes, no mirror sites. Details are in §5.1.
 >
 > **What that means:** no name in this report has **Verified clear** or **Conflict** status for any store, domain, trademark or handle check. Every authoritative check is **Pending**. Search-engine findings are recorded separately as **Risk** (evidence of an existing, possibly conflicting use) or **Inconclusive** (no matching result found, which is **not** evidence of availability).
 
@@ -67,6 +71,8 @@ The backend already does PL/EN diacritics-insensitive ingredient search and unit
 
 **Brand personality.** Practical, confident, food-positive, a little playful, and precise without being clinical. It should feel like a friend who is good with numbers and good in the kitchen. Never moralizing ("guilt-free", "cheat", "slim"), never medical (PRD §12, Plan §11 App Review risk), and never "the AI decides" (PRD §5 principle 10).
 
+**Session 3 addition (2026-09-25, PO feedback).** The name itself has to carry the "a little playful" part of the personality: short, punchy and fun to say, the way Noom, Uber, Zoom, Yuka, Bolt or Kiwi are. The store descriptor ("…: Meal Planner") and the product carry the explanation (§3.4 takeaway), so the name does not need to describe anything.
+
 **Positioning statement (working).** For people in Poland who track what they eat but won't give up the food they love, [Brand] is the meal planner that makes any recipe fit your numbers, your budget and your prep day, and shows you exactly what it changed.
 
 **Positioning statement, international version (session 2, working).** For people who track what they eat but won't give up the food they love, [Brand] is the meal planner that makes any recipe fit your numbers, your budget and your prep day, and shows you exactly what it changed.
@@ -75,7 +81,29 @@ The backend already does PL/EN diacritics-insensitive ingredient search and unit
 
 ## 2. Naming strategy
 
-### 2.1 International-first (session 2, current)
+> **Current strategy: §2.4 (session 3), placed first below.** It is numbered 2.4, not 2.1, so that the many existing references to §2.1–§2.3 elsewhere in this report still point to the right text. §2.1 (session 2) and §2.2 (session 1) are kept for history.
+
+### 2.4 Session 3: short and catchy (current, 2026-09-25)
+
+**Why this changed.** The Product Owner's review of session 2, verbatim: "i dont like those names they are too long and not catchy". The session-2 shortlist had names of 5–7 letters and up to three syllables (Tangram, Ramekin, Sapimo, Portata, Mestolo), several of them real words chosen for their meaning. The PO had already rejected the mostly Polish-rooted session-1 names. So the brand has to be **short and catchy**, and still **international**.
+
+**Rules for session 3** (these tighten §2.1; everything in §2.1 that is not contradicted still applies):
+1. **Length:** 3–5 letters (6 only if exceptionally good), 1–2 syllables. Ideally one stressed syllable, or a bouncy two-syllable CV-CV pattern (Zu-bo, Ka-zu).
+2. **Catchy:** punchy, rhythmic, fun to say, remembered after one hearing, and good as a one-word icon or wordmark. Reference points: Noom, Uber, Zoom, Hinge, Yuka, Bolt, Lime, Oura, Kiwi, Mela, Zego. A strong consonant, a clear vowel, often a repeated sound. Scored as the new criterion **C11** (§2.3).
+3. **International:** no Polish word or Polish root as the concept. A Polish speaker must still read it correctly on first sight, so use letters that sound the same in PL and EN (a, e, i, o, u, b, d, f, g, k, l, m, n, p, r, s, t, z). Avoid c, j, w, y, ch, sz, cz, th, and "ee"/"oo" spellings that Poles misread ("Noom" reads "no-om" in Polish).
+4. **No** diacritics, hyphens or numbers. **No** medical, diet-guilt or body connotations (PRD §5, §12). **Nothing close** to the §3 competitors, especially Fitatu, Fitia, Yazio, Yuka, Noom, Mealime, Mela, Portio and Sapora.
+5. **No reuse** of names already in §4.1–§4.6.
+
+**What session 3 learned (evidence in §3.5 and §5.4):**
+- **Short names are far more crowded than long ones, and the category is the most crowded of all.** Of 111 candidates, about 45 hit a same-category app (meal planning, recipes, macro or calorie tracking, food ordering) on the first search. Examples: Nomo (NomNom, noms), Tasto, Plum, Miso, Nori, Bento, Momo, Lumo, Numo, Nubo, Paku, Miam, Pasto (Plento Pasto), Tamo (Tomo), Tuki (Tucki), Zesto, Zing.
+- **Every 4-letter CV-CV name is used by someone.** None of the shortlisted names is free of same-name apps. The test that still separates them is **whether the same-name uses are in food, nutrition or health**. The shortlist keeps names whose same-name uses are in other fields (ride-hailing, radio, real estate, marketplaces), and flags the ones that touch food or health.
+- **Food words from Japanese and Korean read as international, catchy and easy for Poles** (Kazu, Dozo, Gobo, Kumo, Mogu, Panko, Bibim), because Japanese and Korean romanisation uses the same vowels as Polish. But the popular ones (Miso, Nori, Umai, Mizu, Bento, Momo) are already taken in the category.
+- **Polish ear traps found this round:** "Kazu" sounds close to "Kaziu", the familiar form of the name Kazimierz; "Dozo" echoes "doza" / "dozować" (dose, to dispense); "Mogu" is Russian for "I can"; "Panko" is also a Polish pest-monitoring brand. These are recorded against each name in §6.7.3.
+- **Slang and body traps screened out without searching:** Sumo, Kilo, Gula (ES gluttony), Pica (an eating disorder), Nudo (IT naked), Kapo, Suka, Nuda, Pipa, Bimbo, Zizi, Popo, Kuku, Zaza (§4.7.5).
+
+### 2.1 International-first (session 2; superseded in part 2026-09-25)
+
+> **Superseded in part, 2026-09-25 (PO: too long, not catchy).** The session-2 form rule (4–8 characters, 1–2 syllables "where practical") and the conclusion that "the cleanest openings were" real-word metaphors such as Tangram, Ramekin and Palmo are replaced by §2.4. The international rules below (no Polish root, letters that read the same in PL and EN, the "si/zi/ni/ci" and silent-"e" traps, C10) still apply. The text is kept as written.
 
 **Why this changed.** The Product Owner's review of session 1: "Smakora is mostly a Polish name, like most of them." The launch is in Poland, but the plan is to expand internationally (PRD §3 wedge, PRD §13 roadmap, Plan §3 Polish + English from day one), so **the brand must not read as a Polish word.** Polish stays the first market to test the name in, not the language the name comes from.
 
@@ -118,7 +146,7 @@ The backend already does PL/EN diacritics-insensitive ingredient search and unit
 
 ### 2.3 Naming criteria
 
-C1–C9 are unchanged from session 1. C10 was added in session 2 after the PO feedback.
+C1–C9 are unchanged from session 1. C10 was added in session 2 after the PO feedback. C11 was added in session 3 after the PO feedback on session 2.
 
 | # | Criterion | Why |
 |---|---|---|
@@ -132,6 +160,7 @@ C1–C9 are unchanged from session 1. C10 was added in session 2 after the PO fe
 | C8 | .com or .app obtainable; consistent social handles possible | Brand consistency |
 | C9 | No conflicting live trademarks in classes 9, 42, 44 (and 35, 41, 29/30) | Legal risk |
 | **C10** | **International neutrality:** meaning and sound don't depend on one language, and no bad meaning is known in DE, FR, ES, IT, PT, NL or SV. Scored 1–5: 5 = coined or understood the same way across Europe; 3 = a real word from one non-Polish language that reads as foreign-but-friendly elsewhere; 1 = only makes sense in Polish. | PO feedback, session 2 |
+| **C11** | **Catchiness:** short (3–5 letters, 1–2 syllables), punchy, rhythmic, fun to say, remembered after one hearing, strong as a one-word icon. Scored 1–5: 5 = a strong consonant onset, clear vowels and a bounce or repeated sound, instantly repeatable (Zoom, Kiwi); 3 = short and easy but flat or ordinary; 1 = long or hard to repeat. Reviewer assessment until a listener test is run. | PO feedback, session 2 ("too long and not catchy") |
 
 ---
 
@@ -211,6 +240,28 @@ Checked 2026-09-24 via WebSearch only. These apps surfaced while screening the s
 | saviMon | "saviMon: Food & Supplements App": food, medication and vitamin tracker | [App Store](https://apps.apple.com/us/app/savimon/id6760576803) | Tracker (health) |
 
 **Takeaway.** The international "import a recipe, fit it to your macros, plan the week" space is filling quickly, and several apps (Sapora, Adapto, MODL, BonApp!) are close to PRD §1. The brand can't rely on a food word to explain the product: the store descriptor ("…: Meal Planner") and the product have to do that. The name's job is to be **distinctive and ownable**.
+
+### 3.5 Same-category apps found in session 3
+
+Checked 2026-09-25 via WebSearch only. These apps surfaced while screening the session-3 short names. None of the pages could be opened (egress-blocked), so the descriptions are the search results' titles and summaries, not verified store data. The most relevant ones for PRD §1 and §8 are listed first.
+
+| Brand | What the search showed | Link | Relevance |
+|---|---|---|---|
+| **Tasto** | "Tasto: Recipe Manager"; summary: saves recipes from Instagram, TikTok and YouTube, "full nutritional breakdown… calories, protein, carbs, and fats", weekly plan, AI ingredient swaps, allergen highlights | [App Store](https://apps.apple.com/us/app/tasto-recipe-manager/id6760462265), [tastoapp.com](https://tastoapp.com/) | **Very close to PRD §8.1–§8.4** (social import, macros, swaps, allergens) |
+| **Miso / Miso Cook** | "Miso - Recipe Keeper" (social import, nutrition, "cost per serving"); "Miso Cook: Meal Planner" (calorie goal 1200–4000 kcal, weekly plan); misoapp.ca (calorie and macro targets, budget, pantry) | [Miso](https://apps.apple.com/us/app/miso-recipe-keeper/id6756516262), [Miso Cook](https://apps.apple.com/us/app/miso-cook-meal-planner/id6757978247), [misoapp.ca](https://misoapp.ca/) | **Very close** (import, calories, cost, pantry) |
+| **Plum Recipes** | Summary: downloads Instagram, TikTok and YouTube recipes; "can estimate calories and macros"; suggests meals for the week | [plumrecipes.app](https://www.plumrecipes.app/) | Close (import plus macros) |
+| **noms / NomNom** | "noms - AI recipe & meal plan" (turns a video link into a structured recipe with nutrition); "NomNom: Meal Planner & Recipes" (week of cheap dinners, "set your budget") | [noms](https://apps.apple.com/us/app/noms-ai-recipe-meal-plan/id6748933312), [NomNom](https://apps.apple.com/us/app/nomnom-meal-planner-recipes/id6788049718) | Close (import; budget planning, cf. PRD §8.8) |
+| **Tomo** | "Tomo - Diet & Calories"; summary: recipes "based on your tastes, budget and needs", grocery lists | [App Store](https://apps.apple.com/us/app/tomo-diet-calories/id6793031588) | Close (budget plus calories) |
+| **Plento Pasto** | "Plento Pasto: Meal Planner"; summary: plans "around your grocery budget and what's already in your kitchen", allergy-aware | [plentopasto.com](https://plentopasto.com/) | Close (budget, pantry, allergies) |
+| **Makros** | "Makros: Meal Plan & Grocery"; summary: fitness goals "without breaking the bank", macro tracker, weekly planner | [Google Play](https://play.google.com/store/apps/details?id=com.ivandiettracker.makros.makros_app&hl=en_US) | Close (macros plus budget) |
+| Zesto | "Cooking Assistant AI - Zesto": AI recipes, meal planner, nutrition | [App Store](https://apps.apple.com/us/app/cooking-assistant-ai-zesto/id6584520256) | Recipe AI |
+| Nori | "Nori - Family AI": allergy-aware weekly menus, grocery lists | [heynori.com](https://heynori.com/ai-powered-meal-planning) | Family planner (PRD §13 family phase) |
+| Lumo | "Lumo - AI Chef": meal planning, pantry, nutrition insights | [App Store](https://apps.apple.com/ca/app/lumo-ai-chef/id6746675356) | Planner with pantry |
+| Bento (several) | "Bento Box: Meal plans now easy" (import, plan, grocery lists); "Bento" meal planner (Quartz) | [App Store](https://apps.apple.com/us/app/bento-box-meal-plans-now-easy/id6758401088) | Meal-prep planner |
+| Tucki, Tami Meal / TamiTales, Pomelo | Family and weekly meal-plan apps | [Tucki](https://apps.apple.com/us/app/tucki/id6503348465), [Tami Meal](https://tami-meal.com/), [Pomelo](https://apps.apple.com/us/app/pomelo-nutrition-meal-plans/id6763051623) | Planners |
+| Momo, Paku, Numo, Nubo, Bimi, Bite AI, Umai | AI photo or chat nutrition trackers and recipe apps | [Momo](https://trymomo.app/), [Paku](https://apps.apple.com/us/app/paku-ai-calorie-counter-pet/id6752853273), [Numo](https://play.google.com/store/apps/details?id=com.astertechltda.numo), [Nubo](https://apps.apple.com/vn/app/nubo-body-and-nutrition/id1492780477), [Bimi](https://apps.apple.com/us/app/bimi-eat-better/id6756016601) | Trackers (the short-name space is dense here) |
+
+**Takeaway.** Social-recipe import with macros, which session 2 found at Sapora and BonApp!, is now common (Tasto, Miso, Plum, noms). Budget-aware planning (PRD §8.8) is also appearing (NomNom, Tomo, Plento Pasto, Makros). Short, cute names are the default in this category, so a short name alone will not stand out: it has to avoid the food and nutrition apps above and be ownable.
 
 ---
 
@@ -429,7 +480,149 @@ Result (session 1): 14 names shortlisted. The PO asked for 10–15. *(Superseded
 | 159 | Lust | DE *Lust auf* (to feel like) | Screened out (judgment): EN "lust" (C3) |
 | 160 | Zin | NL *zin in* (to feel like) | Screened out (judgment): one-language word; three letters |
 
-Result: **7 new international names shortlisted** (Tangram, Palmo, Sapimo, Savimo, Portata, Sarto, Mestolo). Together with Ramekin and Tadam from session 1, that makes 9 international names, plus 2 Polish-flavoured alternatives (§6).
+Result: **7 new international names shortlisted** (Tangram, Palmo, Sapimo, Savimo, Portata, Sarto, Mestolo). Together with Ramekin and Tadam from session 1, that makes 9 international names, plus 2 Polish-flavoured alternatives (§6). *(Superseded 2026-09-25, PO: too long, not catchy. See §4.7 and §6.7.)*
+
+### 4.7 Session 3: short-and-catchy longlist (161–271)
+
+111 new names were generated on 2026-09-25 under the §2.4 rules. None of them is in §4.1–§4.6. **S/L** = syllables / letters. "Search" means a WebSearch screen was run that day (evidence in §5.4). "Judgment" means the name was screened out on linguistic, strategic or reviewer-knowledge grounds; where reviewer knowledge was used, it says so and the name was not searched. A name screened out by judgment is not claimed to be taken. A loose link to food, taste, fit, ease or a bite is enough for the idea; catchiness matters more.
+
+#### 4.7.1 Coined sounds (CV-CV and CV-CCV)
+
+| # | Name | S/L | Idea behind it | Screen result |
+|---|---|---|---|---|
+| 161 | Zubo | 2/4 | A punchy "Z" and a round "-bo": sounds like something you'd happily grab, with no dictionary meaning to box it in | **Shortlisted, top 3** |
+| 162 | Nimbo | 2/5 | Nimbus, nimble: light, quick plans (PT *nimbo* = rain cloud) | **Shortlisted, alternate** |
+| 163 | Nomo | 2/4 | "Nom" (the eating sound) + "-o" | Screened out (search): "noms – AI recipe & meal plan", "NomNom: Meal Planner & Recipes" |
+| 164 | Bito | 2/4 | "Bite" + "-o" | Screened out (search): many "Bite" nutrition apps sound the same (Bite AI, BiteRite, BiteTracker) |
+| 165 | Bimo | 2/4 | Coined | Screened out (search): Bimo biscuits (ES); "Bimi – Eat Better" nutrition app |
+| 166 | Tuki | 2/4 | Coined, bouncy | Screened out (search): "Tucki: Family Meal Planner" sounds identical |
+| 167 | Tamo | 2/4 | Coined | Screened out (search): "Tomo – Diet & Calories" is one letter away |
+| 168 | Dabo | 2/4 | Coined | Screened out (search): "Just Dabao" food-saving app; dabo kolo (Ethiopian snack) |
+| 169 | Zumi | 2/4 | Coined | Screened out (search): Zumi Foods (nutrition shakes); "zumi" pet-nutrition app |
+| 170 | Temi | 2/4 | Coined | Screened out (search): Tami Meal / TamiTales meal planners sound close |
+| 171 | Numo | 2/4 | "Num" (yum) + "-o"; the form the PO gave as an example | Screened out (search): "Numo: Contador de calorias" (BR); "Numo World" meal delivery |
+| 172 | Nubo | 2/4 | Coined | Screened out (search): "Nubo – Body and Nutrition" app; NuBo Wellness |
+| 173 | Mubo | 2/4 | Coined | Screened out (judgment): no idea behind it; a grouped search found nothing (Inconclusive) |
+| 174 | Zelo | 2/4 | IT *zelo* (zeal) | Screened out (search): "Zelo Delivery" grocery app; the query also returned ZOE nutrition |
+| 175 | Zembo | 2/5 | Coined | Screened out (search): Zembo is the developer name of the "Circle Diet For Life" diet app |
+| 176 | Nomba | 2/5 | "Nom" + "-ba" | Screened out (search): Nomba, a large Nigerian fintech (nomba.com, @nomba on X) |
+| 177 | Zanko | 2/5 | Coined | Screened out (judgment): weak idea; the search surfaced Zankou Chicken |
+| 178 | Deko | 2/4 | Coined | Screened out (judgment): DE *Deko* = decoration; no food idea (search Inconclusive) |
+| 179 | Lumbo | 2/5 | Coined | Screened out (judgment): echoes "lumbar" (C5); the search surfaced Bumbo Foods and Slimbo meal plans |
+| 180 | Pingo | 2/5 | Coined, bouncy | Screened out (search): "Pingo" restaurant-discovery app |
+| 181 | Bibo | 2/4 | Latin *bibo* (I drink) | Screened out (search): "BIBO" restaurant-ordering app |
+| 182 | Mixo | 2/4 | Mix + "-o" | Screened out (search): Mixo, a food-video social platform |
+| 183 | Maku | 2/4 | Clipped "macro" | Screened out (search): "Makro" and "Makros" macro apps |
+| 184 | Zesto | 2/5 | Zest + "-o" | Screened out (search): "Cooking Assistant AI – Zesto" recipe app |
+| 185 | Tasto | 2/5 | Taste + "-o" (IT *tasto* = key) | Screened out (search): "Tasto: Recipe Manager" (social import plus macros) |
+| 186 | Tosto | 2/5 | IT *tosto* (soon; toast) | Screened out (search): one letter from Tasto |
+| 187 | Savo | 2/4 | Clipped "savour" | Screened out (judgment): too close to Savora and Savimo (§4); not searched |
+| 188 | Prota | 2/5 | Clipped "protein" | Screened out (judgment): ties the brand to protein (C7) and is descriptive (C1) |
+| 189 | Snak | 1/4 | "Snack" respelled | Screened out (judgment): a misspelt descriptive word (C1, C2) |
+| 190 | Kombo | 2/5 | "Combo" with a K | Screened out (search): Kombo healthy meal boxes with macros (Serbia); "Kombo" ordering app |
+
+#### 4.7.2 Playful doubled sounds and eating onomatopoeia
+
+| # | Name | S/L | Idea behind it | Screen result |
+|---|---|---|---|---|
+| 191 | Mogu | 2/4 | JP *mogu-mogu* = "munch munch" | **Shortlisted (not recommended)** |
+| 192 | Paku | 2/4 | JP *paku-paku* = eating in big bites (the root of "Pac-Man") | Screened out (search): "Paku: AI Calorie Counter Pet" |
+| 193 | Zuzu | 2/4 | Doubled "zu" | Screened out (search): ZuZu restaurants and food delivery |
+| 194 | Bimbam | 2/6 | "Bim-bam" bells | Screened out (judgment): echoes "bimbo" in EN; 6 letters (search Inconclusive) |
+| 195 | Pompom | 2/6 | Doubled, bouncy | Screened out (judgment): cheerleading association; no food link (search Inconclusive) |
+| 196 | Tamtam | 2/6 | The tam-tam drum | Screened out (search): TamTam, a Russian messenger app; TamiMeal |
+| 197 | Happa | 2/5 | DE child word *happa-happa* (eat); JP *happa* (leaf) | Screened out (search): Happa Foods (baby food, IN); "h" reads as [x] in Polish |
+| 198 | Miam | 1/4 | FR *miam!* (yum) | Screened out (search): "Miam" recipe and meal-plan app; MiamPlan; MIAM nutrition bars |
+| 199 | Mums | 1/4 | SV *mums!* (yum) | Screened out (search + judgment): in UK English "mums" means mothers; mum-nutrition apps dominate |
+| 200 | Nuum | 1/4 | The form the PO gave as an example | Screened out (judgment): an English speaker reads it exactly like Noom (§3 competitor) |
+| 201 | Kiki | 2/4 | Doubled | Screened out (judgment): slang meanings in EN and FR (C3) |
+| 202 | Zizi | 2/4 | Doubled | Screened out (judgment): FR child word for penis (C3) |
+| 203 | Popo | 2/4 | Doubled | Screened out (judgment): colloquial "bottom" in DE and PL (C3) |
+| 204 | Kuku | 2/4 | Doubled | Screened out (judgment): PL *kuku* = crazy (C3) |
+| 205 | Zaza | 2/4 | Doubled | Screened out (judgment): US slang for cannabis (C3, C5) |
+| 206 | Didi | 2/4 | Doubled | Screened out (judgment): DiDi ride-hailing (reviewer knowledge) |
+| 207 | Pappa | 2/5 | IT *pappa* = grub, "food's ready" | **Shortlisted (not recommended)** |
+
+#### 4.7.3 Short words from other languages, used arbitrarily
+
+| # | Name | S/L | Idea behind it | Screen result |
+|---|---|---|---|---|
+| 208 | Kazu | 2/4 | JP *kazu* = number: it does the numbers so you don't have to | **Shortlisted, top 3** |
+| 209 | Dozo | 2/4 | JP *dōzo* = "please, help yourself", said when offering food | **Shortlisted, top 3** |
+| 210 | Gobo | 2/4 | JP *gobō* (burdock root); also a stage-light stencil that projects a shape | **Shortlisted, alternate** |
+| 211 | Bibim | 2/5 | KR *bibim* = mixed (as in bibimbap): mix what you love with what you need | **Shortlisted** |
+| 212 | Zumo | 2/4 | ES *zumo* = juice: the good stuff, squeezed in | **Shortlisted (not recommended)** |
+| 213 | Kumo | 2/4 | JP *kumo* = cloud: light, always with you | **Shortlisted (not recommended)** |
+| 214 | Panko | 2/5 | JP breadcrumbs: crunchy, playful, food-positive | **Shortlisted (not recommended)** |
+| 215 | Gumbo | 2/5 | The Louisiana stew, and EN "a gumbo of…" (a mix) | **Shortlisted (not recommended)** |
+| 216 | Kibo | 2/4 | JP *kibō* = hope | Screened out (search): Kibo Foods (protein chips, "complete meal kit", recipes) |
+| 217 | Pepo | 2/4 | Botanical term for a squash-type fruit | Screened out (search): the "PEP: Diet" meal-plan app family; Peppo food app |
+| 218 | Pomo | 2/4 | IT *pomo* (apple) | Screened out (search): "Pomelo – Nutrition Meal Plans"; POMO restaurant rewards |
+| 219 | Tembo | 2/5 | Swahili "elephant" | Screened out (search): Tembo Money savings app (UK), Tembo (Postgres), Tembo Connect |
+| 220 | Bento | 2/5 | JP lunch box: meal prep | Screened out (search): several "Bento" meal planners |
+| 221 | Momo | 2/4 | Dumplings; doubled | Screened out (search): "Momo — Eat better", an AI nutrition app |
+| 222 | Nori | 2/4 | Seaweed | Screened out (search): "Nori – Family AI" meal planner; "Nori" nutrition tracker |
+| 223 | Miso | 2/4 | Soybean paste | Screened out (search): "Miso – Recipe Keeper"; "Miso Cook: Meal Planner" |
+| 224 | Umai | 2/4 | JP "tasty" | Screened out (search): "Umai: Recipes with a spark" |
+| 225 | Mizu | 2/4 | JP "water" | Screened out (search): "Mizu – Your CKD companion" (kidney-disease nutrition app; C5) |
+| 226 | Mola | 2/4 | ES slang *¡mola!* ("it's cool") | Screened out (search + judgment): Mola Foods (sauces); "mola" is also a medical term (molar pregnancy) (C5) |
+| 227 | Kudu | 2/4 | Antelope | Screened out (search): Kudu, a Saudi restaurant chain app |
+| 228 | Lulo | 2/4 | Andean fruit | Screened out (search): Lulo, a WIC food-benefits app |
+| 229 | Dango | 2/5 | JP rice dumpling | Screened out (search): "Dango: Food Delivery & More" |
+| 230 | Mirin | 2/5 | JP rice wine | Screened out (judgment): an alcohol-based ingredient; near "Miri AI" nutrition app (search) |
+| 231 | Kanzo | 2/5 | JP licorice root | Screened out (judgment): licorice root is sold as a herbal remedy (C5); weak idea |
+| 232 | Posto | 2/5 | IT *a posto* (all sorted) | Screened out (judgment): sounds near Potto (meal planner, §3.4); PT *posto* = petrol station (search Inconclusive) |
+| 233 | Rumbo | 2/5 | ES "heading, course" | Screened out (search): "Rumbo Fitness" app (calorie tracking); Rumbo.es travel |
+| 234 | Tombo | 2/5 | JP "dragonfly" | Screened out (judgment): believed to be close to Tombow pens (reviewer knowledge); search Inconclusive |
+| 235 | Tenko | 2/5 | A crisp JP-sounding word (JP *tenko* = roll call) | Screened out (search + judgment): restaurants; *tenko* (roll call) is also known as the title of a British TV drama about a WW2 prison camp (reviewer knowledge; C3) |
+| 236 | Morso | 2/5 | IT "a bite" | Screened out (search): "Morso – Visual food journal"; a Morso AI recipe app |
+| 237 | Kanpai | 2/6 | JP "cheers!" | Screened out (search): Kanpai Foods (candy); ordering apps; an alcohol toast |
+| 238 | Pasto | 2/5 | IT "meal" | Screened out (search): "Plento Pasto: Meal Planner"; descriptive in IT |
+| 239 | Mako | 2/4 | Shark | Screened out (search): MAKO bakery app; "Makros" meal-plan app |
+| 240 | Mozo | 2/4 | ES "waiter" | Screened out (search): Mozo restaurant order-taking and payments platforms |
+| 241 | Remo | 2/4 | IT/ES "oar" | Screened out (search): sounds like "Remi" and "Remy" recipe apps |
+| 242 | Rumi | 2/4 | Name-like | Screened out (judgment): crowded (the poet); near Remy/Remi (search Inconclusive) |
+| 243 | Pinta | 2/5 | ES *tiene buena pinta* ("looks tasty") | Screened out (judgment): believed to be a Polish craft brewery, Browar PINTA (reviewer knowledge, not searched) |
+| 244 | Mimo | 2/4 | Coined-looking | Screened out (judgment): Mimo coding app (reviewer knowledge); PL *mimo* = "despite" (a Polish word) |
+
+#### 4.7.4 Short English words used arbitrarily
+
+| # | Name | S/L | Idea behind it | Screen result |
+|---|---|---|---|---|
+| 245 | Plum | 1/4 | Fruit; "a plum job" | Screened out (search): "Plum Recipe Saver", "Plum: Recipe Keeper" (import plus macros) |
+| 246 | Fig | 1/3 | Fruit | Screened out (search): "Fig: Food Scanner & Recipes" (diet and allergy app) |
+| 247 | Dill | 1/4 | Herb | Screened out (search): "Dill" campus food ordering, "dill Till" restaurant platform, "Dill Kitchen"; AU slang "dill" = fool (C3) |
+| 248 | Zing | 1/4 | Zest, energy | Screened out (search): "Zing Wellbeing" (recipes, meal plans); Zing Coach |
+| 249 | Gulp | 1/4 | Eating sound | Screened out (search + judgment): "Gulp Note" meal diary; "gulping food" is off-message |
+| 250 | Nibs | 1/4 | Cocoa nibs; nibble | Screened out (search): "Nibbly" recipe and meal-scanner apps |
+
+#### 4.7.5 Screened out on meaning or known brands alone (judgment unless stated)
+
+| # | Name | S/L | Why screened out |
+|---|---|---|---|
+| 251 | Sumo | 2/4 | Body-weight connotation (C5) |
+| 252 | Kilo | 2/4 | Weight unit (C5) |
+| 253 | Gula | 2/4 | ES "gluttony" (C5) |
+| 254 | Pica | 2/4 | The name of an eating disorder (C5) |
+| 255 | Nudo | 2/4 | IT "naked" (C3) |
+| 256 | Kapo | 2/4 | A concentration-camp prisoner functionary (C3) |
+| 257 | Suka | 2/4 | PL and RU vulgar insult (C3) |
+| 258 | Nuda | 2/4 | PL "boredom", and a Polish word (C3) |
+| 259 | Pipa | 2/4 | PL vulgar slang (C3) |
+| 260 | Bimbo | 2/5 | EN insult; Grupo Bimbo bakeries (class 30) (reviewer knowledge) |
+| 261 | Zumba | 2/5 | Zumba fitness brand (reviewer knowledge) |
+| 262 | Bozo | 2/4 | EN insult (C3) |
+| 263 | Kobo | 2/4 | Rakuten Kobo e-readers (class 9) (reviewer knowledge) |
+| 264 | Tazo | 2/4 | Tazo tea (class 30) (reviewer knowledge) |
+| 265 | Numi | 2/4 | Numi organic tea (class 30) (reviewer knowledge); "NuMi" by Nutrisystem appeared in the Numo search |
+| 266 | Lomi | 2/4 | Lomi kitchen composter (reviewer knowledge) |
+| 267 | Olo | 2/3 | Olo restaurant-ordering platform (reviewer knowledge) |
+| 268 | Orzo | 2/4 | Poles read "rz" as "ż" (C2) |
+| 269 | Bimi | 2/4 | Search: "Bimi – Eat Better" nutrition app (seen in the Bimo search) |
+| 270 | Zoe | 2/3 | Search: ZOE personalised-nutrition app (seen in the Zelo search) |
+| 271 | Yuzu | 2/4 | Uses "y"; search: "Yuzu: Healthy Recipes App" (seen in the Mizu search) |
+
+Result: **12 names shortlisted** (§6.7): Zubo, Kazu, Dozo, Nimbo, Gobo, Bibim, Zumo, Kumo, Panko, Gumbo, Mogu, Pappa. All are 4–5 letters and 2 syllables. The last six are kept for comparison and are not recommended (§6.7.2).
 
 ---
 
@@ -474,6 +667,23 @@ At the start of session 2, each official source got **one plain request**, as th
 | **WebSearch** | — | WebSearch | **Worked.** Used for every session-2 screen and per-name check (§5.3, §6.3) |
 
 **Consequence:** the access situation is unchanged from session 1. Every store, domain, trademark and handle check for every name stays **Pending**. No workaround was attempted.
+
+#### Session 3 retry (2026-09-25)
+
+At the start of session 3, each official source got **one plain request**, as the task asked. `curl` was run once for every source (HTTP status only, 20-second timeout). WebFetch was also tried once on the .com RDAP, iTunes, Google Play and TMview URLs. The test name was `zumo`.
+
+| Source (official) | Request | Tool | Result |
+|---|---|---|---|
+| `rdap.verisign.com` (.com RDAP) | `/com/v1/domain/zumo.com` | curl; WebFetch | curl: `curl: (56) CONNECT tunnel failed, response 403`. WebFetch: `EGRESS_BLOCKED … Access to rdap.verisign.com is blocked by the network egress proxy.` |
+| `pubapi.registry.google` (.app RDAP) | `/rdap/domain/zumo.app` | curl | `CONNECT tunnel failed, response 403` |
+| `data.iana.org` (RDAP bootstrap) | `/rdap/dns.json` | curl | `CONNECT tunnel failed, response 403`, so the .pl and .io RDAP servers still can't be looked up |
+| `itunes.apple.com` (iTunes Search API) | `/search?term=zumo&entity=software&country=pl` | curl; WebFetch | curl: `CONNECT tunnel failed, response 403`. WebFetch: `EGRESS_BLOCKED … Access to itunes.apple.com is blocked` |
+| `play.google.com` | `/store/search?q=zumo&c=apps&gl=PL` | curl; WebFetch | curl: `CONNECT tunnel failed, response 403`. WebFetch: `EGRESS_BLOCKED … Access to play.google.com is blocked` |
+| `www.tmdn.org` (TMview) | `/tmview/` | curl; WebFetch | curl: `CONNECT tunnel failed, response 403`. WebFetch: `EGRESS_BLOCKED … Access to www.tmdn.org is blocked` |
+| `euipo.europa.eu/eSearch/`, `ewyszukiwarka.pue.uprp.gov.pl`, `branddb.wipo.int`, `tmsearch.uspto.gov`, `trademarks.ipo.gov.uk` | landing page | curl | `CONNECT tunnel failed, response 403` on each |
+| **WebSearch** | — | WebSearch | **Worked.** Used for every session-3 screen and per-name check (§5.4, §6.7.3). Domain-filtered searches on apps.apple.com, play.google.com, instagram.com and tiktok.com also worked. |
+
+**Consequence:** unchanged for the third session running. Every store, domain, trademark and handle check for every session-3 name is **Pending**. No workaround was attempted.
 
 ### 5.2 Session 1 screening evidence (search engine; status at most Risk or Inconclusive)
 
@@ -567,13 +777,428 @@ All entries are dated **2026-09-24**. Quoted text is the search result's title, 
 | Pranzo | `"Pranzo" app meal OR food OR recipes` | Inconclusive (screened out on judgment) | Italian meal structure; Caffe Pranzo restaurants; no Pranzo app | — |
 | Savimo, Sapimo, Tangram, Palmo, Portata, Sarto, Mestolo | see §6.3 | — | Shortlisted; full per-name evidence in §6.3 | — |
 
+### 5.4 Session 3 screening evidence (search engine; status at most Risk or Inconclusive)
+
+All entries are dated **2026-09-25**. Quoted text is the search result's title, or its snippet or summary, as returned. None of the linked pages could be opened (egress-blocked). Unless stated, the query was `"<Name>" app food OR meal OR nutrition OR recipes` (or the close variant shown). The per-name evidence for the shortlist is in §6.7.3.
+
+| Name | Query (variant) | Status | What the search showed | Links |
+|---|---|---|---|---|
+| Nomo | standard | Risk (screened out) | No Nomo app; "noms - AI recipe & meal plan"; "NomNom: Meal Planner & Recipes" (summary: "set your budget"); "Nom Nom: Organize Recipes Plan" | [noms](https://apps.apple.com/us/app/noms-ai-recipe-meal-plan/id6748933312), [NomNom](https://apps.apple.com/us/app/nomnom-meal-planner-recipes/id6788049718) |
+| Bito | standard | Risk (screened out) | No Bito app; "Bite AI: Meal Calorie Tracker"; "BiteRite \| Calorie controlled, meal plan app"; "BiteTracker: Plan & Track Food" | [Bite AI](https://apps.apple.com/us/app/bite-ai-calorie-counter/id6736922373), [biterite.app](https://biterite.app/) |
+| Kibo | standard | Risk (screened out) | "Collections – Kibo Foods" (complete meal kit); "5 Tips for Sustainable Meal Planning and Prep" on kibofoods.us | [kibofoods.us](https://kibofoods.us/products/complete-meal-kit) |
+| Bimo | standard | Risk (screened out) | Bimo biscuits in Fitia's Spanish database; "Bimi - Eat Better - App Store" | [Bimi](https://apps.apple.com/us/app/bimi-eat-better/id6756016601) |
+| Tuki | standard | Risk (screened out) | "Tucki: Family Meal Planner - App Store"; "Tuki - Apps on Google Play" (a residents' super-app with food delivery) | [Tucki](https://apps.apple.com/us/app/tucki/id6503348465), [Tuki](https://play.google.com/store/apps/details?id=asia.tuki.twa&hl=en_US) |
+| Zesto | `"Zesto" app OR brand food OR meal OR recipes` | Risk (screened out) | "Cooking Assistant AI - Zesto App - App Store"; "Zest: Meal Planner & Recipes"; "Zesto \| Buddy" | [Zesto](https://apps.apple.com/us/app/cooking-assistant-ai-zesto/id6584520256), [Zest](https://apps.apple.com/gb/app/zest-meal-planner-recipes/id1595938390) |
+| Pepo | `"Pepo" app OR brand food OR meal OR nutrition` | Risk (screened out) | "PEP: Diet - Healthy meal plan" and related PEP apps; "Peppo - Apps on Google Play" (Italian food ordering) | [PEP](https://apps.apple.com/us/app/pep-diet-healthy-meal-plan/id1530408366), [Peppo](https://play.google.com/store/apps/details?id=com.dishop.peppo&hl=en_US) |
+| Tasto | standard | Risk (screened out) | "Tasto: Recipe Manager - App Store"; "Tasto: From Social to Kitchen" | [App Store](https://apps.apple.com/us/app/tasto-recipe-manager/id6760462265), [tastoapp.com](https://tastoapp.com/) |
+| Pasto | `"Pasto" app meal planner OR nutrition OR recipes` | Risk (screened out) | "Plento Pasto: Meal Planner - App Store"; "Plento Pasto — Plenty + meal, for the everyday family" | [App Store](https://apps.apple.com/us/app/plento-pasto-meal-planner/id6773336713), [plentopasto.com](https://plentopasto.com/) |
+| Mako | standard | Risk (screened out) | "MAKO - Apps on Google Play" (bakery); "Makros: Meal Plan & Grocery" | [MAKO](https://play.google.com/store/apps/details?id=com.mako.app), [Makros](https://play.google.com/store/apps/details?id=com.ivandiettracker.makros.makros_app&hl=en_US) |
+| Maku | `"Maku" app food OR meal OR nutrition OR macros` | Risk (screened out) | "Food Macro Calculator: Makro - App Store"; "Makros: Meal Plan & Grocery" | [Makro](https://apps.apple.com/us/app/food-macro-calculator-makro/id6477851684) |
+| Bento | `"Bento" app meal prep OR meal planner OR nutrition` | Risk (screened out) | "Bento Box: Meal plans now easy App - App Store"; "Bento - Apps on Google Play" (meal planner); "Bento - Meal Planner, AI Recipe Generator, Calorie Tracker" | [App Store](https://apps.apple.com/us/app/bento-box-meal-plans-now-easy/id6758401088), [Play](https://play.google.com/store/apps/details?id=io.quartz.app&hl=en) |
+| Momo | `"Momo" app meal planner OR nutrition OR recipes` | Risk (screened out) | "Momo — Eat better. Feel your best." (AI meal-photo nutrition) | [trymomo.app](https://trymomo.app/) |
+| Plum | `"Plum" app meal planner OR nutrition OR recipes` | Risk (screened out) | "Plum Recipe Saver on the App Store"; "Plum: Recipe Keeper"; "Plum Recipes - A delightful, free recipe organizer" | [App Store](https://apps.apple.com/us/app/plum-recipe-saver/id6496861616), [plumrecipes.app](https://www.plumrecipes.app/) |
+| Fig | `"Fig" app food OR nutrition OR meal planner` | Risk (screened out) | "Fig: Food Scanner & Recipes App - App Store" | [App Store](https://apps.apple.com/us/app/fig-food-scanner-recipes/id1564434726) |
+| Dill | `"Dill" app meal planner OR recipes OR nutrition`; store-filtered `Dill app` | Inconclusive, then Risk (screened out) | Category query: no Dill app. Store-filtered: "Dill - App Store" (campus food ordering); "dill Till App"; "Dill Kitchen on the App Store"; "What's The Dill" | [Dill](https://apps.apple.com/us/app/dill/id1462397948), [dill Till](https://apps.apple.com/us/app/dill-till/id6461347364), [Dill Kitchen](https://apps.apple.com/us/app/dill-kitchen/id1624644757) |
+| Zing | `"Zing" app meal planner OR nutrition OR recipes OR food` | Risk (screened out) | "Zing Wellbeing - App Store - Apple" (recipes and meal plans); "Nutrition Guide – Zing Coach Help Center" | [App Store](https://apps.apple.com/us/app/zing-wellbeing/id6743520200) |
+| Nori | `"Nori" app meal planner OR nutrition OR recipes` | Risk (screened out) | "Nori - Family AI App - App Store"; "Nori AI: Your Health Advisor"; "Nori - Nutrition Tracker" (Microsoft Store) | [App Store](https://apps.apple.com/us/app/nori-family-ai/id6753757891), [heynori.com](https://heynori.com/ai-powered-meal-planning) |
+| Miso | `"Miso" app meal planner OR nutrition OR recipes` | Risk (screened out) | "Miso - Recipe Keeper"; "Miso Cook: Meal Planner"; "Miso \| Meal Planning, Pantry, Groceries, and Nutrition" | [Miso](https://apps.apple.com/us/app/miso-recipe-keeper/id6756516262), [Miso Cook](https://apps.apple.com/us/app/miso-cook-meal-planner/id6757978247), [misoapp.ca](https://misoapp.ca/) |
+| Mola | standard | Risk (screened out) | "Mola Foods - App on Amazon Appstore" (vegan sauces); "Mola - Food Menu" (restaurant) | [Amazon](https://www.amazon.com/Mola-Foods-Inc/dp/B07FXQ2GZS) |
+| Remo | standard | Risk (screened out) | No Remo app; "Remi: Recipes & Cooking"; "Remy - Recipes & Meal Planner"; ReciMe | [Remi](https://apps.apple.com/us/app/remi-recipes-cooking/id6504444134), [Remy](https://apps.apple.com/us/app/remy-recipes-meal-planner/id6738160281) |
+| Kombo | standard | Risk (screened out) | "Your food. Your day. - Kombo" (meal boxes; summary: calorie values and macronutrient proportions per box); "Kombo App - App Store" (food ordering) | [kombomeals.rs](https://kombomeals.rs/en/home/), [App Store](https://apps.apple.com/us/app/kombo/id1553081211) |
+| Tembo | standard; `"Gobo" OR "Zubo" OR "Tembo" app OR company software` | Inconclusive (food), Risk (software; screened out) | No Tembo food app; "New Version Of Tembo App Is Here!" (Tembo Money); "Tembo \| LinkedIn" (Postgres company); "Tembo Connect - Apps on Google Play" | [Tembo Money](https://www.tembomoney.com/learn/introducing-the-new-version-of-tembo-app), [Tembo Connect](https://play.google.com/store/apps/details?id=nl.speakap.tembo&hl=en_US) |
+| Nubo / Mubo | `"Mubo" OR "Nubo" app OR brand food OR nutrition` | Risk (Nubo, screened out); Inconclusive (Mubo) | "Nubo - Body and Nutrition - App Store"; "NUBO WEIGHT LOSS \| NuBo Wellness"; nothing for Mubo | [App Store](https://apps.apple.com/vn/app/nubo-body-and-nutrition/id1492780477), [nubowellness.com](https://www.nubowellness.com/) |
+| Pomo | standard | Risk (screened out) | "Pomelo - Nutrition Meal Plans - App Store"; "POMO Network" (restaurant rewards) | [Pomelo](https://apps.apple.com/us/app/pomelo-nutrition-meal-plans/id6763051623), [pomo.network](https://pomo.network/) |
+| Tamo | `"Tamo" app OR brand food OR meal OR nutrition` | Risk (screened out) | "Tomo - Diet & Calories App - App Store"; TAMO Bistro + Bar | [Tomo](https://apps.apple.com/us/app/tomo-diet-calories/id6793031588) |
+| Dabo | `"Dabo" app OR brand food OR meal OR nutrition` | Risk (screened out) | "Just Dabao: Food Saving App - Apps on Google Play"; "Dabo kolo" (Wikipedia) | [Play](https://play.google.com/store/apps/details?id=com.dabo.food_delivery_app) |
+| Zumi | `"Zumi" app OR brand food OR meal OR nutrition` | Risk (screened out) | "ZUMI FOODS \| LinkedIn" (milkshakes); "zumi - pet care - Apps on Google Play" (pet weight and nutrition) | [Facebook](https://www.facebook.com/zumifoods/), [Play](https://play.google.com/store/apps/details?id=com.zumi.app.zumi_app&hl=en_US) |
+| Lulo | `"Lulo" app OR brand food OR meal OR nutrition` | Risk (screened out) | "Lulo" (a WIC food-benefits app, New York) | [hellolulo.com](https://www.hellolulo.com/) |
+| Zuzu | `"Zuzu" app OR brand food OR meal OR nutrition` | Risk (screened out) | "ZuZu Handmade Mexican Food - Apps on Google Play"; "ZuZu Foods - Home" | [Play](https://play.google.com/store/apps/details?id=com.chownow.zuzuhandmademexicanfood&hl=en), [zuzu.food](https://zuzu.food/) |
+| Umai | standard | Risk (screened out) | "Umai: Recipes with a spark - Apps on Google Play" | [Play](https://play.google.com/store/apps/details?id=com.ndokholyan.umai) |
+| Tamtam | `"Tamtam" OR "Tam Tam" app food…` | Risk (screened out) | "TamTam (app)" (Wikipedia; a messenger); "TamiMeal - App Store" | [Wikipedia](https://en.wikipedia.org/wiki/TamTam_(app)), [TamiMeal](https://apps.apple.com/us/app/tamimeal/id6745157267) |
+| Kanpai | `"Kanpai" app OR brand food OR meal OR nutrition` | Risk (screened out) | "Kanpai Foodz \| Freeze Dried Candy Store"; "Kanpai - Apps on Google Play" (ordering) | [kanpaifoods.com](https://kanpaifoods.com/), [Play](https://play.google.com/store/apps/details?id=com.owner.kanpai&hl=en) |
+| Mizu | standard | Risk (screened out; C5) | "Mizu - Your CKD companion - App Store - Apple" (kidney-disease food diary) | [App Store](https://apps.apple.com/us/app/mizu-your-ckd-companion/id1536328825) |
+| Zelo | `"Zelo" app OR brand food OR meal OR nutrition` | Risk (screened out) | "Zelo Delivery - Apps on Google Play" (grocery quick commerce); "ZOE: Personalized Nutrition - App Store" | [Zelo](https://play.google.com/store/apps/details?id=com.abs.zelo&hl=en_US), [ZOE](https://apps.apple.com/gb/app/zoe-personalized-nutrition/id1471632228) |
+| Rumbo / Tombo | `"Rumbo" OR "Tombo" app food OR meal planner OR nutrition`; store-filtered `Rumbo app` | Inconclusive (category), then Risk (Rumbo, screened out) | Category query: nothing for either. Store-filtered: "Rumbo Fitness - App Store - Apple" (calorie counting on Apple Watch); "Rumbo.es - vuelos baratos" | [Rumbo Fitness](https://apps.apple.com/us/app/rumbo-fitness/id6475088608), [Rumbo.es](https://apps.apple.com/us/app/rumbo-es-vuelos-baratos/id535128140) |
+| Kudu | standard | Risk (screened out) | "Kudu Restaurant - Saudi Arabia - Apps on Google Play" | [Play](https://play.google.com/store/apps/details?id=com.kudu.androidapp&hl=en) |
+| Temi | standard | Risk (screened out) | No Temi app; "Tami Meal - The meal planner for what's next"; "TamiTales: Weekly Meal Plan" | [tami-meal.com](https://tami-meal.com/), [Play](https://play.google.com/store/apps/details?id=com.tamimeal&hl=en_US) |
+| Posto | `"Posto" app food OR meal OR recipes OR nutrition` | Inconclusive (screened out on judgment) | No Posto app; "Posto Nutrition" (poppy seeds, Bengali cooking); "Potto: Meal Planner & Recipes" | [SnapCalorie](https://www.snapcalorie.com/nutrition/posto_nutrition.html) |
+| Gulp | standard | Risk (screened out) | "Gulp Note - Meal/Dining Diary – Apps bei Google Play" | [Play](https://play.google.com/store/apps/details?id=com.onnz.app.android.gulpnote&hl=en_US) |
+| Nibs | standard | Risk (screened out) | "Recipe Manager - Nibbly - App Store"; "Meal Scanner Fun: Nibbly" | [App Store](https://apps.apple.com/us/app/recipe-manager-nibbly/id6747835183) |
+| Miam | `"Miam" app food OR meal OR recipes OR nutrition` | Risk (screened out) | "Miam - Apps on Google Play" (recipes, weekly planning); "MiamPlan : Meal Plan & Recipe"; "MiaM, the complete breakfast" (nutrition bars) | [Play](https://play.google.com/store/apps/details?id=cloud.miam&hl=en), [miam-nutri.com](https://www.miam-nutri.com/en-US) |
+| Tenko / Zanko | `"Tenko" OR "Zanko" app food OR meal OR nutrition` | Inconclusive (screened out on judgment) | "Order Tenko Japan - Cary" (restaurant); "Zankou Chicken" | [Uber Eats](https://www.ubereats.com/store/tenko-japan-cary/_OsyD1_SWM6R36PKIjahBg) |
+| Mozo | `"Mozo" app OR brand food OR kitchen OR meal` | Risk (screened out) | "Mozo · The order-taking app for restaurants"; "Mozo, The New Generation Ordering & Payments Infrastructure" | [buho.la](https://buho.la/productos/mozo), [trymozo.com](https://www.trymozo.com/) |
+| Tosto | `"Tosto" app OR brand food OR meal OR recipes` | Risk (screened out) | No Tosto app; "Tasto: Recipe Manager" returned first | — |
+| Bimbam / Pompom | `"Bimbam" OR "Pompom" app food OR meal OR recipes` | Inconclusive (screened out on judgment) | Only bibimbap recipes and "Bibimbox" | — |
+| Deko / Kazu | `"Deko" OR "Kazu" app food OR meal planner OR nutrition` | Inconclusive | No app named Deko or Kazu in the category results | — |
+| Numo | standard | Risk (screened out) | "Numo: Contador de calorias - Apps on Google Play"; "Numo World App - App Store" (nutritious meal delivery) | [Play](https://play.google.com/store/apps/details?id=com.astertechltda.numo), [App Store](https://apps.apple.com/in/app/numo-world/id6447801011) |
+| Lumo | standard | Risk (screened out) | "Lumo - AI Chef App - App Store"; "Lumo - Know What You Buy"; "Lumo - Nutrition care that keeps moving between visits" | [App Store](https://apps.apple.com/ca/app/lumo-ai-chef/id6746675356), [lumomeals.com](https://lumomeals.com/) |
+| Morso | `"Morso" app OR brand food OR meal OR recipes` | Risk (screened out) | "Morso - Visual food journal App - App Store"; "Morso - App Store - Apple" (AI recipe creator, per summary); "Morso Burger" | [Journal](https://apps.apple.com/sg/app/morso-visual-food-journal/id6758254422), [Morso](https://apps.apple.com/de/app/morso/id6774290724?l=en-GB) |
+| Bibo / Pingo | `"Bibo" OR "Pingo" app food OR meal OR nutrition` | Risk (screened out) | "BIBO - Apps on Google Play" (restaurant ordering); "Pingo - Food & Drink App" (restaurant discovery) | [BIBO](https://play.google.com/store/apps/details?id=mcom.com.mcom.bibo&hl=en), [Pingo](https://mwm.ai/apps/pingo/6446988156) |
+| Rumi / Kibu | `"Rumi" OR "Kibu" app meal planner OR nutrition OR recipes` | Inconclusive | Only Remy, ReciMe and generic planners | — |
+| Dango | `"Dango" app food OR meal planner OR nutrition OR recipes` | Risk (screened out) | "Dango : Food Delivery & More - Apps on Google Play" | [Play](https://play.google.com/store/apps/details?id=com.dango.user.app&hl=en_US) |
+| Mirin / Kanzo | `"Mirin" OR "Kanzo" app meal planner OR nutrition OR recipes` | Inconclusive (screened out on judgment) | Mirin recipes; "Miri AI" nutrition companion | [Miri AI](https://apps.apple.com/mo/app/miri-ai/id6478316446) |
+| Mixo | standard | Risk (screened out) | "Mixo, a Video-First Social Media Platform Built for Food Content, Launches in the App Store" | [GlobeNewswire](https://www.globenewswire.com/news-release/2022/06/01/2454219/0/en/Mixo-a-Video-First-Social-Media-Platform-Built-for-Food-Content-Launches-in-the-App-Store.html) |
+| Paku | standard | Risk (screened out) | "Paku: AI Calorie Counter Pet - App Store - Apple"; same on Google Play | [App Store](https://apps.apple.com/us/app/paku-ai-calorie-counter-pet/id6752853273) |
+| Happa | `"Happa" app OR brand food OR meal OR nutrition` | Risk (screened out) | "About Us \| Happa" (organic baby food, Mumbai); "Happa - App Store - Apple" | [happafoods.com](https://happafoods.com/pages/about-us), [App Store](https://apps.apple.com/us/app/happa/id6495164638) |
+| Mums | `"Mums" app food OR meal OR recipes OR nutrition` | Risk (screened out) | "Healthy Mummy App - App Store" and other apps for mothers | [App Store](https://apps.apple.com/au/app/healthy-mummy/id1411902609) |
+| Nomba / Zembo | `"Nomba" OR "Zembo" app OR brand food OR nutrition`; `"nomba.com" OR …` | Risk (both screened out) | "Circle Diet For Life - Apps on Google Play" (developer id com.zembo); "Nomba \| Business Banking & Payments"; "Nomba Support (@nomba) / X" | [Circle Diet](https://play.google.com/store/apps/details?id=com.zembo.cdfl), [nomba.com](https://nomba.com/) |
+| Lumbo / Dembo | `"Lumbo" OR "Dembo" app OR brand food OR meal` | Inconclusive (screened out on judgment) | Nothing for either; "Bumbo Foods" recipe app; "Slimbo" meal plans | [Slimbo](https://slimbo.app/en/) |
+| Zubo, Kazu, Dozo, Nimbo, Gobo, Bibim, Zumo, Kumo, Panko, Gumbo, Mogu, Pappa | see §6.7.3 | — | Shortlisted; full per-name evidence in §6.7.3 | — |
+
 ---
 
 ## 6. Shortlist
 
+> **Current shortlist: §6.7 (session 3, 2026-09-25), placed first below.** It is numbered 6.7 so that existing references to §6.1–§6.6 still point to the right text. The session-2 shortlist (§6.1–§6.3) and the session-2 top 3 (Tangram, Ramekin, Palmo; alternates Sapimo, Tadam) are **superseded (PO: too long, not catchy)** and kept below with all their evidence.
+
+### 6.7 Session 3: short-and-catchy shortlist (current)
+
+Twelve names, all 4–5 letters and 2 syllables. All checks are dated **2026-09-25**. Store, domain, trademark and handle checks are **Pending** for every name because the official sources were egress-blocked (§5.1). The bracketed text is the search-engine indication only. **N** = C10 international neutrality and **Catch** = C11 catchiness (§2.3), both reviewer assessments.
+
+#### 6.7.1 Check matrix
+
+| Name | S/L | Type | 1 Competitors / similar | 2 App Store | 3 Google Play | 4 .com | 4 .app | 4 .io | 4 .pl | 5 Trademarks (EUIPO / TMview / UPRP / WIPO / USPTO / UKIPO) | 6 Language PL/EN | 7 Confusing similarity | 8 Social handles | N | Catch |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Zubo** | 2/4 | Coinage | Inconclusive: no food, nutrition or recipe use seen; non-food uses (2008 EA game, child-tracking app, a Filipino restaurant) | Pending (Risk: ride-hailing "Zubo", "Zubo: Learn to Read for Kids", "Zubo! Driver") | Pending (Risk: Zubo ride-hailing, Zubo Conductor, Zubo pasajero) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Risk, low: US ZUBO abandoned; US ZUBO footwear application, 2024) | Risk (mild): *zub* = tooth in CS, SK, HR, SR, RU, UK | Risk: exact-name class-9 apps in mobility and kids' education; none in food | Pending (Risk: Instagram @zubo.app is in use) | 4 | 4 |
+| **Kazu** | 2/4 | JP word | Risk (low): restaurants, a "Kazu" spice brand, recipe channels | Pending (Risk: KAZU Public Radio, "Kazu", "Kazu: Positive Affirmations", Sushi Kazu) | Pending (Risk: KAZU real estate, Kazu Bot) | Pending (Inconclusive) | Pending (Inconclusive) | Pending | Pending | Pending (Risk, low: KRAZY FOR KAZU'S, US food mark) | Risk: Poles may hear "Kaziu" (familiar form of Kazimierz); EN "kazoo" | Risk: exact-name class-9 apps outside food | Pending (Risk: @kazu held by an individual) | 3 | 4 |
+| **Dozo** | 2/4 | JP word | Risk: Dozo Food Products (IN, instant grain meals); DOZO dog food (JP); restaurants | Pending (Risk: "dozo" (JP); Dozo LLP developer) | Pending (Risk: Dozo Marketplace, Dozo Live, dōzo gift, Dozo (Bhutan), Dozo Izakaya) | Pending (Inconclusive) | Pending (Risk: dozo.app in use) | Pending | Pending (Inconclusive) | Pending (Risk: US DOZO, classes 5 and 34, hemp gummies and vaporizers; DOZO PERKS application, classes 25 and 5) | Risk: PL *doza* / *dozować* (dose, to dispense); EN "doze" | Risk: supplement and hemp marks in class 5 | Pending (Risk: @dozobrands; X @dozoapp) | 4 | 4 |
+| **Nimbo** | 2/5 | Coinage (PT *nimbo*) | Risk: restaurant loyalty app, ERP apps, satellite maps; a search summary mentioned a patient-management system (unverified) | Pending (Risk: Nimbo Labs developer) | Pending (Risk: NIMBO restaurant app, Nimbo Móvil, Nimbo Yazılım) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Inconclusive: no exact mark seen; NIMBOO, NIMBAO near) | Inconclusive: PT "rain cloud"; EN rhymes "bimbo", "nimby" | Risk (medium): possible health-software namesake (unverified) | Pending (Risk: @nimbo_oficial, @therealnimbo and others) | 4 | 4 |
+| **Gobo** | 2/4 | JP word / EN lighting term | Risk: "Gobo: Order & Sell Local" (restaurants and markets, NI); @gobo.sa healthy food delivery (Jeddah) | Pending (Risk: Gobo: Order & Sell Local, Gobo Box Office, Omino Gobo) | Pending (Risk: Gobo, Gobo Carrier, GOBO Inventory) | Pending (Risk: gobo.com shows a page titled "Gobo") | Pending (Inconclusive) | Pending (Risk: gobo.io in use) | Pending (Inconclusive) | Pending (Risk: GOBO application in India, class 42, third-party site) | Inconclusive: EN "gob" (slang for mouth) | Risk (medium-high): food-ordering and healthy-food uses | Pending (Risk: @wearegobo, @its.gobo, @gobo.sa) | 4 | 4 |
+| **Bibim** | 2/5 | KR word | Risk: many Korean restaurants (class 43) | Pending (Risk: BiBim student-community app; Bibimbox) | Pending (Risk: BiBim) | Pending (Inconclusive) | Pending (Risk: bibim.app in use) | Pending | Pending | Pending (Risk, low: US BIBIM class 43 cancelled 2022; BIBIMBOWL class 43 live) | Inconclusive: reads as "the bibimbap word" | Risk (low): restaurants | Pending (Risk: restaurant accounts) | 3 | 3 |
+| **Zumo** | 2/4 | ES word | Risk: Zumo juice and smoothie bar chain across Europe | Pending (Risk: Zumo, Zumo Thai, zūmo Radar (Garmin)) | Pending (Risk: Zumo, Zumo crypto wallet, Zumo car rental, ZumoDO) | Pending (Inconclusive) | Pending (Inconclusive) | Pending | Pending (Inconclusive) | Pending (Risk, high: an EU ZUMO mark for payment software per a search summary; US ZUMO applications and registrations) | Risk: ES "juice"; Spaniards say "THOO-mo" | Risk (high): EU class-9 mark; ZUMO vape brand | Pending (Risk: @zumo in use) | 3 | 5 |
+| **Kumo** | 2/4 | JP word | Risk: KumoHealth app; sushi restaurants | Pending (Risk: Kumo – Offline Friend, Mitsubishi "kumo cloud", Kumo AI Video) | Pending (Risk: Comfort by Mitsubishi Electric (kumo cloud), KumoHealth) | Pending (Inconclusive) | Pending | Pending | Pending | Pending (Risk: KUMO STATION, Mitsubishi Electric US) | Inconclusive: no negatives found | Risk (high): Mitsubishi "kumo cloud" in class 9; kumo.ai | Pending (Risk: many) | 4 | 4 |
+| **Panko** | 2/5 | JP food word | Risk: Panko, a Polish maker of pest-monitoring products; breadcrumb brands | Pending (Risk: Panko Alerts, Hot Sauce and Panko, Panko and Sushi) | Pending (Risk: Panko, Panko Easy) | Pending (Inconclusive) | Pending | Pending | Pending (Inconclusive) | Pending (Risk: PANKO CONCEPT EU filing, goods unknown) | Risk: the PL pest-control brand; an ingredient word | Risk (medium): PL namesake | Pending (Risk) | 3 | 4 |
+| **Gumbo** | 2/5 | EN food word | Risk: Gumbo, a digital-health company; restaurants | Pending (Risk: Gumbo App, Gumbo 94.9, Gumbo King) | Pending (Risk: Gumbo (health), GUMBO off-road (PL), Gumbo social) | Pending (Risk: gumbo.com in use) | Pending | Pending | Pending | Pending (Inconclusive) | Risk: PL says "GOOM-bo", EN "GUM-bo"; a "Gumbo Brands" account selling "Disposables" (product type not shown) | Risk (high): same-name digital-health app | Pending (Risk: @gumbo_app taken) | 3 | 4 |
+| **Mogu** | 2/4 | JP onomatopoeia | Risk: Mogu Mogu drinks; MÓGU Mushrooms supplements | Pending (Risk: "Mogu Exercise", a chewing tracker for meals; MÓGŪ restaurant) | Pending (Risk: MOGU, MOGU Tours) | Pending (Risk: mogu.com used by MOGU Inc., per a search summary) | Pending | Pending | Pending | Pending (Risk: US MOGU, MÓGU MUSHROOMS (supplements), MOGU MOGU (drinks)) | Risk: RU *могу* = "I can", which Poles recognise | Risk (high): chewing tracker in the eating space | Pending (Risk: many) | 2 | 5 |
+| **Pappa** | 2/5 | IT word | Risk: pizza restaurants, Pappa Pastificio | Pending (Risk: Pappa Pizza, Pappa AB developer, Papa Care) | Pending (Risk: Pappa.ai, Papa Care) | Pending (Inconclusive) | Pending | Pending | Pending | Pending (Inconclusive) | Risk: IT baby food, *pappa pronta* ("spoon-fed"); SV/NO "dad" | Risk (medium): "Papa" senior-care apps sound identical | Pending (Risk: @pappa in use) | 3 | 3 |
+
+#### 6.7.2 Scores (C1–C7, C10, C11) and ranking
+
+Scores run from 1 (poor) to 5 (strong) and are the reviewer's assessment of the evidence above. **C8 (domains and handles) and C9 (trademarks) are Pending for every name** and are not scored. "Evidence weight" summarises the search-engine Risk findings; it is a triage signal, not a legal assessment. The rank weighs the C1–C7 sum, C10, C11 and the evidence weight together, so a higher sum does not always mean a higher rank. **This is a recommendation for further investigation, not a selection.**
+
+| Rank | Name | S/L | C1 | C2 | C3 | C4 | C5 | C6 | C7 | Sum /35 | C10 /5 | C11 /5 | Evidence weight (SE) | Further investigation? |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | **Zubo** | 2/4 | 5 | 5 | 4 | 3 | 5 | 5 | 5 | 32 | 4 | 4 | **Medium:** exact-name apps in ride-hailing and kids' reading (class 9); Instagram @zubo.app in use; **no food, nutrition or health use seen** | **Yes, top 3** |
+| 2 | **Kazu** | 2/4 | 4 | 4 | 4 | 4 | 5 | 5 | 5 | 31 | 3 | 4 | **Medium:** exact-name apps in radio, real estate and affirmations; food uses limited to restaurants and a spice brand; @kazu taken; the PL "Kaziu" echo | **Yes, top 3** |
+| 3 | **Dozo** | 2/4 | 4 | 4 | 3 | 5 | 4 | 5 | 5 | 30 | 4 | 4 | **Medium-high:** US DOZO marks for hemp gummies and vaporizers and a supplements application (class 5); dozo.app in use; many Japanese apps; a dog-food brand | **Yes, top 3** |
+| 4 | **Nimbo** | 2/5 | 4 | 5 | 4 | 3 | 5 | 5 | 5 | 31 | 4 | 4 | **Medium:** restaurant-loyalty and ERP apps; one unverified health-software mention | Yes, alternate |
+| 5 | **Gobo** | 2/4 | 4 | 5 | 4 | 3 | 5 | 5 | 5 | 31 | 4 | 4 | **Medium-high:** a food-ordering super-app and a healthy-food delivery service use the exact name; gobo.com and gobo.io in use | Yes, alternate |
+| 6 | Bibim | 2/5 | 3 | 4 | 5 | 4 | 5 | 5 | 4 | 30 | 3 | 3 | Medium: restaurants (class 43), a student app, bibim.app in use | Only if the top 5 all fail |
+| 7 | Kumo | 2/4 | 3 | 5 | 5 | 3 | 5 | 5 | 5 | 31 | 4 | 4 | **High:** Mitsubishi Electric "kumo cloud" app and KUMO STATION mark (class 9); KumoHealth | No |
+| 8 | Zumo | 2/4 | 3 | 5 | 4 | 3 | 4 | 5 | 4 | 28 | 3 | 5 | **High:** an EU ZUMO class-9 software mark (per a search summary); a European juice-bar chain; a vape brand | No |
+| 9 | Mogu | 2/4 | 3 | 4 | 3 | 5 | 4 | 5 | 5 | 29 | 2 | 5 | **High:** "Mogu Exercise" chewing tracker; MÓGU MUSHROOMS supplements mark; MOGU Inc. (listed company) | No |
+| 10 | Panko | 2/5 | 3 | 4 | 3 | 4 | 5 | 5 | 4 | 28 | 3 | 4 | Medium-high: a Polish pest-monitoring brand called Panko; an EU "PANKO CONCEPT" filing | No |
+| 11 | Pappa | 2/5 | 3 | 4 | 3 | 3 | 5 | 5 | 5 | 28 | 3 | 3 | Medium: "Papa" senior-care apps; baby-food meaning in IT | No |
+| 12 | Gumbo | 2/5 | 3 | 3 | 4 | 4 | 4 | 5 | 4 | 27 | 3 | 4 | **High:** a same-name digital-health app; a "Gumbo Brands" disposables account (product type not shown) | No |
+
+**Catchiness in one line each (C11):**
+- **Zubo (4):** a buzzy "Z" into two round vowels; says itself after one hearing; looks bold as a four-letter icon. Not a 5 only because it carries no hook or image.
+- **Kazu (4):** crisp K-Z contrast and an open "-zu" ending; "kazoo" makes it playful in English.
+- **Dozo (4):** mirrored "o-o" vowels give it bounce, and it invites you in ("help yourself").
+- **Nimbo (4):** soft and light; "-mbo" gives it rhythm. One consonant more than the others.
+- **Gobo (4):** repeated "o" and a "go" start, friendly and toy-like.
+- **Bibim (3):** fun doubled "bi", but the closed "-im" ending lands flat, and people may stumble over the stress.
+- **Zumo (5):** the punchiest: "zoom" plus "-o", with an energy-drink feel.
+- **Kumo (4):** smooth and calm rather than punchy.
+- **Mogu (5):** *mogu-mogu* is literally "munch-munch"; cute and memorable.
+- **Panko (4):** crunchy "-nk-" in the middle; playful.
+- **Pappa (3):** doubled but ordinary, and reads as "papa".
+- **Gumbo (4):** fun and bouncy, but a little clumsy ("gum").
+
+**Trade-offs in brief:**
+- **Zubo** is the cleanest short name found: coined, spelled and said the same way in PL and EN ("ZOO-boh"), with no food, nutrition or health namesake in any search. The cost: it means nothing, so the store descriptor and brand work must carry the product ("Zubo: Meal Planner", 18 characters). Same-name apps exist in ride-hailing and kids' reading, and the Instagram handle @zubo.app is already in use. A mild tooth echo (*zub*) exists in Czech, Slovak, BCS and Russian. For a food app that is about chewing, not medicine, but a listener test should confirm it.
+- **Kazu** has a hidden hook: *kazu* is Japanese for "number", which fits "we do the maths, you cook" without saying diet. It is crisp and easy in PL and EN. The cost: many exact-name apps in other fields, and to Polish ears it can sound like **"Kaziu"**, the familiar form of the old-fashioned name Kazimierz. Given the PO's rejection of Polish-sounding names, **this needs a PL listener test before going further.**
+- **Dozo** has the warmest meaning (*dōzo*, "please, help yourself", said when offering food), which matches "eat what you feel like" (PRD §1). The cost: US DOZO marks cover hemp gummies and vaporizers, and a "DOZO PERKS" application covers dietary supplements (class 5). That is an unwelcome neighbour for a nutrition app (C5). dozo.app is in use. PL *doza* (dose) is a mild medical echo.
+- **Nimbo** (alternate) is soft and neutral, with no food namesake. But one search summary mentioned a patient-management system called Nimbo (unverified), and it has no meaning hook.
+- **Gobo** (alternate) is very easy and friendly, but the exact name is used by a local food-ordering super-app and by a healthy-food delivery account. That is close to our category.
+- **Zumo and Mogu** are the catchiest (5), but both have high-weight conflicts: an EU software mark and a juice-bar chain for Zumo; a meal-chewing tracker and a supplements mark for Mogu. They are shown because the PO asked for catchiness, not recommended.
+- **A pattern to note:** six of the twelve are Japanese words (Kazu, Dozo, Gobo, Kumo, Panko, Mogu). Japanese romanisation reads the same in PL and EN, which is why they pass C2. If two of them reach the final, the PO may want to decide whether a Japanese flavour suits a Polish-launched nutrition brand (§8.5.3).
+
+#### 6.7.3 Per-name evidence (session 3)
+
+All checks are dated **2026-09-25**. "SE" means a WebSearch result that could not be opened. Domains: RDAP was blocked for every TLD, so every domain status is **Pending**. A 4-letter .com is almost always registered, so each block lists realistic variants to check first (`get<name>.com`, `<name>.app`, `<name>app.com`, `<name>.pl`). They are unverified and must be checked by RDAP before any decision. Handles on Facebook, YouTube, X, Threads and LinkedIn could not be checked (no filtered search returned them, and Threads was not searchable in session 1) and are **Pending**, unless noted.
+
+---
+
+##### `Zubo` (top 3)
+
+- **Concept:** A coined sound, not a word. A buzzy "Z" and a round, friendly "-bo" make it something you'd grab without thinking. It doesn't say diet, meal or AI, so it stretches to pantry, family and dietitian phases (PRD §13). The meaning comes from the product and the descriptor.
+- **Pronunciation:** PL [ˈzubɔ] "ZU-bo". EN /ˈzuːboʊ/ "ZOO-boh". The same in both, and people can spell it after one hearing (a Pole writes "zubo"; an English speaker might try "zoobo", so the wordmark matters).
+- **Meaning and connotations:** no dictionary meaning in PL, EN, DE, FR, ES, IT, PT, NL or SV (reviewer assessment). Echo: *zub* = tooth in Czech, Slovak, Croatian, Serbian, Russian and Ukrainian (Polish is *ząb*). That fits eating, but should be listener-tested. No slang found. Nothing medical or moralising (C5).
+- **Positioning line:** "Your recipe. Your numbers. Zubo." / "Jedz, co lubisz. Zubo dopasuje resztę." ("Eat what you like. Zubo fits the rest.")
+- **Store title:** "Zubo: Meal Planner" (18 characters).
+- **Catchiness:** 4/5 (see §6.7.2).
+- **Main risks:** exact-name apps in ride-hailing, driver and kids' reading (class 9); Instagram @zubo.app is in use; the tooth echo in some Slavic languages.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Inconclusive | 2026-09-25 | [Zubo game (Fandom)](https://zubo.fandom.com/wiki/Zubo_(Game)), [zubogo.com](https://zubogo.com/), [@zubo.to (via SE)](https://www.instagram.com/zubo.to/), [zuno.fit](https://zuno.fit/) | SE: "Zubo (Game) \| Zubo Wiki" (EA, Nintendo DS, 2008); "Zubo: Smart App for Child Tracking and Safety"; "ZUBO.TO", a Filipino restaurant. Query `"Zubo" app OR brand food OR meal OR nutrition` returned **no** Zubo food or nutrition product; the nearest were Zuno (a fitness and nutrition app) and Zumub (sports-nutrition shop). |
+| 2 App Store (PL/US/GB) | Pending (SE: Risk) | 2026-09-25 | [Zubo App](https://apps.apple.com/gh/app/zubo/id6742074745), [Zubo: Learn to Read for Kids](https://apps.apple.com/us/app/zubo-learn-to-read-for-kids/id6747403776), [Zubo! Driver](https://apps.apple.com/us/app/zubo-driver/id6749956894) | Store-filtered SE: a ride-hailing app, a kids' AI reading tutor, a driver app. No food app. The iTunes API is blocked; App Store Connect availability is an owner action. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Zubo](https://play.google.com/store/apps/details?id=com.zubo.ride), [Zubo Conductor](https://play.google.com/store/apps/details?id=zubo.io), [Zubo pasajero](https://play.google.com/store/apps/details?id=zubocliente.app.io&hl=en_US) | Ride-hailing and taxi apps. No food app. |
+| 4 Domains .com / .app / .io / .pl | Pending (SE: Inconclusive) | 2026-09-25 | RDAP blocked; SE `"zubo.com" OR "zubo.app" OR "zubo.io" OR "zubo.pl"` | No site at those four surfaced; "zubo.io" appeared only as a Play package ID. zubogo.com is in use. **Not evidence of availability.** Check first: getzubo.com, zubo.app, zuboapp.com, zubo.pl. |
+| 5 Trademarks | Pending (SE: Risk, low) | 2026-09-25 | [Trademarkia: ZUBO 77462177](https://www.trademarkia.com/zubo-77462177), [Justia: ZUBO 98431784](https://trademarks.justia.com/984/31/zubo-98431784.html) | Third-party pages: EA's US ZUBO (filed 2008-04-30) "ABANDONED - NO STATEMENT OF USE FILED"; a new US ZUBO application filed 2024-03-04 "for sneakers and footwear kits". No software, food or nutrition mark surfaced. Registries blocked. |
+| 6 Language | Risk (mild) | 2026-09-25 | Reviewer assessment | The Slavic tooth echo as above. A native-speaker check is pending. |
+| 7 Confusing similarity | Risk | 2026-09-25 | as rows 2–3 | Identical name on class-9 apps in mobility and education. Nothing in food or nutrition. "Zuno" (fitness and nutrition) is a sound-neighbour, low. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@zubo.app](https://www.instagram.com/zubo.app/), [@zubo.store](https://www.instagram.com/zubo.store/), [@zubo_zb](https://www.instagram.com/zubo_zb/), [TikTok @zubo.hr](https://www.tiktok.com/@zubo.hr) (all via SE) | **"Zubo (@zubo.app)" is in use on Instagram**, so that variant is gone. "Z U B O (@zubo_zb)" is a fashion account (41K per the SE summary). The exact @zubo was not seen. Try `getzubo`, `zubo.pl`, `zuboplanner`. |
+
+---
+
+##### `Kazu` (top 3)
+
+- **Concept:** *Kazu* (数) is Japanese for "number". The app does the numbers (calories, macros, cost per portion) so you can cook what you want. The meaning is a hidden bonus. Most users will hear a short, crisp, friendly name.
+- **Pronunciation:** PL [ˈkazu] "KA-zu". EN /ˈkɑːzuː/ "KAH-zoo". Spellable after one hearing, though English speakers may write "Kazoo".
+- **Meaning and connotations:** JP "number"; also a common Japanese given-name element (Kazuo, Kazuki). EN: echoes "kazoo" (a toy instrument), which is playful. **PL: close to "Kaziu", the familiar vocative of Kazimierz** (an old-fashioned name); the "zi" is softer, but the resemblance is audible. No rude meanings found in the languages checked (reviewer assessment).
+- **Positioning line:** "You cook. Kazu does the numbers." / "Ty gotujesz, Kazu liczy."
+- **Store title:** "Kazu: Meal Planner" (18 characters).
+- **Catchiness:** 4/5.
+- **Main risks:** the "Kaziu" echo for the first market; many exact-name apps (radio, real estate, affirmations, a sushi bar); @kazu is held by an individual.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk (low) | 2026-09-25 | [Kazu Authentic recipes](https://kazuauthentic.com/recipes/), [Kazu restaurant](https://kazu.restaurants-info.com/menu), [Kazu Recipes (YouTube)](https://www.youtube.com/channel/UCQLfZpJhJ6BVGPxyUCgIvFQ) | SE: "Kazu \| Recipes" (a spice and seasoning brand); a Kazu restaurant in Montreal; "Kazu Recipes" cooking channels. **No** Kazu food, nutrition or meal-planning app. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [KAZU Public Radio](https://apps.apple.com/us/app/kazu-public-radio-app/id979422850), [Kazu](https://apps.apple.com/us/app/kazu/id6756679772), [Kazu: Positive Affirmations](https://apps.apple.com/my/app/kazu-positive-affirmations/id6760725778), [Sushi Kazu](https://apps.apple.com/us/app/sushi-kazu/id6744416017) | Radio, an app whose category did not show, an AI affirmations app, a sushi-restaurant ordering app (Bad Nauheim, DE). |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [KAZU](https://play.google.com/store/apps/details?id=com.kazurealestate.kazu&hl=en_US), [Kazu Bot](https://play.google.com/store/apps/details?id=net.klymora.velnato.kazu.bot) | Real estate (El Salvador); a game. |
+| 4 Domains | Pending (SE: Inconclusive) | 2026-09-25 | RDAP blocked; [kazu.org](https://www.kazu.org/contact) | kazu.org (public radio) is in use. The SE summary said kazu.com and kazu.app belong to the real-estate platform, **but no URL at those domains was shown**, so that is unverified. Check first: getkazu.com, kazu.app, kazuapp.com, kazu.pl. |
+| 5 Trademarks | Pending (SE: Risk, low) | 2026-09-25 | [Trademarkia: KRAZY FOR KAZU'S](https://www.trademarkia.com/krazy-for-kazu-s-85278533) | "KRAZY FOR KAZU'S is a registered trademark (Registration #4298723)", described as food-related (CT, US). The SE also returned KAZOO (software), "Dead/Cancelled". No exact KAZU software mark surfaced. Registries blocked. |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | The "Kaziu" echo (PL). A PL listener test is needed. |
+| 7 Confusing similarity | Risk | 2026-09-25 | as rows 2–3 | Identical name on several class-9 apps outside food. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@kazu](https://www.instagram.com/kazu/), [@kazu.makino](https://www.instagram.com/kazu.makino/?hl=en), [@kazu_official_](https://www.instagram.com/kazu_official_/) (via SE) | "KAZU \| Sander (@kazu)" holds the exact Instagram handle. Try `getkazu`, `kazu.app`, `kazu.pl`. |
+
+---
+
+##### `Dozo` (top 3)
+
+- **Concept:** *Dōzo* (どうぞ) is what you say in Japanese when offering food: "please, go ahead, help yourself". The app says the same about the recipe you wanted: go ahead, it fits your plan. That is the core promise (PRD §1) in two syllables, and it is hospitable rather than preachy (PRD §5).
+- **Pronunciation:** PL [ˈdɔzɔ] "DO-zo". EN /ˈdoʊzoʊ/ "DOH-zoh" (JP [doːzo]). Spellable after one hearing in both languages.
+- **Meaning and connotations:** JP "please / go ahead / help yourself". EN: the first syllable echoes "doze" (sleepy), mild. **PL: echoes *doza* (a dose) and *dozować* (to dose or dispense)**, as in "doza leku" (a dose of medicine) and "dozownik" (a dispenser). The portion sense fits; the medicine sense is a mild C5 flag. No rude meanings found (reviewer assessment).
+- **Positioning line:** "Dozo. Help yourself." / "Dozo – częstuj się."
+- **Store title:** "Dozo: Meal Planner" (18 characters).
+- **Catchiness:** 4/5.
+- **Main risks:** US DOZO marks for hemp gummies and vaporizers, and a DOZO PERKS application for dietary supplements, both class 5 (an unwelcome neighbour for a nutrition app); dozo.app is in use; many Japanese "dozo" apps and restaurants; a Japanese dog-food brand.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [Dozo Food Products](https://dozofoodproducts.com/about/), [@dozo20_dogs (via SE)](https://www.instagram.com/dozo20_dogs/), [@dozodozonyc (via SE)](https://www.instagram.com/dozodozonyc/) | "Dozo Food Products" (Mumbai, since 1987): "2-minute nutritious meals" from ragi, jowar and amaranth. "DOZO(ドーゾ)", a low-allergen dog-food brand. Several Japanese restaurants (Charlotte, NYC, Toulouse). |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [dozo（ドーゾ）](https://apps.apple.com/jp/app/dozo-%E3%83%89%E3%83%BC%E3%82%BE/id6708591529?l=en-US), [Dozo LLP developer](https://apps.apple.com/ci/developer/dozo-llp/id917205893?l=en) | A Japanese souvenir-shop app; a developer named Dozo LLP. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Dozo Marketplace](https://play.google.com/store/apps/details?id=com.dozo_app.dozo&hl=en_US), [Dozo Live](https://play.google.com/store/apps/details?id=com.dozo.live&hl=en_US), [dōzo gift](https://play.google.com/store/apps/details?id=li.yapp.app05A23784), [Dozo (Bhutan)](https://play.google.com/store/apps/details?id=bt.dcpl.dozo&hl=en_IN), [Dozo Izakaya](https://play.google.com/store/apps/details?id=com.chownow.dozoizakaya&hl=en_US) | A Japanese marketplace, a live-chat app, a gift service, Bhutan's "all-in-one" ride-hailing and delivery app, a restaurant. |
+| 4 Domains | Pending (SE: Risk for .app) | 2026-09-25 | [GitHub: dozo.app](https://github.com/dozo-app), [X @dozoapp](https://x.com/dozoapp) | "dozo.app · GitHub" and "dozo.app (@dozoapp) / X"; the SE summary says dozo.app "is designed to help students stay focused" in class, so **dozo.app appears to be registered and in use** (unverified). Nothing surfaced for dozo.com, .io or .pl (the SE mixed in the DOZ.pl pharmacy app). Check first: getdozo.com, dozoapp.com, dozo.pl. |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | [uspto.report: DOZO 97460033](https://uspto.report/TM/97460033/APP20220618112443/), [Justia: DOZO PERKS 98725477](https://trademark.justia.com/987/25/dozo-98725477.html) | Third-party summaries: "DOZO is registered by LATRO INC." in class 005 ("herbal gummy supplements exclusively for use with Hemp…") and class 034 ("disposable oral vaporizers…"). "DOZO PERKS" filed 2024-08-29, classes 025 and 005 ("dietary and nutritional supplements"). None in 9, 29, 30, 42 per the summary. Registries blocked. |
+| 6 Language | Risk (mild) | 2026-09-25 | Reviewer assessment | The *doza* and "doze" echoes above. |
+| 7 Confusing similarity | Risk | 2026-09-25 | as rows 1, 3, 5 | Hemp and supplement marks (class 5) and Indian instant-meal products; many unrelated apps. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@dozobrands](https://www.instagram.com/dozobrands/), [@dozoclt](https://www.instagram.com/dozoclt/), [@thisisdozo_](https://www.instagram.com/thisisdozo_/) (via SE); X @dozoapp (row 4) | Many Dozo accounts; X `@dozoapp` is in use. The exact Instagram @dozo was not seen. |
+
+---
+
+##### `Nimbo` (alternate)
+
+- **Concept:** From *nimbus* (a cloud, a halo) and "nimble": light, quick plans that move with you. Soft and friendly, with no diet or body meaning.
+- **Pronunciation:** PL [ˈnimbɔ] "NIM-bo". EN /ˈnɪmboʊ/ "NIM-boh". Spellable after one hearing.
+- **Meaning and connotations:** PT *nimbo* = a rain cloud (poetic). EN rhymes: "bimbo", and the "nimby" echo; both mild. No negatives found in PL, DE, FR, ES or IT (reviewer assessment).
+- **Positioning line:** "Nimbo. Plans that keep up with you."
+- **Store title:** "Nimbo: Meal Planner" (19 characters).
+- **Catchiness:** 4/5.
+- **Main risks:** many Nimbo businesses (ERP, telecom, satellite maps, a restaurant-loyalty app); one unverified mention of a Nimbo patient-management system for doctors (health, class 9/44).
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [NIMBO (restaurant app)](https://play.google.com/store/apps/details?id=com.remarked.nimbo.app&hl=en_US), [nimbo.earth](https://nimbo.earth/earth-online/about-nimbo/) | "NIMBO … an app for three restaurants" (loyalty); Nimbo satellite basemaps (Kermap, FR). The Instagram-filtered SE summary also mentioned "a digital patient management system used by over 20,000 doctors" named Nimbo, **with no titled link** (weak evidence). |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Nimbo Labs developer](https://apps.apple.com/us/developer/nimbo-labs/id427868910) | A developer called Nimbo Labs (GPS-tracking apps); a "NIMBO AI" chatbot per the summary. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Nimbo Móvil](https://play.google.com/store/apps/details?id=com.avathartech.nimbomovil), [Nimbo Yazılım](https://play.google.com/store/apps/details?id=com.nimboyazilim) | ERP and business apps; the NIMBO restaurant app (row 1). |
+| 4 Domains | Pending (SE: Inconclusive) | 2026-09-25 | RDAP blocked; [app.nimbo-x.com](https://app.nimbo-x.com/) | Nothing surfaced at nimbo.com, .app, .io or .pl; nimbo-x.com, nimbo.earth and nimbosync.com are in use. Check first: getnimbo.com, nimbo.app, nimbo.pl. |
+| 5 Trademarks | Pending (SE: Inconclusive) | 2026-09-25 | [Justia: NIMBOO](https://trademarks.justia.com/982/00/nimboo-98200027.html), [Trademarkia: NIMBAO](https://www.trademarkia.com/nimbao-99498595) | No exact NIMBO mark surfaced. Near: NIMBOO (US application; luggage, furniture, toys), NIMBAO (US; clothing). **Not a clearance.** |
+| 6 Language | Inconclusive | 2026-09-25 | Reviewer assessment | As above. |
+| 7 Confusing similarity | Risk (medium) | 2026-09-25 | row 1 | Resolve whether a health-software "Nimbo" exists (registry and store search). |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@therealnimbo](https://www.instagram.com/therealnimbo/?hl=en), [@nimbo_oficial](https://www.instagram.com/nimbo_oficial/), [@nimbomovil](https://www.instagram.com/nimbomovil/), [@nimboberlin](https://www.instagram.com/nimboberlin/) (via SE) | Many Nimbo accounts; the exact @nimbo was not seen. |
+
+---
+
+##### `Gobo` (alternate)
+
+- **Concept:** Two things at once: *gobō* is Japanese burdock root (a real food), and a gobo is the stencil that makes a spotlight project a shape. The app puts your food in the spotlight and shapes it to your plan. Mostly it is just a happy, toy-like sound.
+- **Pronunciation:** PL [ˈɡɔbɔ] "GO-bo". EN /ˈɡoʊboʊ/ "GOH-boh". Spellable after one hearing.
+- **Meaning and connotations:** as above. EN: "gob" is slang for mouth (and "to gob" = to spit, BrE); mild. Gobo is also a Fraggle Rock character (reviewer knowledge, not searched). No negatives known in PL, DE, FR, ES or IT (reviewer assessment).
+- **Positioning line:** "Gobo. Your food, in the spotlight."
+- **Store title:** "Gobo: Meal Planner" (18 characters).
+- **Catchiness:** 4/5.
+- **Main risks:** "Gobo: Order & Sell Local" is a food-ordering super-app (restaurants, markets); @gobo.sa is a healthy-food delivery service; gobo.com and gobo.io are in use; a GOBO filing in India in class 42.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [Gobo: Order & Sell Local](https://play.google.com/store/apps/details?id=com.gobo&hl=en_US), [@gobo.sa (via SE)](https://www.instagram.com/gobo.sa/), [@bar.gobo (via SE)](https://www.instagram.com/bar.gobo/?hl=en) | "Gobo is a super app for your city": order "from restaurants, market, pharmacy" (Nicaragua). "Gobo - جوبو (@gobo.sa)": per the summary, "a food delivery service in Jeddah offering healthy options". A wine bar in Vancouver. The category query `"Gobo" app food…` returned only burdock recipes. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Gobo: Order & Sell Local](https://apps.apple.com/us/app/gobo-order-sell-local/id6504262676), [Gobo Box Office](https://apps.apple.com/us/app/gobo-box-office/id6470237867), [Omino Gobo](https://apps.apple.com/us/app/omino-gobo/id800905067) | Local ordering; ticketing; a stage-lighting tool. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Gobo Carrier](https://play.google.com/store/apps/details?id=com.gobo.carrier&hl=en_US), [GOBO Inventory](https://play.google.com/store/apps/details?id=com.goboInventory.android&gl=US) | The same local-ordering platform's courier and store apps. |
+| 4 Domains | Pending (SE: Risk) | 2026-09-25 | [gobo.com](https://gobo.com/), [gobo.io](https://www.gobo.io/), [gobo.social](https://gobo.social/) | gobo.com shows a page titled "Gobo" (the summary calls it a minimal landing page); gobo.io is "Gobo · Build, brand, and monetize your app ecosystem"; gobo.social is an MIT social-media aggregator. Nothing for .app or .pl. Check first: getgobo.com, gobo.app, gobo.pl. |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | [registerkaro: GOBO 5100801](https://www.registerkaro.in/trademark-details/gobo-5100801) | Third-party summary: "The trademark GOBO is registered under Trademark Class 42" (India; status and owner not shown). Registries blocked. |
+| 6 Language | Inconclusive | 2026-09-25 | Reviewer assessment | "gob" echo; the Fraggle Rock character. |
+| 7 Confusing similarity | Risk (medium-high) | 2026-09-25 | rows 1–3 | Food ordering and healthy-food delivery under the identical name. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@wearegobo](https://www.instagram.com/wearegobo/), [@its.gobo](https://www.instagram.com/its.gobo/), [@gobo.sa](https://www.instagram.com/gobo.sa/) (via SE) | Many Gobo accounts; the exact @gobo was not seen. |
+
+---
+
+##### `Bibim` (next in line)
+
+- **Concept:** Korean *bibim* = "mixed", the first half of bibimbap. The app mixes what you love with what you need.
+- **Pronunciation:** PL [ˈbibim] "BI-bim". EN /ˈbiːbɪm/ "BEE-bim". Spellable after one hearing.
+- **Meaning and connotations:** strongly tied to Korean cuisine (C7) and used by many Korean restaurants. No negatives found (reviewer assessment).
+- **Positioning line:** "Mix what you love with what you need."
+- **Store title:** "Bibim: Meal Planner" (19 characters).
+- **Catchiness:** 3/5 (fun doubled "bi", but a flat ending).
+- **Main risks:** crowded by restaurants (class 43); bibim.app in use; reads as a Korean-cuisine brand.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [bibimpdx.com](https://bibimpdx.com/), [bibimclt.com](https://www.bibimclt.com/) | Korean restaurants (Portland, Charlotte) and others; "BiBimSnack" Korean snack boxes. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [BiBim](https://apps.apple.com/my/app/bibim/id6670340531), [Bibimbox](https://apps.apple.com/us/app/bibimbox/id6749148572) | An international-student community app; a restaurant app. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [BiBim](https://play.google.com/store/apps/details?id=site.bibim.app&hl=en_US) | The same student app. |
+| 4 Domains | Pending (SE: Risk for .app) | 2026-09-25 | [bibim.app](https://www.bibim.app/en) | "BIBIM \| Open-Source AI Agent for Revit & ArchiCAD" at bibim.app. Nothing for bibim.com, .io or .pl. Check first: getbibim.com, bibim.pl. |
+| 5 Trademarks | Pending (SE: Risk, low) | 2026-09-25 | [Justia: BIBIM 86473501](https://trademarks.justia.com/864/73/bibim-86473501.html), [Justia: BIBIMBOWL](https://trademarks.justia.com/854/92/bibimbowl-85492479.html) | US BIBIM, class 043, "cancelled on February 4, 2022"; BIBIMBOWL, class 043, active per the summary. |
+| 6 Language | Inconclusive | 2026-09-25 | Reviewer assessment | As above. |
+| 7 Confusing similarity | Risk (low) | 2026-09-25 | row 1 | Restaurants only (class 43). |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@bibim_pdx](https://www.instagram.com/bibim_pdx/), [@bibim_charlotte](https://www.instagram.com/bibim_charlotte/), [@b_i_b_i_m_](https://www.instagram.com/b_i_b_i_m_/) (via SE) | Many restaurant accounts. |
+
+---
+
+##### `Zumo` (not recommended)
+
+- **Concept:** Spanish *zumo* = juice: all the good stuff, squeezed in. The punchiest name found ("zoom" plus "-o").
+- **Pronunciation:** PL [ˈzumɔ] "ZU-mo". EN /ˈzuːmoʊ/ "ZOO-moh". In Spain, "z" is [θ], so Spaniards say "THOO-mo".
+- **Meaning and connotations:** ES "juice" (descriptive for drinks). Garmin uses "zūmo" for motorcycle navigators. No rude meanings found.
+- **Store title:** "Zumo: Meal Planner" (18 characters). **Catchiness:** 5/5.
+- **Main risks:** an EU ZUMO mark for payment software (class 9) per a search summary; the Zumo juice-bar chain across Europe; a ZUMO vape brand; many same-name apps.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [Zumo (Wikipedia)](https://en.wikipedia.org/wiki/Zumo), [The Zumo Group](https://www.thezumogroup.com/) | "Zumo, a juice and smoothie bar chain in Europe with over 100 establishments in 13 countries" (summary); "The Zumo Group, independent leader in sustainable retail". |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Zumo](https://apps.apple.com/us/app/zumo/id6753967313), [Zumo Thai](https://apps.apple.com/us/app/zumo-thai/id1668729047), [zūmo Radar](https://apps.apple.com/us/app/z%C5%ABmo-radar/id6449474035) | A drone-community app, a restaurant, a Garmin companion app. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Zumo](https://play.google.com/store/apps/details?id=com.zumo.android&hl=en_US), [Zumo crypto](https://play.google.com/store/apps/details?id=com.zumopay.core&hl=en_US&gl=US), [Zumo car rental](https://play.google.com/store/apps/details?id=com.zumoapp.app&hl=en), [ZumoDO](https://play.google.com/store/apps/details?id=com.zumodo&hl=en_NZ) | Quotes, crypto wallet, car rental, task manager. |
+| 4 Domains | Pending (SE: Inconclusive) | 2026-09-25 | [zumo.co.uk](https://zumo.co.uk/), [app.zumo.tech](https://app.zumo.tech/downloadapp/) | zumo.co.uk and zumo.tech are in use (digital assets). The SE summary attributed zumo.app and zumo.pl to other apps, but no URLs at those domains were shown (unverified). |
+| 5 Trademarks | Pending (SE: Risk, high) | 2026-09-25 | [Justia: ZUMO 88380257](https://trademarks.justia.com/883/80/zumo-88380257.html), [Trademarkia: ZUMO 88047580](https://trademark.trademarkia.com/zumo-88047580.html) | Summary: "ZUMO is a registered trade mark of Blockstar Developments Limited (EU TM Reg No 17996331)", covering "computer software for facilitating payment transactions"; a US ZUMO application (88380257). A US ZUMO (NG Sports; swim goggles, class 9) is "REGISTERED". Third-party sources only. |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | Descriptive in Spanish for drinks; the "THOO-mo" reading in Spain. |
+| 7 Confusing similarity | Risk (high) | 2026-09-25 | rows 1, 5, 8 | EU class-9 mark; juice chain; vape brand. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@zumo](https://www.instagram.com/zumo/), [TikTok @zumo_official](https://www.tiktok.com/@zumo_official), [@zumovape](https://www.instagram.com/zumovape/) (via SE) | The exact Instagram @zumo is in use; "Official ZUMO (@zumovape)" sells disposable vapes. |
+
+---
+
+##### `Kumo` (not recommended)
+
+- **Concept:** Japanese *kumo* = cloud: light, always with you.
+- **Pronunciation:** PL [ˈkumɔ] "KU-mo". EN /ˈkuːmoʊ/ "KOO-moh". **Catchiness:** 4/5. **Store title:** "Kumo: Meal Planner" (18).
+- **Meaning and connotations:** JP "cloud" (also "spider", written differently). "Kumo" was also Microsoft's pre-Bing search codename (per the SE). No negatives found.
+- **Main risks:** Mitsubishi Electric's "kumo cloud" app and KUMO STATION mark (class 9); KumoHealth; kumo.ai.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [KumoHealth](https://play.google.com/store/apps/details?id=com.drkumo.kumohealth&hl=en_US), [Kumo Japanese Cuisine](https://apps.apple.com/ca/app/kumo-japanese-cuisine/id1576578875) | A health app; restaurant ordering apps. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Kumo – Offline Friend](https://apps.apple.com/us/app/kumo-offline-friend/id6756067305), [kumo cloud](https://apps.apple.com/us/app/kumo-cloud/id998509713), [Kumo AI Video](https://apps.apple.com/us/app/kumo-ai-video-generator/id6753729055) | "Comfort is the new kumo", Mitsubishi Electric's HVAC app; others. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Comfort by Mitsubishi Electric](https://play.google.com/store/apps/details?id=com.mehvac.kumocloud&hl=en_US) | Package `com.mehvac.kumocloud`. |
+| 4 Domains | Pending (SE: Risk) | 2026-09-25 | [kumo.ai](https://kumo.ai/) | kumo.ai in use (the SE title reads "NVIDIA Structured Data and Graph Models"). Nothing for .com, .app, .io or .pl. |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | [Justia: KUMO STATION](https://trademarks.justia.com/868/56/kumo-86856871.html) | "KUMO STATION Trademark of Mitsubishi Electric US, Inc. - Registration Number 5438716". |
+| 6 Language | Inconclusive | 2026-09-25 | Reviewer assessment | No negatives found. |
+| 7 Confusing similarity | Risk (high) | 2026-09-25 | rows 2–5 | A large brand's class-9 app and mark. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@kumoscarsdale](https://www.instagram.com/kumoscarsdale/?hl=en), [@thekumocollective](https://www.instagram.com/thekumocollective/), [TikTok @kumodev](https://www.tiktok.com/@kumodev) | Many accounts. |
+
+---
+
+##### `Panko` (not recommended)
+
+- **Concept:** Japanese breadcrumbs (*pan* = bread, *ko* = crumbs): crunchy, playful, food-positive.
+- **Pronunciation:** PL [ˈpankɔ] "PAN-ko". EN /ˈpæŋkoʊ/ or /ˈpɑːŋkoʊ/. **Catchiness:** 4/5. **Store title:** "Panko: Meal Planner" (19).
+- **Meaning and connotations:** an ingredient word (descriptive for class 30 breadcrumbs). **PL: "Panko" is a Polish brand of pest-monitoring products** (a bad association for food). PL *pan* = Mr.
+- **Main risks:** the Polish pest-control namesake; an EU "PANKO CONCEPT" filing; restaurant apps.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [Panko Polska (Facebook, via SE)](https://www.facebook.com/pankopolska/), [panko.digital](https://panko.digital/) | "Panko - Producent środków monitorujących obecność szkodników" (a maker of pest-monitoring products; Radom, since 1993 per the summary); an Australian software agency. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Panko Alerts](https://apps.apple.com/us/app/panko-alerts/id6761290712), [Hot Sauce and Panko](https://apps.apple.com/us/app/hot-sauce-and-panko/id1568185986), [Panko and Sushi](https://apps.apple.com/gb/app/panko-and-sushi-macclesfield/id6737588308) | Alerts, restaurant ordering. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Panko](https://play.google.com/store/apps/details?id=jp.co.isub.panko&hl=en_US&gl=US), [Panko Easy](https://play.google.com/store/apps/details?id=com.hhy.game.panko&hl=en_US&gl=US) | A group-divider utility; a puzzle game. |
+| 4 Domains | Pending (SE: Inconclusive) | 2026-09-25 | RDAP blocked | Nothing surfaced at panko.com, .app, .io or .pl. |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | [Trademark Elite: PANKO CONCEPT 018273183](https://www.trademarkelite.com/europe/trademark/trademark-detail/018273183/PANKO-CONCEPT) | "PANKO CONCEPT EU Trademark" filed by Projectico Oy; goods not shown. |
+| 6 Language | Risk | 2026-09-25 | row 1 | The PL pest-control association. |
+| 7 Confusing similarity | Risk (medium) | 2026-09-25 | rows 1, 5 | As above. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@pankote](https://www.instagram.com/pankote/), [TikTok @fatfatpankocat](https://www.tiktok.com/@fatfatpankocat) | Personal and pet accounts; heavy recipe hashtag use. |
+
+---
+
+##### `Gumbo` (not recommended)
+
+- **Concept:** The Louisiana stew, and English "a gumbo of…" (a mix of everything).
+- **Pronunciation:** PL [ˈɡumbɔ] "GOOM-bo". EN /ˈɡʌmboʊ/ "GUM-boh". The vowel differs, so it fails "one spelling, one sound". **Catchiness:** 4/5. **Store title:** "Gumbo: Meal Planner" (19).
+- **Main risks:** a same-name digital-health company and app; a "Gumbo Brands Official | Disposables" account (product type not shown); gumbo.com in use; a Polish off-road app called GUMBO.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [getgumbo.com](https://getgumbo.com/), [Gumbo King](https://apps.apple.com/us/app/gumbo-king/id6503229616), [Gumbo Calculator](https://mwm.ai/apps/gumbo-calculator/6754898310) | Gumbo "is a healthcare technology company… bridging the gap between patients and healthcare providers"; restaurants; a gumbo-recipe calculator. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Gumbo App](https://apps.apple.com/us/app/gumbo-app/id1244235497), [Gumbo 94.9](https://apps.apple.com/us/app/gumbo-94-9-country-classics/id1072552230) | Social sharing; radio. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Gumbo (GUMBO CORPORATION)](https://play.google.com/store/apps/details?id=com.gumbo.app), [GUMBO off-road](https://chrome-stats.com/d/pl.gumbo.mobile) | "Healthy Communities, No Language Barriers"; a Polish 4x4 app (package `pl.gumbo.mobile`). |
+| 4 Domains | Pending (SE: Risk) | 2026-09-25 | [gumbo.com](https://www.gumbo.com/) | "Gumbo Software, Inc." at gumbo.com. |
+| 5 Trademarks | Pending (SE: Inconclusive) | 2026-09-25 | Registries blocked | No mark surfaced. |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | PL/EN vowel mismatch. |
+| 7 Confusing similarity | Risk (high) | 2026-09-25 | rows 1, 3 | Same-name digital-health app. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@gumbo_app](https://www.instagram.com/gumbo_app/), [@gumbobrands](https://www.instagram.com/gumbobrands/), [@gumbobrandsdisposable](https://www.instagram.com/gumbobrandsdisposable/) | `@gumbo_app` is the off-road app; "Gumbo Brands Official \| Disposables". |
+
+---
+
+##### `Mogu` (not recommended)
+
+- **Concept:** Japanese *mogu-mogu* = "munch munch", the sound of happy chewing. Very catchy and on-topic.
+- **Pronunciation:** PL [ˈmɔɡu] "MO-gu". EN /ˈmoʊɡuː/ "MOH-goo". **Catchiness:** 5/5. **Store title:** "Mogu: Meal Planner" (18).
+- **Meaning and connotations:** **Russian *могу* ("mogu") = "I can"**, which most Poles recognise; PL *mogę* is close. That makes it read as Slavic, against the PO's international brief (C10 = 2).
+- **Main risks:** "Mogu Exercise", an app that tracks chewing during meals; US MÓGU MUSHROOMS (dietary supplements); MOGU Inc. (mogu.com); MOGU MOGU drinks.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [Mogu Mogu (Wikipedia)](https://en.wikipedia.org/wiki/Mogu_Mogu), [@mogumycelium (via SE)](https://www.instagram.com/mogumycelium/) | A nata-de-coco drink brand; a mycelium design company. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Mogu Exercise](https://apps.apple.com/us/app/mogu-exercise/id6757423910), [MÓGŪ Modern Chinese](https://apps.apple.com/us/app/m%C3%B3g%C5%AB-modern-chinese/id6498314806), [Mogu Router](https://apps.apple.com/us/app/mogu-router/id1530313625) | Summary: Mogu Exercise "automatically tracks chewing per bite during meals". |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [MOGU](https://play.google.com/store/apps/details?id=com.bella.mogu&hl=en_US), [MOGU Tours](https://play.google.com/store/apps/details?id=com.moguapp&hl=en_US) | Teacher monitoring; travel. |
+| 4 Domains | Pending (SE: Risk) | 2026-09-25 | [Yahoo Finance: MOGU](https://finance.yahoo.com/quote/MOGU/), [moguplatform.com](https://moguplatform.com/en) | The summary lists "Mogu.com" among MOGU Inc.'s websites (unverified). |
+| 5 Trademarks | Pending (SE: Risk) | 2026-09-25 | [Trademarkia: MOGU 76977413](https://www.trademarkia.com/mogu-76977413), [uspto.report: MÓGU MUSHROOMS](https://uspto.report/TM/98143269), [Justia: MOGU MOGU](https://trademarks.justia.com/975/76/mogu-97576111.html) | "MOGU is a registered trademark (Registration #2952844) owned by Ebisu Kasei"; MÓGU MUSHROOMS Reg #7511938 "to cover dietary supplements"; MOGU MOGU Reg 4923794 (beverages). |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | The Russian "I can" reading. |
+| 7 Confusing similarity | Risk (high) | 2026-09-25 | rows 2, 5 | An eating-behaviour app and a supplements mark. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@mogumogu_global](https://www.instagram.com/mogumogu_global/), [@moguchinese](https://www.instagram.com/moguchinese/) | Many accounts. |
+
+---
+
+##### `Pappa` (not recommended)
+
+- **Concept:** Italian *pappa* = grub ("la pappa è pronta", "food's ready").
+- **Pronunciation:** PL [ˈpappa] "PAP-pa". EN /ˈpɑːpə/ "PAH-puh". **Catchiness:** 3/5. **Store title:** "Pappa: Meal Planner" (19).
+- **Meaning and connotations:** IT *pappa* is mainly baby food; *la pappa pronta* means "spoon-fed" (having things done for you), a slightly pejorative idiom. SV/NO *pappa* = dad. It reads as "papa" everywhere.
+- **Main risks:** "Papa" senior-care apps sound identical; baby-food meaning; @pappa in use.
+
+| Check | Status | Date | Source link | What the source showed |
+|---|---|---|---|---|
+| 1 Competitors | Risk | 2026-09-25 | [Pappa Ciccia](https://apps.apple.com/us/app/pappa-ciccia/id858138217?uo=4), [Pappa Pastificio](https://apps.apple.com/us/app/id1587366145) | Italian restaurants and delivery. |
+| 2 App Store | Pending (SE: Risk) | 2026-09-25 | [Pappa Pizza](https://apps.apple.com/us/app/pappa-pizza/id6648791468), [Pappa AB developer](https://apps.apple.com/us/developer/pappa-ab/id1169932510), [Papa Care](https://apps.apple.com/us/app/papa-care/id1534207289) | Pizza ordering; a Swedish developer; senior care. |
+| 3 Google Play | Pending (SE: Risk) | 2026-09-25 | [Pappa.ai](https://play.google.com/store/apps/details?id=com.maitsys.pappaai&hl=en_US), [Papa Care](https://play.google.com/store/apps/details?id=com.papacare&hl=en_US) | A school-pickup app; senior care. |
+| 4 Domains | Pending (SE: Inconclusive) | 2026-09-25 | RDAP blocked | Nothing surfaced at pappa.com, .app, .io or .pl; app.papa.com (Papa) is in use. |
+| 5 Trademarks | Pending (SE: Inconclusive) | 2026-09-25 | Registries blocked | No PAPPA mark surfaced; Pappas Restaurants marks are near. |
+| 6 Language | Risk | 2026-09-25 | Reviewer assessment | Baby food; "spoon-fed"; "dad". |
+| 7 Confusing similarity | Risk (medium) | 2026-09-25 | rows 2–3 | Papa (senior care) sounds identical. |
+| 8 Social handles | Pending (SE: Risk) | 2026-09-25 | [@pappa](https://www.instagram.com/pappa/), [@pappa_fr](https://www.instagram.com/pappa_fr/) | The exact Instagram @pappa is in use. |
+
+#### 6.7.4 Domain strategy for short names
+
+A 4-letter .com is almost always registered, and for Zubo, Kazu, Dozo, Nimbo and Gobo the search engine found other businesses using related domains (zubogo.com, kazu.org, dozo.app, nimbo.earth, gobo.com, gobo.io). Once RDAP is reachable, check these in this order, then decide with the owner (§8.5.2):
+
+| Name | 1st | 2nd | 3rd | 4th (PL market) |
+|---|---|---|---|---|
+| Zubo | zubo.app | getzubo.com | zuboapp.com | zubo.pl |
+| Kazu | kazu.app | getkazu.com | kazuapp.com | kazu.pl |
+| Dozo | getdozo.com | dozoapp.com | dozo.io | dozo.pl (dozo.app appears taken) |
+| Nimbo | nimbo.app | getnimbo.com | nimboapp.com | nimbo.pl |
+| Gobo | gobo.app | getgobo.com | goboapp.com | gobo.pl |
+
+All are **Pending**; none has been checked on a registry. Remember that .app requires HTTPS (HSTS preloaded) and that a registry 404 does not guarantee a standard price.
+
+---
+
+### Session-2 shortlist (superseded 2026-09-25, PO: too long, not catchy)
+
+> **Superseded 2026-09-25 (PO: "i dont like those names they are too long and not catchy").** §6.1–§6.6 below are kept exactly as written, with all their evidence. The session-2 top 3 (Tangram, Ramekin, Palmo) and alternates (Sapimo, Tadam) are no longer recommended. They are replaced by §6.7.
+
 > **Rebuilt in session 2 (2026-09-24), international-first.** The shortlist now has **9 international names** (§6.1–§6.3) and **2 Polish-flavoured alternatives** (§6.4), which are not recommended as the main brand for international expansion. The other session-1 names were removed; their evidence is kept in §6.5. The session-1 check matrix and ranking are kept in §6.6 and marked superseded.
 
-### 6.1 Check matrix (session 2: 9 international names)
+### 6.1 Check matrix (session 2: 9 international names; superseded 2026-09-25)
 
 Read each cell as **authoritative status (search-engine indication)**. "Pending" means the official source was blocked (§5.1); the bracketed indication comes from the search engine only. **N** is C10 international neutrality (1–5, §2.3), a reviewer assessment.
 
@@ -589,7 +1214,7 @@ Read each cell as **authoritative status (search-engine indication)**. "Pending"
 | **Portata** | IT word | Risk: portata.dev ("AI host for independent restaurants") | Pending (Inconclusive: only apps using the IT phrase) | Pending (Inconclusive) | Pending (Inconclusive) | Pending | Pending | Pending | Pending (Inconclusive), plus a descriptiveness risk in IT | Inconclusive: no negatives found | Risk: PORTA (IT ready meals, US retail); Portio AI | Pending (Inconclusive) | 3 |
 | **Mestolo** | IT word | Risk (low): restaurants in Siena and Bremen | Pending (Inconclusive) | Pending (Inconclusive) | Pending (Risk: mestolo.com is a German cooking blog, per a third-party SEO page) | Pending | Pending | Pending | Pending | Inconclusive: 3 syllables; stress unclear in EN | Risk (low): class 43 restaurants | Pending (Risk: @mestolo.de, @mestolo_bremen) | 3 |
 
-### 6.2 Scores (C1–C7, C10) and ranking
+### 6.2 Scores (C1–C7, C10) and ranking (session 2; superseded 2026-09-25)
 
 Scores run from 1 (poor) to 5 (strong) and are the reviewer's assessment of the evidence above. **C8 (domains and handles) and C9 (trademarks) are Pending for every name** and are not scored. "Evidence weight" summarises the search-engine Risk findings; it is a triage signal, not a legal assessment. **The rank weighs the C1–C7 score, C10 and the evidence weight together**, so a higher sum does not always mean a higher rank.
 
@@ -614,13 +1239,13 @@ Scores run from 1 (poor) to 5 (strong) and are the reviewer's assessment of the 
 - **Savimo** would score at the top on language, but "saviMon" (food and meds tracker) is too close in the same category for it to be a first choice.
 - **Sarto, Portata and Mestolo** show that Italian words read as "international" to most Europeans, but each is a real Italian word. They are weak in Italy (and Portata is descriptive there), and the category is crowded around them. They are kept for completeness, not recommended.
 
-### 6.3 Per-name evidence (international shortlist)
+### 6.3 Per-name evidence (session-2 international shortlist; superseded 2026-09-25)
 
 All session-2 checks are dated **2026-09-24**. Store, domain, trademark and handle checks are **Pending** for every name because the official sources were egress-blocked (§5.1). The bracketed search-engine indication is given in the "What the source showed" column. "SE" means a WebSearch result that could not be opened.
 
 ---
 
-#### `Tangram` (top 3)
+#### `Tangram` (session-2 top 3; superseded 2026-09-25)
 
 - **Concept:** A tangram is the seven-piece puzzle whose pieces always come together into one shape. The app does the same with the pieces the user already has (the recipe they want, their calories and macros, allergies, budget and prep day) and fits them into a plan that works. It suggests the optimisation without saying "diet", and it isn't tied to one feature.
 - **Pronunciation:** PL [ˈtaŋɡram] "TAN-gram". The word is already used in Polish for the puzzle ("tangram – chińska układanka"). EN /ˈtæŋɡræm/ "TANG-gram". It is spelled phonetically in both languages, so people can write it after hearing it once.
@@ -642,7 +1267,7 @@ All session-2 checks are dated **2026-09-24**. Store, domain, trademark and hand
 
 ---
 
-#### `Palmo` (top 3)
+#### `Palmo` (session-2 top 3; superseded 2026-09-25)
 
 - **Concept:** "Palmo" is the handspan in Italian, Spanish and Portuguese (*palmo a palmo* = inch by inch), and it echoes English "palm". Two ideas in one word: portions you can judge with your hand (the familiar "palm-sized protein" method), and a plan that sits in the palm of your hand. It isn't tied to one diet or feature.
 - **Pronunciation:** PL [ˈpalmɔ] "PAL-mo". EN /ˈpælmoʊ/ "PAL-moh"; some speakers may say "PAHL-moh". Unlike in "palm", the "l" is spoken. Easy to spell after one hearing.
@@ -664,7 +1289,7 @@ All session-2 checks are dated **2026-09-24**. Store, domain, trademark and hand
 
 ---
 
-#### `Sapimo` (alternate: the coined option)
+#### `Sapimo` (session-2 alternate; superseded 2026-09-25)
 
 - **Concept:** Coined from Latin *sapor* (taste), which lives on in IT *sapore*, ES/PT *sabor* and FR *saveur*, with an open, friendly "-imo" ending. "Taste first" in a form most Europeans half-recognise, without belonging to any one language.
 - **Pronunciation:** PL [saˈpimɔ] "sa-PI-mo". EN /səˈpiːmoʊ/ "suh-PEE-moh". Spelled phonetically, so it is easy to write after one hearing.
@@ -769,7 +1394,7 @@ All session-2 checks are dated **2026-09-24**. Store, domain, trademark and hand
 
 Their session-1 evidence (2026-09-24) follows unchanged. Session 2 re-ran no checks on them, because the official sources were still blocked and the search-engine evidence is from the same day.
 
-#### `Ramekin`
+#### `Ramekin` (session-2 top 3; superseded 2026-09-25)
 
 - **Concept:** A ramekin is the small dish that holds one portion. The name says "your recipe, portioned and fitted to you" without saying diet, and it leaves room for pantry, family and dietitian phases.
 - **Pronunciation:** EN /ˈræmɪkɪn/ "RAM-ih-kin". PL [ˈramɛkin] "RA-me-kin". A Pole reads it close to the English. English speakers spell it after one hearing; Polish speakers who don't know the word may write "ramekin" or "ramkin".
@@ -793,7 +1418,7 @@ Their session-1 evidence (2026-09-24) follows unchanged. Session 2 re-ran no che
 
 ---
 
-#### `Tadam` (alternate)
+#### `Tadam` (session-2 alternate; superseded 2026-09-25)
 
 - **Concept:** "Ta-dam!" is the reveal when your recipe comes back fitted to your plan. It maps to the value-first paywall moment ("optimized version found", PRD §11).
 - **Pronunciation:** PL [taˈdam]. EN /təˈdæm/. Instantly spellable in PL, EN and FR.
@@ -1113,15 +1738,39 @@ Scores run from 1 (poor) to 5 (strong). They are the reviewer's assessment from 
 
 ## 7. Risks and unresolved checks
 
-### 7.1 Session-level limits (updated 2026-09-24)
+> **Current: §7.4 (session 3), placed first below, and §7.1 (session-level limits, updated 2026-09-25).** §7.2 (session 2) and §7.3 (session 1) are kept for history.
 
-1. **No authoritative check could run in either session.** Every store, domain, trademark and handle status is Pending (§5.1). Rankings rest on search-engine evidence, which can miss registered marks, unlaunched apps, and parked or reserved domains.
+### 7.4 Session 3 risks (current, 2026-09-25)
+
+**Session-level risks added in session 3** (on top of §7.1):
+1. **Short names cannot be "clean".** Every shortlisted name already has same-name apps, businesses and handles somewhere. The shortlist is ranked by *where* those uses are (outside food, nutrition and health is better), not by absence. Expect the exact .com and the exact Instagram handle to be unavailable for all of them, and plan for a variant (§6.7.4).
+2. **Catchiness and language scores are the reviewer's own.** C11 is new and has not been tested with listeners. Short names depend heavily on how they sound, so the PL and EN listener test (§8.5.2 item 7) matters more than it did for longer names.
+3. **Japanese-word cluster.** Six of the twelve shortlisted names are Japanese words. They pass the PL/EN reading test for the same reason (identical vowels), but a Japanese flavour is a brand choice the PO should make on purpose (§8.5.3).
+4. **Search summaries are sometimes wrong about domains.** In this session the search engine attributed domains (kazu.com, zumo.app, zumo.pl) to businesses without showing a URL at those domains. Those claims are recorded as unverified and must not be relied on. Only RDAP settles domain status.
+
+**Name-specific risks (top 3 and alternates):**
+
+| Name | Main remaining risk | What would resolve it |
+|---|---|---|
+| **Zubo** | Exact-name class-9 apps in ride-hailing and kids' reading; Instagram @zubo.app in use; the *zub* (tooth) echo in CS/SK/BCS/RU; no meaning, so the descriptor carries the product | EUIPO, TMview (EM, PL), UPRP, WIPO and USPTO for ZUBO and ZUB* in classes 9, 42, 44 (and 35, 41, 29/30); RDAP for zubo.app, getzubo.com, zubo.pl; a listener test including a Czech or Croatian speaker |
+| **Kazu** | The PL "Kaziu" echo (familiar form of Kazimierz) in the launch market; many exact-name class-9 apps; @kazu taken | A PL listener test first (5–10 people from the PRD §3 wedge: "what does this remind you of?"); then registry searches for KAZU and KAZ* in the same classes; RDAP |
+| **Dozo** | US DOZO marks for hemp gummies and vaporizers and a DOZO PERKS supplements application (class 5); dozo.app in use; the PL *doza* (dose) echo | Registry searches for DOZO in classes 5, 9, 29, 30, 42, 44 (EU, PL, US); an attorney's view on class-5 neighbours for a nutrition app; RDAP for getdozo.com and dozo.pl; a PL listener test for the "dose" echo |
+| Nimbo (alternate) | An unverified mention of a Nimbo patient-management system (health software); many Nimbo businesses | A store and registry search for a health "Nimbo"; registry searches in classes 9, 42, 44; RDAP |
+| Gobo (alternate) | Exact name used by a food-ordering super-app and a healthy-food delivery service; gobo.com and gobo.io in use; a GOBO class-42 filing in India | Registry searches in classes 9, 35, 39, 42, 43; an attorney's view on coexistence with a food-ordering platform; RDAP for gobo.app and getgobo.com |
+
+**Open checks per shortlisted name (all Pending):** App Store (iTunes API PL/US/GB) and App Store Connect, Google Play (PL/US), RDAP for .com, .app, .io and .pl plus the §6.7.4 variants, EUIPO, TMview (EM + PL, plus JP-, KR- and ES-origin checks as relevant), UPRP, WIPO, USPTO, UK IPO, and handles on Instagram, TikTok, Facebook, YouTube, X, Threads and LinkedIn.
+
+### 7.1 Session-level limits (updated 2026-09-24; still current, see also §7.4)
+
+1. **No authoritative check could run in any session (1, 2 or 3).** Every store, domain, trademark and handle status is Pending (§5.1). Rankings rest on search-engine evidence, which can miss registered marks, unlaunched apps, and parked or reserved domains.
 2. **Absence is not availability.** Where the search found nothing (for example Sapimo anywhere, or Tangram and Palmo in food), the status is Inconclusive. It must not be read as "free".
 3. **Language checks are the reviewer's own assessment.** C10 raises the bar: native-speaker checks are now needed in PL, EN (UK and US), DE, FR, ES, IT, PT, NL and SV for the top 3 and the alternates. They are pending.
 4. **Trademark reality.** Real words used arbitrarily (Tangram, Palmo, Ramekin, Tadam) will have registrations in other classes, and Tangram is a common noun for puzzle games in class 9. Coinages (Sapimo) are likely stronger but carry less meaning. Italian words (Sarto, Portata, Mestolo) are weak in Italy, and Portata may be descriptive there. Only a registry search and an attorney can settle this.
 5. **The category is filling fast.** Session 2 found more than fifteen same-category apps that weren't in the session-1 landscape (§3.4). A name that is Inconclusive today can have a competitor next month, so re-check at decision time.
 
-### 7.2 Name-specific risks (session 2: top 3 and alternates)
+### 7.2 Name-specific risks (session 2: top 3 and alternates; superseded 2026-09-25)
+
+> **Superseded 2026-09-25 (PO: too long, not catchy).** These names are no longer recommended; §7.4 lists the current risks. Kept as written.
 
 | Name | Main remaining risk | What would resolve it |
 |---|---|---|
@@ -1158,7 +1807,47 @@ Scores run from 1 (poor) to 5 (strong). They are the reviewer's assessment from 
 
 ## 8. Next verification steps
 
-### 8.1 Re-run on a network with registry access (agent, next session)
+> **Current: §8.5 (session 3), placed first below.** It is numbered 8.5 so that existing references to §8.1–§8.4 stay valid. §8.1–§8.3 (session 2) and §8.4 (session 1) are superseded and kept for history. The current decisions for the Product Owner are in **§8.5.3**.
+
+### 8.5 Session 3 next steps (current, 2026-09-25)
+
+#### 8.5.1 Re-run on a network with registry access (agent, next session)
+
+Run these for **Zubo, Kazu and Dozo** first, then **Nimbo and Gobo**, then Bibim. Replace `<n>` with the lowercase name.
+
+- App Store: `https://itunes.apple.com/search?term=<n>&entity=software&country=pl` (then `us`, `gb`). Record every exact and near match and its category (Health & Fitness, Food & Drink especially).
+- Google Play: `https://play.google.com/store/search?q=<n>&c=apps&gl=PL` (then `gl=US`).
+- .com: `https://rdap.verisign.com/com/v1/domain/<n>.com`, and also `get<n>.com` and `<n>app.com`.
+- .app: `https://pubapi.registry.google/rdap/domain/<n>.app` (for Dozo, confirm whether dozo.app is registered, as the search suggests).
+- .pl and .io: get the RDAP base URLs for `pl` and `io` from `https://data.iana.org/rdap/dns.json`, then `<base>/domain/<n>.pl` and `<base>/domain/<n>.io`.
+- Re-check the specific findings from session 3: the Instagram account @zubo.app; the "Kazu" App Store app id6756679772 (category unknown); US DOZO serial 97460033 and DOZO PERKS 98725477 (goods and status); the "Nimbo" patient-management mention; GOBO India 5100801; EU ZUMO 17996331.
+
+#### 8.5.2 Owner actions (need an account, or are the owner's call)
+
+1. **Trademark searches**, until the agent can reach the registries. Search each name as an exact word, then with a wildcard and phonetically:
+   - **EUIPO eSearch plus** (https://euipo.europa.eu/eSearch/): Trade marks, "Word" = `ZUBO`, then `KAZU`, `DOZO`, `NIMBO`, `GOBO`. Nice classes 5, 9, 29, 30, 35, 41, 42, 43, 44 (class 5 because of the DOZO hemp and supplement marks). Status: all, then filed and registered only. Repeat with `ZUB*`, `KAZ*`, `DOZ*`, `NIMB*`, `GOB*`.
+   - **TMview** (https://www.tmdn.org/tmview/): the same terms. Offices: EM, PL, DE, FR, ES, IT, CZ, HR, WO, plus JP for Kazu, Dozo and Gobo. Same classes. Record live or dead status, owner and filing date.
+   - **UPRP e-Wyszukiwarka** (https://ewyszukiwarka.pue.uprp.gov.pl/): "Znaki towarowe", word element `zubo` / `kazu` / `dozo` / `nimbo` / `gobo`.
+   - **WIPO Global Brand Database** (https://branddb.wipo.int/): Brand = the name, the classes above, designations PL, EU, US, GB.
+   - **USPTO** (https://tmsearch.uspto.gov/): `ZUBO` (confirm 77462177 is dead and read 98431784's goods), `DOZO` (open 97460033 and 98725477), `KAZU`, `NIMBO`, `GOBO`; classes 5, 9, 42, 44. **UK IPO** (https://trademarks.ipo.gov.uk/): the same.
+2. **App Store Connect name check** for "Zubo", "Kazu" and "Dozo", each with a descriptor (for example "Zubo: Meal Planner", 18 characters). This needs the owner's Apple Developer account. Reserve a name only when ready to commit, because Apple holds reservations for a limited time.
+3. **Google Play Console check:** needs the owner's developer account.
+4. **Trademark attorney clearance** before adoption, in at least the EU (EUIPO) and Poland (UPRP), plus the US and UK if English-speaking launches are planned. Ask specifically about: Zubo against the same-name class-9 apps; Dozo against the US class-5 DOZO marks; Gobo against the food-ordering platform. Nothing here is a legal opinion.
+5. **Social handles:** only signing up confirms a handle is free. For Zubo, `@zubo.app` is already taken on Instagram, so the realistic set is `getzubo`, `zubo.pl`, `zuboplanner` (and `@zubo` if it turns out to be free). The owner decides whether to sign up on Instagram, TikTok, Facebook, YouTube, X, Threads and LinkedIn.
+6. **Domain purchase decisions:** the owner buys; the agent never does. Accept early that a 4-letter .com is unlikely and choose a pattern (`<name>.app` + `get<name>.com` + `<name>.pl`) (§6.7.4).
+7. **Listener test (the most important next step for short names):** 5–10 people from the PL wedge (PRD §3), 3–5 native English speakers, and 1–2 each for DE, ES, IT, CS or HR. Play each name once (Zubo, Kazu, Dozo, Nimbo, Gobo) and ask them to write it down, say it back, say what it reminds them of, and rate how catchy it is. Probe specifically: "Kaziu" for Kazu; "doza" (dose) for Dozo; the *zub* (tooth) echo for Zubo; "gob" for Gobo.
+
+#### 8.5.3 Decisions for the Product Owner
+
+1. **Does the session-3 direction answer the feedback?** All shortlisted names are 4–5 letters and 2 syllables. Is this the length and rhythm the PO had in mind, and which of Zubo, Kazu and Dozo (or Nimbo, Gobo) feels catchy?
+2. **Pure sound or a hidden meaning.** Zubo means nothing, which makes it the most ownable but leaves all the explaining to the descriptor. Kazu ("number") and Dozo ("help yourself") carry a story for the brand, at the cost of more namesakes. Which does the PO prefer?
+3. **Japanese flavour.** Kazu, Dozo and Gobo (and Kumo, Panko, Mogu) are Japanese words. Is a Japanese-sounding brand acceptable for a Polish-launched, internationally expanding nutrition app, or should the next round stay with coined sounds such as Zubo and Nimbo?
+4. **Handle and domain compromise.** Is a variant such as `getzubo` / `zubo.app` acceptable, given that the exact 4-letter handles and .com are very likely taken for any short name?
+5. **Catchiness versus conflicts.** Zumo and Mogu are the catchiest names found (C11 = 5) but carry high-weight conflicts. Does the PO want them investigated anyway?
+
+**Do not** rename application identifiers, bundle IDs, packages, domains or assets until the Product Owner approves a final name (CLAUDE.md).
+
+### 8.1 Re-run on a network with registry access (session 2; superseded 2026-09-25 by §8.5.1)
 
 Run these for **Tangram, Ramekin and Palmo** first, then **Sapimo and Tadam**, then the rest of §6.1 and the §6.4 alternatives. Replace `<n>` with the lowercase name.
 
@@ -1169,7 +1858,7 @@ Run these for **Tangram, Ramekin and Palmo** first, then **Sapimo and Tadam**, t
 - .pl and .io: get the RDAP base URL for `pl` and `io` from `https://data.iana.org/rdap/dns.json`, then `<base>/domain/<n>.pl` and `<base>/domain/<n>.io`
 - Also re-check the near-conflicts found in session 2: "saviMon" (for Savimo), "Sapora" (for Sapimo), PORTA and "portata.dev" (for Portata), and the US TANGRAM serial 88473186 (for Tangram).
 
-### 8.2 Owner actions (need an account, or are the owner's call)
+### 8.2 Owner actions (session 2; superseded 2026-09-25 by §8.5.2)
 
 1. **Trademark searches**, until the agent can reach the registries. Search each name as an exact word, then with a wildcard and phonetically:
    - **EUIPO eSearch plus** (https://euipo.europa.eu/eSearch/): Trade marks, "Word" = `TANGRAM`, then `RAMEKIN`, `PALMO`, `SAPIMO`, `TADAM`. Nice classes 9, 29, 30, 35, 41, 42, 43, 44. Status: all, then filed and registered only. Repeat with `TANGRAM*`, `PALM*`, `SAPI*` and `SAVIM*`.
@@ -1184,7 +1873,9 @@ Run these for **Tangram, Ramekin and Palmo** first, then **Sapimo and Tadam**, t
 6. **Domain purchase decisions:** the owner buys; the agent never does. Short dictionary words (Tangram, Palmo, Ramekin) very likely have a registered .com, so decide early whether a variant (`get<name>.com`, `<name>.app`) is acceptable.
 7. **Audience and native-speaker test (international):** 5–10 people from the PL wedge (PRD §3), 3–5 native English speakers, and 2–3 each for DE, ES and IT. Test the top 3 and alternates for pronunciation after hearing each name once, spelling, associations and appeal. For Palmo, include Spanish slang; for Sapimo, the "sap" and "sapie" echoes.
 
-### 8.3 Decisions for the Product Owner
+### 8.3 Decisions for the Product Owner (session 2; superseded 2026-09-25 by §8.5.3)
+
+> **Superseded 2026-09-25.** The PO answered these indirectly ("too long and not catchy"). The current decisions are in **§8.5.3**. Kept as written.
 
 1. **Real word or coinage.** Tangram, Palmo and Ramekin carry meaning but share their word with others. Sapimo is more ownable but explains less. Which trade-off does the PO prefer?
 2. **Do Italian-word names count as "international"?** Sarto, Portata and Mestolo read as foreign-but-friendly in Poland and most of Europe, but they are ordinary words in Italy. They are shown in §6 but not recommended.
@@ -1249,3 +1940,4 @@ Run these for Ramekin, Oskoma, Smakora and Tadam first, then the rest of §6. Re
 | 2026-09-24 | Report created with the brief, criteria and templates. No research run yet. |
 | 2026-09-24 | First research session (brand-researcher). Only WebSearch was available; all registry, store, trademark and social sources were egress-blocked (§5.1), so every authoritative check is Pending. Added: product positioning (§1), naming strategy (§2), competitor landscape for PL and international (§3), a 73-name longlist with screen results (§4), a dated evidence log (§5), a 14-name shortlist with check matrix, scores and per-name evidence (§6), risks (§7) and next steps with owner actions (§8). Recommended for further investigation, not selected: Ramekin, Oskoma, Smakora (alternate: Tadam). No earlier findings existed, so nothing was superseded. |
 | 2026-09-24 | **Second research session (brand-researcher): international-first round.** It responds to the Product Owner's feedback on session 1: "Smakora is mostly a Polish name, like most of them." (11 of 14 shortlisted names were Polish-rooted.) At the start, each official source was retried once with a plain request (curl for all; WebFetch also for the RDAP, IANA, iTunes, Play and TMview URLs). All were still egress-blocked (§5.1), so every authoritative check remains **Pending**, and screening used WebSearch only. **Added:** the international-first strategy with the PO feedback, and the new criterion C10 (international neutrality) (§2.1, §2.3); an international positioning statement (§1); same-category apps found in session 2 (§3.4); 87 new candidates, #74–#160 (§4.6); the session-2 access log and screening evidence (§5.1, §5.3); a rebuilt shortlist of **9 international names** (Tangram, Ramekin, Palmo, Sapimo, Tadam, Savimo, Sarto, Portata, Mestolo) with a check matrix including C10, scores and per-name evidence (§6.1–§6.3); new risks (§7.1–§7.2) and next steps with owner decisions (§8.1–§8.3). **Superseded, not deleted:** the session-1 conclusion that Polish-rooted names were the best opening (§2.2, §3.3); the session-1 shortlist, matrix and ranking (§6.6); session-1 risks and next steps (§7.3, §8.4). Oskoma and Smakora moved to "Polish-flavoured alternatives (not recommended as the main brand for international expansion)" (§6.4). The other session-1 names moved to §6.5 with their evidence. **Top 3 for further investigation** changed from Ramekin, Oskoma, Smakora to **Tangram, Ramekin, Palmo** (alternates: Sapimo, Tadam). No name was selected. |
+| 2026-09-25 | **Third research session (brand-researcher): short-and-catchy round.** It responds to the Product Owner's feedback on session 2, verbatim: "i dont like those names they are too long and not catchy" (covering Tangram, Ramekin, Palmo, Sapimo, Tadam, Savimo, Sarto, Portata, Mestolo). At the start, each official source was retried once with a plain request (curl for all; WebFetch also for the .com RDAP, iTunes, Google Play and TMview URLs). All were still egress-blocked (§5.1), so every authoritative check remains **Pending**, and screening used WebSearch only. **Added:** the session-3 strategy with the PO feedback (§2.4, numbered to keep existing references valid) and the new criterion C11 catchiness (§2.3); a short note in §1; same-category apps found in session 3 (§3.5); 111 new candidates, #161–#271, all 3–6 letters and 1–2 syllables (§4.7); the session-3 access log and screening evidence (§5.1, §5.4); a new current shortlist of **12 names** (Zubo, Kazu, Dozo, Nimbo, Gobo, Bibim, Kumo, Zumo, Mogu, Panko, Pappa, Gumbo) with a check matrix, C1–C7, C10 and C11 scores, per-name evidence and a domain-variant plan (§6.7); session-3 risks (§7.4, §7.1 updated); next steps, owner actions and PO decisions (§8.5). **Superseded, not deleted:** the session-2 form rule and "cleanest openings" conclusion (§2.1); the session-2 shortlist, matrix, ranking and top 3 (§6.1–§6.3, marked "superseded (PO: too long, not catchy)"); session-2 risks and next steps (§7.2, §8.1–§8.3). **Top 3 for further investigation** changed from Tangram, Ramekin, Palmo to **Zubo, Kazu, Dozo** (alternates: Nimbo, Gobo). No name was selected. |
