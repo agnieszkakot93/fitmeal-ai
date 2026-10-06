@@ -5,7 +5,7 @@
 <body>
 <div id="root"></div>
 <script>
-var F = window.FitMeal, h = React.createElement;
+var F = window.Donut, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
 function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
@@ -54,13 +54,13 @@ show([
    h(F.OnboardingProgress, {key:'p', step:6}),
    scroll(q('How many calories a day?', 'Suggested from your body data and goal.'),
      h(F.NumberField, {large:true, value:'1500', unit:'kcal', hint:'Suggested: about 480 kcal under your maintenance. Change it anytime.'}),
-     h(F.Notice, {tone:'offline', icon:'shield', body:'FitMeal never plans below 1,200 kcal a day.'})),
+     h(F.Notice, {tone:'offline', icon:'shield', body:'Donut never plans below 1,200 kcal a day.'})),
    h('div', {key:'c'}, cta('Continue'))
  ]),
  Ph('06b Below the 1,200 kcal floor', [
    h(F.OnboardingProgress, {key:'p', step:6}),
    scroll(q('How many calories a day?'),
-     h(F.NumberField, {large:true, value:'1100', unit:'kcal', error:'FitMeal doesn’t build plans below 1,200 kcal a day. Very low intakes need supervision from a doctor or dietitian.'})),
+     h(F.NumberField, {large:true, value:'1100', unit:'kcal', error:'Donut doesn’t build plans below 1,200 kcal a day. Very low intakes need supervision from a doctor or dietitian.'})),
    h('div', {key:'c'}, cta('Continue', null, true))
  ]),
  Ph('07 Macros · Advanced', [

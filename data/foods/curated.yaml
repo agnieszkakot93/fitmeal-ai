@@ -1,4 +1,4 @@
-# FitMeal AI — curated ingredient list
+# Donut — curated ingredient list
 #
 # This file owns everything *about* an ingredient: names, aliases, category,
 # allergens (EU 14) and `may_contain` traces, culinary roles, portion weights,
@@ -16,7 +16,7 @@
 #   * `review: {status: draft | auto_checked | verified, by: <initials>, date: YYYY-MM-DD}`.
 #     Only a named human sets `verified`, after checking the whole entry,
 #     including portion weights, densities and package sizes (typical values).
-# The FDC descriptions follow SR Legacy naming; `fitmeal-admin foods import
+# The FDC descriptions follow SR Legacy naming; `donut-admin foods import
 # --dry-run` lists any that do not match together with the closest FDC
 # descriptions.
 #

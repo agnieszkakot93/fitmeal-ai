@@ -1,6 +1,6 @@
 # IngredientRow
 
-One ingredient in a recipe, with its amount, what FitMeal changed and the Swap action.
+One ingredient in a recipe, with its amount, what Donut changed and the Swap action.
 
 **Props:** `name`, `amount` (*150 g*), `was` (original amount or ingredient — renders the paprika change state), `role` (*protein*, *sauce*), `excluded` (badge text, e.g. *Fish — excluded*), `checkable`, `checked`, `swappable`.
 

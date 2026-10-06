@@ -1,6 +1,6 @@
 # Onboarding 1 — welcome, new phone, age, consent, goal
 
-Welcome, Restore profile and No profile on this phone (new phone), 18+ confirmation (and the under-18 stop), health-data consent with the health notice, Goal, composed from FitMeal components on 375 × 780 iPhone frames. A showcase page, not a component: build the SwiftUI screen from the components it uses.
+Welcome, Restore profile and No profile on this phone (new phone), 18+ confirmation (and the under-18 stop), health-data consent with the health notice, Goal, composed from Donut components on 375 × 780 iPhone frames. A showcase page, not a component: build the SwiftUI screen from the components it uses.
 
 ## New-phone path (01b, 01c)
 

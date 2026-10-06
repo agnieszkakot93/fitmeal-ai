@@ -1,4 +1,6 @@
-# FitMeal AI
+# Donut
+
+*Formerly FitMeal AI. See [the naming research](docs/branding/NAME_RESEARCH.md) and [rename plan](docs/branding/RENAME_PLAN.md).*
 
 Intelligent meal planning for iOS: import any recipe (social media, link, PDF) and get it adapted to your calories, macros, allergies, budget and meal-prep schedule, with a weekly plan and shopping list.
 

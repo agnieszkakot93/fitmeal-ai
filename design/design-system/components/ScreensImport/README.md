@@ -1,6 +1,6 @@
 # Add and import a recipe
 
-Add recipe with the import notice, PDF recipe picker, import fallbacks (scanned PDF, no recipe data, site opts out, Instagram/TikTok link), Share Extension (with and without a caption), Import preview with a blocking allergen notice, No profile on this phone, Clarification prompt, Your version with source nutrition, Target missed, I don't have this, composed from FitMeal components on 375 × 780 iPhone frames. A showcase page, not a component: build the SwiftUI screen from the components it uses.
+Add recipe with the import notice, PDF recipe picker, import fallbacks (scanned PDF, no recipe data, site opts out, Instagram/TikTok link), Share Extension (with and without a caption), Import preview with a blocking allergen notice, No profile on this phone, Clarification prompt, Your version with source nutrition, Target missed, I don't have this, composed from Donut components on 375 × 780 iPhone frames. A showcase page, not a component: build the SwiftUI screen from the components it uses.
 
 ## Rules
 
@@ -20,7 +20,7 @@ Add recipe with the import notice, PDF recipe picker, import fallbacks (scanned 
 | PDF has text but no recipes found | 25c layout, title *We couldn’t find a recipe in this PDF*, same actions |
 | Offline after ticking recipes | *Import N recipes* is disabled; `Notice` tone `offline`: *Importing needs a connection. Your ticks are kept.* |
 | Link fetch fails (timeout, 404) | 25d layout with *Try again* as the second action |
-| Share Extension while signed out | Sheet says *Open FitMeal to sign in first* with *Open FitMeal*; the caption isn't sent |
+| Share Extension while signed out | Sheet says *Open Donut to sign in first* with *Open Donut*; the caption isn't sent |
 
 ## Copy
 
@@ -31,7 +31,7 @@ Add recipe with the import notice, PDF recipe picker, import fallbacks (scanned 
 | add.pdf | Choose a PDF | Wybierz PDF |
 | add.pdf.desc | PDFs with selectable text, read on your phone | PDF z tekstem do zaznaczenia, czytany na Twoim telefonie |
 | add.paste | Paste recipe text | Wklej tekst przepisu |
-| add.tip | Tip: in Instagram or TikTok, tap Share → FitMeal. | Wskazówka: w Instagramie lub TikToku dotknij Udostępnij → FitMeal. |
+| add.tip | Tip: in Instagram or TikTok, tap Share → Donut. | Wskazówka: w Instagramie lub TikToku dotknij Udostępnij → Donut. |
 | import.notice | **Import recipes only.** Don’t import documents with other people’s personal or health information. PDFs are read on your phone and never leave it. Recipe text is processed by our AI provider in the EU. Imports stay private to you. | **Importuj tylko przepisy.** Nie dodawaj dokumentów z danymi osobowymi ani zdrowotnymi innych osób. PDF-y czytamy na Twoim telefonie i nigdy go nie opuszczają. Tekst przepisu przetwarza nasz dostawca AI w UE. Importy widzisz tylko Ty. |
 | picker.title | Choose recipes | Wybierz przepisy |
 | picker.file.meta | 42 pages · read on this phone | 42 strony · odczytany na tym telefonie |
@@ -48,12 +48,12 @@ Add recipe with the import notice, PDF recipe picker, import fallbacks (scanned 
 | tdm.title | We don’t open this site | Nie otwieramy tej strony |
 | tdm.body | This site doesn’t allow automated reading, so we don’t open it. Paste the recipe text and we’ll keep the link as the source. | Ta strona nie zezwala na automatyczne odczytywanie treści, więc jej nie otwieramy. Wklej tekst przepisu, a link zapiszemy jako źródło. |
 | social.title | We don’t open Instagram or TikTok links | Nie otwieramy linków z Instagrama ani TikToka |
-| social.body | Share the post to FitMeal, or paste the caption. We’ll keep the link as the source. | Udostępnij post do FitMeal albo wklej opis. Link zapiszemy jako źródło. |
-| social.steps | In Instagram or TikTok, tap Share · Then choose FitMeal | W Instagramie lub TikToku dotknij Udostępnij · Potem wybierz FitMeal |
+| social.body | Share the post to Donut, or paste the caption. We’ll keep the link as the source. | Udostępnij post do Donut albo wklej opis. Link zapiszemy jako źródło. |
+| social.steps | In Instagram or TikTok, tap Share · Then choose Donut | W Instagramie lub TikToku dotknij Udostępnij · Potem wybierz Donut |
 | other.link | Try another link | Spróbuj innego linku |
 | source.kept | Saved with the recipe as its source. | Zapisany przy przepisie jako źródło. |
 | source.notopened | Saved as the source. We don’t open it. | Zapisany jako źródło. Nie otwieramy go. |
-| share.title | Add to FitMeal | Dodaj do FitMeal |
+| share.title | Add to Donut | Dodaj do Donut |
 | share.caption | Caption we’ll use | Opis, którego użyjemy |
 | share.more | Paste more text | Wklej więcej tekstu |
 | share.note | We’ll use only this text. The link is saved as the source and never opened. | Użyjemy tylko tego tekstu. Link zapiszemy jako źródło i nie będziemy go otwierać. |

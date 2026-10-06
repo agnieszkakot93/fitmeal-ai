@@ -1,6 +1,6 @@
 # Onboarding 2 — body data and targets
 
-Optional body data, suggested calories, the 1,200 kcal floor, Macros, Meals and distribution, composed from FitMeal components on 375 × 780 iPhone frames. A showcase page, not a component: build the SwiftUI screen from the components it uses.
+Optional body data, suggested calories, the 1,200 kcal floor, Macros, Meals and distribution, composed from Donut components on 375 × 780 iPhone frames. A showcase page, not a component: build the SwiftUI screen from the components it uses.
 
 05 Body data: the suggested-targets calculator runs on the phone, and body data stays there (and in the user's private iCloud when sync is on). The footnote says so next to the fields:
 

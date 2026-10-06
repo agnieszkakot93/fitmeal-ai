@@ -1,6 +1,6 @@
 # ChangeItem
 
-One line of *Why did FitMeal change this?*: the change, its measured effect, and a Keep/Undo control.
+One line of *Why did Donut change this?*: the change, its measured effect, and a Keep/Undo control.
 
 **Props:** `what` (*Reduced oil by 8 g*), `effect` (*saves 72 kcal*), `icon`, `rejected` (start as rejected), `decidable` (false hides the control on read-only lists). Render it inside `<ul class="fm-changes">`.
 

@@ -1,4 +1,4 @@
-# FitMeal AI: working rules
+# Donut: working rules
 
 See [README.md](README.md) for the repository layout and stack, and `.claude/agents/` for the agent team.
 
@@ -49,6 +49,9 @@ docs/branding/NAME_RESEARCH.md
 
 Brand selection requires Product Owner approval.
 
-Do not rename application identifiers, domains,
-packages, or product assets until the final name
-has been approved.
+The final name, Donut, was approved on 2026-10-06.
+Rename in the order set out in docs/branding/RENAME_PLAN.md:
+technical identifiers (packages, env prefixes) and
+external identities (domains, trademarks, bundle IDs,
+store names) only in their own phases, after their
+checks pass.

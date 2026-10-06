@@ -1,4 +1,4 @@
-# FitMeal AI — backend
+# Donut — backend
 
 FastAPI modular monolith. See [../docs/DEVELOPMENT_PLAN.md](../docs/DEVELOPMENT_PLAN.md) for the architecture.
 
@@ -21,14 +21,14 @@ uv run alembic upgrade head
 uv run uvicorn app.main:app --reload
 ```
 
-Compose publishes Postgres and Redis on `127.0.0.1` only, and Redis requires a password (dev default `fitmeal`). The defaults work as they are; to override, copy `infra/.env.example` to `infra/.env` (Compose) and `backend/.env.example` to `backend/.env` (app settings), keeping the Redis password the same in both.
+Compose publishes Postgres and Redis on `127.0.0.1` only, and Redis requires a password (dev default `donut`). The defaults work as they are; to override, copy `infra/.env.example` to `infra/.env` (Compose) and `backend/.env.example` to `backend/.env` (app settings), keeping the Redis password the same in both.
 
 To load ingredient data, see [../data/README.md](../data/README.md).
 
 ## Checks
 
 ```bash
-uv run pytest                 # needs Postgres: uses the fitmeal_test database
+uv run pytest                 # needs Postgres: uses the donut_test database
 uv run ruff check . && uv run ruff format --check .
 uv run mypy app tests
 uv run alembic check          # models and migrations in sync
@@ -43,7 +43,7 @@ app/
   core/        settings, database session, text folding
   nutrition/   pure engine: units → grams, nutrient math, allergens (no I/O)
   foods/       food tables, curated-list + USDA FDC importer, search and nutrition APIs
-  cli.py       fitmeal-admin commands
+  cli.py       donut-admin commands
 alembic/       migrations
 tests/         unit tests + API/DB tests against real Postgres
 ```

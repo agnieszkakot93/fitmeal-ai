@@ -5,7 +5,7 @@
 <body>
 <div id="root"></div>
 <script>
-var F = window.FitMeal, h = React.createElement;
+var F = window.Donut, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
 function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
@@ -44,9 +44,9 @@ var UP_NEXT = h(F.BottomAccessory, {icon:'clock', title:'Up next · Dinner 19:00
 show([
  Ph('01 Welcome', [
    h('div', {key:'a', style:{flex:1, display:'flex', flexDirection:'column', justifyContent:'center', gap:20, padding:'0 20px'}},
-     h('p', {className:'fm-cap', style:{color:'var(--paprika-ink)'}}, 'FitMeal'),
+     h('p', {className:'fm-cap', style:{color:'var(--paprika-ink)'}}, 'Donut'),
      h('h1', {className:'fm-hxl'}, 'Your favorite food. Your macros. Less waste.'),
-     h('p', {className:'fm-callout'}, 'Paste any recipe. FitMeal fits it to your calories and protein, builds your week and writes the shopping list.'),
+     h('p', {className:'fm-callout'}, 'Paste any recipe. Donut fits it to your calories and protein, builds your week and writes the shopping list.'),
      h(F.CompareCard, {originalLabel:'Recipe you found', yoursLabel:'Fitted to you', original:{kcal:720, protein:29}, yours:{kcal:510, protein:48}, foundLabel:'Same dish, your numbers'})),
    h('div', {key:'b', className:'fm-sticky'},
      h(F.Button, {variant:'primary', size:'lg', block:true}, 'Get started'),
@@ -88,7 +88,7 @@ show([
  ]),
  Ph('02 Age confirmation', [
    h(F.OnboardingProgress, {key:'p', step:2}),
-   scroll(q('Are you 18 or older?', 'FitMeal is designed for adults. We don’t ask for or store your date of birth.')),
+   scroll(q('Are you 18 or older?', 'Donut is designed for adults. We don’t ask for or store your date of birth.')),
    h('div', {key:'c', className:'fm-sticky'},
      h(F.Button, {variant:'primary', size:'lg', block:true}, 'I’m 18 or older'),
      h(F.Button, {variant:'secondary', size:'lg', block:true}, 'I’m under 18'))
@@ -96,8 +96,8 @@ show([
  Ph('02b Under 18', [
    h('div', {key:'a', style:{flex:1, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'flex-start', gap:16, padding:'0 24px'}},
      h('span', {style:{display:'grid', placeItems:'center', width:56, height:56, borderRadius:999, background:'var(--basil-soft)', color:'var(--basil-ink)'}}, h(F.Icon, {name:'shield', size:28})),
-     h('h1', {className:'fm-h2'}, 'FitMeal is for adults'),
-     h('p', {className:'fm-body'}, 'Nutrition needs change a lot while you’re still growing, so FitMeal’s plans aren’t made for people under 18.'),
+     h('h1', {className:'fm-h2'}, 'Donut is for adults'),
+     h('p', {className:'fm-body'}, 'Nutrition needs change a lot while you’re still growing, so Donut’s plans aren’t made for people under 18.'),
      h('p', {className:'fm-body'}, 'A doctor, school nurse or dietitian can help you plan meals that fit you.')),
    h('div', {key:'c', className:'fm-sticky'}, h(F.Button, {variant:'secondary', size:'lg', block:true, icon:'chevron-left'}, 'Go back'))
  ]),
@@ -105,11 +105,11 @@ show([
    h(F.OnboardingProgress, {key:'p', step:3}),
    scroll(q('Your health data'),
      card(
-       h('p', {className:'fm-body', style:{fontSize:15, lineHeight:'21px'}}, 'To build your plans, FitMeal processes health-related data: allergies, intolerances, goals and (if you add it) body data.'),
+       h('p', {className:'fm-body', style:{fontSize:15, lineHeight:'21px'}}, 'To build your plans, Donut processes health-related data: allergies, intolerances, goals and (if you add it) body data.'),
        h('p', {className:'fm-foot'}, 'Your profile (targets, allergies, age, weight, height) stays on this phone and syncs to your private iCloud; you can turn sync off in Profile. We receive it only to build a plan or swap, and don’t keep it. It’s never sent to AI. Withdraw consent in Profile anytime.'),
        h('div', {style:{display:'flex', gap:12, alignItems:'flex-start', paddingTop:4, borderTop:'1px solid var(--line)'}},
          h('span', {style:{paddingTop:12}}, h(F.Checkbox, {label:'I agree to health-data processing'})),
-         h('p', {style:{margin:'12px 0 0', font:'500 15px/21px var(--font-text)'}}, 'I agree that FitMeal processes my health data to build my plans. ', h('a', {href:'#', style:{color:'var(--basil)', fontWeight:650}}, 'Privacy policy')))),
+         h('p', {style:{margin:'12px 0 0', font:'500 15px/21px var(--font-text)'}}, 'I agree that Donut processes my health data to build my plans. ', h('a', {href:'#', style:{color:'var(--basil)', fontWeight:650}}, 'Privacy policy')))),
      h(F.Notice, {tone:'offline', icon:'info', title:'Not medical advice', body:'If you’re pregnant or breastfeeding, have or have had an eating disorder, have kidney disease, diabetes or another condition, or follow a prescribed diet, talk to a doctor or dietitian first. We don’t ask about any of this.'})),
    h('div', {key:'c'}, cta('Continue', null, true))
  ]),

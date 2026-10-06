@@ -5,7 +5,7 @@
 <body>
 <div id="root"></div>
 <script>
-var F = window.FitMeal, h = React.createElement;
+var F = window.Donut, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 root(h('div', {style:{display:'grid', gridTemplateColumns:'repeat(3, 150px)', gap:8, padding:16}},
   h(F.StatTile, {value:'17', label:'Meals eaten', note:'This week'}), h(F.StatTile, {value:'96', unit:'%', label:'Protein target hit'}), h(F.StatTile, {value:'6', unit:'of 7', label:'Days on target'})));
