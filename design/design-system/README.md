@@ -35,6 +35,8 @@ Real copy to match:
 | Allergen block | *Contains peanuts (peanut butter). Peanuts are your allergy. You can save this recipe, but we can't personalize or plan it until peanut butter is swapped or removed.* |
 | No plan | *We couldn't build a 7-day plan. Too few breakfasts fit your exclusions and the 15-minute limit.* |
 | Import | *Recipe detected · 1 cup cheese — Which cheese?* |
+| Import fallback | *We can't read a recipe on this page. Paste the recipe text and we'll keep the link as the source.* |
+| Where data lives | *Your profile stays on this phone and syncs to your private iCloud. We receive it only to build a plan or swap, and don't keep it.* |
 | Swap | *Amounts are converted by protein, not 1:1* |
 | Paywall | *Economy version found · 34 → 23 unique items · same calories, same protein target* |
 | Meal prep | *Cook today: lunch and dinner cover Wed + Thu.* |
@@ -48,7 +50,7 @@ The palette is basil green, paprika and warm paper, with three macro colours. Al
 - **Brand:** `basil` is the primary action, the selected state, success and "on target". Text on a basil fill is `on-basil`, which turns dark in the dark theme. Selected fills use `basil-soft` with `basil-ink` text.
 - **Accent:** `paprika` means *FitMeal changed this* and *Add*. It covers change tints (`paprika-soft` / `paprika-ink`), the Add tab button and the import CTA. Text on a paprika fill is always `on-paprika`, never white. Paprika is never used for errors.
 - **Macros:** `macro-protein` (terracotta), `macro-carbs` (amber) and `macro-fat` (blue), on a `macro-track`. Carbs is the lightest and protein the darkest in light mode. Fat is blue, so no pair relies on a red–green split. A macro colour never appears without its letter or word (P / C / F).
-- **Severity:** `danger` marks ALLERGY and allergen-block notices. `warning` marks INTOLERANCE, low-confidence imports, missed targets and plans that can't be built. *Don't like* and *Prefer not* stay neutral.
+- **Severity:** `danger` marks ALLERGY and allergen-block notices. `warning` marks INTOLERANCE, low-confidence imports, missed targets, plans that can't be built and an allergen check that can't run (no profile on the phone). Import fallbacks (*Paste recipe text*) are `info`. *Don't like* and *Prefer not* stay neutral.
 - **Premium:** `premium` on `premium-soft` is for the Premium tier only.
 - **Focus:** `focus-ring`, a solid 2px ring offset 2px, at least 5.8:1 on every surface in both themes.
 
@@ -71,11 +73,19 @@ FitMeal follows Apple's Liquid Glass design language, in its light and clear for
 ## Safety, privacy and consent
 
 - **Adults only.** Onboarding step 2 asks *Are you 18 or older?* with two equal buttons. *I'm under 18* ends onboarding on a kind stop screen, and there is no way around it. No date of birth is stored.
-- **Health-data consent (GDPR Art. 9)** has its own screen: a plain explanation, a **separate, unticked** checkbox and a Privacy link. It is never bundled with the terms. *Continue* stays disabled until it's ticked. Consent can be withdrawn in Profile › Privacy & health, which leads to account deletion.
+- **Health-data consent (GDPR Art. 9)** has its own screen: a plain explanation, a **separate, unticked** checkbox and a Privacy link. It is never bundled with the terms. *Continue* stays disabled until it's ticked. Its footnote says where the profile lives (next point). This is the only consent in the app. Consent can be withdrawn in Profile › Privacy & health, which leads to account deletion.
+- **Where data lives.** Say it the same way everywhere (03, 05, 15, 37b, 38):
+  - *On this phone:* the nutrition profile (targets, exclusions with their tiers, optional body data). It syncs through the user's private iCloud, on by default and switchable in Profile; we can't read it. The server receives it with each plan, transform, swap and rebalance request and keeps nothing. The suggested-targets calculator runs on the phone.
+  - *On our servers in the EU:* account, plans, meal status, saved and imported recipes, shopping lists, consent records.
+  - *Never collected:* medical conditions, date of birth, device or advertising identifiers, PDF files.
+  - Never say the profile is "stored in the EU" or "on our servers". Recipe text goes to *our AI provider in the EU*; the profile never goes to AI.
+- **No analytics and no device identifiers.** There is no analytics SDK, so there is no analytics consent, toggle or banner anywhere. Don't add one.
+- **No marketing.** No marketing email or push at launch, so no marketing opt-in. The only notification is the Thursday *plan next week* reminder, offered on the cooking step (14) through the iOS permission prompt with *Not now*, and managed in Profile › *Plan reminder · Thursdays*.
+- **Imports** are private, never feed a public catalog, and send only recipe text: PDFs are read on the phone, link import uses only schema.org recipe data, and shares send only the caption. The import notice sits next to every import action.
 - **Health notice:** a neutral `Notice` in onboarding says the app is general planning, not medical advice, and names who should talk to a doctor or dietitian first. It stays available in Profile. The app never asks about or stores medical conditions.
 - **1,200 kcal floor:** a refusal, not a warning. `NumberField` shows the error and the reason, *Continue* is disabled, and a suggested value is clamped to 1,200.
-- **Allergens:** the checklist is the 14 EU allergens, diet categories, and free text that must be matched to a food and confirmed. An unmatched entry says it can't be enforced. `ExclusionRow` states what each tier does. *Allergy* also excludes derived ingredients and "may contain" traces. An *Intolerance* can be relaxed to *avoid when possible*. Unclear imported ingredients count as possible allergens until clarified.
-- **Account deletion** says what is deleted and that the App Store subscription must be cancelled with Apple. *Export my data* sits next to it.
+- **Allergens:** the checklist is the 14 EU allergens, diet categories, and free text that must be matched to a food and confirmed. An unmatched entry says it can't be enforced. `ExclusionRow` states what each tier does. *Allergy* also excludes derived ingredients and "may contain" traces. An *Intolerance* can be relaxed to *avoid when possible*. Unclear imported ingredients count as possible allergens until clarified. With no profile on the phone, the allergen check can't run: Import Preview is blocked (`warning`), and plans and swaps wait for the profile.
+- **Export and deletion** cover both places. *Export my data* combines the profile from this phone with the data from our servers. *Delete account* names what goes: account, plans and private imports on our servers, and the profile on this phone and in iCloud (if iCloud can't be reached, it says the profile may stay there and how to remove it). Consent records are kept only as long as the law requires. It also says the App Store subscription must be cancelled with Apple.
 
 ## MVP scope in the UI
 
@@ -105,14 +115,15 @@ These components already support the Phase 2 versions (`Delta` with `PLN`, `Shop
 
 ## Layout patterns
 
-- **Onboarding** has 14 steps, each with one question and one sticky primary: welcome, 18+, consent and health notice, goal, body data (optional, *Skip, I'll enter my own*), calories, macros (Simple by default, Advanced opt-in), meals per day, distribution, allergens, diet and other exclusions, preferences, budget, and meal prep with cooking. No account is needed. *Sign in with Apple* is asked when the first plan is generated, as a sheet over the new plan (whether to show the plan first is an open decision in the PRD). Use Apple's own `SignInWithAppleButton` in the app.
+- **Onboarding** has 14 steps, each with one question and one sticky primary: welcome, 18+, consent and health notice, goal, body data (optional, *Skip, I'll enter my own*), calories, macros (Simple by default, Advanced opt-in), meals per day, distribution, allergens, diet and other exclusions, preferences, budget, and meal prep with cooking. No account is needed. Step 14 (cooking) also offers the Thursday plan reminder as a card with *Remind me on Thursdays* (the iOS prompt) and *Not now*; it is not a separate step. *Sign in with Apple* is asked when the first plan is generated, as a sheet over the new plan (whether to show the plan first is an open decision in the PRD). The sheet says plans and recipes are kept with the account and the profile stays on this phone; it offers no iCloud choice. Use Apple's own `SignInWithAppleButton` in the app.
+- **New phone:** *I already have an account* → Sign in with Apple → 18+ and consent again → **01b Restore profile** from iCloud (the normal path: a summary of calories, protein and exclusions to check, *Restore my profile* / *Set up again*) or, when sync was off or iCloud can't be reached, **01c No profile on this phone** (plans are back; plans, swaps and the import allergen check are paused until the profile is set up in steps 04–14 or restored).
 - **Tab roots** (Today, Plan, Shopping) use a `NavBar large` title plus subtitle, the user's `Avatar` at the top right, content scrolling under a floating glass `TabBar` with three tabs, and a separate round Add button that opens Add Recipe. A `BottomAccessory` shows what's next: *Up next · Lunch 13:30* on Today, *Cook today · 2 recipes* on Plan, basket progress on Shopping.
-- **Profile** is not a tab. Tapping the `Avatar` opens it as a page sheet over the current tab, with a glass-prominent check (Done) at the top right. It holds stats, targets (calories, exclusions, meal prep), subscription, data export and account deletion.
+- **Profile** is not a tab. Tapping the `Avatar` opens it as a page sheet over the current tab, with a glass-prominent check (Done) at the top right. It holds stats, targets (calories, exclusions, meal prep), subscription, and Privacy & health: *Nutrition profile · On this phone* (opens *Where your data lives*), *Sync with iCloud*, *Plan reminder · Thursdays* (mirrors the iOS permission, with *Open Settings* when it's off), the health notice, the consent, data export and account deletion.
 - **Decisions** (swap meal, swap ingredient, *I don't have this*) open a floating glass sheet (inset 8px, `radius-sheet`). It holds ranked `SwapOption`s with their `Delta`, the effect on the day (*Your day after the swap*), and one primary button naming the result, with *Nothing changes until you confirm*.
 - **Rebalance proposal:** after a confirmed swap that leaves the day outside tolerance, a `RebalanceProposal` lists each adjustment (±20% at most) with its own checkbox. Eaten, skipped and earlier meals are shown as locked, and *Keep day as is* is always available. When the target can't be restored, it switches to the unreachable variant.
 - **Meal status:** every `MealCard` on Today and Plan can be marked cooked, eaten or skipped in one tap, including offline. Prepped meals show *cook Wed · eat by Thu*.
 - **States:** *No plan possible* explains the blocker in plain words and lists concrete changes (never relaxing an allergy). A plan built by relaxing a soft goal says which goal. Offline shows what still works and what needs a connection. All three use `Notice`.
-- **Import:** the allergen block sits at the top of Import Preview. Unclear lines open a Clarification prompt that blocks planning until answered. *Your version* shows the source's own nutrition figure for comparison only. A missed target is shown as missed, with options.
+- **Import:** Add recipe offers *Paste link* (recipe pages and blogs), *Choose a PDF* (selectable text, read on the phone), *Paste recipe text* and *Enter manually*, with the import notice next to them. A PDF opens a picker of the recipes found with their pages; each ticked recipe is one import and the picker shows what's left. When a source can't be read (a scanned PDF, a page without recipe data, a site that opts out of text and data mining, an Instagram or TikTok link), an `info` `Notice` offers *Paste recipe text* first and the URL stays as the source. The Share Extension shows the caption it will use and the source URL, which is never opened. The allergen block sits at the top of Import Preview; with no profile on the phone, a `warning` block asks to set it up, and the recipe can still be saved. Unclear lines open a Clarification prompt that blocks planning until answered. *Your version* shows the source's own nutrition figure for comparison only. A missed target is shown as missed, with options. Never lead with AI and never design OCR or link fetching for Instagram or TikTok.
 - **Shopping list:** sections follow the backend's store-walk order (vegetables, fruit, meat & fish, dairy & eggs …). Package counts are shown. A checked item that grew shows *+200 g more to buy*.
 - **Recipes** open with an edge-to-edge `RecipeHero` (the macro plate) under a glass `NavBar overlay`, then the name, `MacroLine lg`, badges (time, portions, cost, storage), a paprika *Fitted to your lunch · N changes* link, and ingredient rows with changes tinted. The bottom has a glass *Cook* button and a glass-prominent *Mark as cooked*.
 - **Cooking mode** shows one big step per screen, with a glass toolbar (previous, *Next step*, timers) and the running timer in a `BottomAccessory`.
@@ -132,6 +143,7 @@ The iOS app uses **SF Symbols** (regular weight, 22 pt in rows, 24 pt in the tab
 | flame | `flame` | alert | `exclamationmark.triangle` |
 | clock | `clock` | leaf (waste) | `leaf` |
 | target | `scope` | wallet (budget) | `creditcard` |
+| cloud (iCloud sync) | `icloud` | | |
 
 Icons are single-ink and take the text colour of their row. No emoji or illustrated food icons in the UI chrome. Recipe imagery comes later and never reuses a source's photos.
 
@@ -156,12 +168,12 @@ Helper classes in `bundle.css`: `.fm-glass` (the glass material), `.fm-glass-gro
 
 The **Screens** group lays out the MVP flow of the PRD (after the review decisions) on iPhone frames:
 
-- **Onboarding (01–15):** welcome, 18+ confirmation and the under-18 stop, consent and health notice, goal, body data, suggested calories and the 1,200 kcal floor, macros, meals and distribution, the 14 EU allergens with severity tiers, diet and free-text exclusions, preferences, budget and meal prep, and *Sign in with Apple* to save the first plan.
+- **Onboarding (01–15):** welcome, restore profile on a new phone (01b) and no profile on this phone (01c), 18+ confirmation and the under-18 stop, consent and health notice (profile on this phone), goal, body data (calculated on the phone), suggested calories and the 1,200 kcal floor, macros, meals and distribution, the 14 EU allergens with severity tiers, diet and free-text exclusions, preferences, budget and meal prep with the plan reminder, and *Sign in with Apple* to save the first plan.
 - **Plan and Today (16–19):** create plan (3, 5 or 7 days), weekly plan with cook and eat-by days, Today with meal statuses, and swap meal with its effect on the day.
 - **Rebalance and recipe (20–24):** rebalance proposal, the can't-restore case, recipe, *Why did FitMeal change this?* with keep and undo per change, and ingredient swap.
-- **Import (25–30):** add recipe, Import Preview with an allergen block, clarification prompt, your version with source nutrition, target missed, and *I don't have this*.
+- **Import (25–30):** add recipe with the import notice, PDF recipe picker (25b), fallbacks to *Paste recipe text* for a scanned PDF (25c), a page without recipe data (25d), a site that opts out of text and data mining (25e) and an Instagram or TikTok link (25f), the Share Extension with and without a caption (25g), Import Preview with an allergen block (shared-caption source line), Import Preview with no profile on this phone (26b), clarification prompt, your version with source nutrition, target missed, and *I don't have this*.
 - **Plan states (31–33):** no plan possible, a plan with a relaxed goal, and offline.
-- **Shopping, paywall and profile (34–38):** shopping list, Economy Mode v1 preview, paywall, Profile with consent and health notice, and delete account.
-- A dark-theme set and a Liquid Glass page.
+- **Shopping, paywall and profile (34–38):** shopping list, Economy Mode v1 preview, paywall, Profile with Privacy & health (profile on this phone, iCloud sync, plan reminder, export), *Where your data lives* (37b), and delete account (with the iCloud-not-reachable case).
+- A dark-theme set (including 01c, an import fallback, the no-profile block and 37b) and a Liquid Glass page.
 
 Together they cover every step of the MVP Definition of Done.

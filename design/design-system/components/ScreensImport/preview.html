@@ -1,4 +1,4 @@
-<!-- @dsCard group="Screens" height=900 width=2610 page subtitle="Add recipe, Import preview with a blocking allergen notice, Clarification prompt, Your version with source nutrition, Target missed, I don't have this" -->
+<!-- @dsCard group="Screens" height=900 width=6058 page subtitle="Add recipe with the import notice, PDF recipe picker, import fallbacks (scanned PDF, no recipe data, site opts out, Instagram/TikTok link), Share Extension (with and without a caption), Import preview with a blocking allergen notice, No profile on this phone, Clarification prompt, Your version with source nutrition, Target missed, I don't have this" -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Add and import a recipe</title></head>
@@ -22,43 +22,138 @@ function label(t){ return h('span', {className:'fm-cap'}, t); }
 function sheet(){ return h('div', {key:'s', className:'fm-scrim'}, h.apply(null, ['div', {className:'fm-sheet'}, h('span', {className:'fm-sheet-grab'})].concat([].slice.call(arguments)))); }
 function sheetHead(title){ return h('div', {style:{display:'flex', justifyContent:'space-between', alignItems:'center'}}, h('h2', {className:'fm-h2'}, title), h(F.IconButton, {icon:'close', label:'Close'})); }
 var AV = h(F.Avatar, {initials:'OL', label:'Profile'});
-var PREP = {portion:'1/2', cook:'Wed', eatBy:'Thu'};
-var TODAY_MEALS = [
-  h(F.MealCard, {key:1, slot:'Breakfast', time:'08:00', title:'Protein Snickers Shake', kcal:520, protein:44, carbs:52, fat:14, status:'eaten', badges:[{label:'Prepare fresh', icon:'clock'}]}),
-  h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, status:'cooked', prep:PREP}),
-  h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Turkey Pasta Bake', kcal:429, protein:32, carbs:40, fat:14, prep:PREP})
-];
-function daySummary(){ return card(
-  h('div', {style:{display:'flex', alignItems:'center', gap:16}},
-    h(F.MacroRing, {value:1497, target:1500, size:112, stroke:10, macros:{protein:{share:.32}, carbs:{share:.35}, fat:{share:.33}}}),
-    h('div', {style:{flex:1, display:'flex', flexDirection:'column', gap:10}},
-      h(F.MacroBar, {macro:'protein', value:125, target:115, mode:'min', compact:true}),
-      h(F.MacroBar, {macro:'carbs', value:150, target:140, compact:true}),
-      h(F.MacroBar, {macro:'fat', value:40, target:50, compact:true})))); }
-var UP_NEXT = h(F.BottomAccessory, {icon:'clock', title:'Up next · Dinner 19:00', subtitle:'Turkey Pasta Bake · meal prep 1/2', action:'Eat'});
+
+/* Import notice: shown next to every import action (Add recipe, Share Extension). Not a warning, so no Notice tone. */
+function importNotice(){ return h('div', {role:'note', style:{display:'flex', gap:10, alignItems:'flex-start', padding:'12px 14px', borderRadius:'var(--radius-md)', background:'var(--surface-sunken)'}},
+  h('span', {style:{flex:'none', paddingTop:1, color:'var(--ink)'}}, h(F.Icon, {name:'shield', size:18})),
+  h('p', {className:'fm-foot', style:{color:'var(--ink)'}}, h('b', null, 'Import recipes only. '), 'Don’t import documents with other people’s personal or health information. PDFs are read on your phone and never leave it. Recipe text is processed by our AI provider in the EU. Imports stay private to you.')); }
+/* The link or file the fallback is about, and the source reference we keep. */
+function linkField(url){ return h(F.NumberField, {label:'Paste a link', value:url, placeholder:'https://…'}); }
+function source(url, note){ return h('div', {style:{display:'flex', gap:12, alignItems:'center', padding:'12px 16px', background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-md)'}},
+  h('span', {style:{color:'var(--ink-muted)', flex:'none'}}, h(F.Icon, {name:'link', size:20})),
+  h('div', {style:{flex:1, minWidth:0, display:'flex', flexDirection:'column', gap:2}},
+    label('Source'),
+    h('span', {style:{font:'500 15px/20px var(--font-text)', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}, url),
+    note ? h('span', {className:'fm-foot'}, note) : null)); }
+function file(name, meta){ return h('div', {style:{display:'flex', gap:12, alignItems:'center', padding:'12px 16px', background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-md)'}},
+  h('span', {style:{display:'grid', placeItems:'center', width:40, height:40, borderRadius:'var(--radius-sm)', background:'var(--surface-sunken)', flex:'none'}}, h(F.Icon, {name:'doc', size:22})),
+  h('div', {style:{flex:1, minWidth:0, display:'flex', flexDirection:'column'}},
+    h('span', {style:{font:'600 16px/22px var(--font-text)', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}, name),
+    h('span', {className:'fm-foot'}, meta))); }
+function pick(title, pages, on){ return h('div', {style:{display:'flex', alignItems:'center', gap:12, padding:'10px 16px', minHeight:44, borderBottom:'1px solid var(--line)', background:'var(--surface-raised)'}},
+  h(F.Checkbox, {label:title + ', ' + pages, checked:on}),
+  h('span', {style:{flex:1, display:'flex', flexDirection:'column'}},
+    h('span', {style:{font:'500 16px/22px var(--font-text)', color: on ? 'var(--ink)' : 'var(--ink-muted)'}}, title),
+    h('span', {className:'fm-foot'}, pages))); }
+var FALLBACK_NAV = h(F.NavBar, {key:'n', back:'Cancel', title:'Add a recipe'});
+var PASTE = {label:'Paste recipe text', icon:'text'};
+var CAPTION = 'Chicken teriyaki in 20 minutes. 300 g chicken breast, 2 tbsp soy sauce, 1 tbsp honey, 1 garlic clove, 1 tsp grated ginger, 150 g rice. Fry the chicken, add the sauce, reduce for 3 minutes and serve on the rice.';
+var HOST = h('div', {key:'host', style:{flex:1, background:'var(--surface-sunken)'}});
+
 show([
  Ph('25 Add recipe', [
-   h(F.NavBar, {key:'n', large:true, title:'Add a recipe', subtitle:'From Instagram, TikTok, a blog, a PDF or your notes.'}),
+   h(F.NavBar, {key:'n', large:true, title:'Add a recipe', subtitle:'From a recipe page, a PDF, a shared post or your notes.'}),
    scroll(
-     h(F.NumberField, {label:'Paste a link', value:'', placeholder:'https://…'}),
+     linkField(''),
+     importNotice(),
      h('div', {className:'fm-stack', style:{gap:8}},
-       h(F.SelectCard, {icon:'link', title:'Paste link', description:'Recipe pages, Instagram and TikTok captions', meta:'2 of 3 left'}),
-       h(F.SelectCard, {icon:'doc', title:'Upload PDF', description:'E-books and plans from your dietitian', meta:'1 trial'}),
-       h(F.SelectCard, {icon:'text', title:'Paste text', description:'Copy a recipe from anywhere'}),
+       h(F.SelectCard, {icon:'link', title:'Paste link', description:'Recipe pages and blogs', meta:'2 of 3 left'}),
+       h(F.SelectCard, {icon:'doc', title:'Choose a PDF', description:'PDFs with selectable text, read on your phone', meta:'1 trial'}),
+       h(F.SelectCard, {icon:'text', title:'Paste recipe text', description:'Copy a recipe from anywhere'}),
        h(F.SelectCard, {icon:'edit', title:'Enter manually', description:'Type ingredients line by line'})),
-     h('p', {className:'fm-foot'}, 'Tip: in Instagram, tap Share → FitMeal. Imports stay private to you.')),
+     h('p', {className:'fm-foot'}, 'Tip: in Instagram or TikTok, tap Share → FitMeal.')),
    h(F.TabBar, {key:'t', active:'none'})
+ ]),
+ Ph('25b PDF recipe picker', [
+   h(F.NavBar, {key:'n', back:'Cancel', title:'Choose recipes'}),
+   scroll(
+     file('Fit Lunchbox e-book.pdf', '42 pages · read on this phone'),
+     h(F.SectionHeader, {title:'Recipes found', meta:'4 found · 3 ticked'}),
+     h('div', {className:'fm-group'},
+       pick('Chicken Burrito Bowl', 'Pages 12–13', true),
+       pick('Turkey Meatballs with Rice', 'Page 14', true),
+       pick('Overnight Protein Oats', 'Page 18', true),
+       pick('Lemon Cheesecake', 'Pages 30–31', false)),
+     h('p', {className:'fm-foot'}, 'Only the text of the ticked recipes is sent. The PDF stays on your phone.')),
+   h('div', {key:'c'}, cta('Import 3 recipes', h('p', {className:'fm-foot', style:{textAlign:'center'}}, 'Each recipe counts as 1 import · 27 left this month')))
+ ]),
+ Ph('25c Scanned PDF', [
+   FALLBACK_NAV,
+   scroll(
+     file('Dieta_tydzien_1.pdf', '6 pages · no selectable text'),
+     h(F.Notice, {tone:'info', title:'This PDF is a scan', body:'We can only read PDFs with selectable text. Paste the recipe text instead.', actions:[PASTE, {label:'Choose another PDF'}]}))
+ ]),
+ Ph('25d No recipe data on the page', [
+   FALLBACK_NAV,
+   scroll(
+     linkField('https://blog.example.pl/zupa-dyniowa'),
+     h(F.Notice, {tone:'info', title:'We can’t read a recipe on this page', body:'Paste the recipe text and we’ll keep the link as the source.', actions:[PASTE, {label:'Try another link'}]}),
+     source('blog.example.pl/zupa-dyniowa', 'Saved with the recipe as its source.'))
+ ]),
+ Ph('25e Site opts out of text and data mining', [
+   FALLBACK_NAV,
+   scroll(
+     linkField('https://magazyn.example.com/przepisy/risotto'),
+     h(F.Notice, {tone:'info', title:'We don’t open this site', body:'This site doesn’t allow automated reading, so we don’t open it. Paste the recipe text and we’ll keep the link as the source.', actions:[PASTE, {label:'Try another link'}]}),
+     source('magazyn.example.com/przepisy/risotto', 'Saved as the source. We don’t open it.'))
+ ]),
+ Ph('25f Instagram or TikTok link pasted', [
+   FALLBACK_NAV,
+   scroll(
+     linkField('https://www.instagram.com/reel/C9xk2Lm'),
+     h(F.Notice, {tone:'info', title:'We don’t open Instagram or TikTok links', body:'Share the post to FitMeal, or paste the caption. We’ll keep the link as the source.', items:['In Instagram or TikTok, tap Share', 'Then choose FitMeal'], actions:[PASTE]}),
+     source('instagram.com/reel/C9xk2Lm', 'Saved as the source. We don’t open it.'))
+ ]),
+ Ph('25g Share Extension (from Instagram)', [
+   HOST,
+   h('div', {key:'s', className:'fm-scrim'},
+     h('div', {className:'fm-sheet'},
+       h('span', {className:'fm-sheet-grab'}),
+       sheetHead('Add to FitMeal'),
+       label('Caption we’ll use'),
+       h('div', {style:{background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-md)', padding:'12px 14px'}},
+         h('p', {className:'fm-body', style:{fontSize:15, lineHeight:'21px'}}, CAPTION)),
+       h(F.Button, {variant:'quiet', size:'sm', icon:'plus', style:{alignSelf:'flex-start'}}, 'Paste more text'),
+       source('instagram.com/reel/C9xk2Lm', null),
+       h('p', {className:'fm-foot'}, 'We’ll use only this text. The link is saved as the source and never opened.'),
+       importNotice(),
+       h(F.Button, {variant:'primary', size:'lg', block:true}, 'Import recipe')))
+ ]),
+ Ph('25g Share Extension · no caption', [
+   HOST,
+   h('div', {key:'s', className:'fm-scrim'},
+     h('div', {className:'fm-sheet'},
+       h('span', {className:'fm-sheet-grab'}),
+       sheetHead('Add to FitMeal'),
+       h(F.Notice, {tone:'info', title:'This post has no caption to use', body:'Paste the recipe text, for example from the comments. We’ll keep the link as the source.', actions:[PASTE]}),
+       h('div', {role:'textbox', 'aria-label':'Recipe text', style:{minHeight:72, padding:'12px 14px', background:'var(--surface-raised)', border:'1.5px solid var(--line-strong)', borderRadius:'var(--radius-sm)', font:'400 15px/21px var(--font-text)', color:'var(--ink-faint)'}}, 'Paste the recipe text'),
+       source('instagram.com/reel/C9xk2Lm', 'Saved as the source. We don’t open it.'),
+       importNotice(),
+       h(F.Button, {variant:'primary', size:'lg', block:true, disabled:true}, 'Import recipe')))
  ]),
  Ph('26 Import preview · allergen', [
    h(F.NavBar, {key:'n', back:'Cancel', title:'Check ingredients'}),
    scroll(
      h(F.Notice, {tone:'danger', title:'Contains peanuts (peanut butter)', body:'Peanuts are your allergy. You can save this recipe, but we can’t personalize or plan it until peanut butter is swapped or removed.', actions:[{label:'Swap peanut butter', icon:'swap'}, {label:'Remove it'}]}),
-     h('div', {className:'fm-stack', style:{gap:2}}, label('Recipe detected'), h('h1', {className:'fm-h2'}, 'Satay Chicken Wrap'), h('p', {className:'fm-foot'}, 'from instagram.com · serves 2 · 20 min')),
+     h('div', {className:'fm-stack', style:{gap:2}}, label('Recipe detected'), h('h1', {className:'fm-h2'}, 'Satay Chicken Wrap'), h('p', {className:'fm-foot'}, 'Shared from instagram.com · caption only · serves 2 · 20 min')),
      h('div', {className:'fm-group'},
        h(F.IngredientRow, {name:'Peanut butter', amount:'2 tbsp · 32 g', excluded:'Allergy · peanuts', swappable:false}),
        h(F.IngredientRow, {name:'Chicken breast', amount:'300 g', swappable:false}),
        h(F.IngredientRow, {name:'Cheese?', amount:'1 cup · check this', swappable:false}))),
    h('div', {key:'c'}, cta('Continue', h('p', {className:'fm-foot', style:{textAlign:'center'}}, '1 allergen to fix · 1 item to check')))
+ ]),
+ Ph('26b Import preview · no profile on this phone', [
+   h(F.NavBar, {key:'n', back:'Cancel', title:'Check ingredients'}),
+   scroll(
+     h(F.Notice, {tone:'warning', icon:'lock', title:'We can’t check this recipe for your allergens', body:'Your profile isn’t on this phone, so we don’t know your allergies. Set it up to check, fit and plan this recipe. You can save it now.', actions:[{label:'Set up my profile'}, {label:'Restore from iCloud', icon:'cloud'}]}),
+     h('div', {className:'fm-stack', style:{gap:2}}, label('Recipe detected'), h('h1', {className:'fm-h2'}, 'Chicken Burrito Bowl'), h('p', {className:'fm-foot'}, 'From Fit Lunchbox e-book.pdf · pages 12–13 · serves 2 · 25 min')),
+     h('div', {className:'fm-group'},
+       h(F.IngredientRow, {name:'Chicken breast', amount:'300 g', swappable:false}),
+       h(F.IngredientRow, {name:'Black beans', amount:'1 can · 240 g', swappable:false}),
+       h(F.IngredientRow, {name:'Cheddar', amount:'40 g', swappable:false}))),
+   h('div', {key:'c', className:'fm-sticky'},
+     h('p', {className:'fm-foot', style:{textAlign:'center'}}, 'Saved recipes aren’t fitted or planned until the allergen check has run.'),
+     h(F.Button, {variant:'secondary', size:'lg', block:true}, 'Save to my recipes'))
  ]),
  Ph('27 Clarification prompt', [
    h(F.NavBar, {key:'n', back:'Cancel', title:'Check ingredients'}),

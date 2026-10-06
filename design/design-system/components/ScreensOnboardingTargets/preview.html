@@ -44,7 +44,8 @@ show([
      h('div', {className:'fm-fieldrow'}, h(F.NumberField, {label:'Height', value:'170', unit:'cm'}),
        h('div', {className:'fm-stack', style:{gap:6, flex:1}}, h('span', {className:'fm-field-label'}, 'Sex'), h(F.SegmentedControl, {options:['Female','Male'], value:'Female'}))),
      h('div', {className:'fm-stack', style:{gap:6}}, h('span', {className:'fm-field-label'}, 'Activity'), h(F.SegmentedControl, {options:['Low','Light','Active','Very'], value:'Light'}),
-       h('p', {className:'fm-foot'}, 'Light: desk job, 2–3 workouts a week.'))),
+       h('p', {className:'fm-foot'}, 'Light: desk job, 2–3 workouts a week.')),
+     h('p', {className:'fm-foot', style:{display:'flex', gap:6, alignItems:'flex-start'}}, h('span', {style:{flex:'none', paddingTop:1}}, h(F.Icon, {name:'lock', size:16})), 'We calculate suggestions on this phone. These details stay on it.')),
    h('div', {key:'c', className:'fm-sticky'},
      h(F.Button, {variant:'primary', size:'lg', block:true}, 'Suggest my targets'),
      h(F.Button, {variant:'quiet', size:'md', block:true}, 'Skip, I’ll enter my own'))
