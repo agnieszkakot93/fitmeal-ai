@@ -91,7 +91,7 @@ foods:
 
   - slug: pork-tenderloin-raw
     name: {en: "Pork tenderloin, lean, raw", pl: "Polędwiczka wieprzowa, surowa"}
-    aliases: {en: [pork tenderloin, pork fillet], pl: [polędwiczka wieprzowa, polędwica wieprzowa, schab]}
+    aliases: {en: [pork tenderloin, pork fillet], pl: [polędwiczka wieprzowa, polędwica wieprzowa]}
     category: meat_fish
     origin: meat
     traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
@@ -100,6 +100,68 @@ foods:
     portions: {piece: 450}
     packages_g: [450, 500]
     fdc: {description: "Pork, fresh, loin, tenderloin, separable lean only, raw"}
+    review: {status: draft}
+
+  - slug: pork-loin-raw
+    name: {en: "Pork loin, boneless, lean, raw", pl: "Schab wieprzowy bez kości, surowy"}
+    aliases: {en: [pork loin, boneless pork loin, pork loin chops], pl: [schab, schab bez kości, schab wieprzowy, schab środkowy]}
+    category: meat_fish
+    origin: meat
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
+    culinary_roles: [main_protein]
+    substitution_groups: [lean_pork, red_meat]
+    portions: {slice: 120}  # one chop-sized slice
+    packages_g: [500, 1000]
+    fdc: {description: "Pork, fresh, loin, whole, separable lean only, raw"}
+    review: {status: draft}
+
+  - slug: pork-shoulder-raw
+    name: {en: "Pork shoulder, boneless, raw", pl: "Łopatka wieprzowa bez kości, surowa"}
+    aliases: {en: [pork shoulder, boneless pork shoulder], pl: [łopatka, łopatka wieprzowa, mięso z łopatki]}
+    category: meat_fish
+    origin: meat
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
+    culinary_roles: [main_protein]
+    substitution_groups: [red_meat]
+    packages_g: [500, 1000]
+    fdc: {description: "Pork, fresh, shoulder, whole, separable lean and fat, raw"}
+    review: {status: draft}
+
+  - slug: pork-ground-raw
+    name: {en: "Ground pork, raw", pl: "Mięso mielone wieprzowe, surowe"}
+    aliases: {en: [ground pork, minced pork, pork mince], pl: [mielone wieprzowe, mięso mielone wieprzowe, wieprzowina mielona]}
+    category: meat_fish
+    origin: meat
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
+    culinary_roles: [main_protein]
+    substitution_groups: [ground_meat, red_meat]
+    packages_g: [400, 500]
+    fdc: {description: "Pork, fresh, ground, raw"}
+    review: {status: draft}
+
+  - slug: chicken-drumstick-raw
+    name: {en: "Chicken drumstick meat, skinless, raw", pl: "Podudzie z kurczaka bez skóry, surowe"}
+    aliases: {en: [chicken drumstick, chicken drumsticks], pl: [podudzie z kurczaka, podudzia z kurczaka, pałka z kurczaka, pałki z kurczaka]}
+    category: meat_fish
+    origin: poultry
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
+    culinary_roles: [main_protein]
+    substitution_groups: [poultry]
+    portions: {piece: 70}  # edible meat of one drumstick, no bone or skin
+    packages_g: [500, 1000]  # sold bone-in
+    fdc: {description: "Chicken, broilers or fryers, drumstick, meat only, raw"}
+    review: {status: draft}
+
+  # Offal is not clearly a "whole cut" under TRACE_POLICY.md#raw-meat-eggs: unknown.
+  - slug: chicken-liver-raw
+    name: {en: "Chicken liver, raw", pl: "Wątróbka drobiowa, surowa"}
+    aliases: {en: [chicken liver, chicken livers], pl: [wątróbka drobiowa, wątróbki drobiowe, wątróbka z kurczaka]}
+    category: meat_fish
+    origin: poultry
+    traces: {status: unknown}
+    culinary_roles: [main_protein]
+    packages_g: [500]
+    fdc: {description: "Chicken, liver, all classes, raw"}
     review: {status: draft}
 
   - slug: ham-deli-lean
@@ -174,6 +236,90 @@ foods:
     fdc: {description: "Crustaceans, shrimp, raw"}
     review: {status: draft}
 
+  - slug: mackerel-raw
+    name: {en: "Mackerel, Atlantic, raw", pl: "Makrela, surowa"}
+    aliases: {en: [mackerel, mackerel fillet], pl: [makrela, makrela świeża, filet z makreli]}
+    category: meat_fish
+    origin: fish
+    allergens: [fish]
+    may_contain: [crustaceans, molluscs]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-fish-seafood"}}
+    culinary_roles: [main_protein]
+    substitution_groups: [oily_fish]
+    portions: {piece: 120}  # one fillet
+    fdc: {description: "Fish, mackerel, Atlantic, raw"}
+    review: {status: draft}
+
+  # Plain "śledź" is left out: in Polish recipes it is usually salted or pickled.
+  - slug: herring-raw
+    name: {en: "Herring, Atlantic, raw", pl: "Śledź świeży, surowy"}
+    aliases: {en: [fresh herring, herring fillet], pl: [śledź świeży, śledź surowy, filet ze śledzia świeżego]}
+    category: meat_fish
+    origin: fish
+    allergens: [fish]
+    may_contain: [crustaceans, molluscs]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-fish-seafood"}}
+    culinary_roles: [main_protein]
+    substitution_groups: [oily_fish]
+    fdc: {description: "Fish, herring, Atlantic, raw"}
+    review: {status: draft}
+
+  - slug: trout-raw
+    name: {en: "Rainbow trout, farmed, raw", pl: "Pstrąg tęczowy, surowy"}
+    aliases: {en: [trout, rainbow trout, trout fillet], pl: [pstrąg, pstrąg tęczowy, filet z pstrąga]}
+    category: meat_fish
+    origin: fish
+    allergens: [fish]
+    may_contain: [crustaceans, molluscs]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-fish-seafood"}}
+    culinary_roles: [main_protein]
+    substitution_groups: [oily_fish]
+    portions: {piece: 125}  # one fillet
+    fdc: {description: "Fish, trout, rainbow, farmed, raw"}
+    review: {status: draft}
+
+  - slug: carp-raw
+    name: {en: "Carp, raw", pl: "Karp, surowy"}
+    aliases: {en: [carp, carp fillet], pl: [karp, filet z karpia, dzwonko karpia]}
+    category: meat_fish
+    origin: fish
+    allergens: [fish]
+    may_contain: [crustaceans, molluscs]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-fish-seafood"}}
+    culinary_roles: [main_protein]
+    substitution_groups: [white_fish]
+    portions: {piece: 150}  # one steak (dzwonko)
+    fdc: {description: "Fish, carp, raw"}
+    review: {status: draft}
+
+  - slug: tuna-canned-oil
+    name: {en: "Tuna in oil, canned, drained", pl: "Tuńczyk w oleju, odsączony"}
+    aliases: {en: [tuna in oil, canned tuna in oil], pl: [tuńczyk w oleju, tuńczyk w oliwie]}
+    category: meat_fish
+    origin: fish
+    allergens: [fish]
+    traces: {status: unknown}
+    culinary_roles: [main_protein]
+    substitution_groups: [canned_fish]
+    portions: {can: 120}
+    packages_g: [120]
+    fdc: {description: "Fish, tuna, light, canned in oil, drained solids"}
+    review: {status: draft}
+
+  - slug: sardines-canned-oil
+    name: {en: "Sardines in oil, canned, drained", pl: "Sardynki w oleju, odsączone"}
+    aliases: {en: [sardines, canned sardines, sardines in oil], pl: [sardynki, sardynki w oleju, sardynki w oliwie]}
+    category: meat_fish
+    origin: fish
+    allergens: [fish]
+    traces: {status: unknown}
+    culinary_roles: [main_protein]
+    substitution_groups: [canned_fish]
+    portions: {can: 90, piece: 12}
+    packages_g: [90]
+    fdc: {description: "Fish, sardine, Atlantic, canned in oil, drained solids with bone"}
+    review: {status: draft}
+
   # ── Eggs ──────────────────────────────────────────────────────────────────
   - slug: egg-whole-raw
     name: {en: "Egg, whole, raw", pl: "Jajko kurze całe, surowe"}
@@ -204,6 +350,20 @@ foods:
     fdc: {description: "Egg, white, raw, fresh"}
     review: {status: draft}
 
+  # Separated from a shell egg at home, like egg-white-raw.
+  - slug: egg-yolk-raw
+    name: {en: "Egg yolk, raw", pl: "Żółtko jaja kurzego, surowe"}
+    aliases: {en: [egg yolk, egg yolks], pl: [żółtko, żółtka, żółtko jaja]}
+    category: dairy_eggs
+    origin: egg
+    allergens: [eggs]
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#raw-meat-eggs"}}
+    culinary_roles: [binder, creamy_base]
+    substitution_groups: [egg]
+    portions: {piece: 17}
+    fdc: {description: "Egg, yolk, raw, fresh"}
+    review: {status: draft}
+
   # ── Dairy ─────────────────────────────────────────────────────────────────
   - slug: milk-2
     name: {en: "Milk 2% fat", pl: "Mleko 2%"}
@@ -221,7 +381,7 @@ foods:
 
   - slug: milk-skim
     name: {en: "Skim milk", pl: "Mleko odtłuszczone 0,5%"}
-    aliases: {en: [skim milk, skimmed milk, fat free milk], pl: [mleko odtłuszczone, mleko 0,5%, mleko chude]}
+    aliases: {en: [skim milk, skimmed milk, fat free milk], pl: [mleko odtłuszczone, "mleko 0,5%", mleko chude]}
     category: dairy_eggs
     origin: dairy
     allergens: [milk]
@@ -443,6 +603,108 @@ foods:
     fdc: {description: "Cream, sour, cultured"}
     review: {status: draft}
 
+  - slug: milk-whole
+    name: {en: "Milk 3.2% fat", pl: "Mleko 3,2%"}
+    aliases: {en: [whole milk, full fat milk, full-fat milk], pl: ["mleko 3,2%", mleko pełnotłuste, mleko tłuste]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
+    culinary_roles: [liquid, creamy_base]
+    substitution_groups: [milk]
+    density_g_per_ml: 1.03
+    packages_g: [1030]
+    fdc: {description: "Milk, whole, 3.25% milkfat, with added vitamin D"}
+    review: {status: draft}
+
+  - slug: buttermilk
+    name: {en: "Buttermilk, plain", pl: "Maślanka naturalna"}
+    aliases: {en: [buttermilk, cultured buttermilk], pl: [maślanka, maślanka naturalna]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#plain-dairy"}}
+    culinary_roles: [liquid, creamy_base]
+    substitution_groups: [fermented_milk]
+    density_g_per_ml: 1.03
+    packages_g: [1000]
+    fdc: {description: "Milk, buttermilk, fluid, cultured, lowfat"}
+    review: {status: draft}
+
+  # UHT coffee creams often add stabilisers (carrageenan, phosphates), so this
+  # is not clearly plain-dairy: unknown until a label is recorded.
+  - slug: cream-light-12
+    name: {en: "Light cream 12% (half and half)", pl: "Śmietanka 12%"}
+    aliases: {en: [half and half, light cream, coffee cream], pl: [śmietanka 12%, śmietanka do kawy]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    traces: {status: unknown}
+    culinary_roles: [creamy_base, sauce_base, liquid]
+    substitution_groups: [creamy_dairy]
+    density_g_per_ml: 1.01
+    packages_g: [200, 330, 500]
+    fdc: {description: "Cream, fluid, half and half"}
+    review: {status: draft}
+
+  - slug: ricotta
+    name: {en: "Ricotta, whole milk", pl: "Ricotta"}
+    aliases: {en: [ricotta, ricotta cheese], pl: [ricotta, ser ricotta, serek ricotta]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    traces: {status: unknown}
+    culinary_roles: [creamy_base, cheese]
+    substitution_groups: [fresh_cheese]
+    portions: {tbsp: 15}
+    packages_g: [250]
+    fdc: {description: "Cheese, ricotta, whole milk"}
+    review: {status: draft}
+
+  # Semi-hard cheeses: some use lysozyme from egg or additives beyond the
+  # plain-dairy list, so traces stay unknown until a label is recorded.
+  - slug: gouda
+    name: {en: "Gouda cheese", pl: "Ser gouda"}
+    aliases: {en: [gouda, gouda cheese], pl: [gouda, ser gouda, ser żółty gouda]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    traces: {status: unknown}
+    culinary_roles: [cheese, topping]
+    substitution_groups: [hard_cheese]
+    portions: {slice: 15}
+    packages_g: [150, 300]
+    fdc: {description: "Cheese, gouda"}
+    review: {status: draft}
+
+  - slug: emmental
+    name: {en: "Emmental cheese", pl: "Ser ementaler"}
+    aliases: {en: [emmental, emmentaler, swiss cheese], pl: [ementaler, ser ementaler, ser szwajcarski]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    traces: {status: unknown}
+    culinary_roles: [cheese, topping]
+    substitution_groups: [hard_cheese]
+    portions: {slice: 15}
+    packages_g: [150, 250]
+    fdc: {description: "Cheese, swiss"}
+    review: {status: draft}
+
+  - slug: camembert
+    name: {en: "Camembert", pl: "Ser camembert"}
+    aliases: {en: [camembert, camembert cheese], pl: [camembert, ser camembert, ser pleśniowy camembert]}
+    category: dairy_eggs
+    origin: dairy
+    allergens: [milk]
+    traces: {status: unknown}
+    culinary_roles: [cheese]
+    substitution_groups: [soft_cheese]
+    portions: {piece: 120}
+    packages_g: [120]
+    fdc: {description: "Cheese, camembert"}
+    review: {status: draft}
+
   # ── Plant protein & legumes ───────────────────────────────────────────────
   - slug: tofu-firm
     name: {en: "Tofu, firm", pl: "Tofu naturalne"}
@@ -507,6 +769,85 @@ foods:
     portions: {can: 240}
     packages_g: [240]
     fdc: {description: "Beans, kidney, red, mature seeds, canned, drained solids"}
+    review: {status: draft}
+
+  - slug: lentils-green-dry
+    name: {en: "Green or brown lentils, dry", pl: "Soczewica zielona, sucha"}
+    aliases: {en: [green lentils, brown lentils], pl: [soczewica zielona, soczewica brązowa]}
+    category: legumes
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [main_protein, carb_base]
+    substitution_groups: [legume_dry]
+    portions: {szklanka: 200, cup: 190}
+    packages_g: [400, 500]
+    fdc: {description: "Lentils, raw"}
+    review: {status: draft}
+
+  - slug: chickpeas-dry
+    name: {en: "Chickpeas, dry", pl: "Ciecierzyca sucha"}
+    aliases: {en: [dried chickpeas, dry chickpeas, dried garbanzo beans], pl: [ciecierzyca sucha, ciecierzyca suszona, cieciorka sucha]}
+    category: legumes
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [main_protein, carb_base]
+    substitution_groups: [legume_dry]
+    portions: {szklanka: 200, cup: 200}
+    packages_g: [400, 500]
+    fdc: {description: "Chickpeas (garbanzo beans, bengal gram), mature seeds, raw"}
+    review: {status: draft}
+
+  - slug: white-beans-dry
+    name: {en: "White beans, dry", pl: "Fasola biała, sucha"}
+    aliases: {en: [white beans, dried white beans, cannellini beans], pl: [fasola biała, biała fasola, fasola jaś, fasola piękny jaś]}
+    category: legumes
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [main_protein, carb_base]
+    substitution_groups: [legume_dry]
+    portions: {szklanka: 190, cup: 180}
+    packages_g: [400, 500]
+    fdc: {description: "Beans, white, mature seeds, raw"}
+    review: {status: draft}
+
+  - slug: split-peas-dry
+    name: {en: "Split peas, dry", pl: "Groch łuskany, suchy"}
+    aliases: {en: [split peas, yellow split peas, dried peas], pl: [groch łuskany, groch, groch połówki, groch żółty]}
+    category: legumes
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [main_protein, carb_base]
+    substitution_groups: [legume_dry]
+    portions: {szklanka: 200, cup: 195}
+    packages_g: [400, 500]
+    fdc: {description: "Peas, split, mature seeds, raw"}
+    review: {status: draft}
+
+  - slug: edamame-frozen
+    name: {en: "Edamame, shelled, frozen", pl: "Edamame łuskane, mrożone"}
+    aliases: {en: [edamame, green soybeans], pl: [edamame, fasolka edamame, soja edamame]}
+    category: legumes
+    origin: plant
+    allergens: [soy]
+    traces: {status: unknown}
+    culinary_roles: [main_protein, vegetable]
+    substitution_groups: [plant_protein]
+    packages_g: [400, 500]
+    fdc: {description: "Edamame, frozen, unprepared"}
+    review: {status: draft}
+
+  # Contains tahini (sesame).
+  - slug: hummus
+    name: {en: "Hummus", pl: "Hummus"}
+    aliases: {en: [hummus, houmous, chickpea dip], pl: [hummus, humus, pasta z ciecierzycy]}
+    category: legumes
+    origin: plant
+    allergens: [sesame]
+    traces: {status: unknown}
+    culinary_roles: [sauce_base, creamy_base]
+    portions: {tbsp: 15}
+    packages_g: [200, 250]
+    fdc: {description: "Hummus, commercial"}
     review: {status: draft}
 
   - slug: whey-protein-isolate
@@ -663,6 +1004,75 @@ foods:
     fdc: {description: "Quinoa, uncooked"}
     review: {status: draft}
 
+  - slug: pearl-barley-dry
+    name: {en: "Pearl barley, dry", pl: "Kasza jęczmienna pęczak, sucha"}
+    aliases: {en: [pearl barley, barley groats], pl: [pęczak, kasza pęczak, kasza jęczmienna, kasza jęczmienna perłowa]}
+    category: grains_pasta
+    origin: plant
+    allergens: [gluten]
+    traces: {status: unknown}
+    culinary_roles: [carb_base]
+    substitution_groups: [grain]
+    portions: {szklanka: 200, cup: 200}
+    packages_g: [400, 1000]
+    fdc: {description: "Barley, pearled, raw"}
+    review: {status: draft}
+
+  - slug: semolina-dry
+    name: {en: "Semolina, dry", pl: "Kasza manna, sucha"}
+    aliases: {en: [semolina, cream of wheat], pl: [kasza manna, kaszka manna, manna, grysik]}
+    category: grains_pasta
+    origin: plant
+    allergens: [gluten]
+    traces: {status: unknown}
+    culinary_roles: [carb_base, binder]
+    substitution_groups: [breakfast_grain]
+    portions: {szklanka: 180, cup: 167, tbsp: 10}
+    packages_g: [500, 1000]
+    fdc: {description: "Semolina, enriched"}
+    review: {status: draft}
+
+  - slug: rice-arborio-dry
+    name: {en: "Risotto rice (arborio), dry", pl: "Ryż do risotto (arborio), suchy"}
+    aliases: {en: [arborio rice, risotto rice, carnaroli rice, medium grain rice], pl: [ryż arborio, ryż do risotto, ryż carnaroli]}
+    category: grains_pasta
+    origin: plant
+    may_contain: [gluten]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#gluten-free-grains"}}
+    culinary_roles: [carb_base]
+    substitution_groups: [grain]
+    portions: {szklanka: 200, cup: 195}
+    packages_g: [500, 1000]
+    fdc: {description: "Rice, white, medium-grain, raw, unenriched"}
+    review: {status: draft}
+
+  - slug: oat-bran
+    name: {en: "Oat bran", pl: "Otręby owsiane"}
+    aliases: {en: [oat bran], pl: [otręby owsiane]}
+    category: grains_pasta
+    origin: plant
+    allergens: [gluten]
+    traces: {status: unknown}
+    culinary_roles: [carb_base, binder]
+    substitution_groups: [breakfast_grain]
+    portions: {szklanka: 95, cup: 94, tbsp: 6}
+    packages_g: [250, 400]
+    fdc: {description: "Oat bran, raw"}
+    review: {status: draft}
+
+  - slug: egg-noodles-dry
+    name: {en: "Egg noodles, dry", pl: "Makaron jajeczny, suchy"}
+    aliases: {en: [egg noodles, egg pasta], pl: [makaron jajeczny, nitki jajeczne, makaron jajeczny nitki]}
+    category: grains_pasta
+    origin: plant
+    allergens: [gluten, eggs]
+    traces: {status: unknown}
+    culinary_roles: [carb_base]
+    substitution_groups: [pasta]
+    packages_g: [250, 500]
+    fdc: {description: "Noodles, egg, dry, enriched"}
+    review: {status: draft}
+
   - slug: flour-wheat
     name: {en: "Wheat flour, all-purpose", pl: "Mąka pszenna"}
     aliases: {en: [flour, all-purpose flour, plain flour, wheat flour], pl: [mąka, mąka pszenna, mąka tortowa]}
@@ -675,6 +1085,61 @@ foods:
     portions: {szklanka: 160, cup: 125, tbsp: 8}
     packages_g: [1000]
     fdc: {description: "Wheat flour, white, all-purpose, enriched, bleached"}
+    review: {status: draft}
+
+  - slug: flour-wholewheat
+    name: {en: "Whole-wheat flour", pl: "Mąka pszenna pełnoziarnista"}
+    aliases: {en: [whole wheat flour, wholemeal flour, whole-grain flour], pl: [mąka pełnoziarnista, mąka pszenna razowa, mąka graham, mąka pszenna typ 2000]}
+    category: sweets_baking
+    origin: plant
+    allergens: [gluten]
+    traces: {status: unknown}
+    culinary_roles: [binder]
+    substitution_groups: [flour]
+    portions: {szklanka: 150, cup: 120, tbsp: 8}
+    packages_g: [1000]
+    fdc: {description: "Wheat flour, whole-grain"}
+    review: {status: draft}
+
+  - slug: flour-rye
+    name: {en: "Rye flour", pl: "Mąka żytnia"}
+    aliases: {en: [rye flour], pl: [mąka żytnia, mąka żytnia typ 720]}
+    category: sweets_baking
+    origin: plant
+    allergens: [gluten]
+    traces: {status: unknown}
+    culinary_roles: [binder]
+    substitution_groups: [flour]
+    portions: {szklanka: 130, cup: 102, tbsp: 7}
+    packages_g: [1000]
+    fdc: {description: "Rye flour, medium"}
+    review: {status: draft}
+
+  - slug: flour-buckwheat
+    name: {en: "Buckwheat flour", pl: "Mąka gryczana"}
+    aliases: {en: [buckwheat flour], pl: [mąka gryczana]}
+    category: sweets_baking
+    origin: plant
+    may_contain: [gluten]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#gluten-free-grains"}}
+    culinary_roles: [binder]
+    substitution_groups: [flour]
+    portions: {szklanka: 150, cup: 120, tbsp: 8}
+    packages_g: [500, 1000]
+    fdc: {description: "Buckwheat flour, whole-groat"}
+    review: {status: draft}
+
+  # Corn is not one of the grains of TRACE_POLICY.md#gluten-free-grains: unknown.
+  - slug: cornstarch
+    name: {en: "Corn starch", pl: "Skrobia kukurydziana"}
+    aliases: {en: [cornstarch, corn starch], pl: [skrobia kukurydziana]}
+    category: sweets_baking
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [binder]
+    portions: {tbsp: 8, tsp: 2.7}
+    packages_g: [250, 400]
+    fdc: {description: "Cornstarch"}
     review: {status: draft}
 
   - slug: bread-wholewheat
@@ -731,6 +1196,60 @@ foods:
     portions: {piece: 9}
     packages_g: [100, 130]
     fdc: {description: "Snacks, rice cakes, brown rice, plain"}
+    review: {status: draft}
+
+  - slug: bread-white-wheat
+    name: {en: "White wheat bread", pl: "Chleb pszenny"}
+    aliases: {en: [white bread, wheat bread], pl: [chleb pszenny, chleb biały, pieczywo pszenne]}
+    category: bakery
+    origin: plant
+    allergens: [gluten]
+    traces: {status: unknown}
+    culinary_roles: [carb_base]
+    substitution_groups: [bread]
+    portions: {slice: 30}
+    packages_g: [500]
+    fdc: {description: "Bread, white, commercially prepared (includes soft bread crumbs)"}
+    review: {status: draft}
+
+  - slug: kaiser-roll
+    name: {en: "Kaiser roll", pl: "Bułka pszenna (kajzerka)"}
+    aliases: {en: [kaiser roll, bread roll, white roll], pl: [kajzerka, kajzerki, bułka, bułka pszenna, bułka zwykła]}
+    category: bakery
+    origin: plant
+    allergens: [gluten]
+    traces: {status: unknown}
+    culinary_roles: [carb_base]
+    substitution_groups: [bread]
+    portions: {piece: 50}
+    fdc: {description: "Rolls, hard (includes kaiser)"}
+    review: {status: draft}
+
+  - slug: crispbread-rye
+    name: {en: "Rye crispbread", pl: "Pieczywo chrupkie żytnie"}
+    aliases: {en: [crispbread, rye crispbread, knäckebröd], pl: [pieczywo chrupkie, pieczywo chrupkie żytnie, chleb chrupki]}
+    category: bakery
+    origin: plant
+    allergens: [gluten]
+    traces: {status: unknown}
+    culinary_roles: [carb_base]
+    substitution_groups: [bread]
+    portions: {piece: 11}
+    packages_g: [200, 250]
+    fdc: {description: "Crackers, rye, wafers, plain"}
+    review: {status: draft}
+
+  - slug: breadcrumbs
+    name: {en: "Breadcrumbs, dry", pl: "Bułka tarta"}
+    aliases: {en: [breadcrumbs, bread crumbs, dried breadcrumbs], pl: [bułka tarta, tarta bułka]}
+    category: bakery
+    origin: plant
+    allergens: [gluten]
+    traces: {status: unknown}
+    culinary_roles: [binder, topping]
+    portions: {szklanka: 115, cup: 108, tbsp: 7}
+    packages_g: [450, 500]
+    fdc: {description: "Bread crumbs, dry, grated, plain"}
     review: {status: draft}
 
   - slug: potatoes
@@ -1086,6 +1605,248 @@ foods:
     fdc: {description: "Beets, raw"}
     review: {status: draft}
 
+  - slug: celeriac
+    name: {en: "Celeriac (celery root)", pl: "Seler korzeniowy"}
+    aliases: {en: [celeriac, celery root], pl: [seler korzeniowy, korzeń selera]}
+    category: vegetables
+    origin: plant
+    allergens: [celery]
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [aromatic, vegetable]
+    substitution_groups: [root_vegetable, aromatic_vegetable]
+    portions: {piece: 500}
+    fdc: {description: "Celeriac, raw"}
+    review: {status: draft}
+
+  - slug: radish
+    name: {en: "Radishes", pl: "Rzodkiewka"}
+    aliases: {en: [radish, radishes], pl: [rzodkiewka, rzodkiewki]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [vegetable]
+    substitution_groups: [salad_vegetable]
+    portions: {piece: 10, bunch: 150}
+    fdc: {description: "Radishes, raw"}
+    review: {status: draft}
+
+  - slug: kohlrabi
+    name: {en: "Kohlrabi", pl: "Kalarepa"}
+    aliases: {en: [kohlrabi], pl: [kalarepa]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [vegetable]
+    substitution_groups: [brassica]
+    portions: {piece: 250}
+    fdc: {description: "Kohlrabi, raw"}
+    review: {status: draft}
+
+  - slug: cabbage-red
+    name: {en: "Red cabbage", pl: "Kapusta czerwona"}
+    aliases: {en: [red cabbage, purple cabbage], pl: [kapusta czerwona, modra kapusta]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [vegetable]
+    substitution_groups: [brassica]
+    portions: {piece: 1200}
+    fdc: {description: "Cabbage, red, raw"}
+    review: {status: draft}
+
+  - slug: cabbage-napa
+    name: {en: "Napa cabbage", pl: "Kapusta pekińska"}
+    aliases: {en: [napa cabbage, chinese cabbage], pl: [kapusta pekińska, pekinka]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [vegetable]
+    substitution_groups: [brassica, leafy_green]
+    portions: {piece: 1000}
+    fdc: {description: "Cabbage, chinese (pe-tsai), raw"}
+    review: {status: draft}
+
+  - slug: brussels-sprouts
+    name: {en: "Brussels sprouts", pl: "Brukselka"}
+    aliases: {en: [brussels sprouts], pl: [brukselka]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [vegetable]
+    substitution_groups: [brassica]
+    portions: {piece: 15}
+    packages_g: [500]
+    fdc: {description: "Brussels sprouts, raw"}
+    review: {status: draft}
+
+  - slug: kale
+    name: {en: "Kale", pl: "Jarmuż"}
+    aliases: {en: [kale, curly kale], pl: [jarmuż]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [vegetable]
+    substitution_groups: [leafy_green]
+    portions: {handful: 20}
+    packages_g: [150, 200]
+    fdc: {description: "Kale, raw"}
+    review: {status: draft}
+
+  - slug: butterhead-lettuce
+    name: {en: "Butterhead lettuce", pl: "Sałata masłowa"}
+    aliases: {en: [butterhead lettuce, butter lettuce, boston lettuce], pl: [sałata masłowa, sałata zielona, sałata głowiasta]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [vegetable]
+    substitution_groups: [leafy_green]
+    portions: {piece: 200, handful: 20}
+    fdc: {description: "Lettuce, butterhead (includes boston and bibb types), raw"}
+    review: {status: draft}
+
+  - slug: asparagus
+    name: {en: "Asparagus", pl: "Szparagi"}
+    aliases: {en: [asparagus, green asparagus, white asparagus], pl: [szparagi, szparagi zielone, szparagi białe]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [vegetable]
+    substitution_groups: [green_vegetable]
+    portions: {piece: 20, bunch: 500}
+    fdc: {description: "Asparagus, raw"}
+    review: {status: draft}
+
+  - slug: broad-beans-fresh
+    name: {en: "Broad beans, fresh", pl: "Bób, świeży"}
+    aliases: {en: [broad beans, fava beans], pl: [bób, bób świeży]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [vegetable, main_protein]
+    substitution_groups: [green_vegetable]
+    fdc: {description: "Broadbeans, immature seeds, raw"}
+    review: {status: draft}
+
+  - slug: pumpkin
+    name: {en: "Pumpkin", pl: "Dynia"}
+    aliases: {en: [pumpkin], pl: [dynia, miąższ dyni]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [vegetable, carb_base]
+    substitution_groups: [squash]
+    fdc: {description: "Pumpkin, raw"}
+    review: {status: draft}
+
+  - slug: chili-pepper
+    name: {en: "Chili pepper, fresh", pl: "Papryczka chili, świeża"}
+    aliases: {en: [chili pepper, chilli, red chili, hot pepper], pl: [papryczka chili, ostra papryczka, świeże chili]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [seasoning, aromatic]
+    portions: {piece: 15}
+    fdc: {description: "Peppers, hot chili, red, raw"}
+    review: {status: draft}
+
+  - slug: spring-onion
+    name: {en: "Spring onion", pl: "Dymka ze szczypiorem"}
+    aliases: {en: [spring onion, spring onions, scallion, scallions, green onion], pl: [dymka, cebulka dymka, szczypior, zielona cebulka]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [aromatic, vegetable, topping]
+    substitution_groups: [allium]
+    portions: {piece: 15, bunch: 100}
+    fdc: {description: "Onions, spring or scallions (includes tops and bulb), raw"}
+    review: {status: draft}
+
+  - slug: ginger-root
+    name: {en: "Ginger root, fresh", pl: "Imbir świeży"}
+    aliases: {en: [ginger, fresh ginger, ginger root], pl: [imbir, imbir świeży, korzeń imbiru]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [aromatic, seasoning]
+    portions: {tsp: 2, piece: 50}
+    fdc: {description: "Ginger root, raw"}
+    review: {status: draft}
+
+  - slug: chives
+    name: {en: "Chives", pl: "Szczypiorek"}
+    aliases: {en: [chives], pl: [szczypiorek]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [seasoning, topping]
+    substitution_groups: [fresh_herb]
+    portions: {tbsp: 3, bunch: 25}
+    fdc: {description: "Chives, raw"}
+    review: {status: draft}
+
+  - slug: dill
+    name: {en: "Dill, fresh", pl: "Koperek"}
+    aliases: {en: [dill, fresh dill, dill weed], pl: [koperek, koper, koper ogrodowy]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [seasoning, topping]
+    substitution_groups: [fresh_herb]
+    portions: {tbsp: 2, bunch: 40}
+    fdc: {description: "Dill weed, fresh"}
+    review: {status: draft}
+
+  # Plain "pietruszka" is left out: on its own it usually means the root.
+  - slug: parsley
+    name: {en: "Parsley leaves, fresh", pl: "Natka pietruszki"}
+    aliases: {en: [parsley, fresh parsley, flat-leaf parsley], pl: [natka pietruszki, natka, zielona pietruszka]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [seasoning, topping]
+    substitution_groups: [fresh_herb]
+    portions: {tbsp: 4, bunch: 50}
+    fdc: {description: "Parsley, fresh"}
+    review: {status: draft}
+
+  - slug: basil-fresh
+    name: {en: "Basil, fresh", pl: "Bazylia świeża"}
+    aliases: {en: [basil, fresh basil, basil leaves], pl: [bazylia, świeża bazylia, liście bazylii]}
+    category: vegetables
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [seasoning, topping]
+    substitution_groups: [fresh_herb]
+    portions: {tbsp: 2.6, piece: 0.5}  # piece = one leaf
+    fdc: {description: "Basil, fresh"}
+    review: {status: draft}
+
+  - slug: sauerkraut
+    name: {en: "Sauerkraut", pl: "Kapusta kiszona"}
+    aliases: {en: [sauerkraut], pl: [kapusta kiszona, kiszona kapusta, kapusta kwaszona]}
+    category: vegetables
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [vegetable, acid]
+    substitution_groups: [fermented_vegetable]
+    packages_g: [500, 900]
+    fdc: {description: "Sauerkraut, canned, solids and liquids"}
+    review: {status: draft}
+
+  # Brine-fermented only. Vinegar pickles (ogórki konserwowe) are left out on
+  # purpose: they are often spiced with mustard seed.
+  - slug: pickled-cucumbers
+    name: {en: "Sour pickles (brine-fermented cucumbers)", pl: "Ogórki kiszone"}
+    aliases: {en: [sour pickles, fermented pickles, polish pickles], pl: [ogórki kiszone, ogórek kiszony, kiszone ogórki]}
+    category: vegetables
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [vegetable, acid]
+    substitution_groups: [fermented_vegetable]
+    portions: {piece: 60}
+    fdc: {description: "Pickles, cucumber, sour"}
+    review: {status: draft}
+
   # ── Fruit ─────────────────────────────────────────────────────────────────
   - slug: banana
     name: {en: "Banana", pl: "Banan"}
@@ -1174,6 +1935,204 @@ foods:
     fdc: {description: "Lemon juice, raw"}
     review: {status: draft}
 
+  - slug: pear
+    name: {en: "Pear", pl: "Gruszka"}
+    aliases: {en: [pear, pears], pl: [gruszka, gruszki]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit]
+    substitution_groups: [crunchy_fruit]
+    portions: {piece: 180}
+    fdc: {description: "Pears, raw"}
+    review: {status: draft}
+
+  - slug: orange
+    name: {en: "Orange", pl: "Pomarańcza"}
+    aliases: {en: [orange, oranges], pl: [pomarańcza, pomarańcze]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit]
+    substitution_groups: [citrus]
+    portions: {piece: 140}  # flesh
+    fdc: {description: "Oranges, raw, all commercial varieties"}
+    review: {status: draft}
+
+  - slug: mandarin
+    name: {en: "Mandarin", pl: "Mandarynka"}
+    aliases: {en: [mandarin, mandarins, tangerine, tangerines], pl: [mandarynka, mandarynki]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit]
+    substitution_groups: [citrus]
+    portions: {piece: 75}  # flesh
+    fdc: {description: "Tangerines, (mandarin oranges), raw"}
+    review: {status: draft}
+
+  - slug: kiwi
+    name: {en: "Kiwi", pl: "Kiwi"}
+    aliases: {en: [kiwi, kiwifruit, kiwi fruit], pl: [kiwi]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit, topping]
+    substitution_groups: [sweet_fruit]
+    portions: {piece: 70}  # flesh
+    fdc: {description: "Kiwifruit, green, raw"}
+    review: {status: draft}
+
+  - slug: grapes
+    name: {en: "Grapes", pl: "Winogrona"}
+    aliases: {en: [grapes, grape], pl: [winogrona, winogrono, winogrona bezpestkowe]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit]
+    substitution_groups: [sweet_fruit]
+    portions: {piece: 5, handful: 80}
+    packages_g: [500]
+    fdc: {description: "Grapes, red or green (European type, such as Thompson seedless), raw"}
+    review: {status: draft}
+
+  - slug: plums
+    name: {en: "Plums", pl: "Śliwki"}
+    aliases: {en: [plum, plums], pl: [śliwka, śliwki, węgierki]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit]
+    substitution_groups: [stone_fruit]
+    portions: {piece: 40}
+    packages_g: [500, 1000]
+    fdc: {description: "Plums, raw"}
+    review: {status: draft}
+
+  - slug: sour-cherries
+    name: {en: "Sour cherries", pl: "Wiśnie"}
+    aliases: {en: [sour cherries, sour cherry, morello cherries], pl: [wiśnie, wiśnia]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit, acid]
+    substitution_groups: [stone_fruit]
+    portions: {szklanka: 150, cup: 155, handful: 60}  # pitted
+    packages_g: [500, 1000]
+    fdc: {description: "Cherries, sour, red, raw"}
+    review: {status: draft}
+
+  - slug: peach
+    name: {en: "Peach", pl: "Brzoskwinia"}
+    aliases: {en: [peach, peaches], pl: [brzoskwinia, brzoskwinie]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit]
+    substitution_groups: [stone_fruit]
+    portions: {piece: 150}
+    fdc: {description: "Peaches, yellow, raw"}
+    review: {status: draft}
+
+  - slug: watermelon
+    name: {en: "Watermelon", pl: "Arbuz"}
+    aliases: {en: [watermelon], pl: [arbuz]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit]
+    substitution_groups: [sweet_fruit]
+    portions: {slice: 280}
+    fdc: {description: "Watermelon, raw"}
+    review: {status: draft}
+
+  - slug: mango
+    name: {en: "Mango", pl: "Mango"}
+    aliases: {en: [mango, mangoes, mangos], pl: [mango]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit, sweetener]
+    substitution_groups: [sweet_fruit]
+    portions: {piece: 200}  # flesh
+    fdc: {description: "Mangos, raw"}
+    review: {status: draft}
+
+  - slug: pineapple
+    name: {en: "Pineapple, fresh", pl: "Ananas świeży"}
+    aliases: {en: [pineapple, fresh pineapple], pl: [ananas, ananas świeży]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit, sweetener]
+    substitution_groups: [sweet_fruit]
+    portions: {slice: 85}
+    fdc: {description: "Pineapple, raw, all varieties"}
+    review: {status: draft}
+
+  - slug: blackcurrants
+    name: {en: "Blackcurrants", pl: "Czarne porzeczki"}
+    aliases: {en: [blackcurrants, blackcurrant, black currants], pl: [czarne porzeczki, czarna porzeczka, porzeczki]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit, topping]
+    substitution_groups: [berries]
+    portions: {handful: 50, szklanka: 110, cup: 112}
+    packages_g: [250, 500]
+    fdc: {description: "Currants, european black, raw"}
+    review: {status: draft}
+
+  - slug: rhubarb
+    name: {en: "Rhubarb", pl: "Rabarbar"}
+    aliases: {en: [rhubarb], pl: [rabarbar]}
+    category: fruit
+    origin: plant
+    traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
+    culinary_roles: [fruit, acid]
+    portions: {stalk: 50}
+    fdc: {description: "Rhubarb, raw"}
+    review: {status: draft}
+
+  - slug: raisins
+    name: {en: "Raisins", pl: "Rodzynki"}
+    aliases: {en: [raisins, raisin], pl: [rodzynki, rodzynka]}
+    category: fruit
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [fruit, sweetener, topping]
+    substitution_groups: [dried_fruit]
+    portions: {tbsp: 9, handful: 30}
+    packages_g: [100, 200]
+    fdc: {description: "Raisins, dark, seedless (Includes foods for USDA's Food Distribution Program)"}
+    review: {status: draft}
+
+  - slug: prunes
+    name: {en: "Prunes (dried plums)", pl: "Suszone śliwki"}
+    aliases: {en: [prunes, prune, dried plums], pl: [suszone śliwki, śliwki suszone, suszona śliwka]}
+    category: fruit
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [fruit, sweetener]
+    substitution_groups: [dried_fruit]
+    portions: {piece: 9.5}
+    packages_g: [200]
+    fdc: {description: "Plums, dried (prunes), uncooked"}
+    review: {status: draft}
+
+  - slug: dates-dried
+    name: {en: "Dates, dried", pl: "Daktyle suszone"}
+    aliases: {en: [dates, dried dates, pitted dates], pl: [daktyle, daktyle suszone, daktyle bez pestek]}
+    category: fruit
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [fruit, sweetener]
+    substitution_groups: [dried_fruit]
+    portions: {piece: 7}
+    packages_g: [200, 250]
+    fdc: {description: "Dates, deglet noor"}
+    review: {status: draft}
+
   # ── Oils, nuts, seeds ─────────────────────────────────────────────────────
   - slug: olive-oil
     name: {en: "Olive oil", pl: "Oliwa z oliwek"}
@@ -1199,6 +2158,62 @@ foods:
     density_g_per_ml: 0.92
     packages_g: [920]
     fdc: {description: "Oil, canola"}
+    review: {status: draft}
+
+  - slug: sunflower-oil
+    name: {en: "Sunflower oil", pl: "Olej słonecznikowy"}
+    aliases: {en: [sunflower oil], pl: [olej słonecznikowy]}
+    category: oils_fats
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [cooking_fat]
+    substitution_groups: [cooking_oil]
+    density_g_per_ml: 0.92
+    packages_g: [920]
+    fdc: {description: "Oil, sunflower, linoleic, (approx. 65%)"}
+    review: {status: draft}
+
+  - slug: coconut-oil
+    name: {en: "Coconut oil", pl: "Olej kokosowy"}
+    aliases: {en: [coconut oil], pl: [olej kokosowy, tłuszcz kokosowy]}
+    category: oils_fats
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [cooking_fat]
+    substitution_groups: [cooking_fat]
+    density_g_per_ml: 0.92
+    portions: {tbsp: 13.6, tsp: 4.5}
+    packages_g: [200, 500]
+    fdc: {description: "Oil, coconut"}
+    review: {status: draft}
+
+  # For cold use: not in cooking_oil, so it is never swapped in for frying.
+  - slug: linseed-oil
+    name: {en: "Linseed (flaxseed) oil", pl: "Olej lniany"}
+    aliases: {en: [linseed oil, flaxseed oil], pl: [olej lniany, olej z lnu]}
+    category: oils_fats
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [cooking_fat, topping]
+    density_g_per_ml: 0.93
+    packages_g: [230, 460]
+    fdc: {description: "Oil, flaxseed, cold pressed"}
+    review: {status: draft}
+
+  # Clarified butter: not clearly "butter" under TRACE_POLICY.md#plain-dairy, so unknown.
+  - slug: ghee
+    name: {en: "Ghee (clarified butter)", pl: "Masło klarowane"}
+    aliases: {en: [ghee, clarified butter], pl: [masło klarowane, ghee]}
+    category: oils_fats
+    origin: dairy
+    allergens: [milk]
+    traces: {status: unknown}
+    culinary_roles: [cooking_fat]
+    substitution_groups: [cooking_fat]
+    density_g_per_ml: 0.91
+    portions: {tbsp: 12.8, tsp: 4.3}
+    packages_g: [250]
+    fdc: {description: "Butter oil, anhydrous"}
     review: {status: draft}
 
   - slug: peanut-butter
@@ -1246,6 +2261,66 @@ foods:
     fdc: {description: "Nuts, walnuts, english"}
     review: {status: draft}
 
+  - slug: hazelnuts
+    name: {en: "Hazelnuts", pl: "Orzechy laskowe"}
+    aliases: {en: [hazelnuts, hazelnut, filberts], pl: [orzechy laskowe, orzech laskowy]}
+    category: nuts_seeds
+    origin: plant
+    allergens: [tree_nuts]
+    may_contain: [peanuts]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#tree-nuts"}}
+    culinary_roles: [topping, cooking_fat]
+    substitution_groups: [nuts]
+    portions: {handful: 30, piece: 1.4}
+    packages_g: [100, 200]
+    fdc: {description: "Nuts, hazelnuts or filberts"}
+    review: {status: draft}
+
+  - slug: cashews
+    name: {en: "Cashews", pl: "Orzechy nerkowca"}
+    aliases: {en: [cashews, cashew, cashew nuts], pl: [nerkowce, orzechy nerkowca, nerkowiec]}
+    category: nuts_seeds
+    origin: plant
+    allergens: [tree_nuts]
+    may_contain: [peanuts]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#tree-nuts"}}
+    culinary_roles: [topping, cooking_fat, creamy_base]
+    substitution_groups: [nuts]
+    portions: {handful: 30, piece: 1.5}
+    packages_g: [100, 200]
+    fdc: {description: "Nuts, cashew nuts, raw"}
+    review: {status: draft}
+
+  - slug: pistachios
+    name: {en: "Pistachios, shelled, unsalted", pl: "Pistacje łuskane, niesolone"}
+    aliases: {en: [pistachios, pistachio, pistachio nuts], pl: [pistacje, pistacja, pistacje łuskane]}
+    category: nuts_seeds
+    origin: plant
+    allergens: [tree_nuts]
+    may_contain: [peanuts]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#tree-nuts"}}
+    culinary_roles: [topping]
+    substitution_groups: [nuts]
+    portions: {handful: 30, piece: 0.7}
+    packages_g: [100, 200]
+    fdc: {description: "Nuts, pistachio nuts, raw"}
+    review: {status: draft}
+
+  - slug: peanuts
+    name: {en: "Peanuts, unroasted", pl: "Orzeszki ziemne, nieprażone"}
+    aliases: {en: [peanuts, peanut, raw peanuts], pl: [orzeszki ziemne, orzechy arachidowe, fistaszki]}
+    category: nuts_seeds
+    origin: plant
+    allergens: [peanuts]
+    may_contain: [tree_nuts]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#peanuts"}}
+    culinary_roles: [topping, cooking_fat]
+    substitution_groups: [nuts]
+    portions: {handful: 30}
+    packages_g: [100, 200, 500]
+    fdc: {description: "Peanuts, all types, raw"}
+    review: {status: draft}
+
   - slug: chia-seeds
     name: {en: "Chia seeds", pl: "Nasiona chia"}
     aliases: {en: [chia, chia seeds], pl: [chia, nasiona chia, szałwia hiszpańska]}
@@ -1287,6 +2362,48 @@ foods:
     portions: {tbsp: 9, tsp: 3}
     packages_g: [100]
     fdc: {description: "Seeds, sesame seeds, whole, dried"}
+    review: {status: draft}
+
+  - slug: pumpkin-seeds
+    name: {en: "Pumpkin seeds, hulled", pl: "Pestki dyni łuskane"}
+    aliases: {en: [pumpkin seeds, pepitas], pl: [pestki dyni, pestki dyni łuskane]}
+    category: nuts_seeds
+    origin: plant
+    may_contain: [peanuts, tree_nuts, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#seeds"}}
+    culinary_roles: [topping]
+    substitution_groups: [seeds]
+    portions: {tbsp: 8, handful: 25}
+    packages_g: [100, 200]
+    fdc: {description: "Seeds, pumpkin and squash seed kernels, dried"}
+    review: {status: draft}
+
+  - slug: flaxseed
+    name: {en: "Flaxseed (linseed)", pl: "Siemię lniane"}
+    aliases: {en: [flaxseed, flax seeds, linseed, ground flaxseed], pl: [siemię lniane, len, siemię lniane mielone, nasiona lnu]}
+    category: nuts_seeds
+    origin: plant
+    may_contain: [peanuts, tree_nuts, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#seeds"}}
+    culinary_roles: [topping, binder]
+    substitution_groups: [seeds]
+    portions: {tbsp: 10, tsp: 3.4}
+    packages_g: [250, 500]
+    fdc: {description: "Seeds, flaxseed"}
+    review: {status: draft}
+
+  # Poppy seed is neither listed by TRACE_POLICY.md#seeds nor clearly a spice: unknown.
+  - slug: poppy-seeds
+    name: {en: "Poppy seeds", pl: "Mak"}
+    aliases: {en: [poppy seeds, poppy seed], pl: [mak, mak niebieski, mak mielony]}
+    category: nuts_seeds
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [topping]
+    substitution_groups: [seeds]
+    portions: {tbsp: 9, tsp: 2.8}
+    packages_g: [200]
+    fdc: {description: "Spices, poppy seed"}
     review: {status: draft}
 
   - slug: tahini
@@ -1397,6 +2514,32 @@ foods:
     fdc: {description: "Sugars, granulated"}
     review: {status: draft}
 
+  - slug: sugar-brown
+    name: {en: "Brown sugar", pl: "Cukier trzcinowy"}
+    aliases: {en: [brown sugar, cane sugar], pl: [cukier trzcinowy, cukier brązowy]}
+    category: sweets_baking
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [sweetener]
+    substitution_groups: [dry_sweetener]
+    portions: {tbsp: 12, tsp: 4}
+    packages_g: [500, 1000]
+    fdc: {description: "Sugars, brown"}
+    review: {status: draft}
+
+  - slug: sugar-powdered
+    name: {en: "Powdered sugar", pl: "Cukier puder"}
+    aliases: {en: [powdered sugar, icing sugar, confectioners sugar], pl: [cukier puder]}
+    category: sweets_baking
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [sweetener]
+    substitution_groups: [dry_sweetener]
+    portions: {szklanka: 130, cup: 120, tbsp: 8, tsp: 2.6}
+    packages_g: [400, 500]
+    fdc: {description: "Sugars, powdered"}
+    review: {status: draft}
+
   - slug: cocoa-powder
     name: {en: "Cocoa powder, unsweetened", pl: "Kakao naturalne"}
     aliases: {en: [cocoa, cocoa powder], pl: [kakao, kakao naturalne, kakao gorzkie]}
@@ -1433,6 +2576,42 @@ foods:
     portions: {tsp: 4.6, pack: 15}
     packages_g: [15, 30]
     fdc: {description: "Leavening agents, baking powder, double-acting, sodium aluminum sulfate"}
+    review: {status: draft}
+
+  - slug: baking-soda
+    name: {en: "Baking soda", pl: "Soda oczyszczona"}
+    aliases: {en: [baking soda, bicarbonate of soda, bicarb], pl: [soda oczyszczona, soda, wodorowęglan sodu]}
+    category: sweets_baking
+    origin: other
+    traces: {status: unknown}
+    culinary_roles: [leavening]
+    portions: {tsp: 4.6}
+    packages_g: [70, 100]
+    fdc: {description: "Leavening agents, baking soda"}
+    review: {status: draft}
+
+  - slug: yeast-fresh
+    name: {en: "Fresh yeast", pl: "Drożdże świeże"}
+    aliases: {en: [fresh yeast, compressed yeast, cake yeast], pl: [drożdże, drożdże świeże, kostka drożdży]}
+    category: sweets_baking
+    origin: fungi
+    traces: {status: unknown}
+    culinary_roles: [leavening]
+    portions: {pack: 100}  # one cube
+    packages_g: [100]
+    fdc: {description: "Leavening agents, yeast, baker's, compressed"}
+    review: {status: draft}
+
+  - slug: yeast-dry
+    name: {en: "Dry yeast", pl: "Drożdże suszone"}
+    aliases: {en: [dry yeast, instant yeast, active dry yeast], pl: [drożdże suszone, drożdże instant, drożdże suche]}
+    category: sweets_baking
+    origin: fungi
+    traces: {status: unknown}
+    culinary_roles: [leavening]
+    portions: {pack: 7, tsp: 4}
+    packages_g: [7, 8]
+    fdc: {description: "Leavening agents, yeast, baker's, active dry"}
     review: {status: draft}
 
   # ── Condiments ────────────────────────────────────────────────────────────
@@ -1490,6 +2669,60 @@ foods:
     portions: {tbsp: 17, tsp: 6}
     packages_g: [450, 480]
     fdc: {description: "Catsup"}
+    review: {status: draft}
+
+  - slug: vinegar-spirit
+    name: {en: "Spirit vinegar", pl: "Ocet spirytusowy"}
+    aliases: {en: [vinegar, white vinegar, distilled vinegar, spirit vinegar], pl: [ocet, ocet spirytusowy, "ocet 10%"]}
+    category: condiments
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [acid, seasoning]
+    substitution_groups: [vinegar]
+    density_g_per_ml: 1.01
+    portions: {tbsp: 15, tsp: 5}
+    packages_g: [500]
+    fdc: {description: "Vinegar, distilled"}
+    review: {status: draft}
+
+  # Made from grape must and wine vinegar: declares sulphites.
+  - slug: vinegar-balsamic
+    name: {en: "Balsamic vinegar", pl: "Ocet balsamiczny"}
+    aliases: {en: [balsamic vinegar, balsamic], pl: [ocet balsamiczny]}
+    category: condiments
+    origin: plant
+    allergens: [sulphites]
+    traces: {status: unknown}
+    culinary_roles: [acid, seasoning]
+    substitution_groups: [vinegar]
+    density_g_per_ml: 1.06
+    portions: {tbsp: 16, tsp: 5.3}
+    packages_g: [250, 500]
+    fdc: {description: "Vinegar, balsamic"}
+    review: {status: draft}
+
+  - slug: olives-black
+    name: {en: "Black olives, pitted, canned", pl: "Oliwki czarne drylowane"}
+    aliases: {en: [black olives, olives], pl: [oliwki czarne, czarne oliwki, oliwki]}
+    category: condiments
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [topping, seasoning]
+    substitution_groups: [olives]
+    portions: {piece: 4}
+    fdc: {description: "Olives, ripe, canned (small-extra large)"}
+    review: {status: draft}
+
+  - slug: olives-green
+    name: {en: "Green olives, pitted", pl: "Oliwki zielone drylowane"}
+    aliases: {en: [green olives], pl: [oliwki zielone, zielone oliwki]}
+    category: condiments
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [topping, seasoning]
+    substitution_groups: [olives]
+    portions: {piece: 4}
+    fdc: {description: "Olives, pickled, canned or bottled, green"}
     review: {status: draft}
 
   # ── Spices ────────────────────────────────────────────────────────────────
@@ -1555,4 +2788,148 @@ foods:
     portions: {tsp: 2.1, pinch: 0.2}
     packages_g: [20]
     fdc: {description: "Spices, cumin seed"}
+    review: {status: draft}
+
+  - slug: turmeric
+    name: {en: "Turmeric, ground", pl: "Kurkuma mielona"}
+    aliases: {en: [turmeric, ground turmeric], pl: [kurkuma, kurkuma mielona]}
+    category: spices
+    origin: plant
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
+    culinary_roles: [seasoning]
+    portions: {tsp: 3, pinch: 0.2}
+    packages_g: [20, 50]
+    fdc: {description: "Spices, turmeric, ground"}
+    review: {status: draft}
+
+  - slug: ginger-ground
+    name: {en: "Ginger, ground", pl: "Imbir mielony"}
+    aliases: {en: [ground ginger, dried ginger], pl: [imbir mielony, imbir suszony]}
+    category: spices
+    origin: plant
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
+    culinary_roles: [seasoning]
+    portions: {tsp: 1.8, pinch: 0.1}
+    packages_g: [15, 20]
+    fdc: {description: "Spices, ginger, ground"}
+    review: {status: draft}
+
+  - slug: nutmeg
+    name: {en: "Nutmeg, ground", pl: "Gałka muszkatołowa mielona"}
+    aliases: {en: [nutmeg, ground nutmeg], pl: [gałka muszkatołowa, gałka muszkatołowa mielona]}
+    category: spices
+    origin: plant
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
+    culinary_roles: [seasoning]
+    portions: {tsp: 2.2, pinch: 0.1}
+    packages_g: [10, 15]
+    fdc: {description: "Spices, nutmeg, ground"}
+    review: {status: draft}
+
+  - slug: allspice
+    name: {en: "Allspice", pl: "Ziele angielskie"}
+    aliases: {en: [allspice, pimento, allspice berries], pl: [ziele angielskie, ziele angielskie mielone]}
+    category: spices
+    origin: plant
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
+    culinary_roles: [seasoning]
+    portions: {piece: 0.2, tsp: 1.9}  # piece = one whole berry
+    packages_g: [15, 20]
+    fdc: {description: "Spices, allspice, ground"}
+    review: {status: draft}
+
+  - slug: cayenne-pepper
+    name: {en: "Cayenne pepper, ground", pl: "Pieprz cayenne (chili mielone)"}
+    aliases: {en: [cayenne, cayenne pepper, ground chili, chilli flakes], pl: [pieprz cayenne, pieprz kajeński, chili mielone, płatki chili]}
+    category: spices
+    origin: plant
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
+    culinary_roles: [seasoning]
+    portions: {tsp: 1.8, pinch: 0.1}
+    packages_g: [15, 20]
+    fdc: {description: "Spices, pepper, red or cayenne"}
+    review: {status: draft}
+
+  - slug: caraway
+    name: {en: "Caraway seeds", pl: "Kminek"}
+    aliases: {en: [caraway, caraway seeds], pl: [kminek, kminek zwyczajny]}
+    category: spices
+    origin: plant
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
+    culinary_roles: [seasoning]
+    portions: {tsp: 2.1, pinch: 0.2}
+    packages_g: [20, 30]
+    fdc: {description: "Spices, caraway seed"}
+    review: {status: draft}
+
+  - slug: garlic-powder
+    name: {en: "Garlic powder", pl: "Czosnek granulowany"}
+    aliases: {en: [garlic powder, granulated garlic, dried garlic], pl: [czosnek granulowany, czosnek suszony, czosnek mielony]}
+    category: spices
+    origin: plant
+    may_contain: [celery, mustard, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
+    culinary_roles: [seasoning]
+    portions: {tsp: 3.1, pinch: 0.2}
+    packages_g: [20, 30]
+    fdc: {description: "Spices, garlic powder"}
+    review: {status: draft}
+
+  # Contains mustard, so the ground-spices trace list drops it.
+  - slug: mustard-seed
+    name: {en: "Mustard seed", pl: "Gorczyca"}
+    aliases: {en: [mustard seed, mustard seeds, yellow mustard seed], pl: [gorczyca, ziarna gorczycy, gorczyca biała]}
+    category: spices
+    origin: plant
+    allergens: [mustard]
+    may_contain: [celery, gluten, sesame]
+    traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
+    culinary_roles: [seasoning]
+    portions: {tsp: 3}
+    packages_g: [20, 30]
+    fdc: {description: "Spices, mustard seed, ground"}
+    review: {status: draft}
+
+  # Dried leafy herbs: TRACE_POLICY.md#ground-spices names spices, not herbs,
+  # so these stay unknown until the policy or a label says otherwise.
+  - slug: bay-leaf
+    name: {en: "Bay leaf, dried", pl: "Liść laurowy"}
+    aliases: {en: [bay leaf, bay leaves], pl: [liść laurowy, liście laurowe, listek laurowy]}
+    category: spices
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [seasoning]
+    portions: {piece: 0.2}  # one leaf
+    packages_g: [5, 10]
+    fdc: {description: "Spices, bay leaf"}
+    review: {status: draft}
+
+  - slug: marjoram
+    name: {en: "Marjoram, dried", pl: "Majeranek"}
+    aliases: {en: [marjoram, dried marjoram], pl: [majeranek, majeranek suszony]}
+    category: spices
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [seasoning]
+    portions: {tsp: 0.6, pinch: 0.1}
+    packages_g: [8, 10]
+    fdc: {description: "Spices, marjoram, dried"}
+    review: {status: draft}
+
+  - slug: oregano
+    name: {en: "Oregano, dried", pl: "Oregano suszone"}
+    aliases: {en: [oregano, dried oregano], pl: [oregano, oregano suszone]}
+    category: spices
+    origin: plant
+    traces: {status: unknown}
+    culinary_roles: [seasoning]
+    portions: {tsp: 1, pinch: 0.1}
+    packages_g: [10]
+    fdc: {description: "Spices, oregano, dried"}
     review: {status: draft}

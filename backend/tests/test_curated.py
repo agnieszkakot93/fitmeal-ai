@@ -47,6 +47,18 @@ def test_real_file_states_provenance_on_every_entry(curated: CuratedFile) -> Non
     assert implicit == []
 
 
+def test_real_file_aliases_are_whole_words(curated: CuratedFile) -> None:
+    # An unquoted comma in a YAML flow list splits an alias: [mleko 0,5%] loads
+    # as "mleko 0" and "5%". A fragment with no letter shows the split.
+    fragments = [
+        (f.slug, alias)
+        for f in curated.foods
+        for alias in (*f.aliases.en, *f.aliases.pl)
+        if not re.search(r"[^\W\d_]", alias)
+    ]
+    assert fragments == []
+
+
 def test_real_file_policy_traces_cite_a_rule_of_the_policy(curated: CuratedFile) -> None:
     policy = TRACE_POLICY.read_text(encoding="utf-8")
     rules = set(re.findall(r"^\| `([a-z0-9-]+)` \|", policy, re.M))
@@ -72,6 +84,15 @@ def test_real_file_policy_traces_cite_a_rule_of_the_policy(curated: CuratedFile)
         ("celery-stalk", Allergen.CELERY),
         ("tahini", Allergen.SESAME),
         ("grana-padano", Allergen.EGGS),
+        ("celeriac", Allergen.CELERY),
+        ("hummus", Allergen.SESAME),
+        ("egg-noodles-dry", Allergen.EGGS),
+        ("egg-noodles-dry", Allergen.GLUTEN),
+        ("edamame-frozen", Allergen.SOY),
+        ("mustard-seed", Allergen.MUSTARD),
+        ("vinegar-balsamic", Allergen.SULPHITES),
+        ("crispbread-rye", Allergen.GLUTEN),
+        ("ghee", Allergen.MILK),
     ],
 )
 def test_known_allergens(
