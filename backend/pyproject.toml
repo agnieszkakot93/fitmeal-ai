@@ -1,7 +1,7 @@
 [project]
-name = "fitmeal-backend"
+name = "donut-backend"
 version = "0.1.0"
-description = "FitMeal AI backend: nutrition engine, planner and API"
+description = "Donut backend: nutrition engine, planner and API"
 requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.20.0",
@@ -26,7 +26,7 @@ dev = [
 ]
 
 [project.scripts]
-fitmeal-admin = "app.cli:main"
+donut-admin = "app.cli:main"
 
 [build-system]
 requires = ["hatchling"]

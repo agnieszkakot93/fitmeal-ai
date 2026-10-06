@@ -23,7 +23,7 @@ Safe to do now, easy to revert, no external dependency.
 3. **Agent definitions and CLAUDE.md**: update the brand name in `.claude/agents/*.md` and CLAUDE.md. Replace the "do not rename until approved" rule in CLAUDE.md with a pointer to this plan.
 4. **Copy**: PL/EN strings use "Donut". The store title target is "Donut: Meal Planner & Macros" (28 characters).
 
-## Phase 2: technical identifiers (after Phase 1 merges)
+## Phase 2: technical identifiers (done 2026-10-06)
 
 Mechanical, but touches CI and local setups. Do it in one PR with a note to contributors.
 
@@ -51,3 +51,4 @@ Domains, trademarks and accounts are purchased or registered by the Product Owne
 ## Progress
 
 - **2026-10-06, Phase 1 done:** "FitMeal AI" and "FitMeal" replaced with "Donut" in README, CLAUDE.md, PRD, Development Plan, backend and data READMEs, agent definitions and the design system (including the `window.Donut` bundle global and planned iOS target names in the Development Plan). Not changed yet: `backend/app/main.py` API title and the `data/foods/curated.yaml` header comment (Phase 2, with the other code), and `docs/branding/` history.
+- **2026-10-06, Phase 2 done:** `fitmeal-backend` → `donut-backend` (`uv.lock` regenerated), CLI `fitmeal-admin` → `donut-admin`, env prefix `FITMEAL_` → `DONUT_`, dev/CI database user and names `fitmeal`/`fitmeal_test` → `donut`/`donut_test`, Redis dev password, Docker Compose project name, API title. **Contributors:** rename `FITMEAL_` to `DONUT_` in your local `backend/.env` (and `fitmeal` → `donut` in its URLs), then recreate the dev stack (`docker compose -f infra/docker-compose.yml down` and `up -d`); the new Compose project name starts with fresh, empty volumes, so re-run the food import. Checked: ruff, ruff format, mypy and the full pytest suite (194 passed against Postgres with the new names).

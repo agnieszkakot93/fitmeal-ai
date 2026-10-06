@@ -17,15 +17,15 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_USER: fitmeal
-          POSTGRES_PASSWORD: fitmeal
-          POSTGRES_DB: fitmeal_test
+          POSTGRES_USER: donut
+          POSTGRES_PASSWORD: donut
+          POSTGRES_DB: donut_test
         ports: ["5432:5432"]
         options: >-
-          --health-cmd "pg_isready -U fitmeal"
+          --health-cmd "pg_isready -U donut"
           --health-interval 2s --health-timeout 3s --health-retries 20
     env:
-      FITMEAL_TEST_DATABASE_URL: postgresql+asyncpg://fitmeal:fitmeal@localhost:5432/fitmeal_test
+      DONUT_TEST_DATABASE_URL: postgresql+asyncpg://donut:donut@localhost:5432/donut_test
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
@@ -37,4 +37,4 @@ jobs:
       - name: Models and migrations are in sync
         run: uv run alembic check
         env:
-          FITMEAL_DATABASE_URL: postgresql+asyncpg://fitmeal:fitmeal@localhost:5432/fitmeal_test
+          DONUT_DATABASE_URL: postgresql+asyncpg://donut:donut@localhost:5432/donut_test

@@ -30,6 +30,6 @@ uv run mypy app tests
 uv run pytest
 uv run alembic check
 ```
-Tests needing Postgres use `FITMEAL_TEST_DATABASE_URL`; start it with `docker compose -f infra/docker-compose.yml up -d postgres redis` if available. If you can't run a check, say so plainly.
+Tests needing Postgres use `DONUT_TEST_DATABASE_URL`; start it with `docker compose -f infra/docker-compose.yml up -d postgres redis` if available. If you can't run a check, say so plainly.
 
 Match the existing code style: type-hinted, small functions, comments only where the reason isn't obvious. Add tests next to the existing ones in `backend/tests/`.

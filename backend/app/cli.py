@@ -1,4 +1,4 @@
-"""Admin commands: ``fitmeal-admin foods import --fdc-dir ... [--dry-run]``."""
+"""Admin commands: ``donut-admin foods import --fdc-dir ... [--dry-run]``."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ DEFAULT_CURATED = Path(__file__).resolve().parents[2] / "data" / "foods" / "cura
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="fitmeal-admin")
+    parser = argparse.ArgumentParser(prog="donut-admin")
     sub = parser.add_subparsers(dest="group", required=True)
     foods = sub.add_parser("foods").add_subparsers(dest="command", required=True)
 

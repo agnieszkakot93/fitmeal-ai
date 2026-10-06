@@ -3,28 +3,28 @@
 # API: http://localhost:8000/docs
 # Postgres and Redis listen on 127.0.0.1 only. Optional overrides go in
 # infra/.env (see infra/.env.example).
-name: fitmeal
+name: donut
 
 services:
   postgres:
     image: postgres:16
     environment:
-      POSTGRES_USER: fitmeal
-      POSTGRES_PASSWORD: fitmeal
-      POSTGRES_DB: fitmeal
+      POSTGRES_USER: donut
+      POSTGRES_PASSWORD: donut
+      POSTGRES_DB: donut
     ports: ["127.0.0.1:5432:5432"]
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./postgres/create-test-db.sql:/docker-entrypoint-initdb.d/create-test-db.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U fitmeal -d fitmeal"]
+      test: ["CMD-SHELL", "pg_isready -U donut -d donut"]
       interval: 2s
       timeout: 3s
       retries: 20
 
   redis:
     image: redis:7-alpine
-    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:-fitmeal}"]
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:-donut}"]
     ports: ["127.0.0.1:6379:6379"]
 
   api:
@@ -32,8 +32,8 @@ services:
       context: ..
       dockerfile: backend/Dockerfile
     environment:
-      FITMEAL_DATABASE_URL: postgresql+asyncpg://fitmeal:fitmeal@postgres:5432/fitmeal
-      FITMEAL_REDIS_URL: redis://:${REDIS_PASSWORD:-fitmeal}@redis:6379/0
+      DONUT_DATABASE_URL: postgresql+asyncpg://donut:donut@postgres:5432/donut
+      DONUT_REDIS_URL: redis://:${REDIS_PASSWORD:-donut}@redis:6379/0
     ports: ["8000:8000"]
     depends_on:
       postgres: {condition: service_healthy}

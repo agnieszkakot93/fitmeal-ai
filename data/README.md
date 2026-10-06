@@ -47,7 +47,7 @@ trace policy cite it; everything else is `traces: unknown`.
 
 ### Allergen lint
 
-`fitmeal-admin foods import` (also with `--dry-run`) refuses to write when an
+`donut-admin foods import` (also with `--dry-run`) refuses to write when an
 entry clearly contradicts its allergens: a `dairy`/`egg`/`fish`/`shellfish`
 origin without milk/eggs/fish/crustaceans or molluscs, or a name or alias that
 names an allergen source ("wheat", "pszenne", "tahini", "tofu", "almond" ...)
@@ -67,7 +67,7 @@ list words that always mean the allergen.
 
    ```bash
    cd backend
-   uv run fitmeal-admin foods import \
+   uv run donut-admin foods import \
      --fdc-dir ../data/fdc/sr_legacy --fdc-dir ../data/fdc/foundation --dry-run
    ```
 
@@ -87,7 +87,7 @@ With Docker Compose instead of a local Python:
 
 ```bash
 docker compose -f infra/docker-compose.yml run --rm api \
-  fitmeal-admin foods import --fdc-dir /app/data/fdc/sr_legacy --fdc-dir /app/data/fdc/foundation
+  donut-admin foods import --fdc-dir /app/data/fdc/sr_legacy --fdc-dir /app/data/fdc/foundation
 ```
 
 ## Conventions

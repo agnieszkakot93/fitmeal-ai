@@ -10,7 +10,7 @@ from app.foods.router import router as foods_router
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="FitMeal AI API", version="0.1.0")
+    app = FastAPI(title="Donut API", version="0.1.0")
     app.include_router(foods_router)
     app.include_router(nutrition_router)
 
