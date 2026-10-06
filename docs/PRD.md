@@ -1,14 +1,14 @@
-# FitMeal AI — Product Requirements Document
+# Donut — Product Requirements Document
 
 24 Sept 2026 · @blvck
 
 ## 1. Overview & Vision
 
-FitMeal AI is an intelligent meal planning app that turns any recipe — from social media, a PDF, or its own catalog — into a personalized plan matched to the user's calories, macros, allergies, budget, cooking time, and pantry.
+Donut is an intelligent meal planning app that turns any recipe — from social media, a PDF, or its own catalog — into a personalized plan matched to the user's calories, macros, allergies, budget, cooking time, and pantry.
 
 **Core promise:** "Eat what you feel like eating — matched to your plan." The app imports or suggests a recipe the user actually wants, adapts it to fit their targets, generates a compatible weekly plan, and produces a shopping list.
 
-**Product thesis:** FitMeal AI is a nutrition + optimization platform with an AI layer, not an AI chatbot with recipes attached. The moat is the deterministic Recipe Transformation Engine, Substitution Engine, and Planner/Optimizer — AI only interprets and explains; it never computes nutrition truth.
+**Product thesis:** Donut is a nutrition + optimization platform with an AI layer, not an AI chatbot with recipes attached. The moat is the deterministic Recipe Transformation Engine, Substitution Engine, and Planner/Optimizer — AI only interprets and explains; it never computes nutrition truth.
 
 ## 2. Problem Statement
 
@@ -25,7 +25,7 @@ Users find appealing recipes on Instagram, TikTok, blogs, or in PDFs, but:
 9. Generic calorie counters don't understand a recipe's culinary structure.
 10. Users must invent their own substitutions manually.
 
-FitMeal AI solves all ten as one integrated system, rather than as separate tools (a calorie counter + a recipe site + a shopping list app).
+Donut solves all ten as one integrated system, rather than as separate tools (a calorie counter + a recipe site + a shopping list app).
 
 ## 3. Target Users
 
@@ -81,13 +81,13 @@ Metrics are computed from aggregated server data and App Store Connect; there is
 
 First launch builds the user's `NutritionProfile`, which is stored only on the phone (§12.2). Simple Mode with sensible defaults is the default path; Advanced options are opt-in. No account is needed to complete onboarding; Sign in with Apple is requested when the first plan is generated, so the plan can be saved and synced.
 
-- **Age confirmation (first step):** the user confirms they are 18 or older. Anyone who does not confirm cannot continue and sees a short explanation that FitMeal is designed for adults. If the user later enters an age under 18 in body data, the same block applies.
+- **Age confirmation (first step):** the user confirms they are 18 or older. Anyone who does not confirm cannot continue and sees a short explanation that Donut is designed for adults. If the user later enters an age under 18 in body data, the same block applies.
 - **Consent & health notice:**
-  - Explicit, separate, unticked consent to process health-related data (allergies, intolerances, body data, calorie/macro goals) under GDPR Art. 9 — not bundled with the terms of service. The consent text says that this data is stored only on the phone and is sent to FitMeal's servers only to compute plans and recipes, without being saved there. Without it the app cannot build a personalized profile (see §12.2).
-  - General notice: FitMeal gives general nutrition planning, not medical advice. If you are pregnant or breastfeeding, have or have had an eating disorder, have kidney disease, diabetes or another medical condition, or follow a medically prescribed diet, consult a doctor or registered dietitian before using the app. The app does **not** ask about or store any of these conditions.
+  - Explicit, separate, unticked consent to process health-related data (allergies, intolerances, body data, calorie/macro goals) under GDPR Art. 9 — not bundled with the terms of service. The consent text says that this data is stored only on the phone and is sent to Donut's servers only to compute plans and recipes, without being saved there. Without it the app cannot build a personalized profile (see §12.2).
+  - General notice: Donut gives general nutrition planning, not medical advice. If you are pregnant or breastfeeding, have or have had an eating disorder, have kidney disease, diabetes or another medical condition, or follow a medically prescribed diet, consult a doctor or registered dietitian before using the app. The app does **not** ask about or store any of these conditions.
 - **Goal:** cut / maintain / bulk, or a fully custom calorie/macro target.
 - **Body data (optional):** age, sex, weight, height, and activity level. If provided, the app calculates suggested calorie and macro targets on the phone (standard energy-expenditure equation + goal adjustment) and pre-fills the next screens. The user can skip this step and enter targets directly, and can override any suggested value.
-- **Calories:** direct numeric input (e.g. 1500 kcal/day), pre-filled with the suggestion when body data was given. **Hard floor: 1200 kcal/day.** The app refuses any target below it (including a suggested value, which is clamped to 1200) and explains why: very low intakes need supervision from a doctor or dietitian, so FitMeal doesn't build plans below 1200 kcal a day.
+- **Calories:** direct numeric input (e.g. 1500 kcal/day), pre-filled with the suggestion when body data was given. **Hard floor: 1200 kcal/day.** The app refuses any target below it (including a suggested value, which is clamped to 1200) and explains why: very low intakes need supervision from a doctor or dietitian, so Donut doesn't build plans below 1200 kcal a day.
 - **Macros — two modes:**
   1. Simple: standard / high protein / lower carb / balanced presets.
   2. Advanced: explicit grams per macro (e.g. Protein 120 g, Fat 50 g, Carbs 140 g), with support for minimum-based targets (e.g. "Protein minimum: 115 g") instead of forcing an exact number. Gram targets whose implied energy is below 1200 kcal are refused with the same explanation.
@@ -118,11 +118,11 @@ Four input sources: (1) the app's own recipe database, (2) link import from page
 
 **Import pipeline:** URL/PDF/Text → extract content → detect recipes → parse ingredients → normalize units → match to FoodItems → detect servings → calculate nutrition → AI culinary interpretation → validation → user preview. Low-confidence extractions (e.g. "1 cup cheese") open a clarification prompt rather than silently guessing; every parsed ingredient carries a confidence score (0–1).
 
-**Source nutrition is for comparison only:** nutrition values found on the linked page or in the PDF are shown next to FitMeal's calculation (e.g. "Source says 540 kcal · FitMeal calculated 612 kcal") and are never used as truth. All nutrition the app uses is computed by the deterministic engine (§9).
+**Source nutrition is for comparison only:** nutrition values found on the linked page or in the PDF are shown next to Donut's calculation (e.g. "Source says 540 kcal · Donut calculated 612 kcal") and are never used as truth. All nutrition the app uses is computed by the deterministic engine (§9).
 
 **Allergens at import:** if an imported recipe contains an ingredient matching the user's ALLERGY or strict INTOLERANCE (directly, derived, or — for ALLERGY — as "may contain"), Import Preview shows a blocking notice at the top naming the ingredient and allergen. The recipe can be saved, but cannot be personalized or planned until that ingredient is substituted with a safe alternative or removed.
 
-**Public catalog vs. private import:** recipes sourced from the internet are re-expressed as an internal concept (ingredients, technique, dish type) with the app's own generated instructions and presentation — never a copy of a third party's text, photos, or layout. Imports are always private to the user and **never feed a public catalog**; the catalog contains only recipes FitMeal owns (see Risks).
+**Public catalog vs. private import:** recipes sourced from the internet are re-expressed as an internal concept (ingredients, technique, dish type) with the app's own generated instructions and presentation — never a copy of a third party's text, photos, or layout. Imports are always private to the user and **never feed a public catalog**; the catalog contains only recipes Donut owns (see Risks).
 
 ### 8.2 Recipe Schema
 
@@ -138,7 +138,7 @@ Given an original recipe and the user's meal target (e.g. 720 kcal/42 g protein 
 - After rounding to practical amounts, the result is re-verified: kcal within **±5%** of the target, protein still at or above the minimum. If rounding breaks either, the engine re-solves; it never shows an out-of-tolerance result as "on target".
 - If the target cannot be reached while keeping the dish culinarily valid, the preview says which target was missed and by how much, and offers options (accept as is, pick a different recipe, adjust the meal's share of daily calories).
 
-**User control:** the transformed recipe is shown as a proposal with every change listed ("Why did FitMeal change this?", §9). The user can reject individual changes — the engine re-solves without them — and nothing is saved until the user confirms.
+**User control:** the transformed recipe is shown as a proposal with every change listed ("Why did Donut change this?", §9). The user can reject individual changes — the engine re-solves without them — and nothing is saved until the user confirms.
 
 ### 8.4 Substitution Engine
 
@@ -201,7 +201,7 @@ Every planned meal can be marked cooked, eaten, or skipped from Today and Weekly
 
 **Confidence system:** every AI-extracted ingredient carries a confidence score (0–1); low-confidence items (e.g. "one scoop protein" at 0.63) trigger a user clarification prompt rather than a silent guess. An unresolved ingredient is treated as possibly containing any of the user's ALLERGY or strict INTOLERANCE items, so the recipe stays blocked from planning until the user clarifies it.
 
-**Explainability:** any non-trivial modification exposes a "Why did FitMeal change this?" breakdown listing each change and its nutritional effect (e.g. "reduced oil by 8 g → saves 72 kcal"). Each change can be approved or rejected individually.
+**Explainability:** any non-trivial modification exposes a "Why did Donut change this?" breakdown listing each change and its nutritional effect (e.g. "reduced oil by 8 g → saves 72 kcal"). Each change can be approved or rejected individually.
 
 **Allergen Engine:** enforces the severity tiers defined in §7 over the 14 EU allergens, diet categories, and matched free-text exclusions.
 

@@ -1,4 +1,4 @@
-FitMeal takes a recipe someone actually wants to eat and fits it to their calories, protein, allergies, budget and cooking time. It then builds a week around it and writes the shopping list. The interface should feel like a calm kitchen notebook with a precise calculator inside: warm paper, confident numbers, and every change explained.
+Donut takes a recipe someone actually wants to eat and fits it to their calories, protein, allergies, budget and cooking time. It then builds a week around it and writes the shopping list. The interface should feel like a calm kitchen notebook with a precise calculator inside: warm paper, confident numbers, and every change explained.
 
 > **Your favorite food. Your macros. Less waste.**
 > *Jedz to, na co masz ochotę — dopasowane do Twojego planu.*
@@ -6,16 +6,16 @@ FitMeal takes a recipe someone actually wants to eat and fits it to their calori
 ## Principles the UI must show
 
 1. **Numbers are the hero.** Kcal and protein are always visible, set in `numeral` / `numeral-xl` with tabular figures. Never hide a number behind a vague label like "healthy".
-2. **Show what changed and why.** Anything FitMeal alters is tinted `paprika-soft` and can be explained with a `ChangeItem` list ("Reduced oil by 8 g — saves 72 kcal").
+2. **Show what changed and why.** Anything Donut alters is tinted `paprika-soft` and can be explained with a `ChangeItem` list ("Reduced oil by 8 g — saves 72 kcal").
 3. **Allergies are hard walls.** `danger` belongs only to allergies, destructive actions and errors. Options that conflict with an allergy or a strict intolerance are never offered. A recipe that contains one gets a blocking `Notice` naming the ingredient and the allergen, and it is never collapsed or hidden.
-4. **Nothing changes until the user confirms.** Transformations, swaps, *I don't have this* and rebalances are proposals. Each change in *Why did FitMeal change this?* and each adjustment in a `RebalanceProposal` can be rejected on its own. Meals marked eaten or skipped are locked.
+4. **Nothing changes until the user confirms.** Transformations, swaps, *I don't have this* and rebalances are proposals. Each change in *Why did Donut change this?* and each adjustment in a `RebalanceProposal` can be rejected on its own. Meals marked eaten or skipped are locked.
 5. **Value before the paywall.** Show the real result first (`CompareCard`, `LockedPreview`), then ask for the upgrade.
 6. **Food, not "AI".** Never lead with AI, sparkles or robots. The product is the plan.
 7. **Safe by default.** Adults only (18+). There's a hard floor of 1,200 kcal a day for every target, plan and rebalance. The app makes no medical claims and asks for no medical conditions (see *Safety, privacy and consent*).
 
 ## Content fundamentals
 
-- **Voice:** a capable friend who cooks. Plain, specific and brief. Use *you* for the user. FitMeal speaks as *we* only when it did something ("We found a simpler week").
+- **Voice:** a capable friend who cooks. Plain, specific and brief. Use *you* for the user. Donut speaks as *we* only when it did something ("We found a simpler week").
 - **Casing:** sentence case everywhere, including buttons and titles. `caption` section labels are the only uppercase.
 - **Numbers:** always digits with units: *520 kcal*, *44 g protein*, *12.40 PLN*, *25 min*. Macro shorthand is `44 P · 52 C · 12 F`, always in that order and always after kcal. Use a true minus (−) and an explicit plus (+) in deltas. Put spaces before units. Polish locale: *199,99 zł*, decimal comma.
 - **Buttons** are verbs naming the outcome: *Generate week*, *Use turkey breast*, *Adjust dinner −70 kcal*, *Unlock Economy Mode*. Never write *OK*, *Submit* or *Go Premium*.
@@ -23,7 +23,7 @@ FitMeal takes a recipe someone actually wants to eat and fits it to their calori
 - **No medical claims.** Don't use "treat", "cure" or "detox". Sensitive profiles get the disclaimer in `footnote`.
 - **No emoji** in UI copy. The one exception is post-meal feedback, which may use a fixed four-face scale.
 - **Never moralize food or bodies.** Don't call foods "good" or "bad", don't say "cheat meal", and don't body-shame. Say what changed in numbers.
-- **Name:** *FitMeal* is the working title (`docs/branding/NAME_RESEARCH.md`). Keep it set in plain type. No logo or wordmark exists until the Product Owner approves the final name; when that happens, the name, the cover and this book change together.
+- **Name:** *Donut* is the working title (`docs/branding/NAME_RESEARCH.md`). Keep it set in plain type. No logo or wordmark exists until the Product Owner approves the final name; when that happens, the name, the cover and this book change together.
 - **Languages:** Polish is the primary market and English ships from day one. Every string needs a PL version. Check Polish plural forms (1 posiłek, 2 posiłki, 5 posiłków) and allow about 30% extra length.
 
 Real copy to match:
@@ -31,7 +31,7 @@ Real copy to match:
 | Where | Copy |
 | --- | --- |
 | Rebalance | *Your day is 90 kcal over. Rebalance the meal you haven't eaten yet?* · *Dinner, portion −16%, −70 kcal* |
-| Calorie floor | *FitMeal doesn't build plans below 1,200 kcal a day. Very low intakes need supervision from a doctor or dietitian.* |
+| Calorie floor | *Donut doesn't build plans below 1,200 kcal a day. Very low intakes need supervision from a doctor or dietitian.* |
 | Allergen block | *Contains peanuts (peanut butter). Peanuts are your allergy. You can save this recipe, but we can't personalize or plan it until peanut butter is swapped or removed.* |
 | No plan | *We couldn't build a 7-day plan. Too few breakfasts fit your exclusions and the 15-minute limit.* |
 | Import | *Recipe detected · 1 cup cheese — Which cheese?* |
@@ -48,7 +48,7 @@ The palette is basil green, paprika and warm paper, with three macro colours. Al
 - **Grounds:** screens sit on `surface`. Cards, sheets and list groups use `surface-raised`. Wells and tracks use `surface-sunken`. Separate them with a `line` hairline, not shadows (`shadow-card` stays faint).
 - **Text:** use `ink` for everything that matters and `ink-muted` for units and metadata. `ink-faint` is for disabled text and placeholders only, because it fails 4.5:1 on purpose.
 - **Brand:** `basil` is the primary action, the selected state, success and "on target". Text on a basil fill is `on-basil`, which turns dark in the dark theme. Selected fills use `basil-soft` with `basil-ink` text.
-- **Accent:** `paprika` means *FitMeal changed this* and *Add*. It covers change tints (`paprika-soft` / `paprika-ink`), the Add tab button and the import CTA. Text on a paprika fill is always `on-paprika`, never white. Paprika is never used for errors.
+- **Accent:** `paprika` means *Donut changed this* and *Add*. It covers change tints (`paprika-soft` / `paprika-ink`), the Add tab button and the import CTA. Text on a paprika fill is always `on-paprika`, never white. Paprika is never used for errors.
 - **Macros:** `macro-protein` (terracotta), `macro-carbs` (amber) and `macro-fat` (blue), on a `macro-track`. Carbs is the lightest and protein the darkest in light mode. Fat is blue, so no pair relies on a red–green split. A macro colour never appears without its letter or word (P / C / F).
 - **Severity:** `danger` marks ALLERGY and allergen-block notices. `warning` marks INTOLERANCE, low-confidence imports, missed targets, plans that can't be built and an allergen check that can't run (no profile on the phone). Import fallbacks (*Paste recipe text*) are `info`. *Don't like* and *Prefer not* stay neutral.
 - **Premium:** `premium` on `premium-soft` is for the Premium tier only.
@@ -58,7 +58,7 @@ Every text token's usage note names the grounds it passes 4.5:1 on in both theme
 
 ## Liquid Glass (iOS 26)
 
-FitMeal follows Apple's Liquid Glass design language, in its light and clear form. Content (meals, numbers, recipes) sits on warm solid paper. Navigation and controls float above it as clear glass: half-transparent, lit from the top by a soft sheen, with a crisp 1px rim and barely any shadow. The colour of whatever scrolls underneath glows through. There are two layers and never more.
+Donut follows Apple's Liquid Glass design language, in its light and clear form. Content (meals, numbers, recipes) sits on warm solid paper. Navigation and controls float above it as clear glass: half-transparent, lit from the top by a soft sheen, with a crisp 1px rim and barely any shadow. The colour of whatever scrolls underneath glows through. There are two layers and never more.
 
 - **What is glass:** the three-tab bar and its Add button, the bottom accessory, NavBar back and trailing buttons (grouped into one capsule), floating CTAs over a hero or scrolling list, partial-height sheets, context menus and the cooking-mode toolbar.
 - **What is never glass:** cards, list groups, ingredient rows, macro visuals and any content. Glass on glass is not allowed. Inside a glass container, controls are plain (`.fm-glass-group .fm-iconbtn`).
@@ -149,7 +149,7 @@ Icons are single-ink and take the text colour of their row. No emoji or illustra
 
 ## Components
 
-The React bundle is `window.FitMeal` (React 18). It is the visual reference for the SwiftUI `DesignSystem` package: each component maps to one SwiftUI view with the same name and props. Groups:
+The React bundle is `window.Donut` (React 18). It is the visual reference for the SwiftUI `DesignSystem` package: each component maps to one SwiftUI view with the same name and props. Groups:
 
 - **Actions:** `Button` (including `glass` / `glass-prominent`), `IconButton` (including `glass`)
 - **Inputs:** `Chip`, `SegmentedControl`, `SelectCard`, `Toggle`, `Checkbox`, `NumberField`, `ExclusionRow`, `DistributionEditor`
@@ -170,7 +170,7 @@ The **Screens** group lays out the MVP flow of the PRD (after the review decisio
 
 - **Onboarding (01–15):** welcome, restore profile on a new phone (01b) and no profile on this phone (01c), 18+ confirmation and the under-18 stop, consent and health notice (profile on this phone), goal, body data (calculated on the phone), suggested calories and the 1,200 kcal floor, macros, meals and distribution, the 14 EU allergens with severity tiers, diet and free-text exclusions, preferences, budget and meal prep with the plan reminder, and *Sign in with Apple* to save the first plan.
 - **Plan and Today (16–19):** create plan (3, 5 or 7 days), weekly plan with cook and eat-by days, Today with meal statuses, and swap meal with its effect on the day.
-- **Rebalance and recipe (20–24):** rebalance proposal, the can't-restore case, recipe, *Why did FitMeal change this?* with keep and undo per change, and ingredient swap.
+- **Rebalance and recipe (20–24):** rebalance proposal, the can't-restore case, recipe, *Why did Donut change this?* with keep and undo per change, and ingredient swap.
 - **Import (25–30):** add recipe with the import notice, PDF recipe picker (25b), fallbacks to *Paste recipe text* for a scanned PDF (25c), a page without recipe data (25d), a site that opts out of text and data mining (25e) and an Instagram or TikTok link (25f), the Share Extension with and without a caption (25g), Import Preview with an allergen block (shared-caption source line), Import Preview with no profile on this phone (26b), clarification prompt, your version with source nutrition, target missed, and *I don't have this*.
 - **Plan states (31–33):** no plan possible, a plan with a relaxed goal, and offline.
 - **Shopping, paywall and profile (34–38):** shopping list, Economy Mode v1 preview, paywall, Profile with Privacy & health (profile on this phone, iCloud sync, plan reminder, export), *Where your data lives* (37b), and delete account (with the iCloud-not-reachable case).

@@ -5,7 +5,7 @@
 <body>
 <div id="root"></div>
 <script>
-var F = window.FitMeal, h = React.createElement;
+var F = window.Donut, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 root(h('div', {className:'fm-row', style:{padding:16, alignItems:'stretch'}},
   h('div', {style:{width:340}}, h(F.MealCard, {slot:'Lunch', time:'13:30', title:'Chicken Teriyaki', kcal:548, protein:49, carbs:58, fat:12, status:'cooked', prep:{portion:'1/2', cook:'Wed', eatBy:'Thu'}})),

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..700&display=swap');
 
-/* FitMeal components. Every colour, space and radius is a token from tokens.css. */
+/* Donut components. Every colour, space and radius is a token from tokens.css. */
 body { margin: 0; background: var(--surface); color: var(--ink); font-family: var(--font-text); -webkit-font-smoothing: antialiased; }
 .fm-icon { flex: none; display: block; }
 .fm-dot { display: inline-block; width: 8px; height: 8px; border-radius: var(--radius-pill); flex: none; }

@@ -1,6 +1,6 @@
 # CompareCard
 
-Original vs your version: the moment FitMeal shows what it did to a recipe.
+Original vs your version: the moment Donut shows what it did to a recipe.
 
 **Props:**
 - `original`, `yours`: `{kcal, protein}`

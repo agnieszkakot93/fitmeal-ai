@@ -14,7 +14,7 @@ The availability checks are still open (NAME_RESEARCH.md §8.6.3). The plan is o
 | iOS display name, bundle ID | `ios/` not started yet | 0 |
 | Repository name `fitmeal-ai` | GitHub | 1 |
 
-## Phase 1: user-facing text (now)
+## Phase 1: user-facing text (done 2026-10-06)
 
 Safe to do now, easy to revert, no external dependency.
 
@@ -47,3 +47,7 @@ Domains, trademarks and accounts are purchased or registered by the Product Owne
 
 - The trademark and App Store checks may still fail (Donut for Slack is the main conflict). Phases 1 and 2 are cheap to redo if so; Phase 3 isn't, which is why it's gated.
 - Phase 2 breaks local `.env` files until contributors update the prefix.
+
+## Progress
+
+- **2026-10-06, Phase 1 done:** "FitMeal AI" and "FitMeal" replaced with "Donut" in README, CLAUDE.md, PRD, Development Plan, backend and data READMEs, agent definitions and the design system (including the `window.Donut` bundle global and planned iOS target names in the Development Plan). Not changed yet: `backend/app/main.py` API title and the `data/foods/curated.yaml` header comment (Phase 2, with the other code), and `docs/branding/` history.

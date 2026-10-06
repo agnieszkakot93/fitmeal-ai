@@ -5,7 +5,7 @@
 <body>
 <div id="root"></div>
 <script>
-var F = window.FitMeal, h = React.createElement;
+var F = window.Donut, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
 function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
@@ -70,7 +70,7 @@ function deleteSheet(icloudUnreachable){ return sheet(
   h('span', {style:{display:'grid', placeItems:'center', width:48, height:48, borderRadius:999, background:'var(--danger-soft)', color:'var(--danger)'}}, h(F.Icon, {name:'trash', size:24})),
   h('h2', {className:'fm-h2'}, 'Delete your account?'),
   h('p', {className:'fm-body', style:{fontSize:15, lineHeight:'21px'}}, 'Permanently deletes your account, plans and private imports from our servers, and your profile from this phone and iCloud. We keep a record of your consents only as long as the law requires.'),
-  icloudUnreachable ? h(F.Notice, {tone:'offline', icon:'cloud', title:'We can’t reach your iCloud right now', body:'Your profile may stay in your iCloud. To remove it, open iOS Settings › your name › iCloud › Manage Storage › FitMeal and delete its data.'}) : null,
+  icloudUnreachable ? h(F.Notice, {tone:'offline', icon:'cloud', title:'We can’t reach your iCloud right now', body:'Your profile may stay in your iCloud. To remove it, open iOS Settings › your name › iCloud › Manage Storage › Donut and delete its data.'}) : null,
   h(F.Notice, {tone:'offline', icon:'info', body:'Your App Store subscription isn’t cancelled automatically. Manage it in Settings › Apple ID › Subscriptions.'}),
   h(F.Button, {variant:'danger', size:'lg', block:true}, 'Delete account'),
   h(F.Button, {variant:'quiet', size:'md', block:true}, 'Export my data first')); }

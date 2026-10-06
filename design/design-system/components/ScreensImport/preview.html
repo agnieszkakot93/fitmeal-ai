@@ -5,7 +5,7 @@
 <body>
 <div id="root"></div>
 <script>
-var F = window.FitMeal, h = React.createElement;
+var F = window.Donut, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
 function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
@@ -61,7 +61,7 @@ show([
        h(F.SelectCard, {icon:'doc', title:'Choose a PDF', description:'PDFs with selectable text, read on your phone', meta:'1 trial'}),
        h(F.SelectCard, {icon:'text', title:'Paste recipe text', description:'Copy a recipe from anywhere'}),
        h(F.SelectCard, {icon:'edit', title:'Enter manually', description:'Type ingredients line by line'})),
-     h('p', {className:'fm-foot'}, 'Tip: in Instagram or TikTok, tap Share → FitMeal.')),
+     h('p', {className:'fm-foot'}, 'Tip: in Instagram or TikTok, tap Share → Donut.')),
    h(F.TabBar, {key:'t', active:'none'})
  ]),
  Ph('25b PDF recipe picker', [
@@ -101,7 +101,7 @@ show([
    FALLBACK_NAV,
    scroll(
      linkField('https://www.instagram.com/reel/C9xk2Lm'),
-     h(F.Notice, {tone:'info', title:'We don’t open Instagram or TikTok links', body:'Share the post to FitMeal, or paste the caption. We’ll keep the link as the source.', items:['In Instagram or TikTok, tap Share', 'Then choose FitMeal'], actions:[PASTE]}),
+     h(F.Notice, {tone:'info', title:'We don’t open Instagram or TikTok links', body:'Share the post to Donut, or paste the caption. We’ll keep the link as the source.', items:['In Instagram or TikTok, tap Share', 'Then choose Donut'], actions:[PASTE]}),
      source('instagram.com/reel/C9xk2Lm', 'Saved as the source. We don’t open it.'))
  ]),
  Ph('25g Share Extension (from Instagram)', [
@@ -109,7 +109,7 @@ show([
    h('div', {key:'s', className:'fm-scrim'},
      h('div', {className:'fm-sheet'},
        h('span', {className:'fm-sheet-grab'}),
-       sheetHead('Add to FitMeal'),
+       sheetHead('Add to Donut'),
        label('Caption we’ll use'),
        h('div', {style:{background:'var(--surface-raised)', border:'1px solid var(--line)', borderRadius:'var(--radius-md)', padding:'12px 14px'}},
          h('p', {className:'fm-body', style:{fontSize:15, lineHeight:'21px'}}, CAPTION)),
@@ -124,7 +124,7 @@ show([
    h('div', {key:'s', className:'fm-scrim'},
      h('div', {className:'fm-sheet'},
        h('span', {className:'fm-sheet-grab'}),
-       sheetHead('Add to FitMeal'),
+       sheetHead('Add to Donut'),
        h(F.Notice, {tone:'info', title:'This post has no caption to use', body:'Paste the recipe text, for example from the comments. We’ll keep the link as the source.', actions:[PASTE]}),
        h('div', {role:'textbox', 'aria-label':'Recipe text', style:{minHeight:72, padding:'12px 14px', background:'var(--surface-raised)', border:'1.5px solid var(--line-strong)', borderRadius:'var(--radius-sm)', font:'400 15px/21px var(--font-text)', color:'var(--ink-faint)'}}, 'Paste the recipe text'),
        source('instagram.com/reel/C9xk2Lm', 'Saved as the source. We don’t open it.'),

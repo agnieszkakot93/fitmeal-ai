@@ -1,4 +1,4 @@
-# FitMeal AI — backend
+# Donut — backend
 
 FastAPI modular monolith. See [../docs/DEVELOPMENT_PLAN.md](../docs/DEVELOPMENT_PLAN.md) for the architecture.
 

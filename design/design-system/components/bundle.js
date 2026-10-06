@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"FitMeal","components":[{"name":"Icon"},{"name":"Button"},{"name":"IconButton"},{"name":"Chip"},{"name":"SegmentedControl"},{"name":"SelectCard"},{"name":"Toggle"},{"name":"Checkbox"},{"name":"NumberField"},{"name":"ExclusionRow"},{"name":"DistributionEditor"},{"name":"MacroRing"},{"name":"MacroBar"},{"name":"MacroLine"},{"name":"Delta"},{"name":"Badge"},{"name":"Notice"},{"name":"MealCard"},{"name":"DayStrip"},{"name":"RebalanceProposal"},{"name":"IngredientRow"},{"name":"SwapOption"},{"name":"ChangeItem"},{"name":"CompareCard"},{"name":"ConfidencePrompt"},{"name":"ShoppingItem"},{"name":"StatTile"},{"name":"PlanCard"},{"name":"LockedPreview"},{"name":"SectionHeader"},{"name":"NavBar"},{"name":"Avatar"},{"name":"OnboardingProgress"},{"name":"TabBar"},{"name":"BottomAccessory"},{"name":"RecipeHero"},{"name":"PhoneFrame"}]} */
+/* @ds-bundle: {"format":4,"namespace":"Donut","components":[{"name":"Icon"},{"name":"Button"},{"name":"IconButton"},{"name":"Chip"},{"name":"SegmentedControl"},{"name":"SelectCard"},{"name":"Toggle"},{"name":"Checkbox"},{"name":"NumberField"},{"name":"ExclusionRow"},{"name":"DistributionEditor"},{"name":"MacroRing"},{"name":"MacroBar"},{"name":"MacroLine"},{"name":"Delta"},{"name":"Badge"},{"name":"Notice"},{"name":"MealCard"},{"name":"DayStrip"},{"name":"RebalanceProposal"},{"name":"IngredientRow"},{"name":"SwapOption"},{"name":"ChangeItem"},{"name":"CompareCard"},{"name":"ConfidencePrompt"},{"name":"ShoppingItem"},{"name":"StatTile"},{"name":"PlanCard"},{"name":"LockedPreview"},{"name":"SectionHeader"},{"name":"NavBar"},{"name":"Avatar"},{"name":"OnboardingProgress"},{"name":"TabBar"},{"name":"BottomAccessory"},{"name":"RecipeHero"},{"name":"PhoneFrame"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
@@ -436,7 +436,7 @@
       h('span', { className: 'fm-change-icon' }, h(Icon, { name: p.icon || 'edit', size: 16 })),
       h('span', { className: 'fm-change-body' },
         h('span', { className: 'fm-change-what' }, p.what),
-        h('span', { className: 'fm-change-effect' }, kept ? p.effect : 'Rejected. FitMeal re-solves without it.')),
+        h('span', { className: 'fm-change-effect' }, kept ? p.effect : 'Rejected. Donut re-solves without it.')),
       p.decidable !== false && h('button', {
         type: 'button', className: cx('fm-change-toggle', kept && 'is-on'), 'aria-pressed': kept,
         'aria-label': (kept ? 'Keep: ' : 'Rejected: ') + p.what, onClick: function () { ctl[1](!kept); }
@@ -461,7 +461,7 @@
         h('span', { className: 'fm-cmp-arrow' }, h(Icon, { name: 'arrow', size: 20 })),
         col(p.yoursLabel || 'Your version', y, true)),
       p.target && h('p', { className: 'fm-cmp-target' }, p.target),
-      p.sourceKcal != null && h('p', { className: 'fm-cmp-target' }, 'FitMeal calculates every number itself. The source\u2019s figure is shown for comparison only.'));
+      p.sourceKcal != null && h('p', { className: 'fm-cmp-target' }, 'Donut calculates every number itself. The source\u2019s figure is shown for comparison only.'));
   }
 
   function ConfidencePrompt(p) {
@@ -641,8 +641,8 @@
   }
 
   var C = window;
-  C.FitMeal = C.FitMeal || {};
-  Object.assign(C.FitMeal, {
+  C.Donut = C.Donut || {};
+  Object.assign(C.Donut, {
     Icon: Icon, Button: Button, IconButton: IconButton, Chip: Chip, SegmentedControl: SegmentedControl,
     SelectCard: SelectCard, Toggle: Toggle, Checkbox: Checkbox, NumberField: NumberField, ExclusionRow: ExclusionRow,
     DistributionEditor: DistributionEditor, MacroRing: MacroRing, MacroBar: MacroBar, MacroLine: MacroLine, Delta: Delta,

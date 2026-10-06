@@ -1,4 +1,4 @@
-// FitMeal design system — React 18, window.FitMeal. Types are documentation.
+// Donut design system — React 18, window.Donut. Types are documentation.
 import * as React from 'react';
 type Tone = 'neutral' | 'basil' | 'paprika' | 'warning' | 'danger' | 'premium' | 'solid';
 type Macro = 'protein' | 'carbs' | 'fat';

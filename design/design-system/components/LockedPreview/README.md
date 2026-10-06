@@ -1,6 +1,6 @@
 # LockedPreview
 
-The value-first paywall: show the result FitMeal already found, then gate applying it.
+The value-first paywall: show the result Donut already found, then gate applying it.
 
 **Props:** `kicker` (*Economy version found*), `stats` (`[{label, from, to}]`), `note`, `cta` (*Unlock Economy Mode*), `tier` (`premium` switches to premium tones).
 

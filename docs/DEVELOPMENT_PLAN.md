@@ -1,4 +1,4 @@
-# FitMeal AI — Development Plan (iOS SwiftUI + Backend)
+# Donut — Development Plan (iOS SwiftUI + Backend)
 
 Companion to [PRD.md](PRD.md). Date: 24 Sept 2026.
 
@@ -142,9 +142,9 @@ Estimates (~4 zł/USD):
 
 ```
 ios/
-  FitMeal.xcodeproj
-  FitMeal/                      # app target: entry point, DI container, root navigation
-  FitMealShareExtension/        # "Share to FitMeal" from Instagram, TikTok, Safari, Files (PDF text extracted on the phone)
+  Donut.xcodeproj
+  Donut/                      # app target: entry point, DI container, root navigation
+  DonutShareExtension/        # "Share to Donut" from Instagram, TikTok, Safari, Files (PDF text extracted on the phone)
   Packages/
     DesignSystem/               # colors, typography, macro rings, cards, buttons, paywall blocks
     APIClient/                  # generated from backend OpenAPI (swift-openapi-generator) + auth middleware
@@ -154,7 +154,7 @@ ios/
       Onboarding/               # 14 onboarding screens (Welcome … Meal prep)
       Today/
       WeeklyPlan/
-      Recipe/                   # recipe detail, "Why did FitMeal change this?"
+      Recipe/                   # recipe detail, "Why did Donut change this?"
       Swaps/                    # Recipe Swap, Ingredient Swap, "I don't have this"
       Import/                   # Add Recipe, Import Preview, clarification prompts
       ShoppingList/
@@ -440,7 +440,7 @@ Assumes 1 full-time developer (with AI assistance) plus part-time design help, i
 |---|---|---|
 | **S4** (wk 7–8) | Auth (Sign in with Apple → JWT), users API and consent records (no profile storage, D8), OpenAPI published | Xcode project, SPM packages, DesignSystem v1, APIClient generation, **onboarding (14 screens, incl. 18+ confirmation and Art. 9 consent, §7.1)** with Simple/Advanced macro modes; health profile in SwiftData with optional iCloud sync (D8) |
 | **S5** (wk 9–10) | **Planner v1**: filtering, scoring, CP-SAT, meal-prep grouping, portion scaling; plan API | Today + Weekly Plan screens, SwiftData cache, "meal eaten" tracking |
-| **S6** (wk 11–12) | Meal swap + **daily rebalancing**, ingredient swap, "I don't have this", variant persistence, explanations API | Recipe screen, "Why did FitMeal change this?", Recipe Swap, Ingredient Swap flows |
+| **S6** (wk 11–12) | Meal swap + **daily rebalancing**, ingredient swap, "I don't have this", variant persistence, explanations API | Recipe screen, "Why did Donut change this?", Recipe Swap, Ingredient Swap flows |
 | **S7** (wk 13–14) | Async import jobs (arq), PDF text import (Sonnet 5 for long texts), import cache, quotas | Add Recipe (with the import notice, §7.2), on-device PDF text extraction and page picker, **Share Extension**, Import Preview with low-confidence clarification prompts |
 | **S8** (wk 15–16) | Shopping aggregation (sum, categories, package counts), Economy Mode v1 (unique-ingredient + reuse weighting), entitlements + App Store Server Notifications v2 | Shopping List (offline checkmarks), **Paywall** (value-first previews, PRD §11), StoreKit 2 purchase/restore |
 | **S9** (wk 17–18) | Production VPS, backups + restore test, monitoring, rate limits, account deletion/export, APNs weekly reminder. DPIA, Art. 30 records and legal review done before the beta (§7.4, §7.6) | Settings/Profile, account deletion, disclaimers, PL/EN localization pass, server-side product metrics, Sentry. **Closed TestFlight beta (50–200 users)** |

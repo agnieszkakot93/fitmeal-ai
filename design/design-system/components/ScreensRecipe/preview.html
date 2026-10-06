@@ -1,11 +1,11 @@
-<!-- @dsCard group="Screens" height=900 width=2179 page subtitle="Rebalance proposal (per-meal, eaten meals locked), the can't-restore case, Recipe, Why did FitMeal change this? with keep/undo, Ingredient swap" -->
+<!-- @dsCard group="Screens" height=900 width=2179 page subtitle="Rebalance proposal (per-meal, eaten meals locked), the can't-restore case, Recipe, Why did Donut change this? with keep/undo, Ingredient swap" -->
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Rebalance and recipe</title></head>
 <body>
 <div id="root"></div>
 <script>
-var F = window.FitMeal, h = React.createElement;
+var F = window.Donut, h = React.createElement;
 function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
 function Ph(caption, content, footer, theme){ return h(F.PhoneFrame, {caption:caption, footer:footer, theme:theme}, content); }
 function show(list){ root(h.apply(null, ['div', {className:'fm-showcase'}].concat(list))); }
@@ -69,17 +69,17 @@ show([
      h(F.Button, {variant:'glass', size:'lg', icon:'play'}, 'Cook'),
      h('div', {style:{flex:1}}, h(F.Button, {variant:'glass-prominent', size:'lg', block:true, icon:'check'}, 'Mark as cooked'))))
  ]),
- Ph('23 Why did FitMeal change this?', [
+ Ph('23 Why did Donut change this?', [
    h(F.NavBar, {key:'n', back:'Recipe', title:'Changes'}),
    scroll(
-     h('h1', {className:'fm-h2'}, 'Why did FitMeal change this?'),
+     h('h1', {className:'fm-h2'}, 'Why did Donut change this?'),
      h(F.CompareCard, {found:false, original:{kcal:684, protein:31}, yours:{kcal:545, protein:51}, target:'Lunch target: 555 kcal · 45+ g protein'}),
      h('ul', {className:'fm-changes'},
        h(F.ChangeItem, {what:'Replaced cream with skyr', effect:'saves 96 kcal · adds 8 g protein', icon:'swap'}),
        h(F.ChangeItem, {what:'Increased chicken by 100 g', effect:'adds 23 g protein', icon:'plus'}),
        h(F.ChangeItem, {what:'Reduced pasta by 80 g', effect:'saves 118 kcal', icon:'minus'}),
        h(F.ChangeItem, {what:'Reduced oil by 8 g', effect:'saves 72 kcal', icon:'minus'})),
-     h('p', {className:'fm-foot'}, 'Numbers come from our nutrition database, not from AI. Undo any change and FitMeal re-solves without it.')),
+     h('p', {className:'fm-foot'}, 'Numbers come from our nutrition database, not from AI. Undo any change and Donut re-solves without it.')),
    h('div', {key:'c', className:'fm-sticky'}, h(F.Button, {variant:'primary', size:'lg', block:true}, 'Save my version'), h(F.Button, {variant:'quiet', size:'md', block:true}, 'Discard changes'))
  ]),
  Ph('24 Ingredient swap', [

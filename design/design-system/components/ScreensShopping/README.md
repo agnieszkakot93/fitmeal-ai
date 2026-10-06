@@ -1,6 +1,6 @@
 # Shopping, paywall and profile
 
-Shopping list (store-walk order, no prices), Economy Mode v1 preview, Paywall, Profile with Privacy & health (profile on this phone, iCloud sync, plan reminder, export), Where your data lives, Delete account (and the iCloud-not-reachable case), composed from FitMeal components on 375 × 780 iPhone frames. A showcase page, not a component: build the SwiftUI screen from the components it uses.
+Shopping list (store-walk order, no prices), Economy Mode v1 preview, Paywall, Profile with Privacy & health (profile on this phone, iCloud sync, plan reminder, export), Where your data lives, Delete account (and the iCloud-not-reachable case), composed from Donut components on 375 × 780 iPhone frames. A showcase page, not a component: build the SwiftUI screen from the components it uses.
 
 ## Profile › Privacy & health (37, 37b)
 
@@ -39,7 +39,7 @@ Shopping list (store-walk order, no prices), Economy Mode v1 preview, Paywall, P
 | where.policy | Read the privacy policy | Przeczytaj politykę prywatności |
 | delete.body | Permanently deletes your account, plans and private imports from our servers, and your profile from this phone and iCloud. We keep a record of your consents only as long as the law requires. | Trwale usuwa konto, plany i prywatne importy z naszych serwerów oraz profil z tego telefonu i iCloud. Zapis Twoich zgód przechowujemy tylko tak długo, jak wymaga tego prawo. |
 | delete.icloud.title | We can’t reach your iCloud right now | Nie możemy teraz połączyć się z Twoim iCloud |
-| delete.icloud.body | Your profile may stay in your iCloud. To remove it, open iOS Settings › your name › iCloud › Manage Storage › FitMeal and delete its data. | Twój profil może zostać w Twoim iCloud. Aby go usunąć, otwórz Ustawienia iOS › Twoje imię i nazwisko › iCloud › Zarządzaj pamięcią › FitMeal i usuń dane. |
+| delete.icloud.body | Your profile may stay in your iCloud. To remove it, open iOS Settings › your name › iCloud › Manage Storage › Donut and delete its data. | Twój profil może zostać w Twoim iCloud. Aby go usunąć, otwórz Ustawienia iOS › Twoje imię i nazwisko › iCloud › Zarządzaj pamięcią › Donut i usuń dane. |
 
 PL copy avoids gendered verb forms (*jeśli zostały podane*, not *jeśli je podałeś*). The iOS Settings path must match the installed iOS version's labels (mobile-architect to confirm).
 

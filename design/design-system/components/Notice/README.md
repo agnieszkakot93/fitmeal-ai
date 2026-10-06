@@ -30,5 +30,5 @@ When an import can't read the source, it falls back to the user pasting the text
 | Scanned PDF (no text layer) | *This PDF is a scan* | *Choose another PDF* |
 | Page without schema.org recipe data | *We can’t read a recipe on this page* | *Try another link* |
 | Site opts out of text and data mining | *We don’t open this site* | *Try another link* |
-| Instagram or TikTok URL pasted | *We don’t open Instagram or TikTok links* (with Share → FitMeal steps as `items`) | none |
+| Instagram or TikTok URL pasted | *We don’t open Instagram or TikTok links* (with Share → Donut steps as `items`) | none |
 | Share with an empty caption | *This post has no caption to use* | none |
