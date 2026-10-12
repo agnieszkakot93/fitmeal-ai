@@ -8,6 +8,7 @@ from app.foods.curated import load_curated
 from app.foods.fdc import load_fdc_dirs
 from app.foods.models import FoodItem
 from app.foods.repository import get_by_slugs
+from app.optimizer.transform import Target, transform
 from app.recipes import repository
 from app.recipes.models import (
     Recipe,
@@ -89,3 +90,16 @@ async def test_food_in_a_recipe_cannot_be_deleted(foods: AsyncSession) -> None:
     await _recipe(foods)
     with pytest.raises(IntegrityError, match="fk_recipe_ingredients_food_id"):
         await foods.execute(delete(FoodItem).where(FoodItem.slug == "olive-oil"))
+
+
+async def test_stored_recipe_transforms_per_serving(foods: AsyncSession) -> None:
+    created = await _recipe(foods)
+    recipe = await repository.get(foods, created.id)
+    assert recipe is not None
+    lines = repository.transform_lines(recipe)
+    assert [ln.grams for ln in lines] == pytest.approx([150, 75, 6.75])
+    assert lines[2].piece_g is None  # tbsp is a volume unit, not a portion
+
+    per_serving = repository.compute_nutrition(recipe).per_serving
+    result = transform(lines, Target(per_serving.kcal * 0.85, per_serving.protein_g))
+    assert result.on_target, result.misses

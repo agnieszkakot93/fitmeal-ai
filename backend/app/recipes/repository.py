@@ -8,7 +8,9 @@ from sqlalchemy.orm import selectinload
 
 from app.foods.models import FoodItem
 from app.foods.repository import to_facts
+from app.foods.vocab import CulinaryRole
 from app.nutrition.calc import IngredientLine, RecipeNutrition, calculate
+from app.optimizer.transform import Line
 from app.recipes.models import Recipe, RecipeIngredient
 
 
@@ -43,3 +45,22 @@ def refresh_nutrition(recipe: Recipe) -> RecipeNutrition:
     recipe.fiber_g = total.fiber_g
     recipe.total_grams = result.total_grams
     return result
+
+
+def transform_lines(recipe: Recipe) -> list[Line]:
+    """One serving of the recipe as engine input; needs ``get`` loading."""
+    lines = []
+    for i in recipe.ingredients:
+        food = i.food
+        portions = {p.unit: p.grams for p in food.portions}
+        lines.append(
+            Line(
+                key=f"{i.position}:{food.slug}",
+                per_100g=to_facts(food).per_100g,
+                grams=i.amount_g / recipe.servings,
+                role=CulinaryRole(i.culinary_role or food.culinary_roles[0]),
+                optional=i.optional,
+                piece_g=portions.get(i.display_unit) if i.display_unit else None,
+            )
+        )
+    return lines
