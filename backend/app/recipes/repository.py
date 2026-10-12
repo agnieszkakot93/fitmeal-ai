@@ -131,3 +131,58 @@ async def propose_fixes(
             )
             fixes.append(Fix(key, remove=False, substitutes=ranked))
     return fixes
+
+
+# roles where swapping the food is a normal cook's move
+SWAPPABLE_ROLES = {
+    CulinaryRole.MAIN_PROTEIN,
+    CulinaryRole.CARB_BASE,
+    CulinaryRole.CREAMY_BASE,
+    CulinaryRole.CHEESE,
+    CulinaryRole.COOKING_FAT,
+    CulinaryRole.LIQUID,
+}
+
+
+async def substitution_alternatives(
+    session: AsyncSession,
+    recipe: Recipe,
+    exclusions: list[Exclusion] | None = None,
+    per_line: int = 3,
+) -> dict[str, list[Line]]:
+    """Top safe, not-disliked, same-group substitutes per swappable line, as engine lines.
+
+    Only close swaps (same substitution group: chicken -> turkey, rice -> buckwheat)
+    are proposed automatically; wider ones (chicken -> tofu) stay a user choice
+    through the Swap screen. Keys match :func:`transform_lines`; amounts are per
+    serving. Needs ``get`` loading.
+    """
+    result: dict[str, list[Line]] = {}
+    for line, ingredient in zip(transform_lines(recipe), recipe.ingredients, strict=True):
+        if line.role not in SWAPPABLE_ROLES:
+            continue
+        food = ingredient.food
+        candidates = await foods_repo.substitution_candidates(session, food, line.role.value)
+        by_slug = {c.slug: c for c in candidates}
+        ranked = options(
+            foods_repo.to_substitution_food(food),
+            line.grams,
+            line.role,
+            [foods_repo.to_substitution_food(c) for c in candidates],
+            exclusions or [],
+            limit=per_line * 2,
+        )
+        alts = [
+            Line(
+                key=f"{line.key}=>{o.key}",
+                per_100g=to_facts(by_slug[o.key]).per_100g,
+                grams=o.grams,
+                role=line.role,
+                optional=line.optional,
+            )
+            for o in ranked
+            if o.same_group and not o.disliked
+        ]
+        if alts:
+            result[line.key] = alts[:per_line]
+    return result
