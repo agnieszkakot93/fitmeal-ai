@@ -30,6 +30,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.db import Base
 from app.foods.models import FoodItem
+from app.nutrition.allergens import TraceStatus
 
 
 class SourceType(StrEnum):
@@ -91,6 +92,7 @@ class Recipe(Base):
         CheckConstraint(_in("difficulty", Difficulty), name="difficulty_valid"),
         CheckConstraint("fridge_days >= 0", name="fridge_days_non_negative"),
         CheckConstraint("meal_prep_score BETWEEN 0 AND 100", name="meal_prep_score_range"),
+        CheckConstraint(_in("trace_status", TraceStatus), name="trace_status_valid"),
     )
 
     id: Mapped[uuid.UUID] = mapped_column(
@@ -127,6 +129,11 @@ class Recipe(Base):
     carbs_g: Mapped[float | None] = mapped_column(Float)
     fiber_g: Mapped[float | None] = mapped_column(Float)
     total_grams: Mapped[float | None] = mapped_column(Float)
+
+    # cached from the ingredients by refresh_allergens (app.recipes.safety.combine)
+    allergens: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
+    may_contain: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
+    trace_status: Mapped[str] = mapped_column(Text, server_default=TraceStatus.UNKNOWN.value)
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(

@@ -8,6 +8,7 @@ from app.foods.curated import load_curated
 from app.foods.fdc import load_fdc_dirs
 from app.foods.models import FoodItem
 from app.foods.repository import get_by_slugs
+from app.nutrition.allergens import Exclusion, ExclusionCategory, Severity
 from app.optimizer.transform import Target, transform
 from app.recipes import repository
 from app.recipes.models import (
@@ -103,3 +104,38 @@ async def test_stored_recipe_transforms_per_serving(foods: AsyncSession) -> None
     per_serving = repository.compute_nutrition(recipe).per_serving
     result = transform(lines, Target(per_serving.kcal * 0.85, per_serving.protein_g))
     assert result.on_target, result.misses
+
+
+async def test_allergens_are_cached_and_fixes_proposed(foods: AsyncSession) -> None:
+    found = await get_by_slugs(foods, ["egg-whole-raw", "rice-white-dry", "milk-skim"])
+    recipe = Recipe(
+        slug="egg-rice",
+        title_en="Egg rice",
+        servings=1,
+        source=RecipeSource(type=SourceType.CATALOG, public_usage_status="public"),
+        ingredients=[
+            RecipeIngredient(
+                position=0, food=found["egg-whole-raw"], amount_g=100, culinary_role="main_protein"
+            ),
+            RecipeIngredient(position=1, food=found["rice-white-dry"], amount_g=80),
+            RecipeIngredient(position=2, food=found["milk-skim"], amount_g=50, optional=True),
+        ],
+    )
+    foods.add(recipe)
+    await foods.flush()
+    loaded = await repository.get(foods, recipe.id)
+    assert loaded is not None
+    repository.refresh_allergens(loaded)
+    await foods.commit()
+    assert set(loaded.allergens) == {"eggs", "milk"}
+
+    exclusions = [
+        Exclusion(ExclusionCategory.EGGS, Severity.ALLERGY),
+        Exclusion(ExclusionCategory.DAIRY, Severity.ALLERGY),
+    ]
+    assert repository.check_exclusions(loaded, exclusions).blocked
+    fixes = {f.key: f for f in await repository.propose_fixes(foods, loaded, exclusions)}
+    assert fixes["2:milk-skim"].remove
+    egg = fixes["0:egg-whole-raw"]
+    assert not egg.remove
+    assert [o.key for o in egg.substitutes] == ["chicken-breast-raw"]

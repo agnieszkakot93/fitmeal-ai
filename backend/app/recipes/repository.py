@@ -1,28 +1,33 @@
 from __future__ import annotations
 
 import uuid
+from dataclasses import dataclass
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
+from app.foods import repository as foods_repo
 from app.foods.models import FoodItem
-from app.foods.repository import to_facts
+from app.foods.repository import to_allergens, to_facts
 from app.foods.vocab import CulinaryRole
+from app.nutrition.allergens import Allergen, Exclusion, IngredientAllergens, Origin, TraceStatus
 from app.nutrition.calc import IngredientLine, RecipeNutrition, calculate
+from app.optimizer.substitute import Option, options
 from app.optimizer.transform import Line
 from app.recipes.models import Recipe, RecipeIngredient
+from app.recipes.safety import CheckLine, RecipeAllergens, RecipeCheck, check, combine
 
 
 async def get(session: AsyncSession, recipe_id: uuid.UUID) -> Recipe | None:
-    """A recipe with its ingredients and their foods (with portions) loaded."""
+    """A recipe with its ingredients and their foods (with portions and aliases) loaded."""
     stmt = (
         select(Recipe)
         .where(Recipe.id == recipe_id)
         .options(
             selectinload(Recipe.ingredients)
             .selectinload(RecipeIngredient.food)
-            .selectinload(FoodItem.portions)
+            .options(selectinload(FoodItem.portions), selectinload(FoodItem.aliases))
         )
     )
     return (await session.scalars(stmt)).one_or_none()
@@ -64,3 +69,65 @@ def transform_lines(recipe: Recipe) -> list[Line]:
             )
         )
     return lines
+
+
+def _effective(food: FoodItem) -> IngredientAllergens:
+    """Allergen facts without names; enough for ``combine``, no aliases needed."""
+    return IngredientAllergens(
+        origin=Origin(food.origin),
+        contains=frozenset(Allergen(a) for a in food.effective_allergens),
+        may_contain=frozenset(Allergen(a) for a in food.effective_may_contain),
+        trace_status=TraceStatus(food.effective_trace_status),
+    )
+
+
+def refresh_allergens(recipe: Recipe) -> RecipeAllergens:
+    """Recompute and store the cached allergens. Call after any ingredient change."""
+    result = combine(_effective(i.food) for i in recipe.ingredients)
+    recipe.allergens = sorted(result.contains)
+    recipe.may_contain = sorted(result.may_contain)
+    recipe.trace_status = result.trace_status.value
+    return result
+
+
+def check_exclusions(recipe: Recipe, exclusions: list[Exclusion]) -> RecipeCheck:
+    """Per-ingredient conflicts with the user's exclusions; needs ``get`` loading."""
+    lines = [
+        CheckLine(f"{i.position}:{i.food.slug}", to_allergens(i.food), i.optional)
+        for i in recipe.ingredients
+    ]
+    return check(lines, exclusions)
+
+
+@dataclass(frozen=True, slots=True)
+class Fix:
+    """What to do about one excluded ingredient (PRD §8.3 steps 1-2)."""
+
+    key: str
+    remove: bool  # an optional ingredient: just leave it out
+    substitutes: list[Option]  # ranked; empty means no safe substitute was found
+
+
+async def propose_fixes(
+    session: AsyncSession, recipe: Recipe, exclusions: list[Exclusion]
+) -> list[Fix]:
+    """Fixes for every excluded ingredient; nothing changes until the user picks one."""
+    result = check_exclusions(recipe, exclusions)
+    fixes = []
+    for ingredient in recipe.ingredients:
+        key = f"{ingredient.position}:{ingredient.food.slug}"
+        if key in result.must_remove:
+            fixes.append(Fix(key, remove=True, substitutes=[]))
+        elif key in result.must_substitute:
+            food = ingredient.food
+            role = ingredient.culinary_role or food.culinary_roles[0]
+            candidates = await foods_repo.substitution_candidates(session, food, role)
+            ranked = options(
+                foods_repo.to_substitution_food(food),
+                ingredient.amount_g / recipe.servings,
+                CulinaryRole(role),
+                [foods_repo.to_substitution_food(c) for c in candidates],
+                exclusions,
+            )
+            fixes.append(Fix(key, remove=False, substitutes=ranked))
+    return fixes
