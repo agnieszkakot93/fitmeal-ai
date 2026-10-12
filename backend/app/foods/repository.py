@@ -1,15 +1,17 @@
 from __future__ import annotations
 
-from sqlalchemy import case, func, or_, select
+from sqlalchemy import ARRAY, Text, case, cast, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.core.text import fold
 from app.foods.models import FoodAlias, FoodItem
+from app.foods.vocab import CulinaryRole
 from app.nutrition.allergens import Allergen, IngredientAllergens, Origin, TraceStatus
 from app.nutrition.calc import FoodFacts
 from app.nutrition.nutrients import Nutrients
 from app.nutrition.units import FoodUnitData
+from app.optimizer.substitute import Food as SubstitutionFood
 
 _WITH_CHILDREN = (
     selectinload(FoodItem.aliases),
@@ -90,4 +92,34 @@ def to_allergens(item: FoodItem) -> IngredientAllergens:
             *item.substitution_groups,
         ),
         trace_status=TraceStatus(item.effective_trace_status),
+    )
+
+
+async def substitution_candidates(
+    session: AsyncSession, food: FoodItem, role: str
+) -> list[FoodItem]:
+    """Foods sharing a substitution group with ``food`` or able to play ``role``."""
+    result = await session.scalars(
+        select(FoodItem)
+        .where(
+            FoodItem.id != food.id,
+            or_(
+                FoodItem.substitution_groups.op("&&")(cast(food.substitution_groups, ARRAY(Text))),
+                FoodItem.culinary_roles.op("@>")(cast([role], ARRAY(Text))),
+            ),
+        )
+        .options(*_WITH_CHILDREN)
+    )
+    return list(result)
+
+
+def to_substitution_food(item: FoodItem) -> SubstitutionFood:
+    """Needs ``aliases`` loaded."""
+    return SubstitutionFood(
+        key=item.slug,
+        per_100g=to_facts(item).per_100g,
+        roles=frozenset(CulinaryRole(r) for r in item.culinary_roles),
+        groups=frozenset(item.substitution_groups),
+        allergens=to_allergens(item),
+        water_g=item.water_g,
     )

@@ -349,3 +349,17 @@ async def test_calculate_reports_every_unresolvable_line(
 async def test_healthz(migrated_db: None, client: AsyncClient) -> None:
     res = await client.get("/healthz")
     assert res.json() == {"status": "ok"}
+
+
+async def test_substitution_candidates_come_from_group_or_role(
+    imported: importer.ImportReport, db_session: AsyncSession
+) -> None:
+    chicken = await repository.get_by_slug(db_session, "chicken-breast-raw")
+    assert chicken is not None
+    found = await repository.substitution_candidates(db_session, chicken, "main_protein")
+    slugs = {f.slug for f in found}
+    assert "chicken-breast-raw" not in slugs
+    assert "egg-whole-raw" in slugs  # imported fixture food that can be a main protein
+    assert "olive-oil" not in slugs
+    food = repository.to_substitution_food(found[0])
+    assert food.key == found[0].slug
