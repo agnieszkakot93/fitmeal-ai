@@ -4,6 +4,7 @@
 ``donut-admin foods snapshot --fdc-dir ...`` (refresh data/foods/fdc_snapshot from a download)
 ``donut-admin recipes import [--dry-run]`` (run after the food import)
 ``donut-admin recipes report`` (per-serving nutrition with plausibility flags)
+``donut-admin recipes tune-report`` (transformation hit rates on the catalog)
 """
 
 from __future__ import annotations
@@ -17,7 +18,7 @@ from app.core.db import get_sessionmaker
 from app.foods import importer
 from app.foods.curated import load_curated
 from app.foods.fdc import load_fdc_dirs, write_snapshot
-from app.recipes import catalog, report
+from app.recipes import catalog, report, tuning
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 DEFAULT_CURATED = DATA_DIR / "foods" / "curated.yaml"
@@ -49,6 +50,7 @@ def main(argv: list[str] | None = None) -> int:
     rec.add_argument("--dry-run", action="store_true", help="validate only, write nothing")
 
     recipes.add_parser("report", help="per-serving nutrition of stored recipes, with flags")
+    recipes.add_parser("tune-report", help="how often the transformation engine hits targets")
 
     snap = foods.add_parser("snapshot", help="save the FDC records the curated list uses")
     snap.add_argument("--curated", type=Path, default=DEFAULT_CURATED)
@@ -68,6 +70,8 @@ def main(argv: list[str] | None = None) -> int:
         return asyncio.run(_import_recipes(args.catalog, args.curated, args.dry_run))
     if args.group == "recipes" and args.command == "report":
         return asyncio.run(_report())
+    if args.group == "recipes" and args.command == "tune-report":
+        return asyncio.run(_tune_report())
     return 2
 
 
@@ -124,6 +128,13 @@ async def _report() -> int:
         print("no catalog recipes in the database: run `donut-admin recipes import` first")
         return 1
     print(report.render(rows))
+    return 0
+
+
+async def _tune_report() -> int:
+    async with get_sessionmaker()() as session:
+        results = await tuning.evaluate(session)
+    print(tuning.render(results))
     return 0
 
 

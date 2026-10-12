@@ -33,6 +33,17 @@ from app.foods.vocab import CulinaryRole
 from app.nutrition.nutrients import Nutrients, for_grams
 
 KCAL_TOLERANCE_LP = 0.03
+# The LP aims inside the tolerances so rounding to practical amounts has room:
+# kcal within ±2% (the spec allows ±3%) and protein a little above the minimum.
+KCAL_AIM_LP = 0.02
+PROTEIN_MARGIN = 0.02
+PROTEIN_MARGIN_G = 0.5
+# Countable ingredients round to pieces; the rest round in grams.
+_PIECE_ROLES = {CulinaryRole.MAIN_PROTEIN, CulinaryRole.CARB_BASE, CulinaryRole.VEGETABLE,
+                CulinaryRole.FRUIT}  # fmt: skip
+_HALF_PIECE_ROLES = {CulinaryRole.CARB_BASE, CulinaryRole.VEGETABLE, CulinaryRole.FRUIT}
+# Bigger pieces (a salmon fillet, a sweet potato) are bought and portioned by weight.
+MAX_PIECE_G = 60
 KCAL_TOLERANCE_ROUNDED = 0.05
 
 # (min, max) multiple of the original amount, per culinary role
@@ -227,15 +238,15 @@ def _solve(lines: list[Line], target: Target) -> dict[str, float]:
     row = np.zeros(size)
     row[:n], row[kcal_hi] = per_g["kcal"], -1
     a_ub.append(row)
-    b_ub.append(target.kcal * (1 + KCAL_TOLERANCE_LP))
+    b_ub.append(target.kcal * (1 + KCAL_AIM_LP))
     row = np.zeros(size)
     row[:n], row[kcal_lo] = -per_g["kcal"], -1
     a_ub.append(row)
-    b_ub.append(-target.kcal * (1 - KCAL_TOLERANCE_LP))
+    b_ub.append(-target.kcal * (1 - KCAL_AIM_LP))
     row = np.zeros(size)
     row[:n], row[prot] = -per_g["protein_g"], -1
     a_ub.append(row)
-    b_ub.append(-target.protein_min_g)
+    b_ub.append(-_protein_aim(target))
 
     var_bounds = [bounds(line) for line in lines] + [(0, None)] * (2 * n + 7)
     res = linprog(c, A_ub=a_ub, b_ub=b_ub, A_eq=a_eq, b_eq=b_eq, bounds=var_bounds,
@@ -246,10 +257,15 @@ def _solve(lines: list[Line], target: Target) -> dict[str, float]:
     return {line.key: float(x[i]) for i, line in enumerate(lines)}
 
 
+def _protein_aim(target: Target) -> float:
+    if target.protein_min_g == 0:
+        return 0.0
+    return target.protein_min_g * (1 + PROTEIN_MARGIN) + PROTEIN_MARGIN_G
+
+
 def _step(line: Line) -> float:
-    if line.piece_g:
-        half = line.role in (CulinaryRole.VEGETABLE, CulinaryRole.FRUIT)
-        return line.piece_g * (0.5 if half else 1.0)
+    if line.piece_g and line.piece_g <= MAX_PIECE_G and line.role in _PIECE_ROLES:
+        return line.piece_g * (0.5 if line.role in _HALF_PIECE_ROLES else 1.0)
     return ROLE_STEP_G.get(line.role, DEFAULT_STEP_G)
 
 
