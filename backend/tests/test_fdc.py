@@ -86,3 +86,17 @@ def test_suggestions_share_words_and_incomplete_foods_are_named() -> None:
     )
     assert index.suggest("Rice, brown, long-grain, raw")[0].startswith("rice, brown")
     assert index.incomplete_matches("turkey, ground, raw") == ["3: Turkey, ground, raw"]
+
+
+def test_snapshot_round_trips(index: FdcIndex, tmp_path: Path) -> None:
+    from app.foods.fdc import write_snapshot
+
+    assert write_snapshot(index.by_id.values(), tmp_path / "snap") == len(index)
+    again = load_fdc_dirs([tmp_path / "snap"])
+    for fdc_id, food in index.by_id.items():
+        copy = again.by_id[fdc_id]
+        assert copy.description == food.description
+        assert copy.data_type == food.data_type
+        assert copy.water_g == food.water_g
+        for name in ("kcal", "protein_g", "fat_g", "carbs_g", "fiber_g"):
+            assert getattr(copy.nutrients, name) == pytest.approx(getattr(food.nutrients, name))
