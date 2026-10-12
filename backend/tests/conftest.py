@@ -43,6 +43,6 @@ async def db_session(migrated_db: None) -> AsyncIterator[AsyncSession]:
     from app.core.db import get_sessionmaker
 
     async with get_sessionmaker()() as session:
-        await session.execute(text("TRUNCATE food_items CASCADE"))
+        await session.execute(text("TRUNCATE food_items, recipe_sources CASCADE"))
         await session.commit()
         yield session
