@@ -109,6 +109,21 @@ donut-admin recipes import             # insert or update by slug
 A recipe whose foods are not all in the database yet (for example, a food
 with no FDC match) is skipped and listed in the report.
 
+## `foods/fdc_snapshot/`
+
+The FDC records the curated list actually uses (about 216), in FDC's CSV
+layout, so imports, reports and tests run without the 1.7 GB download.
+`donut-admin foods import` uses it when no `--fdc-dir` is given. USDA data is
+public domain.
+
+Refresh it after changing an `fdc:` reference in `curated.yaml` or when a new
+FDC release comes out (needs the download, see above):
+
+```bash
+cd backend
+uv run donut-admin foods snapshot --fdc-dir ../data/fdc/full
+```
+
 ## Conventions
 
 - Nutrition is **per 100 g** of the food as weighed (raw unless the name says otherwise).

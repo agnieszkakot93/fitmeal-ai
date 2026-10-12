@@ -170,3 +170,39 @@ def _load_dir(directory: Path) -> tuple[list[FdcFood], dict[int, str]]:
             continue
         foods.append(FdcFood(fdc_id, description, data_type, nutrients, _first(values, WATER)))
     return foods, incomplete
+
+
+def write_snapshot(foods: Iterable[FdcFood], directory: Path) -> int:
+    """Write ``foods`` as a minimal FDC CSV directory that ``load_fdc_dirs`` reads back.
+
+    Lets the repository carry the few hundred records the curated list uses
+    (public domain) instead of the 1.7 GB download. Carbohydrate is written
+    "by difference" (available + fiber), so it round-trips through
+    :func:`to_nutrients` unchanged.
+    """
+    directory.mkdir(parents=True, exist_ok=True)
+    rows = sorted(foods, key=lambda f: f.fdc_id)
+    with (directory / "food.csv").open("w", encoding="utf-8", newline="") as fh:
+        out = csv.writer(fh, quoting=csv.QUOTE_ALL)
+        out.writerow(["fdc_id", "data_type", "description"])
+        for food in rows:
+            out.writerow([food.fdc_id, food.data_type, food.description])
+    with (directory / "food_nutrient.csv").open("w", encoding="utf-8", newline="") as fh:
+        out = csv.writer(fh, quoting=csv.QUOTE_ALL)
+        out.writerow(["id", "fdc_id", "nutrient_id", "amount"])
+        row_id = 0
+        for food in rows:
+            n = food.nutrients
+            values = {
+                ENERGY_KCAL[0]: n.kcal,
+                PROTEIN[0]: n.protein_g,
+                FAT[0]: n.fat_g,
+                CARBS_BY_DIFFERENCE[0]: n.carbs_g + n.fiber_g,
+                FIBER[0]: n.fiber_g,
+            }
+            if food.water_g is not None:
+                values[WATER[0]] = food.water_g
+            for nutrient_id, amount in values.items():
+                row_id += 1
+                out.writerow([row_id, food.fdc_id, nutrient_id, round(amount, 4)])
+    return len(rows)
