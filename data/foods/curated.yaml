@@ -37,7 +37,7 @@ foods:
     substitution_groups: [lean_poultry]
     portions: {piece: 200}
     packages_g: [400, 500, 1000]
-    fdc: {description: "Chicken, broilers or fryers, breast, meat only, raw"}
+    fdc: {fdc_id: 171077}  # SR Legacy "Chicken, broilers or fryers, breast, meat only, raw"
     review: {status: draft}
 
   - slug: chicken-thigh-raw
@@ -418,7 +418,7 @@ foods:
     substitution_groups: [creamy_dairy]
     density_g_per_ml: 1.04
     packages_g: [180, 370, 400]
-    fdc: {description: "Yogurt, plain, low fat, 12 grams protein per 8 ounce"}
+    fdc: {description: "Yogurt, plain, low fat"}
     review: {status: draft}
 
   - slug: skyr-natural
