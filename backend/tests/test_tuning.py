@@ -1,7 +1,8 @@
 """Transformation hit rates on the real catalog and the committed FDC snapshot.
 
 Guards against regressions in role bounds, rounding and weights. The floors
-are the rates measured when the engine was tuned (2026-10-12): raise them when
+are the rates measured when the engine was tuned (2026-10-12, with same-group
+substitutions): raise them when
 the engine improves, never lower them to make a change pass.
 """
 
@@ -17,9 +18,9 @@ SNAPSHOT = ROOT / "data" / "foods" / "fdc_snapshot"
 CATALOG = ROOT / "data" / "recipes" / "catalog.yaml"
 
 FLOORS = {
-    "cut 20% kcal, keep protein": 41,
+    "cut 20% kcal, keep protein": 52,
     "add 20% kcal, keep protein": 60,
-    "25% more protein, same kcal": 34,
+    "25% more protein, same kcal": 51,
 }
 
 

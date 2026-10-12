@@ -15,7 +15,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.nutrition.nutrients import Nutrients
-from app.optimizer.transform import Miss, Target, transform
+from app.optimizer.combine import transform_with_swaps
+from app.optimizer.transform import Miss, Target
 from app.recipes import repository
 from app.recipes.models import Recipe
 
@@ -30,10 +31,11 @@ SCENARIOS: dict[str, Callable[[Nutrients], Target]] = {
 class ScenarioResult:
     hits: int = 0
     total: int = 0
+    hits_with_swaps: int = 0  # on target only thanks to a substitution
     misses: list[tuple[str, list[Miss]]] = field(default_factory=list)
 
 
-async def evaluate(session: AsyncSession) -> dict[str, ScenarioResult]:
+async def evaluate(session: AsyncSession, swaps: bool = True) -> dict[str, ScenarioResult]:
     results = {name: ScenarioResult() for name in SCENARIOS}
     ids = list(await session.scalars(select(Recipe.id).where(Recipe.slug.is_not(None))))
     for recipe_id in ids:
@@ -41,12 +43,15 @@ async def evaluate(session: AsyncSession) -> dict[str, ScenarioResult]:
         assert recipe is not None
         per_serving = repository.compute_nutrition(recipe).per_serving
         lines = repository.transform_lines(recipe)
+        alternatives = await repository.substitution_alternatives(session, recipe) if swaps else {}
         for name, make_target in SCENARIOS.items():
-            outcome = transform(lines, make_target(per_serving))
+            combined = transform_with_swaps(lines, make_target(per_serving), alternatives)
+            outcome = combined.result
             result = results[name]
             result.total += 1
             if outcome.on_target:
                 result.hits += 1
+                result.hits_with_swaps += bool(combined.swaps)
             else:
                 result.misses.append((recipe.slug or "", outcome.misses))
     return results
@@ -55,7 +60,9 @@ async def evaluate(session: AsyncSession) -> dict[str, ScenarioResult]:
 def render(results: dict[str, ScenarioResult]) -> str:
     lines = []
     for name, r in results.items():
-        lines.append(f"{name}: {r.hits}/{r.total} on target")
+        lines.append(
+            f"{name}: {r.hits}/{r.total} on target ({r.hits_with_swaps} with a substitution)"
+        )
         for slug, misses in sorted(r.misses):
             detail = ", ".join(f"{m.metric.value} {m.actual:.0f} vs {m.target:.0f}" for m in misses)
             lines.append(f"  - {slug}: {detail}")
