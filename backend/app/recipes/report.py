@@ -18,6 +18,9 @@ from app.recipes import repository
 from app.recipes.models import Recipe, RecipeIngredient
 
 MEALS = {"breakfast", "lunch", "dinner"}
+# protein a recipe needs to earn its high_protein tag
+HIGH_PROTEIN_MEAL_G = 25
+HIGH_PROTEIN_SNACK_G = 15
 
 
 @dataclass(frozen=True, slots=True)
@@ -38,11 +41,13 @@ def flags_for(tags: list[str], n: Nutrients, grams: float) -> list[str]:
         found.append("over 1000 kcal")
     if n.kcal > 0 and n.fat_g * 9 / n.kcal > 0.45:
         found.append("fat over 45% of kcal")
-    if "high_protein" in tags and n.protein_g < 25:
-        found.append("tagged high_protein but under 25 g")
+    if "high_protein" in tags:
+        minimum = HIGH_PROTEIN_MEAL_G if meal else HIGH_PROTEIN_SNACK_G
+        if n.protein_g < minimum:
+            found.append(f"tagged high_protein but under {minimum} g")
     if meal and n.protein_g < 10:
         found.append("under 10 g protein")
-    if grams > 800:
+    if grams > 800 and "soup" not in tags:  # broth is mostly water
         found.append("portion over 800 g")
     return found
 

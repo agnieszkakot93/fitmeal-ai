@@ -21,6 +21,12 @@ def test_flags() -> None:
         "portion over 800 g",
     ]
     assert report.flags_for(["snack"], Nutrients(150, 5, 2, 25, 1), 100) == []
+    snack = ["snack", "high_protein"]
+    assert report.flags_for(snack, Nutrients(200, 17, 2, 25, 1), 250) == []
+    assert report.flags_for(snack, Nutrients(200, 12, 2, 25, 1), 250) == [
+        "tagged high_protein but under 15 g"
+    ]
+    assert report.flags_for(["lunch", "soup"], Nutrients(400, 39, 7, 39, 0), 960) == []
 
 
 async def test_build_and_render(db_session: AsyncSession) -> None:
