@@ -2,6 +2,7 @@
 
 ``donut-admin foods import --fdc-dir ... [--dry-run]``
 ``donut-admin recipes import [--dry-run]`` (run after the food import)
+``donut-admin recipes report`` (per-serving nutrition with plausibility flags)
 """
 
 from __future__ import annotations
@@ -15,7 +16,7 @@ from app.core.db import get_sessionmaker
 from app.foods import importer
 from app.foods.curated import load_curated
 from app.foods.fdc import load_fdc_dirs
-from app.recipes import catalog
+from app.recipes import catalog, report
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 DEFAULT_CURATED = DATA_DIR / "foods" / "curated.yaml"
@@ -44,11 +45,15 @@ def main(argv: list[str] | None = None) -> int:
     rec.add_argument("--curated", type=Path, default=DEFAULT_CURATED)
     rec.add_argument("--dry-run", action="store_true", help="validate only, write nothing")
 
+    recipes.add_parser("report", help="per-serving nutrition of stored recipes, with flags")
+
     args = parser.parse_args(argv)
     if args.group == "foods" and args.command == "import":
         return asyncio.run(_import(args.curated, args.fdc_dir, args.dry_run))
     if args.group == "recipes" and args.command == "import":
         return asyncio.run(_import_recipes(args.catalog, args.curated, args.dry_run))
+    if args.group == "recipes" and args.command == "report":
+        return asyncio.run(_report())
     return 2
 
 
@@ -82,6 +87,16 @@ async def _import_recipes(catalog_path: Path, curated_path: Path, dry_run: bool)
     async with get_sessionmaker()() as session, session.begin():
         report = await catalog.apply(session, recipes)
     print(report.summary())
+    return 0
+
+
+async def _report() -> int:
+    async with get_sessionmaker()() as session:
+        rows = await report.build(session)
+    if not rows:
+        print("no catalog recipes in the database: run `donut-admin recipes import` first")
+        return 1
+    print(report.render(rows))
     return 0
 
 

@@ -12,7 +12,7 @@
 # `review` works as in curated.yaml: only a named human sets `verified`,
 # after cooking or checking the recipe.
 #
-# Tags: breakfast, lunch, dinner, snack, dessert · high_protein, vegetarian,
+# Tags: breakfast, lunch, dinner, snack, dessert, starter, side, soup · high_protein, vegetarian,
 # vegan · quick (≤ 20 min total), meal_prep, polish.
 
 recipes:
@@ -79,7 +79,7 @@ recipes:
     prep_minutes: 5
     cook_minutes: 6
     difficulty: easy
-    tags: [breakfast, high_protein, vegetarian, quick]
+    tags: [breakfast, vegetarian, quick]
     equipment: [pan]
     storage: {fridge_days: 0}
     meal_prep_score: 10
@@ -191,7 +191,7 @@ recipes:
     prep_minutes: 8
     cook_minutes: 15
     difficulty: easy
-    tags: [breakfast, vegetarian, high_protein]
+    tags: [breakfast, vegetarian]
     equipment: [pan]
     storage: {fridge_days: 0}
     meal_prep_score: 20
@@ -300,7 +300,7 @@ recipes:
 
   - slug: egg-muffins-ham-veg
     title: {en: "Egg muffins with ham and vegetables", pl: "Muffinki jajeczne z szynką i warzywami"}
-    servings: 3
+    servings: 2
     prep_minutes: 10
     cook_minutes: 20
     difficulty: easy
@@ -414,7 +414,7 @@ recipes:
     prep_minutes: 5
     cook_minutes: 0
     difficulty: easy
-    tags: [breakfast, high_protein, quick, polish]
+    tags: [breakfast, quick, polish]
     equipment: []
     storage: {fridge_days: 1}
     meal_prep_score: 40
@@ -961,11 +961,11 @@ recipes:
     ingredients:
       - {food: beef-ground-90-raw, amount: 250}
       - {food: sweet-potato, amount: 1, unit: piece}
-      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: olive-oil, amount: 1, unit: tsp}
       - {food: romaine-lettuce, amount: 3, unit: handful}
       - {food: tomato, amount: 1, unit: piece}
       - {food: pickled-cucumbers, amount: 2, unit: piece}
-      - {food: cheddar, amount: 2, unit: slice}
+      - {food: cheddar, amount: 1, unit: slice}
       - {food: greek-yogurt-nonfat, amount: 60}
       - {food: ketchup, amount: 1, unit: tbsp}
       - {food: mustard, amount: 1, unit: tsp}
@@ -973,12 +973,12 @@ recipes:
     steps:
       en:
         - Cut the sweet potato into wedges, toss with the oil and salt and bake at 210°C for 25 minutes.
-        - Shape the beef into two patties and fry for 3–4 minutes per side; melt the cheddar on top.
+        - Shape the beef into two patties and fry for 3–4 minutes per side; melt half a cheddar slice on each.
         - Mix the yogurt, ketchup and mustard into a sauce.
         - Fill bowls with lettuce, tomato and pickles, add the patties and wedges and drizzle with sauce.
       pl:
         - Pokrój batata w łódeczki, wymieszaj z oliwą i solą i piecz w 210°C 25 minut.
-        - Uformuj z wołowiny dwa kotlety i smaż 3–4 minuty z każdej strony; na wierzchu roztop cheddar.
+        - Uformuj z wołowiny dwa kotlety i smaż 3–4 minuty z każdej strony; na każdym roztop pół plastra cheddara.
         - Wymieszaj jogurt, ketchup i musztardę na sos.
         - Do misek włóż sałatę, pomidora i ogórki, dodaj kotlety i bataty i polej sosem.
 
@@ -1250,7 +1250,7 @@ recipes:
     prep_minutes: 15
     cook_minutes: 90
     difficulty: easy
-    tags: [lunch, high_protein, meal_prep, polish]
+    tags: [lunch, soup, high_protein, meal_prep, polish]
     equipment: [pot]
     storage: {fridge_days: 4, freezer_friendly: true}
     meal_prep_score: 90
@@ -1285,7 +1285,7 @@ recipes:
     prep_minutes: 10
     cook_minutes: 30
     difficulty: easy
-    tags: [lunch, vegetarian, meal_prep, polish]
+    tags: [starter, soup, vegetarian, meal_prep, polish]
     equipment: [pot]
     storage: {fridge_days: 4, freezer_friendly: true}
     meal_prep_score: 90
@@ -1317,7 +1317,7 @@ recipes:
     prep_minutes: 10
     cook_minutes: 60
     difficulty: easy
-    tags: [lunch, vegan, meal_prep, polish]
+    tags: [lunch, soup, vegan, meal_prep, polish]
     equipment: [pot]
     storage: {fridge_days: 4, freezer_friendly: true}
     meal_prep_score: 95
@@ -1348,7 +1348,7 @@ recipes:
     prep_minutes: 15
     cook_minutes: 25
     difficulty: easy
-    tags: [lunch, vegan, meal_prep]
+    tags: [starter, soup, vegan, meal_prep]
     equipment: [pot, blender]
     storage: {fridge_days: 4, freezer_friendly: true}
     meal_prep_score: 90
@@ -1378,7 +1378,7 @@ recipes:
     prep_minutes: 20
     cook_minutes: 30
     difficulty: easy
-    tags: [lunch, vegetarian, polish]
+    tags: [lunch, soup, vegetarian, polish]
     equipment: [pot]
     storage: {fridge_days: 2}
     meal_prep_score: 60
@@ -1410,7 +1410,7 @@ recipes:
     prep_minutes: 10
     cook_minutes: 25
     difficulty: easy
-    tags: [lunch, vegetarian, meal_prep, polish]
+    tags: [starter, soup, vegetarian, meal_prep, polish]
     equipment: [pot]
     storage: {fridge_days: 4, freezer_friendly: true}
     meal_prep_score: 85
@@ -1509,7 +1509,7 @@ recipes:
     storage: {fridge_days: 2}
     meal_prep_score: 60
     ingredients:
-      - {food: tuna-canned-water, amount: 1, unit: can}
+      - {food: tuna-canned-water, amount: 2, unit: can}
       - {food: egg-whole-raw, amount: 2, unit: piece}
       - {food: green-beans, amount: 200}
       - {food: potatoes, amount: 250}
@@ -1534,7 +1534,7 @@ recipes:
     prep_minutes: 25
     cook_minutes: 30
     difficulty: easy
-    tags: [lunch, vegetarian, meal_prep, polish]
+    tags: [side, vegetarian, meal_prep, polish]
     equipment: [pot]
     storage: {fridge_days: 3}
     meal_prep_score: 75
