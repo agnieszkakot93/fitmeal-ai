@@ -1,0 +1,1822 @@
+# Donut — recipe catalog
+#
+# Recipes Donut owns: own text in Polish and English, public in the app.
+# Imported recipes never land here (PRD §8.1).
+#
+# Ingredients name a food slug from data/foods/curated.yaml, an amount and a
+# unit (default g). The importer converts each amount to grams with the
+# food's portion weights or density and computes nutrition from that;
+# nutrition is never typed here. `role` defaults to the food's first
+# culinary role.
+#
+# `review` works as in curated.yaml: only a named human sets `verified`,
+# after cooking or checking the recipe.
+#
+# Tags: breakfast, lunch, dinner, snack, dessert · high_protein, vegetarian,
+# vegan · quick (≤ 20 min total), meal_prep, polish.
+
+recipes:
+
+  # ── Breakfast ─────────────────────────────────────────────────────────────
+  - slug: protein-oatmeal-berries
+    title: {en: "Protein oatmeal with berries", pl: "Owsianka proteinowa z owocami jagodowymi"}
+    servings: 1
+    prep_minutes: 3
+    cook_minutes: 5
+    difficulty: easy
+    tags: [breakfast, high_protein, vegetarian, quick]
+    equipment: [pot]
+    storage: {fridge_days: 1}
+    meal_prep_score: 40
+    ingredients:
+      - {food: oats-rolled, amount: 50}
+      - {food: milk-skim, amount: 200, unit: ml}
+      - {food: whey-protein-isolate, amount: 1, unit: scoop}
+      - {food: blueberries, amount: 1, unit: handful}
+      - {food: raspberries, amount: 1, unit: handful}
+      - {food: cinnamon, amount: 1, unit: pinch}
+    steps:
+      en:
+        - Simmer the oats in the milk for 4–5 minutes, stirring, until creamy.
+        - Take off the heat, let it cool for a minute and stir in the protein powder.
+        - Top with the berries and a pinch of cinnamon.
+      pl:
+        - Gotuj płatki owsiane w mleku 4–5 minut, mieszając, aż zgęstnieją.
+        - Zdejmij z ognia, odczekaj minutę i wmieszaj odżywkę białkową.
+        - Posyp owocami i szczyptą cynamonu.
+
+  - slug: overnight-oats-apple-cinnamon
+    title: {en: "Apple cinnamon overnight oats", pl: "Owsianka na zimno z jabłkiem i cynamonem"}
+    servings: 1
+    prep_minutes: 5
+    cook_minutes: 0
+    difficulty: easy
+    tags: [breakfast, vegetarian, meal_prep, quick]
+    equipment: [jar]
+    storage: {fridge_days: 3}
+    meal_prep_score: 90
+    ingredients:
+      - {food: oats-rolled, amount: 50}
+      - {food: greek-yogurt-nonfat, amount: 150}
+      - {food: milk-skim, amount: 80, unit: ml}
+      - {food: chia-seeds, amount: 1, unit: tsp}
+      - {food: apple, amount: 0.5, unit: piece}
+      - {food: walnuts, amount: 10}
+      - {food: cinnamon, amount: 0.5, unit: tsp}
+    steps:
+      en:
+        - Mix the oats, yogurt, milk, chia seeds and cinnamon in a jar.
+        - Grate in the apple, stir, close and refrigerate overnight.
+        - Top with chopped walnuts before eating.
+      pl:
+        - W słoiku wymieszaj płatki, jogurt, mleko, nasiona chia i cynamon.
+        - Zetrzyj jabłko, wymieszaj, zamknij i odstaw na noc do lodówki.
+        - Przed jedzeniem posyp posiekanymi orzechami włoskimi.
+
+  - slug: veggie-scrambled-eggs
+    title: {en: "Scrambled eggs with peppers and spinach", pl: "Jajecznica z papryką i szpinakiem"}
+    servings: 1
+    prep_minutes: 5
+    cook_minutes: 6
+    difficulty: easy
+    tags: [breakfast, high_protein, vegetarian, quick]
+    equipment: [pan]
+    storage: {fridge_days: 0}
+    meal_prep_score: 10
+    ingredients:
+      - {food: egg-whole-raw, amount: 3, unit: piece}
+      - {food: bell-pepper-red, amount: 0.5, unit: piece}
+      - {food: spinach, amount: 1, unit: handful}
+      - {food: butter, amount: 1, unit: tsp}
+      - {food: chives, amount: 1, unit: tbsp}
+      - {food: salt, amount: 1, unit: pinch}
+      - {food: black-pepper, amount: 1, unit: pinch}
+      - {food: bread-rye, amount: 1, unit: slice}
+    steps:
+      en:
+        - Dice the pepper and soften it in the butter for 3 minutes.
+        - Add the spinach and let it wilt.
+        - Pour in the beaten eggs, season and stir gently until just set.
+        - Sprinkle with chives and serve with the rye bread.
+      pl:
+        - Pokrój paprykę w kostkę i podsmaż na maśle 3 minuty.
+        - Dodaj szpinak i poczekaj, aż zwiędnie.
+        - Wlej roztrzepane jajka, dopraw i delikatnie mieszaj, aż się zetną.
+        - Posyp szczypiorkiem i podawaj z chlebem żytnim.
+
+  - slug: cottage-cheese-radish-toast
+    title: {en: "Cottage cheese toast with radishes", pl: "Kanapki z serkiem wiejskim i rzodkiewką"}
+    servings: 1
+    prep_minutes: 5
+    cook_minutes: 0
+    difficulty: easy
+    tags: [breakfast, high_protein, vegetarian, quick, polish]
+    equipment: []
+    storage: {fridge_days: 0}
+    meal_prep_score: 10
+    ingredients:
+      - {food: bread-wholewheat, amount: 2, unit: slice}
+      - {food: cottage-cheese-lowfat, amount: 150}
+      - {food: radish, amount: 5, unit: piece}
+      - {food: chives, amount: 1, unit: tbsp}
+      - {food: black-pepper, amount: 1, unit: pinch}
+    steps:
+      en:
+        - Slice the radishes thinly and chop the chives.
+        - Spread the cottage cheese on the bread.
+        - Top with radishes and chives and season with pepper.
+      pl:
+        - Pokrój rzodkiewki w cienkie plasterki i posiekaj szczypiorek.
+        - Rozłóż serek wiejski na chlebie.
+        - Ułóż rzodkiewkę, posyp szczypiorkiem i dopraw pieprzem.
+
+  - slug: banana-oat-pancakes
+    title: {en: "Banana oat pancakes", pl: "Placuszki owsiane z bananem"}
+    servings: 2
+    prep_minutes: 5
+    cook_minutes: 12
+    difficulty: easy
+    tags: [breakfast, vegetarian]
+    equipment: [blender, pan]
+    storage: {fridge_days: 2, freezer_friendly: true}
+    meal_prep_score: 60
+    ingredients:
+      - {food: oats-rolled, amount: 80}
+      - {food: banana, amount: 1, unit: piece}
+      - {food: egg-whole-raw, amount: 2, unit: piece}
+      - {food: milk-skim, amount: 100, unit: ml}
+      - {food: baking-powder, amount: 1, unit: tsp}
+      - {food: rapeseed-oil, amount: 1, unit: tsp}
+      - {food: greek-yogurt-nonfat, amount: 100}
+      - {food: strawberries, amount: 1, unit: handful}
+    steps:
+      en:
+        - Blend the oats, banana, eggs, milk and baking powder into a thick batter.
+        - Brush a pan with oil and fry small pancakes for 2 minutes per side.
+        - Serve with the yogurt and sliced strawberries.
+      pl:
+        - Zmiksuj płatki, banana, jajka, mleko i proszek do pieczenia na gęste ciasto.
+        - Posmaruj patelnię olejem i smaż małe placuszki po 2 minuty z każdej strony.
+        - Podawaj z jogurtem i pokrojonymi truskawkami.
+
+  - slug: greek-yogurt-bowl-nuts
+    title: {en: "Greek yogurt bowl with fruit and nuts", pl: "Miska jogurtu greckiego z owocami i orzechami"}
+    servings: 1
+    prep_minutes: 4
+    cook_minutes: 0
+    difficulty: easy
+    tags: [breakfast, high_protein, vegetarian, quick]
+    equipment: []
+    storage: {fridge_days: 0}
+    meal_prep_score: 20
+    ingredients:
+      - {food: greek-yogurt-nonfat, amount: 250}
+      - {food: kiwi, amount: 1, unit: piece}
+      - {food: blueberries, amount: 1, unit: handful}
+      - {food: almonds, amount: 15}
+      - {food: honey, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Spoon the yogurt into a bowl.
+        - Top with the sliced kiwi, blueberries and roughly chopped almonds.
+        - Drizzle with honey.
+      pl:
+        - Przełóż jogurt do miski.
+        - Ułóż pokrojone kiwi, borówki i grubo posiekane migdały.
+        - Polej miodem.
+
+  - slug: shakshuka
+    title: {en: "Shakshuka", pl: "Szakszuka"}
+    servings: 2
+    prep_minutes: 8
+    cook_minutes: 15
+    difficulty: easy
+    tags: [breakfast, vegetarian, high_protein]
+    equipment: [pan]
+    storage: {fridge_days: 0}
+    meal_prep_score: 20
+    ingredients:
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: bell-pepper-red, amount: 1, unit: piece}
+      - {food: garlic, amount: 2, unit: clove}
+      - {food: tomatoes-canned, amount: 1, unit: can}
+      - {food: cumin, amount: 0.5, unit: tsp}
+      - {food: paprika-sweet, amount: 1, unit: tsp}
+      - {food: egg-whole-raw, amount: 4, unit: piece}
+      - {food: parsley, amount: 1, unit: tbsp}
+      - {food: salt, amount: 2, unit: pinch}
+      - {food: bread-wholewheat, amount: 2, unit: slice}
+    steps:
+      en:
+        - Fry the chopped onion and pepper in the oil for 5 minutes, add the garlic and spices.
+        - Add the tomatoes, season and simmer for 5 minutes until slightly thick.
+        - Make four wells, crack in the eggs, cover and cook for 5–6 minutes until the whites set.
+        - Sprinkle with parsley and serve with the bread.
+      pl:
+        - Podsmaż posiekaną cebulę i paprykę na oliwie przez 5 minut, dodaj czosnek i przyprawy.
+        - Dodaj pomidory, dopraw i duś 5 minut, aż lekko zgęstnieją.
+        - Zrób cztery wgłębienia, wbij jajka, przykryj i gotuj 5–6 minut, aż białka się zetną.
+        - Posyp natką pietruszki i podawaj z chlebem.
+
+  - slug: protein-smoothie-banana-pb
+    title: {en: "Banana peanut butter protein smoothie", pl: "Koktajl proteinowy z bananem i masłem orzechowym"}
+    servings: 1
+    prep_minutes: 3
+    cook_minutes: 0
+    difficulty: easy
+    tags: [breakfast, snack, high_protein, vegetarian, quick]
+    equipment: [blender]
+    storage: {fridge_days: 0}
+    meal_prep_score: 10
+    ingredients:
+      - {food: banana, amount: 1, unit: piece}
+      - {food: milk-skim, amount: 250, unit: ml}
+      - {food: whey-protein-isolate, amount: 1, unit: scoop}
+      - {food: peanut-butter, amount: 1, unit: tbsp}
+      - {food: oats-rolled, amount: 2, unit: tbsp}
+    steps:
+      en:
+        - Put everything in a blender.
+        - Blend until smooth and drink straight away.
+      pl:
+        - Włóż wszystkie składniki do blendera.
+        - Zmiksuj na gładko i wypij od razu.
+
+  - slug: tofu-scramble
+    title: {en: "Tofu scramble with vegetables", pl: "Tofucznica z warzywami"}
+    servings: 1
+    prep_minutes: 5
+    cook_minutes: 8
+    difficulty: easy
+    tags: [breakfast, vegan, high_protein, quick]
+    equipment: [pan]
+    storage: {fridge_days: 2}
+    meal_prep_score: 40
+    ingredients:
+      - {food: tofu-firm, amount: 180}
+      - {food: rapeseed-oil, amount: 1, unit: tsp}
+      - {food: onion, amount: 0.5, unit: piece}
+      - {food: cherry-tomatoes, amount: 6, unit: piece}
+      - {food: spinach, amount: 1, unit: handful}
+      - {food: turmeric, amount: 0.5, unit: tsp}
+      - {food: soy-sauce, amount: 1, unit: tsp}
+      - {food: black-pepper, amount: 1, unit: pinch}
+    steps:
+      en:
+        - Fry the chopped onion in the oil for 3 minutes.
+        - Crumble in the tofu, add the turmeric and soy sauce and fry for 3 minutes.
+        - Add the halved tomatoes and spinach and cook until the spinach wilts. Season with pepper.
+      pl:
+        - Podsmaż posiekaną cebulę na oleju przez 3 minuty.
+        - Rozkrusz tofu, dodaj kurkumę i sos sojowy i smaż 3 minuty.
+        - Dodaj przekrojone pomidorki i szpinak, smaż, aż szpinak zwiędnie. Dopraw pieprzem.
+
+  - slug: buckwheat-porridge-plums
+    title: {en: "Buckwheat porridge with plums", pl: "Kasza gryczana na mleku ze śliwkami"}
+    servings: 1
+    prep_minutes: 3
+    cook_minutes: 15
+    difficulty: easy
+    tags: [breakfast, vegetarian, polish]
+    equipment: [pot]
+    storage: {fridge_days: 2}
+    meal_prep_score: 60
+    ingredients:
+      - {food: buckwheat-groats, amount: 50}
+      - {food: milk-2, amount: 200, unit: ml}
+      - {food: plums, amount: 3, unit: piece}
+      - {food: honey, amount: 1, unit: tsp}
+      - {food: cinnamon, amount: 1, unit: pinch}
+    steps:
+      en:
+        - Rinse the buckwheat and simmer it in the milk, covered, for 12–15 minutes.
+        - Halve and stone the plums and add them for the last 3 minutes.
+        - Sweeten with honey and dust with cinnamon.
+      pl:
+        - Przepłucz kaszę i gotuj ją pod przykryciem w mleku 12–15 minut.
+        - Przekrój śliwki, usuń pestki i dodaj na ostatnie 3 minuty.
+        - Osłódź miodem i oprósz cynamonem.
+
+  - slug: egg-muffins-ham-veg
+    title: {en: "Egg muffins with ham and vegetables", pl: "Muffinki jajeczne z szynką i warzywami"}
+    servings: 3
+    prep_minutes: 10
+    cook_minutes: 20
+    difficulty: easy
+    tags: [breakfast, high_protein, meal_prep]
+    equipment: [oven, muffin_tin]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 90
+    ingredients:
+      - {food: egg-whole-raw, amount: 6, unit: piece}
+      - {food: ham-deli-lean, amount: 6, unit: slice}
+      - {food: bell-pepper-red, amount: 1, unit: piece}
+      - {food: spring-onion, amount: 2, unit: piece}
+      - {food: spinach, amount: 1, unit: handful}
+      - {food: mozzarella-part-skim, amount: 40}
+      - {food: salt, amount: 2, unit: pinch}
+      - {food: black-pepper, amount: 1, unit: pinch}
+    steps:
+      en:
+        - Heat the oven to 180°C and line or grease a 12-hole muffin tin.
+        - Chop the ham, pepper, spring onion and spinach and divide between the holes.
+        - Beat the eggs with the salt and pepper, pour over and top with the grated mozzarella.
+        - Bake for 18–20 minutes until set. Cool before storing.
+      pl:
+        - Rozgrzej piekarnik do 180°C i wyłóż lub natłuść formę na 12 muffinek.
+        - Posiekaj szynkę, paprykę, dymkę i szpinak i rozłóż do foremek.
+        - Roztrzep jajka z solą i pieprzem, zalej warzywa i posyp startą mozzarellą.
+        - Piecz 18–20 minut, aż się zetną. Przed schowaniem ostudź.
+
+  - slug: chia-pudding-mango
+    title: {en: "Chia pudding with mango", pl: "Pudding chia z mango"}
+    servings: 2
+    prep_minutes: 5
+    cook_minutes: 0
+    difficulty: easy
+    tags: [breakfast, vegan, meal_prep]
+    equipment: [jar]
+    storage: {fridge_days: 3}
+    meal_prep_score: 85
+    ingredients:
+      - {food: chia-seeds, amount: 50}
+      - {food: soy-drink, amount: 300, unit: ml}
+      - {food: maple-syrup, amount: 1, unit: tbsp}
+      - {food: mango, amount: 1, unit: piece}
+      - {food: pumpkin-seeds, amount: 1, unit: tbsp}
+    steps:
+      en:
+        - Stir the chia seeds into the soy drink and maple syrup; stir again after 10 minutes.
+        - Refrigerate for at least 3 hours or overnight.
+        - Top with the diced mango and pumpkin seeds.
+      pl:
+        - Wymieszaj nasiona chia z napojem sojowym i syropem klonowym; po 10 minutach zamieszaj ponownie.
+        - Wstaw do lodówki na co najmniej 3 godziny lub na noc.
+        - Podawaj z mango pokrojonym w kostkę i pestkami dyni.
+
+  - slug: avocado-egg-toast
+    title: {en: "Avocado toast with egg", pl: "Tost z awokado i jajkiem"}
+    servings: 1
+    prep_minutes: 5
+    cook_minutes: 8
+    difficulty: easy
+    tags: [breakfast, vegetarian, quick]
+    equipment: [pot]
+    storage: {fridge_days: 0}
+    meal_prep_score: 5
+    ingredients:
+      - {food: bread-wholewheat, amount: 2, unit: slice}
+      - {food: avocado, amount: 0.5, unit: piece}
+      - {food: egg-whole-raw, amount: 2, unit: piece}
+      - {food: lemon-juice, amount: 1, unit: tsp}
+      - {food: chili-pepper, amount: 0.25, unit: piece, optional: true}
+      - {food: salt, amount: 1, unit: pinch}
+    steps:
+      en:
+        - Boil the eggs for 7 minutes, cool in cold water and peel.
+        - Toast the bread. Mash the avocado with the lemon juice and salt.
+        - Spread the avocado on the toast, top with the halved eggs and sliced chili if using.
+      pl:
+        - Gotuj jajka 7 minut, schłodź w zimnej wodzie i obierz.
+        - Opiecz chleb. Rozgnieć awokado z sokiem z cytryny i solą.
+        - Rozsmaruj awokado na tostach, ułóż połówki jajek i plasterki chili, jeśli używasz.
+
+  - slug: semolina-pudding-raspberries
+    title: {en: "Semolina pudding with raspberries", pl: "Kaszka manna z malinami"}
+    servings: 1
+    prep_minutes: 2
+    cook_minutes: 6
+    difficulty: easy
+    tags: [breakfast, vegetarian, quick, polish]
+    equipment: [pot]
+    storage: {fridge_days: 1}
+    meal_prep_score: 30
+    ingredients:
+      - {food: semolina-dry, amount: 40}
+      - {food: milk-2, amount: 250, unit: ml}
+      - {food: whey-protein-isolate, amount: 0.5, unit: scoop, optional: true}
+      - {food: raspberries, amount: 2, unit: handful}
+      - {food: honey, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Bring the milk to a simmer and whisk in the semolina in a thin stream.
+        - Cook for 3–4 minutes, stirring, until thick. Stir in the protein powder off the heat if using.
+        - Serve with the raspberries and honey.
+      pl:
+        - Zagotuj mleko i cienkim strumieniem wsyp kaszę, mieszając trzepaczką.
+        - Gotuj 3–4 minuty, mieszając, aż zgęstnieje. Poza ogniem wmieszaj odżywkę, jeśli używasz.
+        - Podawaj z malinami i miodem.
+
+  - slug: turkey-ham-sandwich-veg
+    title: {en: "Rye sandwich with turkey ham and vegetables", pl: "Kanapki żytnie z szynką i warzywami"}
+    servings: 1
+    prep_minutes: 5
+    cook_minutes: 0
+    difficulty: easy
+    tags: [breakfast, high_protein, quick, polish]
+    equipment: []
+    storage: {fridge_days: 1}
+    meal_prep_score: 40
+    ingredients:
+      - {food: bread-rye, amount: 2, unit: slice}
+      - {food: cream-cheese, amount: 1, unit: tbsp}
+      - {food: ham-deli-lean, amount: 4, unit: slice}
+      - {food: tomato, amount: 1, unit: piece}
+      - {food: cucumber, amount: 0.25, unit: piece}
+      - {food: butterhead-lettuce, amount: 1, unit: handful}
+    steps:
+      en:
+        - Spread the bread thinly with the cream cheese.
+        - Layer the lettuce, ham and sliced tomato and cucumber.
+      pl:
+        - Posmaruj chleb cienko serkiem.
+        - Ułóż sałatę, szynkę oraz plasterki pomidora i ogórka.
+
+  # ── Lunch & dinner: poultry ───────────────────────────────────────────────
+  - slug: chicken-rice-broccoli-bowl
+    title: {en: "Chicken, rice and broccoli bowl", pl: "Miska z kurczakiem, ryżem i brokułami"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 20
+    difficulty: easy
+    tags: [lunch, dinner, high_protein, meal_prep]
+    equipment: [pot, pan]
+    storage: {fridge_days: 3}
+    meal_prep_score: 95
+    ingredients:
+      - {food: chicken-breast-raw, amount: 300}
+      - {food: rice-white-dry, amount: 120}
+      - {food: broccoli, amount: 300}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: garlic, amount: 2, unit: clove}
+      - {food: soy-sauce, amount: 2, unit: tbsp}
+      - {food: sesame-seeds, amount: 1, unit: tsp}
+      - {food: paprika-sweet, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Cook the rice according to the packet. Steam the broccoli florets for 5 minutes.
+        - Cut the chicken into strips, rub with paprika and fry in the oil for 6–7 minutes until cooked through.
+        - Add the garlic and soy sauce for the last minute.
+        - Divide the rice, broccoli and chicken between two bowls and sprinkle with sesame.
+      pl:
+        - Ugotuj ryż według przepisu na opakowaniu. Różyczki brokuła gotuj na parze 5 minut.
+        - Pokrój kurczaka w paski, natrzyj papryką i smaż na oliwie 6–7 minut, aż będzie upieczony w środku.
+        - Na ostatnią minutę dodaj czosnek i sos sojowy.
+        - Rozłóż ryż, brokuły i kurczaka do dwóch misek i posyp sezamem.
+
+  - slug: chicken-curry-coconut
+    title: {en: "Light chicken curry", pl: "Lekkie curry z kurczakiem"}
+    servings: 4
+    prep_minutes: 15
+    cook_minutes: 25
+    difficulty: medium
+    tags: [lunch, dinner, high_protein, meal_prep]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 95
+    ingredients:
+      - {food: chicken-breast-raw, amount: 600}
+      - {food: rapeseed-oil, amount: 1, unit: tbsp}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: garlic, amount: 3, unit: clove}
+      - {food: ginger-root, amount: 2, unit: tsp}
+      - {food: turmeric, amount: 1, unit: tsp}
+      - {food: cumin, amount: 1, unit: tsp}
+      - {food: tomatoes-canned, amount: 1, unit: can}
+      - {food: coconut-milk-canned, amount: 200, unit: ml}
+      - {food: spinach, amount: 3, unit: handful}
+      - {food: rice-brown-dry, amount: 240}
+      - {food: salt, amount: 3, unit: pinch}
+    steps:
+      en:
+        - Cook the rice. Fry the chopped onion in the oil for 5 minutes, add the garlic, ginger and spices for 1 minute.
+        - Add the chicken cut into cubes and brown it for 4 minutes.
+        - Pour in the tomatoes and coconut milk and simmer for 15 minutes.
+        - Stir in the spinach, season and serve with the rice.
+      pl:
+        - Ugotuj ryż. Podsmaż posiekaną cebulę na oleju 5 minut, dodaj czosnek, imbir i przyprawy na minutę.
+        - Dodaj kurczaka pokrojonego w kostkę i obsmaż 4 minuty.
+        - Wlej pomidory i mleczko kokosowe i duś 15 minut.
+        - Wmieszaj szpinak, dopraw i podawaj z ryżem.
+
+  - slug: chicken-fajita-wraps
+    title: {en: "Chicken fajita wraps", pl: "Tortille z kurczakiem fajita"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 12
+    difficulty: easy
+    tags: [lunch, dinner, high_protein]
+    equipment: [pan]
+    storage: {fridge_days: 1}
+    meal_prep_score: 40
+    ingredients:
+      - {food: chicken-breast-raw, amount: 280}
+      - {food: bell-pepper-red, amount: 1, unit: piece}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: paprika-sweet, amount: 1, unit: tsp}
+      - {food: cumin, amount: 0.5, unit: tsp}
+      - {food: garlic-powder, amount: 0.5, unit: tsp}
+      - {food: tortilla-wheat, amount: 2, unit: piece}
+      - {food: greek-yogurt-nonfat, amount: 80}
+      - {food: romaine-lettuce, amount: 2, unit: handful}
+      - {food: lemon-juice, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Slice the chicken, pepper and onion into strips and toss with the spices.
+        - Fry in the oil over high heat for 8–10 minutes until the chicken is cooked.
+        - Warm the tortillas, spread with yogurt mixed with lemon juice, add lettuce and the filling, and roll up.
+      pl:
+        - Pokrój kurczaka, paprykę i cebulę w paski i wymieszaj z przyprawami.
+        - Smaż na oliwie na dużym ogniu 8–10 minut, aż kurczak się upiecze.
+        - Podgrzej tortille, posmaruj jogurtem z sokiem z cytryny, dodaj sałatę i farsz, zwiń.
+
+  - slug: turkey-meatballs-tomato
+    title: {en: "Turkey meatballs in tomato sauce", pl: "Klopsiki z indyka w sosie pomidorowym"}
+    servings: 4
+    prep_minutes: 15
+    cook_minutes: 25
+    difficulty: medium
+    tags: [lunch, dinner, high_protein, meal_prep]
+    equipment: [pan, pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 95
+    ingredients:
+      - {food: turkey-ground-raw, amount: 500}
+      - {food: egg-whole-raw, amount: 1, unit: piece}
+      - {food: breadcrumbs, amount: 3, unit: tbsp}
+      - {food: garlic, amount: 2, unit: clove}
+      - {food: oregano, amount: 1, unit: tsp}
+      - {food: tomato-passata, amount: 500}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: basil-fresh, amount: 2, unit: tbsp}
+      - {food: pasta-wholewheat-dry, amount: 280}
+      - {food: salt, amount: 3, unit: pinch}
+    steps:
+      en:
+        - Mix the turkey, egg, breadcrumbs, 1 grated garlic clove, oregano and salt; shape about 20 meatballs.
+        - Fry the chopped onion and the other garlic clove in the oil, add the passata and bring to a simmer.
+        - Add the meatballs and simmer, covered, for 18–20 minutes.
+        - Cook the pasta and serve with the meatballs and torn basil.
+      pl:
+        - Wymieszaj indyka, jajko, bułkę tartą, 1 starty ząbek czosnku, oregano i sól; uformuj około 20 klopsików.
+        - Podsmaż posiekaną cebulę i drugi ząbek czosnku na oliwie, wlej passatę i zagotuj.
+        - Włóż klopsiki i duś pod przykryciem 18–20 minut.
+        - Ugotuj makaron i podawaj z klopsikami i porwaną bazylią.
+
+  - slug: chicken-thigh-traybake
+    title: {en: "Chicken thigh and vegetable traybake", pl: "Udka z kurczaka pieczone z warzywami"}
+    servings: 3
+    prep_minutes: 10
+    cook_minutes: 40
+    difficulty: easy
+    tags: [dinner, high_protein, meal_prep]
+    equipment: [oven, baking_tray]
+    storage: {fridge_days: 3}
+    meal_prep_score: 85
+    ingredients:
+      - {food: chicken-thigh-raw, amount: 500}
+      - {food: potatoes, amount: 500}
+      - {food: carrot, amount: 3, unit: piece}
+      - {food: zucchini, amount: 1, unit: piece}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: olive-oil, amount: 2, unit: tbsp}
+      - {food: garlic, amount: 4, unit: clove}
+      - {food: marjoram, amount: 1, unit: tsp}
+      - {food: paprika-sweet, amount: 2, unit: tsp}
+      - {food: salt, amount: 4, unit: pinch}
+    steps:
+      en:
+        - Heat the oven to 200°C. Cut the potatoes, carrots, zucchini and onion into chunks.
+        - Toss the vegetables and chicken with the oil, crushed garlic, marjoram, paprika and salt.
+        - Spread on a tray and roast for 35–40 minutes, turning once, until the chicken is golden and cooked through.
+      pl:
+        - Rozgrzej piekarnik do 200°C. Pokrój ziemniaki, marchew, cukinię i cebulę w kawałki.
+        - Wymieszaj warzywa i kurczaka z oliwą, zgniecionym czosnkiem, majerankiem, papryką i solą.
+        - Rozłóż na blasze i piecz 35–40 minut, raz przewracając, aż kurczak będzie złoty i upieczony.
+
+  - slug: chicken-pesto-pasta
+    title: {en: "Chicken pasta with spinach and parmesan", pl: "Makaron z kurczakiem, szpinakiem i parmezanem"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 15
+    difficulty: easy
+    tags: [lunch, dinner, high_protein]
+    equipment: [pot, pan]
+    storage: {fridge_days: 2}
+    meal_prep_score: 65
+    ingredients:
+      - {food: pasta-dry, amount: 150}
+      - {food: chicken-breast-raw, amount: 250}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: garlic, amount: 2, unit: clove}
+      - {food: cherry-tomatoes, amount: 10, unit: piece}
+      - {food: spinach, amount: 3, unit: handful}
+      - {food: parmesan, amount: 2, unit: tbsp}
+      - {food: black-pepper, amount: 1, unit: pinch}
+      - {food: salt, amount: 2, unit: pinch}
+    steps:
+      en:
+        - Cook the pasta, keeping a cup of the cooking water.
+        - Fry the diced chicken in the oil for 6 minutes, add the garlic and halved tomatoes for 2 minutes.
+        - Add the spinach, the pasta and a splash of the water and toss until glossy.
+        - Serve with the parmesan and pepper.
+      pl:
+        - Ugotuj makaron, odlej szklankę wody z gotowania.
+        - Smaż kurczaka pokrojonego w kostkę na oliwie 6 minut, dodaj czosnek i przekrojone pomidorki na 2 minuty.
+        - Dodaj szpinak, makaron i trochę wody z gotowania i mieszaj, aż sos się połączy.
+        - Podawaj z parmezanem i pieprzem.
+
+  - slug: turkey-stir-fry-vegetables
+    title: {en: "Turkey and vegetable stir-fry", pl: "Indyk smażony z warzywami"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 10
+    difficulty: easy
+    tags: [lunch, dinner, high_protein, quick]
+    equipment: [wok]
+    storage: {fridge_days: 2}
+    meal_prep_score: 60
+    ingredients:
+      - {food: turkey-breast-raw, amount: 300}
+      - {food: rapeseed-oil, amount: 1, unit: tbsp}
+      - {food: broccoli, amount: 200}
+      - {food: carrot, amount: 1, unit: piece}
+      - {food: cabbage-napa, amount: 200}
+      - {food: ginger-root, amount: 1, unit: tsp}
+      - {food: garlic, amount: 2, unit: clove}
+      - {food: soy-sauce, amount: 2, unit: tbsp}
+      - {food: cornstarch, amount: 1, unit: tsp}
+      - {food: egg-noodles-dry, amount: 120}
+    steps:
+      en:
+        - Cook the noodles. Slice the turkey thinly and toss with the cornstarch.
+        - Stir-fry the turkey in the hot oil for 3 minutes and set aside.
+        - Stir-fry the vegetables with the ginger and garlic for 4 minutes.
+        - Return the turkey, add the soy sauce and noodles and toss for 1 minute.
+      pl:
+        - Ugotuj makaron. Pokrój indyka w cienkie paski i obtocz w skrobi.
+        - Smaż indyka na mocno rozgrzanym oleju 3 minuty i odłóż.
+        - Smaż warzywa z imbirem i czosnkiem 4 minuty.
+        - Dodaj z powrotem indyka, sos sojowy i makaron i mieszaj minutę.
+
+  # ── Lunch & dinner: fish ──────────────────────────────────────────────────
+  - slug: salmon-potatoes-asparagus
+    title: {en: "Baked salmon with potatoes and asparagus", pl: "Łosoś pieczony z ziemniakami i szparagami"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 25
+    difficulty: easy
+    tags: [dinner, high_protein]
+    equipment: [oven, baking_tray]
+    storage: {fridge_days: 2}
+    meal_prep_score: 55
+    ingredients:
+      - {food: salmon-atlantic-raw, amount: 2, unit: piece}
+      - {food: potatoes, amount: 400}
+      - {food: asparagus, amount: 250}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: lemon, amount: 0.5, unit: piece}
+      - {food: dill, amount: 1, unit: tbsp}
+      - {food: salt, amount: 3, unit: pinch}
+    steps:
+      en:
+        - Heat the oven to 200°C. Halve the potatoes, toss with half the oil and salt and roast for 10 minutes.
+        - Add the asparagus and salmon to the tray, brush with the rest of the oil and season.
+        - Roast for 12–14 minutes. Finish with lemon juice and dill.
+      pl:
+        - Rozgrzej piekarnik do 200°C. Przekrój ziemniaki, wymieszaj z połową oliwy i solą i piecz 10 minut.
+        - Dołóż na blachę szparagi i łososia, posmaruj resztą oliwy i dopraw.
+        - Piecz 12–14 minut. Skrop sokiem z cytryny i posyp koperkiem.
+
+  - slug: cod-mashed-potatoes-carrot
+    title: {en: "Cod with mashed potatoes and carrot salad", pl: "Dorsz z puree i surówką z marchewki"}
+    servings: 2
+    prep_minutes: 15
+    cook_minutes: 20
+    difficulty: easy
+    tags: [dinner, high_protein, polish]
+    equipment: [pot, pan]
+    storage: {fridge_days: 2}
+    meal_prep_score: 50
+    ingredients:
+      - {food: cod-raw, amount: 2, unit: piece}
+      - {food: potatoes, amount: 400}
+      - {food: milk-skim, amount: 60, unit: ml}
+      - {food: butter, amount: 1, unit: tsp}
+      - {food: rapeseed-oil, amount: 1, unit: tbsp}
+      - {food: flour-wheat, amount: 1, unit: tbsp}
+      - {food: carrot, amount: 3, unit: piece}
+      - {food: apple, amount: 0.5, unit: piece}
+      - {food: lemon-juice, amount: 1, unit: tbsp}
+      - {food: dill, amount: 1, unit: tbsp}
+      - {food: salt, amount: 3, unit: pinch}
+    steps:
+      en:
+        - Boil the potatoes in salted water for 18 minutes, drain and mash with the milk and butter.
+        - Grate the carrots and apple and mix with the lemon juice.
+        - Season the cod, dust with flour and fry in the oil for 3–4 minutes per side.
+        - Serve with the mash sprinkled with dill and the carrot salad.
+      pl:
+        - Gotuj ziemniaki w osolonej wodzie 18 minut, odcedź i utłucz z mlekiem i masłem.
+        - Zetrzyj marchew i jabłko i wymieszaj z sokiem z cytryny.
+        - Dopraw dorsza, oprósz mąką i smaż na oleju 3–4 minuty z każdej strony.
+        - Podawaj z puree posypanym koperkiem i surówką.
+
+  - slug: tuna-pasta-salad
+    title: {en: "Tuna pasta salad", pl: "Sałatka makaronowa z tuńczykiem"}
+    servings: 3
+    prep_minutes: 15
+    cook_minutes: 10
+    difficulty: easy
+    tags: [lunch, high_protein, meal_prep]
+    equipment: [pot]
+    storage: {fridge_days: 3}
+    meal_prep_score: 90
+    ingredients:
+      - {food: pasta-wholewheat-dry, amount: 180}
+      - {food: tuna-canned-water, amount: 2, unit: can}
+      - {food: sweet-corn-canned-drained, amount: 100}
+      - {food: cucumber, amount: 0.5, unit: piece}
+      - {food: bell-pepper-red, amount: 1, unit: piece}
+      - {food: greek-yogurt-nonfat, amount: 150}
+      - {food: mustard, amount: 1, unit: tsp}
+      - {food: spring-onion, amount: 2, unit: piece}
+      - {food: salt, amount: 2, unit: pinch}
+    steps:
+      en:
+        - Cook the pasta, rinse under cold water and drain well.
+        - Dice the cucumber and pepper and slice the spring onion.
+        - Mix the yogurt with the mustard and salt, then fold in the pasta, drained tuna, corn and vegetables.
+      pl:
+        - Ugotuj makaron, przelej zimną wodą i dobrze odsącz.
+        - Pokrój ogórek i paprykę w kostkę, a dymkę w krążki.
+        - Wymieszaj jogurt z musztardą i solą, dodaj makaron, odsączonego tuńczyka, kukurydzę i warzywa.
+
+  - slug: shrimp-garlic-zucchini-noodles
+    title: {en: "Garlic shrimp with zucchini and spaghetti", pl: "Krewetki z czosnkiem, cukinią i spaghetti"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 12
+    difficulty: easy
+    tags: [dinner, high_protein, quick]
+    equipment: [pot, pan]
+    storage: {fridge_days: 1}
+    meal_prep_score: 30
+    ingredients:
+      - {food: shrimp-raw, amount: 250}
+      - {food: pasta-dry, amount: 120}
+      - {food: zucchini, amount: 1, unit: piece}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: garlic, amount: 3, unit: clove}
+      - {food: chili-pepper, amount: 0.5, unit: piece}
+      - {food: lemon, amount: 0.5, unit: piece}
+      - {food: parsley, amount: 2, unit: tbsp}
+      - {food: salt, amount: 2, unit: pinch}
+    steps:
+      en:
+        - Cook the spaghetti. Cut the zucchini into thin ribbons with a peeler.
+        - Fry the garlic and chili in the oil for 30 seconds, add the shrimp and cook for 2 minutes per side.
+        - Add the zucchini and drained pasta, toss for 2 minutes, then finish with lemon juice and parsley.
+      pl:
+        - Ugotuj spaghetti. Pokrój cukinię obieraczką w cienkie wstążki.
+        - Podsmaż czosnek i chili na oliwie 30 sekund, dodaj krewetki i smaż po 2 minuty z każdej strony.
+        - Dodaj cukinię i odcedzony makaron, mieszaj 2 minuty, skrop sokiem z cytryny i posyp natką.
+
+  - slug: mackerel-buckwheat-cucumber
+    title: {en: "Baked mackerel with buckwheat and cucumber salad", pl: "Pieczona makrela z kaszą gryczaną i mizerią"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 20
+    difficulty: easy
+    tags: [dinner, high_protein, polish]
+    equipment: [oven, pot]
+    storage: {fridge_days: 2}
+    meal_prep_score: 50
+    ingredients:
+      - {food: mackerel-raw, amount: 2, unit: piece}
+      - {food: buckwheat-groats, amount: 100}
+      - {food: cucumber, amount: 1, unit: piece}
+      - {food: yogurt-plain-lowfat, amount: 100}
+      - {food: dill, amount: 2, unit: tbsp}
+      - {food: lemon, amount: 0.5, unit: piece}
+      - {food: allspice, amount: 2, unit: piece}
+      - {food: salt, amount: 3, unit: pinch}
+    steps:
+      en:
+        - Cook the buckwheat. Heat the oven to 200°C.
+        - Season the mackerel fillets, add lemon slices and allspice and bake for 15 minutes.
+        - Slice the cucumber thinly, salt lightly and mix with the yogurt and dill.
+      pl:
+        - Ugotuj kaszę. Rozgrzej piekarnik do 200°C.
+        - Dopraw filety z makreli, dodaj plastry cytryny i ziele angielskie i piecz 15 minut.
+        - Pokrój ogórka w cienkie plasterki, lekko posól i wymieszaj z jogurtem i koperkiem.
+
+  # ── Lunch & dinner: pork and beef ─────────────────────────────────────────
+  - slug: pork-tenderloin-mushroom-sauce
+    title: {en: "Pork tenderloin in mushroom sauce", pl: "Polędwiczka wieprzowa w sosie pieczarkowym"}
+    servings: 3
+    prep_minutes: 10
+    cook_minutes: 25
+    difficulty: medium
+    tags: [dinner, high_protein, polish]
+    equipment: [pan, pot]
+    storage: {fridge_days: 3}
+    meal_prep_score: 75
+    ingredients:
+      - {food: pork-tenderloin-raw, amount: 450}
+      - {food: mushrooms-white, amount: 300}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: rapeseed-oil, amount: 1, unit: tbsp}
+      - {food: cream-light-12, amount: 100, unit: ml}
+      - {food: water, amount: 100, unit: ml}
+      - {food: parsley, amount: 1, unit: tbsp}
+      - {food: buckwheat-groats, amount: 150}
+      - {food: salt, amount: 3, unit: pinch}
+      - {food: black-pepper, amount: 2, unit: pinch}
+    steps:
+      en:
+        - Cook the buckwheat. Cut the tenderloin into 2 cm medallions, season and sear for 2 minutes per side; set aside.
+        - Fry the chopped onion and sliced mushrooms in the same pan for 7 minutes.
+        - Add the water and cream, return the pork and simmer for 5 minutes.
+        - Sprinkle with parsley and serve with the buckwheat.
+      pl:
+        - Ugotuj kaszę. Pokrój polędwiczkę w 2-centymetrowe medaliony, dopraw i obsmaż po 2 minuty z każdej strony; odłóż.
+        - Na tej samej patelni smaż posiekaną cebulę i pokrojone pieczarki 7 minut.
+        - Dodaj wodę i śmietankę, włóż z powrotem mięso i duś 5 minut.
+        - Posyp natką i podawaj z kaszą.
+
+  - slug: beef-chili-con-carne
+    title: {en: "Chili con carne", pl: "Chili con carne"}
+    servings: 4
+    prep_minutes: 10
+    cook_minutes: 35
+    difficulty: easy
+    tags: [lunch, dinner, high_protein, meal_prep]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 100
+    ingredients:
+      - {food: beef-ground-90-raw, amount: 500}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: garlic, amount: 3, unit: clove}
+      - {food: bell-pepper-red, amount: 1, unit: piece}
+      - {food: tomatoes-canned, amount: 2, unit: can}
+      - {food: kidney-beans-canned-drained, amount: 1, unit: can}
+      - {food: sweet-corn-canned-drained, amount: 150}
+      - {food: cumin, amount: 2, unit: tsp}
+      - {food: paprika-sweet, amount: 2, unit: tsp}
+      - {food: cayenne-pepper, amount: 0.5, unit: tsp}
+      - {food: rapeseed-oil, amount: 1, unit: tbsp}
+      - {food: rice-white-dry, amount: 240}
+      - {food: salt, amount: 4, unit: pinch}
+    steps:
+      en:
+        - Fry the onion, garlic and pepper in the oil for 5 minutes, then brown the beef.
+        - Add the spices, tomatoes and beans and simmer for 25 minutes, adding the corn for the last 5.
+        - Cook the rice and serve with the chili.
+      pl:
+        - Podsmaż cebulę, czosnek i paprykę na oleju 5 minut, potem obsmaż wołowinę.
+        - Dodaj przyprawy, pomidory i fasolę i duś 25 minut; kukurydzę dodaj na ostatnie 5 minut.
+        - Ugotuj ryż i podawaj z chili.
+
+  - slug: bolognese-wholewheat
+    title: {en: "Wholewheat spaghetti bolognese", pl: "Spaghetti bolognese z makaronem pełnoziarnistym"}
+    servings: 4
+    prep_minutes: 15
+    cook_minutes: 40
+    difficulty: easy
+    tags: [lunch, dinner, high_protein, meal_prep]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 95
+    ingredients:
+      - {food: beef-ground-90-raw, amount: 450}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: carrot, amount: 1, unit: piece}
+      - {food: celery-stalk, amount: 1, unit: stalk}
+      - {food: garlic, amount: 2, unit: clove}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: tomato-passata, amount: 500}
+      - {food: tomato-paste, amount: 1, unit: tbsp}
+      - {food: oregano, amount: 1, unit: tsp}
+      - {food: pasta-wholewheat-dry, amount: 320}
+      - {food: parmesan, amount: 4, unit: tbsp}
+      - {food: salt, amount: 4, unit: pinch}
+    steps:
+      en:
+        - Finely chop the onion, carrot and celery and soften in the oil for 8 minutes with the garlic.
+        - Brown the beef, add the tomato paste, passata and oregano and simmer for 30 minutes.
+        - Cook the spaghetti and serve with the sauce and parmesan.
+      pl:
+        - Drobno posiekaj cebulę, marchew i seler naciowy i duś na oliwie z czosnkiem 8 minut.
+        - Obsmaż wołowinę, dodaj koncentrat, passatę i oregano i gotuj 30 minut.
+        - Ugotuj makaron i podawaj z sosem i parmezanem.
+
+  - slug: pork-loin-cabbage-stew
+    title: {en: "Pork loin stew with cabbage", pl: "Schab duszony z kapustą"}
+    servings: 4
+    prep_minutes: 15
+    cook_minutes: 45
+    difficulty: medium
+    tags: [dinner, high_protein, meal_prep, polish]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 95
+    ingredients:
+      - {food: pork-loin-raw, amount: 500}
+      - {food: cabbage-white, amount: 600}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: carrot, amount: 1, unit: piece}
+      - {food: tomato-paste, amount: 2, unit: tbsp}
+      - {food: rapeseed-oil, amount: 1, unit: tbsp}
+      - {food: caraway, amount: 1, unit: tsp}
+      - {food: bay-leaf, amount: 2, unit: piece}
+      - {food: allspice, amount: 3, unit: piece}
+      - {food: water, amount: 300, unit: ml}
+      - {food: potatoes, amount: 600}
+      - {food: salt, amount: 4, unit: pinch}
+    steps:
+      en:
+        - Cube the pork and brown it in the oil with the chopped onion.
+        - Add the shredded cabbage, grated carrot, spices, tomato paste and water.
+        - Simmer, covered, for 40 minutes until the pork is tender. Boil the potatoes alongside.
+      pl:
+        - Pokrój schab w kostkę i obsmaż na oleju z posiekaną cebulą.
+        - Dodaj poszatkowaną kapustę, startą marchew, przyprawy, koncentrat i wodę.
+        - Duś pod przykryciem 40 minut, aż mięso zmięknie. W tym czasie ugotuj ziemniaki.
+
+  - slug: beef-burger-bowl
+    title: {en: "Burger bowl with sweet potato wedges", pl: "Burger w misce z batatami"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 30
+    difficulty: easy
+    tags: [dinner, high_protein]
+    equipment: [oven, pan]
+    storage: {fridge_days: 2}
+    meal_prep_score: 60
+    ingredients:
+      - {food: beef-ground-90-raw, amount: 250}
+      - {food: sweet-potato, amount: 1, unit: piece}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: romaine-lettuce, amount: 3, unit: handful}
+      - {food: tomato, amount: 1, unit: piece}
+      - {food: pickled-cucumbers, amount: 2, unit: piece}
+      - {food: cheddar, amount: 2, unit: slice}
+      - {food: greek-yogurt-nonfat, amount: 60}
+      - {food: ketchup, amount: 1, unit: tbsp}
+      - {food: mustard, amount: 1, unit: tsp}
+      - {food: salt, amount: 2, unit: pinch}
+    steps:
+      en:
+        - Cut the sweet potato into wedges, toss with the oil and salt and bake at 210°C for 25 minutes.
+        - Shape the beef into two patties and fry for 3–4 minutes per side; melt the cheddar on top.
+        - Mix the yogurt, ketchup and mustard into a sauce.
+        - Fill bowls with lettuce, tomato and pickles, add the patties and wedges and drizzle with sauce.
+      pl:
+        - Pokrój batata w łódeczki, wymieszaj z oliwą i solą i piecz w 210°C 25 minut.
+        - Uformuj z wołowiny dwa kotlety i smaż 3–4 minuty z każdej strony; na wierzchu roztop cheddar.
+        - Wymieszaj jogurt, ketchup i musztardę na sos.
+        - Do misek włóż sałatę, pomidora i ogórki, dodaj kotlety i bataty i polej sosem.
+
+  # ── Lunch & dinner: vegetarian ────────────────────────────────────────────
+  - slug: red-lentil-dal
+    title: {en: "Red lentil dal", pl: "Dal z czerwonej soczewicy"}
+    servings: 4
+    prep_minutes: 10
+    cook_minutes: 25
+    difficulty: easy
+    tags: [lunch, dinner, vegan, meal_prep]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 100
+    ingredients:
+      - {food: lentils-red-dry, amount: 250}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: garlic, amount: 3, unit: clove}
+      - {food: ginger-root, amount: 2, unit: tsp}
+      - {food: coconut-oil, amount: 1, unit: tbsp}
+      - {food: turmeric, amount: 1, unit: tsp}
+      - {food: cumin, amount: 1, unit: tsp}
+      - {food: tomatoes-canned, amount: 1, unit: can}
+      - {food: water, amount: 700, unit: ml}
+      - {food: spinach, amount: 3, unit: handful}
+      - {food: lemon-juice, amount: 1, unit: tbsp}
+      - {food: rice-brown-dry, amount: 200}
+      - {food: salt, amount: 4, unit: pinch}
+    steps:
+      en:
+        - Fry the onion in the coconut oil for 5 minutes, add the garlic, ginger and spices for 1 minute.
+        - Add the rinsed lentils, tomatoes and water and simmer for 20 minutes, stirring now and then.
+        - Stir in the spinach and lemon juice, season, and serve with the cooked rice.
+      pl:
+        - Podsmaż cebulę na oleju kokosowym 5 minut, dodaj czosnek, imbir i przyprawy na minutę.
+        - Dodaj przepłukaną soczewicę, pomidory i wodę i gotuj 20 minut, od czasu do czasu mieszając.
+        - Wmieszaj szpinak i sok z cytryny, dopraw i podawaj z ugotowanym ryżem.
+
+  - slug: chickpea-spinach-curry
+    title: {en: "Chickpea and spinach curry", pl: "Curry z ciecierzycą i szpinakiem"}
+    servings: 3
+    prep_minutes: 10
+    cook_minutes: 20
+    difficulty: easy
+    tags: [lunch, dinner, vegan, meal_prep]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 95
+    ingredients:
+      - {food: chickpeas-canned-drained, amount: 2, unit: can}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: garlic, amount: 2, unit: clove}
+      - {food: ginger-root, amount: 1, unit: tsp}
+      - {food: rapeseed-oil, amount: 1, unit: tbsp}
+      - {food: turmeric, amount: 1, unit: tsp}
+      - {food: cumin, amount: 1, unit: tsp}
+      - {food: tomato-passata, amount: 300}
+      - {food: coconut-milk-canned, amount: 150, unit: ml}
+      - {food: spinach, amount: 4, unit: handful}
+      - {food: couscous-dry, amount: 180}
+      - {food: salt, amount: 3, unit: pinch}
+    steps:
+      en:
+        - Fry the onion, garlic and ginger in the oil for 5 minutes and add the spices.
+        - Add the chickpeas, passata and coconut milk and simmer for 12 minutes.
+        - Stir in the spinach. Pour boiling water over the couscous, cover for 5 minutes and fluff with a fork.
+      pl:
+        - Podsmaż cebulę, czosnek i imbir na oleju 5 minut i dodaj przyprawy.
+        - Dodaj ciecierzycę, passatę i mleczko kokosowe i gotuj 12 minut.
+        - Wmieszaj szpinak. Kuskus zalej wrzątkiem, przykryj na 5 minut i rozdziel widelcem.
+
+  - slug: tofu-teriyaki-rice
+    title: {en: "Teriyaki-style tofu with rice and greens", pl: "Tofu w stylu teriyaki z ryżem i warzywami"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 20
+    difficulty: easy
+    tags: [dinner, vegan, high_protein]
+    equipment: [pot, pan]
+    storage: {fridge_days: 3}
+    meal_prep_score: 70
+    ingredients:
+      - {food: tofu-firm, amount: 360}
+      - {food: cornstarch, amount: 1, unit: tbsp}
+      - {food: rapeseed-oil, amount: 1, unit: tbsp}
+      - {food: soy-sauce, amount: 3, unit: tbsp}
+      - {food: maple-syrup, amount: 1, unit: tbsp}
+      - {food: ginger-root, amount: 1, unit: tsp}
+      - {food: garlic, amount: 1, unit: clove}
+      - {food: rice-white-dry, amount: 140}
+      - {food: edamame-frozen, amount: 120}
+      - {food: broccoli, amount: 200}
+      - {food: sesame-seeds, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Cook the rice. Steam the broccoli and edamame for 5 minutes.
+        - Pat the tofu dry, cube it, toss with the cornstarch and fry in the oil until golden on all sides.
+        - Mix the soy sauce, maple syrup, ginger and garlic, pour over the tofu and let it bubble for 1 minute.
+        - Serve with the rice and vegetables and sprinkle with sesame.
+      pl:
+        - Ugotuj ryż. Brokuły i edamame gotuj na parze 5 minut.
+        - Osusz tofu, pokrój w kostkę, obtocz w skrobi i smaż na oleju, aż będzie złote ze wszystkich stron.
+        - Wymieszaj sos sojowy, syrop klonowy, imbir i czosnek, wlej do tofu i gotuj minutę.
+        - Podawaj z ryżem i warzywami, posyp sezamem.
+
+  - slug: vegetable-lentil-bolognese
+    title: {en: "Green lentil bolognese", pl: "Bolognese z zielonej soczewicy"}
+    servings: 4
+    prep_minutes: 10
+    cook_minutes: 35
+    difficulty: easy
+    tags: [lunch, dinner, vegan, meal_prep]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 95
+    ingredients:
+      - {food: lentils-green-dry, amount: 200}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: carrot, amount: 2, unit: piece}
+      - {food: mushrooms-white, amount: 250}
+      - {food: garlic, amount: 2, unit: clove}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: tomato-passata, amount: 500}
+      - {food: tomato-paste, amount: 1, unit: tbsp}
+      - {food: oregano, amount: 1, unit: tsp}
+      - {food: water, amount: 500, unit: ml}
+      - {food: pasta-wholewheat-dry, amount: 320}
+      - {food: salt, amount: 4, unit: pinch}
+    steps:
+      en:
+        - Soften the chopped onion, carrot, mushrooms and garlic in the oil for 8 minutes.
+        - Add the rinsed lentils, passata, paste, oregano and water and simmer for 25–30 minutes until the lentils are soft.
+        - Cook the pasta and serve with the sauce.
+      pl:
+        - Duś posiekaną cebulę, marchew, pieczarki i czosnek na oliwie 8 minut.
+        - Dodaj przepłukaną soczewicę, passatę, koncentrat, oregano i wodę i gotuj 25–30 minut, aż soczewica zmięknie.
+        - Ugotuj makaron i podawaj z sosem.
+
+  - slug: greek-quinoa-bowl
+    title: {en: "Greek quinoa bowl with feta", pl: "Miska po grecku z komosą i fetą"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 15
+    difficulty: easy
+    tags: [lunch, vegetarian, meal_prep]
+    equipment: [pot]
+    storage: {fridge_days: 3}
+    meal_prep_score: 85
+    ingredients:
+      - {food: quinoa-dry, amount: 120}
+      - {food: chickpeas-canned-drained, amount: 200}
+      - {food: cucumber, amount: 0.5, unit: piece}
+      - {food: cherry-tomatoes, amount: 10, unit: piece}
+      - {food: olives-black, amount: 8, unit: piece}
+      - {food: feta, amount: 80}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: lemon-juice, amount: 1, unit: tbsp}
+      - {food: oregano, amount: 0.5, unit: tsp}
+    steps:
+      en:
+        - Rinse the quinoa and cook it in twice its volume of water for 12–15 minutes; let it cool.
+        - Dice the cucumber and halve the tomatoes and olives.
+        - Whisk the oil, lemon juice and oregano, toss everything together and crumble the feta on top.
+      pl:
+        - Przepłucz komosę i gotuj w dwukrotnej ilości wody 12–15 minut; ostudź.
+        - Pokrój ogórka w kostkę, przekrój pomidorki i oliwki.
+        - Wymieszaj oliwę, sok z cytryny i oregano, połącz wszystko i pokrusz na wierzchu fetę.
+
+  - slug: stuffed-peppers-rice-beans
+    title: {en: "Stuffed peppers with rice and beans", pl: "Papryki faszerowane ryżem i fasolą"}
+    servings: 4
+    prep_minutes: 20
+    cook_minutes: 35
+    difficulty: medium
+    tags: [dinner, vegetarian, meal_prep]
+    equipment: [oven, pot]
+    storage: {fridge_days: 3, freezer_friendly: true}
+    meal_prep_score: 85
+    ingredients:
+      - {food: bell-pepper-red, amount: 4, unit: piece}
+      - {food: rice-brown-dry, amount: 120}
+      - {food: kidney-beans-canned-drained, amount: 1, unit: can}
+      - {food: sweet-corn-canned-drained, amount: 100}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: tomato-passata, amount: 250}
+      - {food: cumin, amount: 1, unit: tsp}
+      - {food: paprika-sweet, amount: 1, unit: tsp}
+      - {food: mozzarella-part-skim, amount: 100}
+      - {food: olive-oil, amount: 1, unit: tsp}
+      - {food: salt, amount: 3, unit: pinch}
+    steps:
+      en:
+        - Cook the rice. Heat the oven to 190°C. Halve the peppers lengthways and remove the seeds.
+        - Fry the onion in the oil, add the spices, beans, corn, half the passata and the rice and season.
+        - Fill the peppers, pour the rest of the passata around them and top with the grated mozzarella.
+        - Bake for 30–35 minutes until the peppers are soft.
+      pl:
+        - Ugotuj ryż. Rozgrzej piekarnik do 190°C. Przekrój papryki wzdłuż i usuń gniazda nasienne.
+        - Podsmaż cebulę na oliwie, dodaj przyprawy, fasolę, kukurydzę, połowę passaty i ryż, dopraw.
+        - Napełnij papryki, resztę passaty wlej dookoła i posyp startą mozzarellą.
+        - Piecz 30–35 minut, aż papryki zmiękną.
+
+  - slug: lazy-cabbage-rolls-buckwheat
+    title: {en: "Lazy cabbage rolls with buckwheat and mushrooms", pl: "Leniwe gołąbki z kaszą i grzybami"}
+    servings: 4
+    prep_minutes: 15
+    cook_minutes: 40
+    difficulty: medium
+    tags: [dinner, vegetarian, meal_prep, polish]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 90
+    ingredients:
+      - {food: cabbage-white, amount: 700}
+      - {food: buckwheat-groats, amount: 150}
+      - {food: mushrooms-white, amount: 300}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: rapeseed-oil, amount: 1, unit: tbsp}
+      - {food: tomato-passata, amount: 400}
+      - {food: marjoram, amount: 1, unit: tsp}
+      - {food: allspice, amount: 3, unit: piece}
+      - {food: bay-leaf, amount: 2, unit: piece}
+      - {food: water, amount: 200, unit: ml}
+      - {food: sour-cream, amount: 4, unit: tbsp, optional: true}
+      - {food: salt, amount: 4, unit: pinch}
+    steps:
+      en:
+        - Cook the buckwheat. Fry the onion and chopped mushrooms in the oil for 8 minutes.
+        - Add the shredded cabbage, spices and water, cover and simmer for 20 minutes.
+        - Stir in the buckwheat and passata and simmer for 10 minutes more. Serve with a spoon of sour cream if you like.
+      pl:
+        - Ugotuj kaszę. Podsmaż cebulę i posiekane pieczarki na oleju 8 minut.
+        - Dodaj poszatkowaną kapustę, przyprawy i wodę, przykryj i duś 20 minut.
+        - Wmieszaj kaszę i passatę i gotuj jeszcze 10 minut. Jeśli chcesz, podawaj z łyżką kwaśnej śmietany.
+
+  - slug: tempeh-sweet-potato-tray
+    title: {en: "Tempeh, sweet potato and kale traybake", pl: "Tempeh pieczony z batatem i jarmużem"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 30
+    difficulty: easy
+    tags: [dinner, vegan, high_protein, meal_prep]
+    equipment: [oven, baking_tray]
+    storage: {fridge_days: 3}
+    meal_prep_score: 80
+    ingredients:
+      - {food: tempeh, amount: 200}
+      - {food: sweet-potato, amount: 1, unit: piece}
+      - {food: kale, amount: 3, unit: handful}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: soy-sauce, amount: 1, unit: tbsp}
+      - {food: paprika-sweet, amount: 1, unit: tsp}
+      - {food: tahini, amount: 1, unit: tbsp}
+      - {food: lemon-juice, amount: 1, unit: tbsp}
+    steps:
+      en:
+        - Heat the oven to 200°C. Cube the sweet potato and tempeh and toss with the oil, soy sauce and paprika.
+        - Roast for 20 minutes, add the kale and roast for 8 minutes more.
+        - Whisk the tahini with the lemon juice and a little water and drizzle over.
+      pl:
+        - Rozgrzej piekarnik do 200°C. Pokrój batata i tempeh w kostkę i wymieszaj z oliwą, sosem sojowym i papryką.
+        - Piecz 20 minut, dodaj jarmuż i piecz jeszcze 8 minut.
+        - Wymieszaj tahini z sokiem z cytryny i odrobiną wody i polej danie.
+
+  # ── Soups ─────────────────────────────────────────────────────────────────
+  - slug: chicken-soup-rosol
+    title: {en: "Chicken broth with noodles", pl: "Rosół z makaronem"}
+    servings: 4
+    prep_minutes: 15
+    cook_minutes: 90
+    difficulty: easy
+    tags: [lunch, high_protein, meal_prep, polish]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 90
+    ingredients:
+      - {food: chicken-drumstick-raw, amount: 6, unit: piece}
+      - {food: chicken-breast-raw, amount: 200}
+      - {food: carrot, amount: 3, unit: piece}
+      - {food: celeriac, amount: 150}
+      - {food: leek, amount: 0.5, unit: piece}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: allspice, amount: 4, unit: piece}
+      - {food: bay-leaf, amount: 2, unit: piece}
+      - {food: water, amount: 2500, unit: ml}
+      - {food: egg-noodles-dry, amount: 160}
+      - {food: parsley, amount: 2, unit: tbsp}
+      - {food: salt, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Put the chicken in a pot with the cold water, bring slowly to a simmer and skim.
+        - Add the vegetables (char the onion halves in a dry pan first), allspice, bay leaves and salt.
+        - Simmer gently, uncovered, for 1½ hours. Strain; slice the carrot and shred the breast meat back into the broth.
+        - Cook the noodles separately and serve in the broth with parsley.
+      pl:
+        - Włóż kurczaka do garnka z zimną wodą, powoli doprowadź do wrzenia i zbierz szumowiny.
+        - Dodaj warzywa (połówki cebuli najpierw opal na suchej patelni), ziele angielskie, liście laurowe i sól.
+        - Gotuj na małym ogniu bez przykrycia 1,5 godziny. Przecedź; pokrój marchew i porwij mięso z piersi do bulionu.
+        - Makaron ugotuj osobno i podawaj w rosole z natką.
+
+  - slug: tomato-soup-rice
+    title: {en: "Tomato soup with rice", pl: "Zupa pomidorowa z ryżem"}
+    servings: 4
+    prep_minutes: 10
+    cook_minutes: 30
+    difficulty: easy
+    tags: [lunch, vegetarian, meal_prep, polish]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 90
+    ingredients:
+      - {food: tomato-passata, amount: 700}
+      - {food: carrot, amount: 2, unit: piece}
+      - {food: celeriac, amount: 100}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: water, amount: 800, unit: ml}
+      - {food: rice-white-dry, amount: 100}
+      - {food: cream-light-12, amount: 100, unit: ml}
+      - {food: allspice, amount: 3, unit: piece}
+      - {food: bay-leaf, amount: 1, unit: piece}
+      - {food: dill, amount: 2, unit: tbsp}
+      - {food: salt, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Simmer the carrot, celeriac and onion with the allspice and bay leaf in the water for 20 minutes.
+        - Remove the whole spices, add the passata and simmer for 5 minutes. Cook the rice separately.
+        - Temper the cream with a ladle of soup, stir it in and season. Serve over the rice with dill.
+      pl:
+        - Gotuj marchew, seler i cebulę z zielem angielskim i liściem laurowym w wodzie 20 minut.
+        - Wyjmij przyprawy, dodaj passatę i gotuj 5 minut. Ryż ugotuj osobno.
+        - Zahartuj śmietankę chochlą zupy, wlej do garnka i dopraw. Podawaj z ryżem i koperkiem.
+
+  - slug: pea-soup-split
+    title: {en: "Split pea soup", pl: "Grochówka"}
+    servings: 4
+    prep_minutes: 10
+    cook_minutes: 60
+    difficulty: easy
+    tags: [lunch, vegan, meal_prep, polish]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 95
+    ingredients:
+      - {food: split-peas-dry, amount: 250}
+      - {food: potatoes, amount: 300}
+      - {food: carrot, amount: 2, unit: piece}
+      - {food: celeriac, amount: 100}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: rapeseed-oil, amount: 1, unit: tbsp}
+      - {food: marjoram, amount: 2, unit: tsp}
+      - {food: garlic, amount: 2, unit: clove}
+      - {food: water, amount: 1500, unit: ml}
+      - {food: salt, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Rinse the peas and simmer them in the water for 30 minutes.
+        - Add the diced potatoes, carrot and celeriac and simmer for 25 minutes more.
+        - Fry the onion and garlic in the oil, stir in with the marjoram and salt and cook for 5 minutes.
+      pl:
+        - Przepłucz groch i gotuj go w wodzie 30 minut.
+        - Dodaj pokrojone w kostkę ziemniaki, marchew i seler i gotuj jeszcze 25 minut.
+        - Podsmaż cebulę z czosnkiem na oleju, dodaj do zupy z majerankiem i solą i gotuj 5 minut.
+
+  - slug: pumpkin-ginger-soup
+    title: {en: "Pumpkin and ginger soup", pl: "Krem z dyni z imbirem"}
+    servings: 4
+    prep_minutes: 15
+    cook_minutes: 25
+    difficulty: easy
+    tags: [lunch, vegan, meal_prep]
+    equipment: [pot, blender]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 90
+    ingredients:
+      - {food: pumpkin, amount: 900}
+      - {food: carrot, amount: 2, unit: piece}
+      - {food: onion, amount: 1, unit: piece}
+      - {food: ginger-root, amount: 2, unit: tsp}
+      - {food: coconut-milk-canned, amount: 150, unit: ml}
+      - {food: water, amount: 800, unit: ml}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: pumpkin-seeds, amount: 4, unit: tbsp}
+      - {food: salt, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Soften the onion and ginger in the oil, add the cubed pumpkin, carrots and water and simmer for 20 minutes.
+        - Blend until smooth, stir in the coconut milk and season.
+        - Toast the pumpkin seeds in a dry pan and scatter over each bowl.
+      pl:
+        - Zeszklij cebulę i imbir na oliwie, dodaj pokrojoną dynię, marchew i wodę i gotuj 20 minut.
+        - Zmiksuj na gładko, wmieszaj mleczko kokosowe i dopraw.
+        - Upraż pestki dyni na suchej patelni i posyp nimi zupę.
+
+  - slug: cold-beet-soup-chlodnik
+    title: {en: "Cold beet soup", pl: "Chłodnik litewski"}
+    servings: 4
+    prep_minutes: 20
+    cook_minutes: 30
+    difficulty: easy
+    tags: [lunch, vegetarian, polish]
+    equipment: [pot]
+    storage: {fridge_days: 2}
+    meal_prep_score: 60
+    ingredients:
+      - {food: beetroot, amount: 3, unit: piece}
+      - {food: buttermilk, amount: 1000, unit: ml}
+      - {food: cucumber, amount: 1, unit: piece}
+      - {food: radish, amount: 1, unit: bunch}
+      - {food: dill, amount: 3, unit: tbsp}
+      - {food: chives, amount: 2, unit: tbsp}
+      - {food: egg-whole-raw, amount: 4, unit: piece}
+      - {food: lemon-juice, amount: 2, unit: tbsp}
+      - {food: salt, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Boil the beetroots until tender (about 30 minutes), cool, peel and grate.
+        - Hard-boil the eggs for 9 minutes. Dice the cucumber and radishes and chop the herbs.
+        - Mix the beetroot, vegetables and herbs into the buttermilk, season with lemon juice and salt and chill.
+        - Serve with the halved eggs.
+      pl:
+        - Ugotuj buraki do miękkości (około 30 minut), ostudź, obierz i zetrzyj.
+        - Ugotuj jajka na twardo (9 minut). Pokrój ogórka i rzodkiewki w kostkę, posiekaj zioła.
+        - Wymieszaj buraki, warzywa i zioła z maślanką, dopraw sokiem z cytryny i solą i schłodź.
+        - Podawaj z połówkami jajek.
+
+  - slug: cauliflower-soup
+    title: {en: "Cauliflower soup", pl: "Zupa kalafiorowa"}
+    servings: 4
+    prep_minutes: 10
+    cook_minutes: 25
+    difficulty: easy
+    tags: [lunch, vegetarian, meal_prep, polish]
+    equipment: [pot]
+    storage: {fridge_days: 4, freezer_friendly: true}
+    meal_prep_score: 85
+    ingredients:
+      - {food: cauliflower, amount: 1, unit: piece}
+      - {food: potatoes, amount: 300}
+      - {food: carrot, amount: 2, unit: piece}
+      - {food: leek, amount: 0.5, unit: piece}
+      - {food: water, amount: 1500, unit: ml}
+      - {food: butter, amount: 1, unit: tbsp}
+      - {food: cream-light-12, amount: 100, unit: ml}
+      - {food: dill, amount: 2, unit: tbsp}
+      - {food: salt, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Soften the sliced leek in the butter, add the water, diced potatoes and carrots and simmer for 10 minutes.
+        - Add the cauliflower florets and simmer for 12 minutes more.
+        - Stir in the tempered cream, season and sprinkle with dill.
+      pl:
+        - Zeszklij pokrojonego pora na maśle, wlej wodę, dodaj pokrojone ziemniaki i marchew i gotuj 10 minut.
+        - Dodaj różyczki kalafiora i gotuj jeszcze 12 minut.
+        - Wmieszaj zahartowaną śmietankę, dopraw i posyp koperkiem.
+
+  # ── Salads ────────────────────────────────────────────────────────────────
+  - slug: chicken-caesar-light
+    title: {en: "Light chicken Caesar salad", pl: "Lekka sałatka Cezar z kurczakiem"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 12
+    difficulty: easy
+    tags: [lunch, high_protein]
+    equipment: [pan]
+    storage: {fridge_days: 1}
+    meal_prep_score: 40
+    ingredients:
+      - {food: chicken-breast-raw, amount: 280}
+      - {food: romaine-lettuce, amount: 0.5, unit: piece}
+      - {food: bread-wholewheat, amount: 1, unit: slice}
+      - {food: parmesan, amount: 3, unit: tbsp}
+      - {food: greek-yogurt-nonfat, amount: 80}
+      - {food: mustard, amount: 1, unit: tsp}
+      - {food: lemon-juice, amount: 1, unit: tbsp}
+      - {food: garlic, amount: 1, unit: clove}
+      - {food: olive-oil, amount: 2, unit: tsp}
+      - {food: black-pepper, amount: 2, unit: pinch}
+    steps:
+      en:
+        - Season the chicken and fry it in 1 teaspoon of oil for 5–6 minutes per side; rest and slice.
+        - Cube the bread and toast it in the pan with the rest of the oil.
+        - Whisk the yogurt, mustard, lemon juice, grated garlic, half the parmesan and pepper.
+        - Toss the lettuce with the dressing and top with the chicken, croutons and remaining parmesan.
+      pl:
+        - Dopraw kurczaka i smaż na łyżeczce oliwy 5–6 minut z każdej strony; odstaw i pokrój.
+        - Pokrój chleb w kostkę i podpraż na patelni z resztą oliwy.
+        - Wymieszaj jogurt, musztardę, sok z cytryny, starty czosnek, połowę parmezanu i pieprz.
+        - Wymieszaj sałatę z sosem i ułóż kurczaka, grzanki i resztę parmezanu.
+
+  - slug: lentil-beet-feta-salad
+    title: {en: "Lentil, beetroot and feta salad", pl: "Sałatka z soczewicą, burakiem i fetą"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 25
+    difficulty: easy
+    tags: [lunch, vegetarian, meal_prep]
+    equipment: [pot]
+    storage: {fridge_days: 3}
+    meal_prep_score: 85
+    ingredients:
+      - {food: lentils-green-dry, amount: 100}
+      - {food: beetroot, amount: 2, unit: piece}
+      - {food: arugula, amount: 2, unit: handful}
+      - {food: feta, amount: 70}
+      - {food: walnuts, amount: 20}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: vinegar-balsamic, amount: 1, unit: tbsp}
+      - {food: honey, amount: 1, unit: tsp}
+      - {food: salt, amount: 1, unit: pinch}
+    steps:
+      en:
+        - Simmer the lentils for 20–25 minutes until just tender and drain. Use pre-cooked beetroot or boil them for 30 minutes.
+        - Whisk the oil, vinegar, honey and salt and toss with the warm lentils.
+        - Add the diced beetroot and arugula and top with the crumbled feta and walnuts.
+      pl:
+        - Gotuj soczewicę 20–25 minut, aż będzie miękka, i odcedź. Użyj ugotowanych buraków albo gotuj je 30 minut.
+        - Wymieszaj oliwę, ocet, miód i sól i połącz z ciepłą soczewicą.
+        - Dodaj pokrojone buraki i rukolę, posyp pokruszoną fetą i orzechami.
+
+  - slug: tuna-egg-salad-bowl
+    title: {en: "Tuna, egg and green bean salad", pl: "Sałatka z tuńczykiem, jajkiem i fasolką"}
+    servings: 2
+    prep_minutes: 10
+    cook_minutes: 10
+    difficulty: easy
+    tags: [lunch, high_protein]
+    equipment: [pot]
+    storage: {fridge_days: 2}
+    meal_prep_score: 60
+    ingredients:
+      - {food: tuna-canned-water, amount: 1, unit: can}
+      - {food: egg-whole-raw, amount: 2, unit: piece}
+      - {food: green-beans, amount: 200}
+      - {food: potatoes, amount: 250}
+      - {food: cherry-tomatoes, amount: 8, unit: piece}
+      - {food: olives-black, amount: 6, unit: piece}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: vinegar-spirit, amount: 1, unit: tsp}
+      - {food: mustard, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Boil the diced potatoes for 10 minutes, adding the green beans for the last 4. Hard-boil the eggs.
+        - Whisk the oil, vinegar and mustard.
+        - Toss the potatoes, beans, tomatoes and olives with the dressing and top with the tuna and quartered eggs.
+      pl:
+        - Gotuj pokrojone ziemniaki 10 minut, na ostatnie 4 dodaj fasolkę. Ugotuj jajka na twardo.
+        - Wymieszaj oliwę, ocet i musztardę.
+        - Połącz ziemniaki, fasolkę, pomidorki i oliwki z sosem i ułóż na wierzchu tuńczyka i ćwiartki jajek.
+
+  - slug: polish-vegetable-salad-light
+    title: {en: "Light Polish vegetable salad", pl: "Lekka sałatka jarzynowa"}
+    servings: 6
+    prep_minutes: 25
+    cook_minutes: 30
+    difficulty: easy
+    tags: [lunch, vegetarian, meal_prep, polish]
+    equipment: [pot]
+    storage: {fridge_days: 3}
+    meal_prep_score: 75
+    ingredients:
+      - {food: potatoes, amount: 400}
+      - {food: carrot, amount: 3, unit: piece}
+      - {food: celeriac, amount: 150}
+      - {food: egg-whole-raw, amount: 4, unit: piece}
+      - {food: pickled-cucumbers, amount: 3, unit: piece}
+      - {food: peas-frozen, amount: 150}
+      - {food: onion, amount: 0.5, unit: piece}
+      - {food: greek-yogurt-nonfat, amount: 150}
+      - {food: mayonnaise, amount: 2, unit: tbsp}
+      - {food: mustard, amount: 1, unit: tsp}
+      - {food: salt, amount: 3, unit: pinch}
+      - {food: black-pepper, amount: 2, unit: pinch}
+    steps:
+      en:
+        - Boil the potatoes, carrots and celeriac in their skins until tender, about 25 minutes; cool and peel.
+        - Hard-boil the eggs and cook the peas for 3 minutes.
+        - Dice everything small, including the pickles and onion.
+        - Mix the yogurt, mayonnaise and mustard, fold through and season.
+      pl:
+        - Ugotuj ziemniaki, marchew i seler w skórkach do miękkości, około 25 minut; ostudź i obierz.
+        - Ugotuj jajka na twardo, a groszek przez 3 minuty.
+        - Pokrój wszystko w drobną kostkę, łącznie z ogórkami i cebulą.
+        - Wymieszaj jogurt, majonez i musztardę, połącz z warzywami i dopraw.
+
+  - slug: mozzarella-tomato-salad
+    title: {en: "Tomato and mozzarella salad", pl: "Sałatka caprese"}
+    servings: 2
+    prep_minutes: 5
+    cook_minutes: 0
+    difficulty: easy
+    tags: [lunch, snack, vegetarian, quick]
+    equipment: []
+    storage: {fridge_days: 0}
+    meal_prep_score: 10
+    ingredients:
+      - {food: tomato, amount: 3, unit: piece}
+      - {food: mozzarella-part-skim, amount: 1, unit: piece}
+      - {food: basil-fresh, amount: 2, unit: tbsp}
+      - {food: olive-oil, amount: 1, unit: tbsp}
+      - {food: vinegar-balsamic, amount: 1, unit: tsp}
+      - {food: salt, amount: 1, unit: pinch}
+      - {food: black-pepper, amount: 1, unit: pinch}
+    steps:
+      en:
+        - Slice the tomatoes and mozzarella and arrange them alternately on a plate.
+        - Scatter with basil, drizzle with the oil and vinegar and season.
+      pl:
+        - Pokrój pomidory i mozzarellę w plastry i ułóż je na zmianę na talerzu.
+        - Posyp bazylią, skrop oliwą i octem i dopraw.
+
+  # ── Snacks & desserts ─────────────────────────────────────────────────────
+  - slug: hummus-veggie-sticks
+    title: {en: "Hummus with vegetable sticks", pl: "Hummus z warzywnymi słupkami"}
+    servings: 1
+    prep_minutes: 5
+    cook_minutes: 0
+    difficulty: easy
+    tags: [snack, vegan, quick]
+    equipment: []
+    storage: {fridge_days: 2}
+    meal_prep_score: 70
+    ingredients:
+      - {food: hummus, amount: 4, unit: tbsp}
+      - {food: carrot, amount: 1, unit: piece}
+      - {food: cucumber, amount: 0.3, unit: piece}
+      - {food: bell-pepper-red, amount: 0.5, unit: piece}
+    steps:
+      en:
+        - Cut the vegetables into sticks.
+        - Serve with the hummus for dipping.
+      pl:
+        - Pokrój warzywa w słupki.
+        - Podawaj z hummusem do maczania.
+
+  - slug: cottage-cheese-berries-snack
+    title: {en: "Cottage cheese with berries", pl: "Serek wiejski z owocami"}
+    servings: 1
+    prep_minutes: 2
+    cook_minutes: 0
+    difficulty: easy
+    tags: [snack, high_protein, vegetarian, quick]
+    equipment: []
+    storage: {fridge_days: 0}
+    meal_prep_score: 20
+    ingredients:
+      - {food: cottage-cheese-lowfat, amount: 200}
+      - {food: strawberries, amount: 1, unit: handful}
+      - {food: blueberries, amount: 1, unit: handful}
+      - {food: honey, amount: 1, unit: tsp}
+    steps:
+      en:
+        - Top the cottage cheese with the berries and drizzle with honey.
+      pl:
+        - Wyłóż serek do miseczki, dodaj owoce i polej miodem.
+
+  - slug: protein-energy-balls
+    title: {en: "Oat and date energy balls", pl: "Kulki mocy z owsem i daktylami"}
+    servings: 6
+    prep_minutes: 15
+    cook_minutes: 0
+    difficulty: easy
+    tags: [snack, vegetarian, meal_prep]
+    equipment: [food_processor]
+    storage: {fridge_days: 7, freezer_friendly: true}
+    meal_prep_score: 100
+    ingredients:
+      - {food: dates-dried, amount: 12, unit: piece}
+      - {food: oats-rolled, amount: 60}
+      - {food: whey-protein-isolate, amount: 1, unit: scoop}
+      - {food: peanut-butter, amount: 2, unit: tbsp}
+      - {food: cocoa-powder, amount: 1, unit: tbsp}
+      - {food: water, amount: 2, unit: tbsp}
+    steps:
+      en:
+        - Soak the pitted dates in hot water for 5 minutes and drain.
+        - Blitz everything in a food processor until it holds together, adding water a spoon at a time.
+        - Roll into 12 balls and chill for 30 minutes.
+      pl:
+        - Namocz daktyle bez pestek w gorącej wodzie przez 5 minut i odcedź.
+        - Zmiksuj wszystko w malakserze, aż masa się połączy, dodając wodę po łyżce.
+        - Uformuj 12 kulek i schłodź 30 minut.
+
+  - slug: apple-cinnamon-baked
+    title: {en: "Baked apples with cinnamon and walnuts", pl: "Pieczone jabłka z cynamonem i orzechami"}
+    servings: 2
+    prep_minutes: 5
+    cook_minutes: 25
+    difficulty: easy
+    tags: [dessert, snack, vegetarian, polish]
+    equipment: [oven]
+    storage: {fridge_days: 2}
+    meal_prep_score: 50
+    ingredients:
+      - {food: apple, amount: 2, unit: piece}
+      - {food: walnuts, amount: 20}
+      - {food: raisins, amount: 1, unit: tbsp}
+      - {food: honey, amount: 2, unit: tsp}
+      - {food: cinnamon, amount: 1, unit: tsp}
+      - {food: greek-yogurt-nonfat, amount: 100}
+    steps:
+      en:
+        - Heat the oven to 180°C and core the apples.
+        - Mix the chopped walnuts, raisins, honey and cinnamon and stuff the apples.
+        - Bake for 25 minutes and serve with the yogurt.
+      pl:
+        - Rozgrzej piekarnik do 180°C i wydrąż gniazda nasienne z jabłek.
+        - Wymieszaj posiekane orzechy, rodzynki, miód i cynamon i nadziej jabłka.
+        - Piecz 25 minut i podawaj z jogurtem.
+
+  - slug: chocolate-protein-pudding
+    title: {en: "Chocolate protein pudding", pl: "Budyń czekoladowy proteinowy"}
+    servings: 2
+    prep_minutes: 3
+    cook_minutes: 7
+    difficulty: easy
+    tags: [dessert, snack, high_protein, vegetarian, quick]
+    equipment: [pot]
+    storage: {fridge_days: 3}
+    meal_prep_score: 80
+    ingredients:
+      - {food: milk-skim, amount: 400, unit: ml}
+      - {food: cornstarch, amount: 3, unit: tbsp}
+      - {food: cocoa-powder, amount: 2, unit: tbsp}
+      - {food: whey-protein-isolate, amount: 1, unit: scoop}
+      - {food: honey, amount: 2, unit: tsp}
+      - {food: raspberries, amount: 1, unit: handful}
+    steps:
+      en:
+        - Whisk the cornstarch and cocoa into 100 ml of the cold milk. Bring the rest of the milk to a simmer.
+        - Pour in the cocoa mixture, whisking, and cook for 1–2 minutes until thick.
+        - Off the heat, whisk in the protein powder and honey. Serve warm or chilled with raspberries.
+      pl:
+        - Rozmieszaj skrobię i kakao w 100 ml zimnego mleka. Resztę mleka zagotuj.
+        - Wlej mieszankę kakaową, mieszając trzepaczką, i gotuj 1–2 minuty, aż zgęstnieje.
+        - Poza ogniem wmieszaj odżywkę i miód. Podawaj na ciepło lub schłodzony z malinami.
+
+  - slug: rice-cakes-peanut-banana
+    title: {en: "Rice cakes with peanut butter and banana", pl: "Wafle ryżowe z masłem orzechowym i bananem"}
+    servings: 1
+    prep_minutes: 3
+    cook_minutes: 0
+    difficulty: easy
+    tags: [snack, vegan, quick]
+    equipment: []
+    storage: {fridge_days: 0}
+    meal_prep_score: 5
+    ingredients:
+      - {food: rice-cakes, amount: 3, unit: piece}
+      - {food: peanut-butter, amount: 1, unit: tbsp}
+      - {food: banana, amount: 0.5, unit: piece}
+      - {food: cinnamon, amount: 1, unit: pinch}
+    steps:
+      en:
+        - Spread the rice cakes with the peanut butter.
+        - Top with banana slices and a pinch of cinnamon.
+      pl:
+        - Posmaruj wafle masłem orzechowym.
+        - Ułóż plasterki banana i oprósz cynamonem.
+
+  - slug: yogurt-berry-ice-pops
+    title: {en: "Yogurt berry ice pops", pl: "Lody jogurtowe z owocami"}
+    servings: 6
+    prep_minutes: 10
+    cook_minutes: 0
+    difficulty: easy
+    tags: [dessert, snack, vegetarian, meal_prep]
+    equipment: [blender, ice_pop_moulds]
+    storage: {fridge_days: 0, freezer_friendly: true}
+    meal_prep_score: 90
+    ingredients:
+      - {food: greek-yogurt-nonfat, amount: 400}
+      - {food: strawberries, amount: 250}
+      - {food: blueberries, amount: 100}
+      - {food: honey, amount: 2, unit: tbsp}
+    steps:
+      en:
+        - Blend the yogurt, strawberries and honey until smooth.
+        - Drop a few blueberries into each mould and pour in the yogurt mixture.
+        - Freeze for at least 5 hours.
+      pl:
+        - Zmiksuj jogurt, truskawki i miód na gładko.
+        - Do każdej foremki wrzuć kilka borówek i wlej masę jogurtową.
+        - Zamroź na co najmniej 5 godzin.
+
+  - slug: roasted-chickpeas-paprika
+    title: {en: "Crispy roasted chickpeas", pl: "Chrupiąca pieczona ciecierzyca"}
+    servings: 3
+    prep_minutes: 5
+    cook_minutes: 30
+    difficulty: easy
+    tags: [snack, vegan, meal_prep]
+    equipment: [oven, baking_tray]
+    storage: {fridge_days: 0}
+    meal_prep_score: 70
+    ingredients:
+      - {food: chickpeas-canned-drained, amount: 1, unit: can}
+      - {food: olive-oil, amount: 2, unit: tsp}
+      - {food: paprika-sweet, amount: 1, unit: tsp}
+      - {food: garlic-powder, amount: 0.5, unit: tsp}
+      - {food: salt, amount: 2, unit: pinch}
+    steps:
+      en:
+        - Heat the oven to 200°C. Dry the chickpeas well with a towel.
+        - Toss with the oil and spices and spread on a lined tray.
+        - Roast for 25–30 minutes, shaking the tray halfway, until crisp. Store in an open container at room temperature.
+      pl:
+        - Rozgrzej piekarnik do 200°C. Dokładnie osusz ciecierzycę ręcznikiem.
+        - Wymieszaj z oliwą i przyprawami i rozłóż na blasze wyłożonej papierem.
+        - Piecz 25–30 minut, w połowie potrząsając blachą, aż będzie chrupiąca. Przechowuj w otwartym pojemniku w temperaturze pokojowej.
+
+  - slug: banana-bread-oat
+    title: {en: "Oat banana bread", pl: "Owsiany chlebek bananowy"}
+    servings: 10
+    prep_minutes: 10
+    cook_minutes: 50
+    difficulty: easy
+    tags: [snack, dessert, vegetarian, meal_prep]
+    equipment: [oven, loaf_tin, blender]
+    storage: {fridge_days: 5, freezer_friendly: true}
+    meal_prep_score: 90
+    ingredients:
+      - {food: banana, amount: 3, unit: piece}
+      - {food: egg-whole-raw, amount: 2, unit: piece}
+      - {food: oats-rolled, amount: 200}
+      - {food: greek-yogurt-nonfat, amount: 150}
+      - {food: honey, amount: 2, unit: tbsp}
+      - {food: baking-powder, amount: 2, unit: tsp}
+      - {food: cinnamon, amount: 1, unit: tsp}
+      - {food: walnuts, amount: 40}
+      - {food: dark-chocolate-70, amount: 4, unit: piece, optional: true}
+    steps:
+      en:
+        - Heat the oven to 180°C and line a loaf tin.
+        - Blend the oats into flour, then blend in the bananas, eggs, yogurt, honey, baking powder and cinnamon.
+        - Fold in the chopped walnuts and chocolate if using, pour into the tin and bake for 45–50 minutes.
+        - Cool in the tin for 10 minutes before slicing.
+      pl:
+        - Rozgrzej piekarnik do 180°C i wyłóż keksówkę papierem.
+        - Zmiksuj płatki na mąkę, potem dodaj banany, jajka, jogurt, miód, proszek do pieczenia i cynamon i zmiksuj.
+        - Wmieszaj posiekane orzechy i czekoladę, jeśli używasz, przelej do formy i piecz 45–50 minut.
+        - Studź w formie 10 minut przed krojeniem.
