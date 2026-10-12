@@ -90,6 +90,25 @@ docker compose -f infra/docker-compose.yml run --rm api \
   donut-admin foods import --fdc-dir /app/data/fdc/sr_legacy --fdc-dir /app/data/fdc/foundation
 ```
 
+## `recipes/catalog.yaml`
+
+The 60 seed recipes Donut owns (PRD §8.1): own text in Polish and English,
+public in the app. Each ingredient names a food slug from `foods/curated.yaml`
+with an amount and a kitchen unit; the importer converts it to grams with the
+food's portion weights or density and computes nutrition. Nutrition is never
+typed in the file. Every recipe starts as `review: {status: draft}`; only a
+named human sets `verified`, after cooking or checking it.
+
+Load it after the foods:
+
+```bash
+donut-admin recipes import --dry-run   # validate against the food list
+donut-admin recipes import             # insert or update by slug
+```
+
+A recipe whose foods are not all in the database yet (for example, a food
+with no FDC match) is skipped and listed in the report.
+
 ## Conventions
 
 - Nutrition is **per 100 g** of the food as weighed (raw unless the name says otherwise).
