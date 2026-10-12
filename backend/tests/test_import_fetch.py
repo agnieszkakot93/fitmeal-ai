@@ -12,8 +12,8 @@ from collections.abc import AsyncIterator, Callable
 import httpx
 import pytest
 
-from app.imports.fetch import BlockedURL, FetchError, FetchLimits, check_url, fetch
-from app.imports.page import PageUnusable, read_recipe_page, recipe_from_html
+from app.imports.fetch import BlockedURL, FetchError, FetchLimits, FetchResult, check_url, fetch
+from app.imports.page import PageRecipe, PageUnusable, read_recipe_page, recipe_from_html
 
 LIMITS = FetchLimits(max_bytes=3 * 1024 * 1024, deadline_s=2.0, max_redirects=3)
 PUBLIC = "93.184.215.14"
@@ -57,10 +57,8 @@ class Recorder:
         self.connected.append(request.url.host)
         return self.handler(request)
 
-    async def get(self, url: str, **kw: object) -> object:
-        return await fetch(
-            url, limits=LIMITS, resolver=self.resolve, transport=self.transport, **kw
-        )  # type: ignore[arg-type]
+    async def get(self, url: str) -> FetchResult:
+        return await fetch(url, limits=LIMITS, resolver=self.resolve, transport=self.transport)
 
 
 def html(body: str = "<p>hi</p>", **headers: str) -> httpx.Response:
@@ -143,7 +141,7 @@ async def test_connects_to_checked_ip_with_host_header() -> None:
     assert rec.connected == [PUBLIC]
     assert seen[0].headers["host"] == "www.example.com"
     assert seen[0].extensions["sni_hostname"] == "www.example.com"
-    assert res.url == "https://www.example.com/r?id=1"  # type: ignore[attr-defined]
+    assert res.url == "https://www.example.com/r?id=1"
 
 
 async def test_dns_rebinding_resolves_once() -> None:
@@ -195,7 +193,7 @@ async def test_follows_public_redirect() -> None:
         return html()
 
     res = await Recorder(handler).get("https://www.example.com/old")
-    assert res.url == "https://example.com/new"  # type: ignore[attr-defined]
+    assert res.url == "https://example.com/new"
 
 
 async def test_gzip_bomb_stops_at_byte_cap() -> None:
@@ -278,17 +276,17 @@ def site(page: httpx.Response, robots: str | None = None, tdmrep: object = None)
     return Recorder(handler)
 
 
-async def read(rec: Recorder, url: str = "https://www.example.com/przepis/owsianka") -> object:
+async def read(rec: Recorder, url: str = "https://www.example.com/przepis/owsianka") -> PageRecipe:
     return await read_recipe_page(url, limits=LIMITS, resolver=rec.resolve, transport=rec.transport)
 
 
 async def test_reads_recipe_from_jsonld() -> None:
     recipe = await read(site(html(RECIPE_HTML)))
-    assert recipe.name == "Owsianka z jabłkiem"  # type: ignore[attr-defined]
-    assert recipe.ingredients == ["50 g płatków owsianych", "1 jabłko", "200 ml mleka"]  # type: ignore[attr-defined]
-    assert recipe.instructions == ["Zagotuj mleko.", "Dodaj płatki."]  # type: ignore[attr-defined]
-    assert recipe.servings == "2"  # type: ignore[attr-defined]
-    assert recipe.source_url == "https://www.example.com/przepis/owsianka"  # type: ignore[attr-defined]
+    assert recipe.name == "Owsianka z jabłkiem"
+    assert recipe.ingredients == ["50 g płatków owsianych", "1 jabłko", "200 ml mleka"]
+    assert recipe.instructions == ["Zagotuj mleko.", "Dodaj płatki."]
+    assert recipe.servings == "2"
+    assert recipe.source_url == "https://www.example.com/przepis/owsianka"
 
 
 async def test_robots_disallow_means_no_page_fetch() -> None:
@@ -312,7 +310,7 @@ async def test_tdmrep_more_specific_rule_wins() -> None:
         {"location": "/*", "tdm-reservation": 1},
         {"location": "/przepis/*", "tdm-reservation": 0},
     ]
-    assert (await read(site(html(RECIPE_HTML), tdmrep=rules))).ingredients  # type: ignore[attr-defined]
+    assert (await read(site(html(RECIPE_HTML), tdmrep=rules))).ingredients
 
 
 async def test_tdm_header_and_meta_opt_out() -> None:
