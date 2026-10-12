@@ -124,6 +124,8 @@ class CuratedFood(_Strict):
     packages_g: list[float] = []
     fdc: FdcRef | None = None
     nutrition: LabelNutrition | None = None
+    # why kcal legitimately doesn't fit 4/4/9 (high fiber, acetic acid ...); silences the check
+    energy_exception: str | None = Field(default=None, min_length=1)
 
     @model_validator(mode="after")
     def _check(self) -> Self:

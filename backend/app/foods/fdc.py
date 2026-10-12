@@ -9,11 +9,12 @@ from __future__ import annotations
 
 import csv
 import difflib
+import re
 from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
 
-from app.nutrition.nutrients import Nutrients
+from app.nutrition.nutrients import Nutrients, energy_is_consistent
 
 DATA_TYPES = ("foundation_food", "sr_legacy_food")
 
@@ -53,8 +54,14 @@ def to_nutrients(values: dict[int, float]) -> Nutrients | None:
     protein = _first(values, PROTEIN)
     fat = _first(values, FAT)
     carbs_total = _first(values, CARBS_BY_DIFFERENCE)
-    if kcal is None or protein is None or fat is None or carbs_total is None:
+    if kcal is None or protein is None or fat is None:
         return None
+    if carbs_total is None:
+        # SR Legacy leaves carbohydrate out for many raw meats and fish, where it is 0.
+        # Accept that only when protein and fat alone explain the energy.
+        carbs_total = 0.0
+        if not energy_is_consistent(Nutrients(kcal, protein, fat, 0.0, 0.0)):
+            return None
     fiber = _first(values, FIBER) or 0.0
     # FDC carbohydrate includes fiber; the engine uses EU "available" carbs.
     return Nutrients(
@@ -66,15 +73,29 @@ def to_nutrients(values: dict[int, float]) -> Nutrients | None:
     )
 
 
+# FDC appends this to many SR Legacy descriptions; curated names may leave it out.
+_SUFFIX = re.compile(r"\s*\(includes foods for usda's food distribution program\)\s*$")
+
+
+def _key(description: str) -> str:
+    return _SUFFIX.sub("", description.casefold()).strip()
+
+
+def _words(text: str) -> set[str]:
+    return set(re.findall(r"[a-z0-9]+", text.casefold()))
+
+
 class FdcIndex:
     """Foods from one or more FDC directories, looked up by id or description."""
 
-    def __init__(self, foods: Iterable[FdcFood]) -> None:
+    def __init__(self, foods: Iterable[FdcFood], incomplete: dict[int, str] | None = None) -> None:
         self.by_id: dict[int, FdcFood] = {}
         self._by_description: dict[str, list[FdcFood]] = {}
+        # in food.csv, but without the core nutrients: id -> description
+        self.incomplete = dict(incomplete or {})
         for food in foods:
             self.by_id[food.fdc_id] = food
-            self._by_description.setdefault(food.description.casefold(), []).append(food)
+            self._by_description.setdefault(_key(food.description), []).append(food)
 
     def __len__(self) -> int:
         return len(self.by_id)
@@ -84,25 +105,42 @@ class FdcIndex:
             return self.by_id.get(fdc_id)
         if description is None:
             return None
-        matches = self._by_description.get(description.casefold(), [])
+        matches = self._by_description.get(_key(description), [])
         # Foundation Foods are the newer analyses; prefer them over SR Legacy.
         matches = sorted(matches, key=lambda f: DATA_TYPES.index(f.data_type))
         return matches[0] if matches else None
 
     def suggest(self, description: str, n: int = 5) -> list[str]:
-        return difflib.get_close_matches(
-            description.casefold(), list(self._by_description), n=n, cutoff=0.6
-        )
+        """Closest descriptions, by shared words first, then by spelling."""
+        wanted = _words(description)
+        if not wanted:
+            return []
+
+        def score(key: str) -> tuple[float, float]:
+            words = _words(key)
+            overlap = len(wanted & words) / len(wanted | words)
+            return overlap, difflib.SequenceMatcher(None, _key(description), key).ratio()
+
+        ranked = sorted(self._by_description, key=score, reverse=True)
+        return [k for k in ranked[:n] if score(k)[0] > 0]
+
+    def incomplete_matches(self, description: str) -> list[str]:
+        """Same-named foods that were skipped because core nutrients are missing."""
+        key = _key(description)
+        return [f"{i}: {d}" for i, d in self.incomplete.items() if _key(d) == key]
 
 
 def load_fdc_dirs(dirs: Iterable[Path]) -> FdcIndex:
     foods: list[FdcFood] = []
+    incomplete: dict[int, str] = {}
     for d in dirs:
-        foods.extend(_load_dir(d))
-    return FdcIndex(foods)
+        loaded, skipped = _load_dir(d)
+        foods.extend(loaded)
+        incomplete.update(skipped)
+    return FdcIndex(foods, incomplete)
 
 
-def _load_dir(directory: Path) -> list[FdcFood]:
+def _load_dir(directory: Path) -> tuple[list[FdcFood], dict[int, str]]:
     for name in ("food.csv", "food_nutrient.csv"):
         if not (directory / name).is_file():
             raise FdcDataError(f"{directory} has no {name}; is this an unzipped FDC CSV download?")
@@ -123,10 +161,12 @@ def _load_dir(directory: Path) -> list[FdcFood]:
             amounts.setdefault(fdc_id, {})[nutrient_id] = float(row["amount"])
 
     foods = []
+    incomplete = {}
     for fdc_id, (description, data_type) in meta.items():
         values = amounts.get(fdc_id, {})
         nutrients = to_nutrients(values)
         if nutrients is None:
+            incomplete[fdc_id] = description
             continue
         foods.append(FdcFood(fdc_id, description, data_type, nutrients, _first(values, WATER)))
-    return foods
+    return foods, incomplete

@@ -111,11 +111,15 @@ def resolve(curated: CuratedFile, index: FdcIndex | None) -> ImportReport:
                 else None
             )
             if match is None:
-                report.unmatched[food.slug] = (
-                    index.suggest(food.fdc.description)
-                    if index is not None and food.fdc.description
-                    else []
-                )
+                hints: list[str] = []
+                if index is not None and food.fdc.fdc_id in index.incomplete:
+                    hints.append(f"missing nutrients: {food.fdc.fdc_id}: "
+                                 f"{index.incomplete[food.fdc.fdc_id]}")  # fmt: skip
+                if index is not None and food.fdc.description:
+                    hints += [f"missing nutrients: {m}"
+                              for m in index.incomplete_matches(food.fdc.description)]  # fmt: skip
+                    hints += index.suggest(food.fdc.description)
+                report.unmatched[food.slug] = hints
                 continue
             resolved = ResolvedFood(
                 food,
@@ -128,7 +132,7 @@ def resolve(curated: CuratedFile, index: FdcIndex | None) -> ImportReport:
                 trace_status[food.slug],
             )
 
-        if not energy_is_consistent(resolved.nutrients):
+        if food.energy_exception is None and not energy_is_consistent(resolved.nutrients):
             report.energy_warnings.append(f"{food.slug}: {resolved.nutrients}")
         report.resolved.append(resolved)
 

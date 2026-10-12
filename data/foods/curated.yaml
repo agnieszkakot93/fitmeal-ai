@@ -37,7 +37,7 @@ foods:
     substitution_groups: [lean_poultry]
     portions: {piece: 200}
     packages_g: [400, 500, 1000]
-    fdc: {description: "Chicken, broilers or fryers, breast, meat only, raw"}
+    fdc: {fdc_id: 171077}  # SR Legacy "Chicken, broilers or fryers, breast, meat only, raw"
     review: {status: draft}
 
   - slug: chicken-thigh-raw
@@ -50,7 +50,7 @@ foods:
     substitution_groups: [poultry]
     portions: {piece: 110}
     packages_g: [500, 1000]
-    fdc: {description: "Chicken, broilers or fryers, thigh, meat only, raw"}
+    fdc: {description: "Chicken, broilers or fryers, dark meat, thigh, meat only, raw"}
     review: {status: draft}
 
   - slug: turkey-breast-raw
@@ -74,7 +74,7 @@ foods:
     culinary_roles: [main_protein]
     substitution_groups: [ground_meat]
     packages_g: [400, 500]
-    fdc: {description: "Ground turkey, raw"}
+    fdc: {description: "Turkey, ground, raw"}
     review: {status: draft}
 
   - slug: beef-ground-90-raw
@@ -149,7 +149,7 @@ foods:
     substitution_groups: [poultry]
     portions: {piece: 70}  # edible meat of one drumstick, no bone or skin
     packages_g: [500, 1000]  # sold bone-in
-    fdc: {description: "Chicken, broilers or fryers, drumstick, meat only, raw"}
+    fdc: {description: "Chicken, broilers or fryers, dark meat, drumstick, meat only, raw"}
     review: {status: draft}
 
   # Offal is not clearly a "whole cut" under TRACE_POLICY.md#raw-meat-eggs: unknown.
@@ -418,7 +418,7 @@ foods:
     substitution_groups: [creamy_dairy]
     density_g_per_ml: 1.04
     packages_g: [180, 370, 400]
-    fdc: {description: "Yogurt, plain, low fat, 12 grams protein per 8 ounce"}
+    fdc: {description: "Yogurt, plain, low fat"}
     review: {status: draft}
 
   - slug: skyr-natural
@@ -820,7 +820,7 @@ foods:
     substitution_groups: [legume_dry]
     portions: {szklanka: 200, cup: 195}
     packages_g: [400, 500]
-    fdc: {description: "Peas, split, mature seeds, raw"}
+    fdc: {description: "Peas, green, split, mature seeds, raw"}
     review: {status: draft}
 
   - slug: edamame-frozen
@@ -891,7 +891,7 @@ foods:
     substitution_groups: [grain]
     portions: {szklanka: 195, cup: 185}
     packages_g: [400, 1000]
-    fdc: {description: "Rice, brown, long-grain, raw"}
+    fdc: {description: "Rice, brown, long grain, unenriched, raw"}
     review: {status: draft}
 
   - slug: oats-rolled
@@ -1058,6 +1058,7 @@ foods:
     portions: {szklanka: 95, cup: 94, tbsp: 6}
     packages_g: [250, 400]
     fdc: {description: "Oat bran, raw"}
+    energy_exception: "high fiber: FDC uses food-specific energy factors"
     review: {status: draft}
 
   - slug: egg-noodles-dry
@@ -1181,7 +1182,7 @@ foods:
     substitution_groups: [bread]
     portions: {piece: 60}
     packages_g: [240, 370]
-    fdc: {description: "Tortillas, ready-to-bake or -fry, flour"}
+    fdc: {description: "Tortillas, ready-to-bake or -fry, flour, shelf stable"}
     review: {status: draft}
 
   - slug: rice-cakes
@@ -1195,7 +1196,7 @@ foods:
     substitution_groups: [bread]
     portions: {piece: 9}
     packages_g: [100, 130]
-    fdc: {description: "Snacks, rice cakes, brown rice, plain"}
+    fdc: {description: "Snacks, rice cakes, brown rice, plain, unsalted"}
     review: {status: draft}
 
   - slug: bread-white-wheat
@@ -1249,7 +1250,7 @@ foods:
     culinary_roles: [binder, topping]
     portions: {szklanka: 115, cup: 108, tbsp: 7}
     packages_g: [450, 500]
-    fdc: {description: "Bread crumbs, dry, grated, plain"}
+    fdc: {description: "Bread, crumbs, dry, grated, plain"}
     review: {status: draft}
 
   - slug: potatoes
@@ -1553,7 +1554,7 @@ foods:
     substitution_groups: [tomato_base]
     portions: {tbsp: 16, tsp: 5}
     packages_g: [80, 200]
-    fdc: {description: "Tomato products, canned, paste, without salt added"}
+    fdc: {description: "Tomato, paste, canned, without salt added"}
     review: {status: draft}
 
   - slug: avocado
@@ -2551,6 +2552,7 @@ foods:
     portions: {tbsp: 5.4, tsp: 1.8}
     packages_g: [80, 150]
     fdc: {description: "Cocoa, dry powder, unsweetened"}
+    energy_exception: "high fiber: FDC uses food-specific energy factors"
     review: {status: draft}
 
   - slug: dark-chocolate-70
@@ -2576,6 +2578,7 @@ foods:
     portions: {tsp: 4.6, pack: 15}
     packages_g: [15, 30]
     fdc: {description: "Leavening agents, baking powder, double-acting, sodium aluminum sulfate"}
+    energy_exception: "carbs are starch filler; used in gram amounts"
     review: {status: draft}
 
   - slug: baking-soda
@@ -2683,6 +2686,7 @@ foods:
     portions: {tbsp: 15, tsp: 5}
     packages_g: [500]
     fdc: {description: "Vinegar, distilled"}
+    energy_exception: "energy is from acetic acid, which is not a macro"
     review: {status: draft}
 
   # Made from grape must and wine vinegar: declares sulphites.
@@ -2699,6 +2703,7 @@ foods:
     portions: {tbsp: 16, tsp: 5.3}
     packages_g: [250, 500]
     fdc: {description: "Vinegar, balsamic"}
+    energy_exception: "energy is partly from acetic acid, which is not a macro"
     review: {status: draft}
 
   - slug: olives-black
@@ -2840,6 +2845,7 @@ foods:
     portions: {piece: 0.2, tsp: 1.9}  # piece = one whole berry
     packages_g: [15, 20]
     fdc: {description: "Spices, allspice, ground"}
+    energy_exception: "high fiber: FDC uses food-specific energy factors"
     review: {status: draft}
 
   - slug: cayenne-pepper
@@ -2853,6 +2859,7 @@ foods:
     portions: {tsp: 1.8, pinch: 0.1}
     packages_g: [15, 20]
     fdc: {description: "Spices, pepper, red or cayenne"}
+    energy_exception: "high fiber: FDC uses food-specific energy factors"
     review: {status: draft}
 
   - slug: caraway
