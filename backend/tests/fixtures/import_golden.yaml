@@ -1,0 +1,46 @@
+# Golden set for ingredient parsing and matching (Sprint 3).
+# Lines are written the way blogs and captions write them, in Polish and
+# English. `grams` is the expected weight; `slug: null` means the line should
+# go to a clarification prompt instead of being guessed.
+lines:
+  - {line: "2 ząbki czosnku, posiekane", slug: garlic, grams: 8}
+  - {line: "200g piersi z kurczaka", slug: chicken-breast-raw, grams: 200}
+  - {line: "1½ cups rolled oats", slug: oats-rolled, grams: 120}
+  - {line: "1 1/2 szklanki mleka", slug: milk-2, grams: 386}
+  - {line: "2 łyżki oliwy z oliwek", slug: olive-oil, grams: 27}
+  - {line: "szczypta soli", slug: salt, grams: 0.4}
+  - {line: "3 eggs", slug: egg-whole-raw, grams: 150}
+  - {line: "3 jajka", slug: egg-whole-raw, grams: 150}
+  - {line: "½ avocado", slug: avocado, grams: 75}
+  - {line: "1 cebula", slug: onion, grams: 110}
+  - {line: "1 marchewka", slug: carrot, grams: 70}
+  - {line: "300 g mielonego indyka", slug: turkey-ground-raw, grams: 300}
+  - {line: "150 g ryżu basmati", slug: rice-white-dry, grams: 150}
+  - {line: "100 g brown rice", slug: rice-brown-dry, grams: 100}
+  - {line: "1 puszka pomidorów krojonych", slug: tomatoes-canned, grams: 400}
+  - {line: "1 can chickpeas, drained", slug: chickpeas-canned-drained, grams: 240}
+  - {line: "2 tbsp peanut butter", slug: peanut-butter, grams: 32}
+  - {line: "1 łyżeczka cynamonu", slug: cinnamon, grams: 2.6}
+  - {line: "1 tsp ground cumin", slug: cumin, grams: 2.1}
+  - {line: "garść szpinaku", slug: spinach, grams: 30}
+  - {line: "2 handfuls of spinach", slug: spinach, grams: 60}
+  # twaróg has no nutrition source yet (pending in curated.yaml), so it must ask
+  - {line: "250 g twarogu półtłustego", slug: null}
+  - {line: "200 g jogurtu greckiego", slug: greek-yogurt-nonfat, grams: 200}
+  - {line: "1 banan", slug: banana, grams: 120}
+  - {line: "1 banana, sliced", slug: banana, grams: 120}
+  - {line: "150 g salmon fillet", slug: salmon-atlantic-raw, grams: 150}
+  - {line: "1 filet z łososia", slug: salmon-atlantic-raw, grams: 125}
+  - {line: "400 g makaronu pełnoziarnistego", slug: pasta-wholewheat-dry, grams: 400}
+  - {line: "1 łyżka miodu", slug: honey, grams: 21.3}
+  - {line: "50 g parmezanu", slug: parmesan, grams: 50}
+  - {line: "1 zucchini", slug: zucchini, grams: 250}
+  - {line: "1 czerwona papryka", slug: bell-pepper-red, grams: 180}
+  - {line: "200 ml mleka kokosowego", slug: coconut-milk-canned, grams: 196}
+  - {line: "1 scoop whey protein", slug: whey-protein-isolate, grams: 30}
+  - {line: "2 kromki chleba żytniego", slug: bread-rye, grams: 70}
+  - {line: "100 g kaszy gryczanej", slug: buckwheat-groats, grams: 100}
+  - {line: "1 tbsp soy sauce", slug: soy-sauce, grams: 17.25}
+  - {line: "sól i pieprz do smaku", slug: null}
+  - {line: "1 cup cheese", slug: null}
+  - {line: "kawałek czegoś słodkiego", slug: null}

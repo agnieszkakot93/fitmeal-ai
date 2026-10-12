@@ -57,6 +57,7 @@ async def search(
     rows = await session.execute(
         select(FoodItem, sub.c.score)
         .join(sub, sub.c.food_id == FoodItem.id)
+        .options(*_WITH_CHILDREN)
         .order_by(sub.c.score.desc(), FoodItem.slug)
         .limit(limit)
     )
