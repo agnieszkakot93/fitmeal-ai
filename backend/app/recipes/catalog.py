@@ -174,6 +174,7 @@ async def apply(session: AsyncSession, catalog: CatalogFile) -> CatalogReport:
             await session.flush()
         _fill(recipe, entry, foods)
         repository.refresh_nutrition(recipe)
+        repository.refresh_allergens(recipe)
         report.written.append(entry.slug)
     await session.flush()
     return report
