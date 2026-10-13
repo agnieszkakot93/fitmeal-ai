@@ -19,5 +19,8 @@
   "settings.language.en": "English",
   "notFound.title": "Page not found",
   "notFound.body": "This page doesn't exist or has moved.",
-  "notFound.home": "Go to Today"
+  "notFound.home": "Go to Today",
+  "error.title": "Something went wrong",
+  "error.body": "Reload the page. Your plan and data are safe.",
+  "error.reload": "Reload"
 }
