@@ -8,6 +8,7 @@ from app.auth.router import router as auth_router
 from app.core.db import get_session
 from app.foods.nutrition_router import router as nutrition_router
 from app.foods.router import router as foods_router
+from app.plans.router import router as plans_router
 from app.recipes.router import router as recipes_router
 from app.users.router import router as users_router
 
@@ -19,6 +20,7 @@ ROUTERS = [
     recipes_router,
     auth_router,
     users_router,
+    plans_router,
 ]
 
 
