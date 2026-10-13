@@ -266,6 +266,69 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create Plan
+         * @description Generate a plan from the profile snapshot, save it as the current plan and return it.
+         */
+        post: operations["create_plan_v1_plans_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/plans/current": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Current Plan
+         * @description The user's latest plan.
+         */
+        get: operations["current_plan_v1_plans_current_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/plans/{plan_id}/slots/{slot}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Set Slot Status
+         * @description Mark a meal cooked, eaten or skipped.
+         *
+         *     Idempotent per ``event_id``: replaying an event (an offline outbox retrying)
+         *     returns the slot unchanged. Reusing an event id for a different change is a 409.
+         */
+        patch: operations["set_slot_status_v1_plans__plan_id__slots__slot__patch"];
+        trace?: never;
+    };
     "/healthz": {
         parameters: {
             query?: never;
@@ -287,6 +350,11 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * Action
+         * @enum {string}
+         */
+        Action: "max_minutes" | "add_equipment" | "relax_intolerance" | "shorten_plan" | "lower_protein" | "change_kcal" | "add_recipes" | "retry";
         /** AppleLoginIn */
         AppleLoginIn: {
             /** Identity Token */
@@ -308,6 +376,19 @@ export interface components {
         /** BlockedOut */
         BlockedOut: {
             detail: components["schemas"]["BlockedDetail"];
+        };
+        /**
+         * BlockerKind
+         * @enum {string}
+         */
+        BlockerKind: "no_recipes" | "filtered" | "protein" | "kcal" | "kcal_and_protein" | "timeout";
+        /** BlockerOut */
+        BlockerOut: {
+            kind: components["schemas"]["BlockerKind"];
+            /** Message */
+            message: string;
+            /** Meal */
+            meal: string | null;
         };
         /** CalculateIn */
         CalculateIn: {
@@ -392,6 +473,14 @@ export interface components {
          * @enum {string}
          */
         CulinaryRole: "main_protein" | "carb_base" | "vegetable" | "aromatic" | "fruit" | "cooking_fat" | "creamy_base" | "cheese" | "binder" | "sauce_base" | "seasoning" | "sweetener" | "liquid" | "topping" | "leavening" | "acid";
+        /** DayOut */
+        DayOut: {
+            /** Day */
+            day: number;
+            totals: components["schemas"]["NutrientsOut"];
+            /** Slots */
+            slots: components["schemas"]["SlotOut"][];
+        };
         /**
          * ExclusionCategory
          * @description The checklist the user sees in onboarding (PRD §7).
@@ -443,6 +532,10 @@ export interface components {
             }[];
             /** Recipe Variants */
             recipe_variants: {
+                [key: string]: unknown;
+            }[];
+            /** Plans */
+            plans: {
                 [key: string]: unknown;
             }[];
         };
@@ -520,6 +613,19 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
+        /**
+         * InfeasibleOut
+         * @description No plan fits the hard constraints: what blocked it and what to change (PRD §8.5).
+         */
+        InfeasibleOut: {
+            status: components["schemas"]["Status"];
+            /** Message */
+            message: string;
+            /** Blockers */
+            blockers: components["schemas"]["BlockerOut"][];
+            /** Suggestions */
+            suggestions: components["schemas"]["SuggestionOut"][];
+        };
         /** IngredientIn */
         IngredientIn: {
             /**
@@ -564,6 +670,16 @@ export interface components {
             may_contain: string[];
             trace_status: components["schemas"]["TraceStatus"];
         };
+        /**
+         * InvalidBodyOut
+         * @description FastAPI's validation error, without the submitted values.
+         */
+        InvalidBodyOut: {
+            /** Detail */
+            detail: {
+                [key: string]: unknown;
+            }[];
+        };
         /** LineOut */
         LineOut: {
             /** Food */
@@ -589,6 +705,17 @@ export interface components {
             /** Consents */
             consents: components["schemas"]["ConsentOut"][];
         };
+        /** MealIn */
+        MealIn: {
+            /** Name */
+            name: string;
+            meal_type: components["schemas"]["MealType"];
+            /**
+             * Kcal Share
+             * @description Share of the daily calories, 0-1
+             */
+            kcal_share: number;
+        };
         /**
          * MealTarget
          * @description One serving's target.
@@ -603,6 +730,11 @@ export interface components {
             /** Carbs G */
             carbs_g?: number | null;
         };
+        /**
+         * MealType
+         * @enum {string}
+         */
+        MealType: "breakfast" | "lunch" | "dinner" | "snack";
         /**
          * Metric
          * @enum {string}
@@ -670,6 +802,75 @@ export interface components {
             on_target: boolean;
             /** Misses */
             misses: components["schemas"]["MissOut"][];
+        };
+        /** PlanIn */
+        PlanIn: {
+            /**
+             * Days
+             * @enum {integer}
+             */
+            days: 3 | 5 | 7;
+            /**
+             * Prep Days
+             * @description "Cook once for N days"
+             * @default 1
+             */
+            prep_days: number;
+            profile: components["schemas"]["ProfileIn"];
+        };
+        /** PlanOut */
+        PlanOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Days */
+            days: number;
+            /** Prep Days */
+            prep_days: number;
+            targets: components["schemas"]["TargetsOut"];
+            /**
+             * Notices
+             * @description Soft goals that had to be relaxed, in plain words
+             */
+            notices: string[];
+            /** Relaxed */
+            relaxed: components["schemas"]["Rule"][];
+            /** Plan Days */
+            plan_days: components["schemas"]["DayOut"][];
+        };
+        /**
+         * ProfileIn
+         * @description The parts of the nutrition profile the planner needs (PRD §7).
+         */
+        ProfileIn: {
+            /** Daily Kcal */
+            daily_kcal: number;
+            /** Protein Min G */
+            protein_min_g: number;
+            /** Meals */
+            meals: components["schemas"]["MealIn"][];
+            /**
+             * Max Minutes
+             * @description None: no limit
+             */
+            max_minutes?: number | null;
+            /**
+             * Equipment
+             * @default []
+             */
+            equipment: string[];
+            /**
+             * Exclusions
+             * @default []
+             */
+            exclusions: components["schemas"]["ExclusionIn"][];
         };
         /** ProposedIngredient */
         ProposedIngredient: {
@@ -804,6 +1005,12 @@ export interface components {
             /** Refresh Token */
             refresh_token: string;
         };
+        /**
+         * Rule
+         * @description Constraints that the infeasibility diagnosis may switch off one at a time.
+         * @enum {string}
+         */
+        Rule: "kcal" | "protein" | "variety";
         /** SearchIn */
         SearchIn: {
             /**
@@ -852,6 +1059,83 @@ export interface components {
          * @enum {string}
          */
         Severity: "allergy" | "intolerance" | "dislike" | "prefer_not";
+        /** SlotOut */
+        SlotOut: {
+            /**
+             * Position
+             * @description The slot's address in `/slots/{slot}`
+             */
+            position: number;
+            /**
+             * Day
+             * @description 0-based
+             */
+            day: number;
+            /** Slot */
+            slot: string;
+            meal_type: components["schemas"]["MealType"];
+            /**
+             * Recipe Id
+             * @description None if the recipe was deleted since
+             */
+            recipe_id: string | null;
+            /** Recipe Slug */
+            recipe_slug: string | null;
+            /** Title En */
+            title_en: string | null;
+            /** Title Pl */
+            title_pl: string | null;
+            /**
+             * Portion
+             * @description Servings of the recipe
+             */
+            portion: number;
+            nutrition: components["schemas"]["NutrientsOut"];
+            /** Cook Day */
+            cook_day: number;
+            /** Eat By Day */
+            eat_by_day: number;
+            /** From Batch */
+            from_batch: boolean;
+            /**
+             * Leave Out
+             * @description Optional ingredient keys to leave out
+             */
+            leave_out: string[];
+            /**
+             * Labels
+             * @description Soft exclusions the recipe touches. Only in the response that created the plan: they come from the profile, which is not stored.
+             * @default []
+             */
+            labels: string[];
+            status: components["schemas"]["SlotStatus"];
+            /** Status Updated At */
+            status_updated_at: string | null;
+        };
+        /**
+         * SlotStatus
+         * @enum {string}
+         */
+        SlotStatus: "planned" | "cooked" | "eaten" | "skipped";
+        /** SlotStatusIn */
+        SlotStatusIn: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "cooked" | "eaten" | "skipped";
+            /**
+             * Event Id
+             * Format: uuid
+             * @description Client-generated, unique per change: a replay with the same id is a no-op
+             */
+            event_id: string;
+        };
+        /**
+         * Status
+         * @enum {string}
+         */
+        Status: "solved" | "infeasible" | "timeout";
         /** SubstitutionOption */
         SubstitutionOption: {
             food: components["schemas"]["FoodRef"];
@@ -916,6 +1200,14 @@ export interface components {
             /** Options */
             options: components["schemas"]["SubstitutionOption"][];
         };
+        /** SuggestionOut */
+        SuggestionOut: {
+            action: components["schemas"]["Action"];
+            /** Message */
+            message: string;
+            /** Value */
+            value: string | number | null;
+        };
         /** SwapOut */
         SwapOut: {
             /** Original Key */
@@ -928,6 +1220,13 @@ export interface components {
              * @description Amount doing the same job, before adjusting to the target
              */
             grams: number;
+        };
+        /** TargetsOut */
+        TargetsOut: {
+            /** Daily Kcal */
+            daily_kcal: number;
+            /** Protein Min G */
+            protein_min_g: number;
         };
         /** TokenPair */
         TokenPair: {
@@ -978,9 +1277,12 @@ export interface components {
     headers: never;
     pathItems: never;
 }
+export type SchemaAction = components['schemas']['Action'];
 export type SchemaAppleLoginIn = components['schemas']['AppleLoginIn'];
 export type SchemaBlockedDetail = components['schemas']['BlockedDetail'];
 export type SchemaBlockedOut = components['schemas']['BlockedOut'];
+export type SchemaBlockerKind = components['schemas']['BlockerKind'];
+export type SchemaBlockerOut = components['schemas']['BlockerOut'];
 export type SchemaCalculateIn = components['schemas']['CalculateIn'];
 export type SchemaCalculateOut = components['schemas']['CalculateOut'];
 export type SchemaChangeOut = components['schemas']['ChangeOut'];
@@ -991,6 +1293,7 @@ export type SchemaConsentOut = components['schemas']['ConsentOut'];
 export type SchemaConsentType = components['schemas']['ConsentType'];
 export type SchemaConsentsIn = components['schemas']['ConsentsIn'];
 export type SchemaCulinaryRole = components['schemas']['CulinaryRole'];
+export type SchemaDayOut = components['schemas']['DayOut'];
 export type SchemaExclusionCategory = components['schemas']['ExclusionCategory'];
 export type SchemaExclusionIn = components['schemas']['ExclusionIn'];
 export type SchemaExportOut = components['schemas']['ExportOut'];
@@ -998,29 +1301,43 @@ export type SchemaFoodDetail = components['schemas']['FoodDetail'];
 export type SchemaFoodRef = components['schemas']['FoodRef'];
 export type SchemaFoodSearchHit = components['schemas']['FoodSearchHit'];
 export type SchemaHttpValidationError = components['schemas']['HTTPValidationError'];
+export type SchemaInfeasibleOut = components['schemas']['InfeasibleOut'];
 export type SchemaIngredientIn = components['schemas']['IngredientIn'];
 export type SchemaIngredientOut = components['schemas']['IngredientOut'];
+export type SchemaInvalidBodyOut = components['schemas']['InvalidBodyOut'];
 export type SchemaLineOut = components['schemas']['LineOut'];
 export type SchemaMeOut = components['schemas']['MeOut'];
+export type SchemaMealIn = components['schemas']['MealIn'];
 export type SchemaMealTarget = components['schemas']['MealTarget'];
+export type SchemaMealType = components['schemas']['MealType'];
 export type SchemaMetric = components['schemas']['Metric'];
 export type SchemaMissOut = components['schemas']['MissOut'];
 export type SchemaNutrientsOut = components['schemas']['NutrientsOut'];
 export type SchemaNutritionOut = components['schemas']['NutritionOut'];
 export type SchemaPersonalizeIn = components['schemas']['PersonalizeIn'];
 export type SchemaPersonalizeOut = components['schemas']['PersonalizeOut'];
+export type SchemaPlanIn = components['schemas']['PlanIn'];
+export type SchemaPlanOut = components['schemas']['PlanOut'];
+export type SchemaProfileIn = components['schemas']['ProfileIn'];
 export type SchemaProposedIngredient = components['schemas']['ProposedIngredient'];
 export type SchemaRecipeDetail = components['schemas']['RecipeDetail'];
 export type SchemaRecipeList = components['schemas']['RecipeList'];
 export type SchemaRecipeSummary = components['schemas']['RecipeSummary'];
 export type SchemaRefreshIn = components['schemas']['RefreshIn'];
+export type SchemaRule = components['schemas']['Rule'];
 export type SchemaSearchIn = components['schemas']['SearchIn'];
 export type SchemaSessionOut = components['schemas']['SessionOut'];
 export type SchemaSeverity = components['schemas']['Severity'];
+export type SchemaSlotOut = components['schemas']['SlotOut'];
+export type SchemaSlotStatus = components['schemas']['SlotStatus'];
+export type SchemaSlotStatusIn = components['schemas']['SlotStatusIn'];
+export type SchemaStatus = components['schemas']['Status'];
 export type SchemaSubstitutionOption = components['schemas']['SubstitutionOption'];
 export type SchemaSubstitutionsIn = components['schemas']['SubstitutionsIn'];
 export type SchemaSubstitutionsOut = components['schemas']['SubstitutionsOut'];
+export type SchemaSuggestionOut = components['schemas']['SuggestionOut'];
 export type SchemaSwapOut = components['schemas']['SwapOut'];
+export type SchemaTargetsOut = components['schemas']['TargetsOut'];
 export type SchemaTokenPair = components['schemas']['TokenPair'];
 export type SchemaTraceStatus = components['schemas']['TraceStatus'];
 export type SchemaValidationError = components['schemas']['ValidationError'];
@@ -1509,6 +1826,95 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ConsentOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_plan_v1_plans_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlanIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlanOut"];
+                };
+            };
+            /** @description No plan fits the profile's hard constraints, or the body is invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InfeasibleOut"] | components["schemas"]["InvalidBodyOut"];
+                };
+            };
+        };
+    };
+    current_plan_v1_plans_current_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlanOut"];
+                };
+            };
+        };
+    };
+    set_slot_status_v1_plans__plan_id__slots__slot__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                plan_id: string;
+                slot: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SlotStatusIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SlotOut"];
                 };
             };
             /** @description Validation Error */
