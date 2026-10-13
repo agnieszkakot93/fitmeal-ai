@@ -29,7 +29,7 @@ This document fixes the architecture, the tool stack, the low-cost infrastructur
 
 | # | Question | Recommendation |
 |---|---|---|
-| Q1 | **Sign-in providers for web** (not decided by the PO). | Google + email magic link for the web MVP. Sign in with Apple is added with the iOS phase, when App Store rules require it. Keep Apple out of the web MVP unless the PO says otherwise. Magic links need a transactional email processor (§6.1) with a DPA. |
+| Q1 | **Sign-in providers for web.** *Decided by the PO on 2026-10-13.* | **Google + email magic link** for the web MVP, both issuing our own JWTs. Sign in with Apple (already built, `/v1/auth/apple`) is enabled with the iOS phase, when App Store rules require it. Magic links need a transactional email processor (§6.1) with a DPA. |
 
 ---
 
@@ -57,7 +57,7 @@ flowchart LR
 
     CLAUDE["Claude on AWS Bedrock (EU)<br/>Haiku 4.5 / Sonnet 5"]
     STRIPE["Stripe<br/>Checkout · Customer Portal · webhooks"]
-    AUTHP["Sign-in provider(s)<br/>(open, §1.1 Q1)"]
+    AUTHP["Sign-in provider(s)<br/>Google + magic link, §1.1 Q1"]
     OBS["Sentry (EU region)<br/>(free tier)"]
 
     APP --> DNS --> CADDY --> API
@@ -178,7 +178,7 @@ web/
 | Networking | `openapi-typescript` types from FastAPI's `openapi.json`, checked in CI, so the API contract is compile-checked on web too. |
 | Health profile | Stored in the account with Art. 9 consent (D13); a copy in IndexedDB for offline display. Without consent: browser-only profile sent with each request (D8 fallback). The suggested-targets calculator runs in the client and is mirrored by a backend function with shared test vectors. |
 | Offline | Service worker precaches the shell; IndexedDB caches the active plan, its recipes, saved recipes and the shopping list. Meal status and shopping checkmarks go to an outbox and sync on reconnect (Background Sync where supported, else on next open). Plan generation, swaps and imports need network. |
-| Auth | Providers open (§1.1 Q1). Access JWT in memory; refresh token in an `HttpOnly`, `Secure`, `SameSite=Strict` cookie scoped to `/v1/auth`; never in `localStorage`. |
+| Auth | Google + email magic link (§1.1 Q1). Access JWT in memory; refresh token in an `HttpOnly`, `Secure`, `SameSite=Strict` cookie scoped to `/v1/auth`; never in `localStorage`. |
 | Payments | Stripe Checkout (redirect) and Customer Portal (D14); entitlements come from the backend. |
 | Reminder | The Thursday reminder via Web Push where supported (installed PWA on iOS 16.4+), otherwise not offered at launch (open, screen-specs question 5). |
 | Analytics | None (D9). No third-party scripts except Stripe redirect pages and the sign-in provider; strict CSP. |
@@ -285,7 +285,7 @@ Phase 0 target: **~500 hand-verified ingredients**. That covers the vast majorit
 | Apple Developer Program (Phase 1b) | Required for the iOS app | $99/year |
 | App Store commission (Phase 1b) | **Enroll in the App Store Small Business Program: 15% instead of 30%** | |
 | Push | Web Push (VAPID) from the backend where supported; APNs with iOS | €0 |
-| Email (magic links if Q1 is accepted; Stripe sends receipts) | Resend or Postmark free tier, EU region, DPA | €0 |
+| Email (magic links, §1.1 Q1; Stripe sends receipts) | Resend or Postmark free tier, EU region, DPA | €0 |
 
 Hetzner, Cloudflare and SaaS free tiers change. Check current prices and limits when you sign up.
 
@@ -362,7 +362,7 @@ Proof of consent: the `ConsentRecord` history (what text version, when, withdraw
 
 ### 7.4 Processors, transfers and records
 
-- **Processors:** Hetzner (hosting, EU), Cloudflare (DNS, CDN, R2), AWS (Claude on Bedrock, EU region), Sentry (EU region), Stripe (payments; also an independent controller for payment data), the sign-in provider(s) once decided (§1.1 Q1) and, with magic links, the email provider. Each has a standard DPA to accept before it receives any data (PRD §12.2). No real user or tester text reaches Bedrock before the AWS DPA is accepted (S3 uses only the golden set and test data).
+- **Processors:** Hetzner (hosting, EU), Cloudflare (DNS, CDN, R2), AWS (Claude on Bedrock, EU region), Sentry (EU region), Stripe (payments; also an independent controller for payment data), Google (sign-in, §1.1 Q1), the email provider (magic links). Each has a standard DPA to accept before it receives any data (PRD §12.2). No real user or tester text reaches Bedrock before the AWS DPA is accepted (S3 uses only the golden set and test data).
 - **Transfers:** processing stays in the EU. The providers are US companies, so record for each whether it relies on the EU–US Data Privacy Framework or Standard Contractual Clauses.
 - **Bedrock data use:** record from the AWS terms that prompts and outputs are not stored by Bedrock beyond the request and not used for model training; don't turn on Bedrock's model invocation logging.
 - **DPIA (Art. 35):** health data is now stored server-side (D13), so the DPIA covers storage, column encryption and key handling, access, backups, export and deletion, plus AI processing of recipe text. Before the public web beta (S9); update it when a processor or a data flow changes.
@@ -534,7 +534,7 @@ Apple Health, grocery integrations, family/shared plans and lists, dietitian/tra
 ## 10. API surface (MVP, v1)
 
 ```
-POST   /v1/auth/{provider}            # providers open (§1.1 Q1); /v1/auth/apple arrives with Phase 1b
+POST   /v1/auth/{provider}            # google | email (§1.1 Q1); /v1/auth/apple arrives with Phase 1b
 POST   /v1/auth/refresh               # refresh token from HttpOnly cookie (web) or body (iOS)
 GET    /v1/me            DELETE /v1/me   GET /v1/me/export   POST /v1/me/consents
 GET    /v1/me/profile    PUT /v1/me/profile                  # health profile, needs health_data consent (D13)
@@ -585,7 +585,7 @@ Personalize, substitute, plan, swap and rebalance requests use the stored profil
 
 1. Create the Stripe account (EU entity, Stripe Tax, BLIK and Przelewy24 enabled, test mode first). The Apple Developer account and Small Business Program wait for Phase 1b.
 2. Create Hetzner, Cloudflare, AWS (request Bedrock access to Claude Haiku 4.5 and Sonnet 5 in an EU region) and Sentry (EU region) accounts. Set an AWS Budgets alert for Bedrock spend.
-3. Buy the domain and point DNS at Cloudflare (app domain served by Caddy). Create the OAuth client for the sign-in provider once §1.1 Q1 is decided.
+3. Buy the domain and point DNS at Cloudflare (app domain served by Caddy). Create the OAuth client for Google sign-in (§1.1 Q1).
 4. Scaffold `backend/` (FastAPI, SQLAlchemy 2, Alembic, pytest, ruff, mypy) and `infra/docker-compose.yml` for local dev; scaffold `web/` (Vite + React + TS) when S4 starts.
 5. Download the USDA FDC Foundation + SR Legacy CSVs and write the importer.
 6. Pick the 50-recipe golden set from real IG/TikTok/blog recipes your target users follow.
