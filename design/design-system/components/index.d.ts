@@ -5,7 +5,7 @@ type Macro = 'protein' | 'carbs' | 'fat';
 export interface DeltaItem { value: number; unit: 'kcal' | 'g' | 'PLN'; letter?: 'P' | 'C' | 'F'; tone?: 'good' | 'bad' | 'neutral' }
 export declare const Icon: React.FC<{ name: string; size?: number; weight?: number; label?: string; className?: string }> & { names: string[] };
 export declare const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'quiet' | 'danger' | 'premium' | 'accent' | 'glass' | 'glass-prominent'; size?: 'lg' | 'md' | 'sm'; icon?: string; trailingIcon?: string; block?: boolean }>;
-export declare const IconButton: React.FC<{ icon: string; label: string; variant?: 'glass' | 'glass-prominent' | 'sunken' | 'raised'; size?: number; onClick?: () => void; disabled?: boolean }>;
+export declare const IconButton: React.FC<{ icon: string; label: string; variant?: 'glass' | 'glass-prominent' | 'sunken' | 'raised'; size?: number; onClick?: () => void; disabled?: boolean; 'aria-describedby'?: string; 'aria-disabled'?: boolean | 'true' | 'false'; 'aria-haspopup'?: 'menu' | 'dialog' | boolean; 'aria-expanded'?: boolean }>;
 export declare const Chip: React.FC<{ selected?: boolean; onChange?: (v: boolean) => void; icon?: string; disabled?: boolean; children: React.ReactNode }>;
 export declare const SegmentedControl: React.FC<{ options: (string | { value: string; label: string })[]; value?: string; onChange?: (v: string) => void; label?: string }>;
 export declare const SelectCard: React.FC<{ title: string; description?: string; icon?: string; meta?: string; selected?: boolean; multiple?: boolean; onChange?: (v: boolean) => void }>;
@@ -36,7 +36,54 @@ export declare const SectionHeader: React.FC<{ title: string; meta?: string; act
 export declare const NavBar: React.FC<{ title: string; large?: boolean; subtitle?: string; back?: string; trailing?: React.ReactNode; avatar?: React.ReactNode; overlay?: boolean }>;
 export declare const Avatar: React.FC<{ initials?: string; size?: number; badge?: boolean | string; label?: string }>;
 export declare const OnboardingProgress: React.FC<{ step: number; total?: number }>;
-export declare const TabBar: React.FC<{ active?: 'today' | 'plan' | 'shopping'; accessory?: React.ReactNode; minimized?: boolean }>;
+export declare const TabBar: React.FC<{ active?: 'today' | 'plan' | 'shopping'; accessory?: React.ReactNode; minimized?: boolean; lang?: 'en' | 'pl'; links?: boolean; hrefs?: Partial<Record<'today' | 'plan' | 'shopping', string>>; onNavigate?: (id: 'today' | 'plan' | 'shopping', e: React.MouseEvent) => void; onAdd?: () => void }>;
 export declare const BottomAccessory: React.FC<{ icon?: string; tone?: 'basil' | 'paprika'; title: string; subtitle?: string; action?: string; progress?: number }>;
 export declare const RecipeHero: React.FC<{ macros?: { protein: number; carbs: number; fat: number }; height?: number; tone?: 'paprika' | 'basil' | 'premium'; className?: string; children?: React.ReactNode }>;
 export declare const PhoneFrame: React.FC<{ caption?: string; theme?: 'light' | 'dark'; children?: React.ReactNode }>;
+
+// ---------- Web (responsive PWA) ----------
+type Lang = 'en' | 'pl';
+type TabId = 'today' | 'plan' | 'shopping';
+type TabHrefs = Partial<Record<TabId, string>>;
+// TabBar (above) also accepts, for web: { lang?: Lang; links?: boolean; hrefs?: TabHrefs; onNavigate?: (id: TabId, e: React.MouseEvent) => void; onAdd?: () => void }
+export declare const AppShell: React.FC<{
+  active?: TabId; lang?: Lang; hrefs?: TabHrefs; onNavigate?: (id: TabId, e: React.MouseEvent) => void; onAdd?: () => void;
+  /** Profile entry: an Avatar. Shown in SideNav at md/lg; put another in TopBar for phone. */ avatar?: React.ReactNode;
+  /** OfflineBanner, rendered first in the top zone. */ banner?: React.ReactNode;
+  /** TopBar (holds the page h1). */ header?: React.ReactNode;
+  notices?: React.ReactNode;
+  /** Right rail at lg (sticky); stacks after the top zone below lg. */ aside?: React.ReactNode; asideLabel?: string;
+  /** Phone only: BottomAccessory above the TabBar. */ accessory?: React.ReactNode;
+  /** Toast elements; the live region is always mounted. */ toasts?: React.ReactNode;
+  /** false hides SideNav and TabBar (onboarding). */ nav?: boolean;
+  /** Onboarding column, max 560 px. */ narrow?: boolean;
+  /** The shell is its own scroller (showcases, embedded frames). */ contained?: boolean;
+  mainId?: string; style?: React.CSSProperties; children?: React.ReactNode;
+}>;
+export declare const SideNav: React.FC<{ active?: TabId; lang?: Lang; hrefs?: TabHrefs; onNavigate?: (id: TabId, e: React.MouseEvent) => void; onAdd?: () => void; avatar?: React.ReactNode; /** auto (default) follows AppShell: rail at md, full at lg */ variant?: 'auto' | 'rail' | 'full' }>;
+export declare const TopBar: React.FC<{ title: string; subtitle?: string; large?: boolean; back?: { label: string; href?: string; onClick?: (e: React.MouseEvent) => void }; actions?: React.ReactNode; avatar?: React.ReactNode; sticky?: boolean; level?: 1 | 2; titleId?: string; lang?: Lang }>;
+interface DialogProps {
+  open?: boolean; onClose?: (reason: 'escape' | 'backdrop' | 'close') => void; title: string; description?: string;
+  actions?: React.ReactNode; children?: React.ReactNode; closeButton?: boolean; closeOnBackdrop?: boolean; lang?: Lang;
+  /** Showcase only: renders the panel inline, not modal. */ preview?: boolean;
+}
+export declare const Dialog: React.FC<DialogProps>;
+export declare const Sheet: React.FC<DialogProps & { /** auto: bottom sheet below 600 px, Dialog at >= 600 px */ presentation?: 'auto' | 'sheet' | 'modal' }>;
+export declare const ToastRegion: React.FC<{ children?: React.ReactNode }>;
+export declare const Toast: React.FC<{ message: React.ReactNode; action?: { label: string; onClick?: () => void }; icon?: string; /** ms, default 10000; 0 = stays */ duration?: number; onDismiss?: (reason: 'timeout' | 'action' | 'close' | 'escape') => void; lang?: Lang }>;
+interface FieldProps { label: string; hint?: string; error?: string; optional?: boolean; id?: string; disabled?: boolean; required?: boolean; name?: string; lang?: Lang }
+export declare const TextField: React.FC<FieldProps & { value?: string; defaultValue?: string; onChange?: (v: string, e: React.ChangeEvent) => void; type?: 'text' | 'email' | 'search' | 'url' | 'tel' | 'password'; autoComplete?: string; placeholder?: string; multiline?: boolean; rows?: number; maxLength?: number; inputMode?: string }>;
+export declare const Select: React.FC<FieldProps & { options: (string | { value: string; label: string; disabled?: boolean })[]; value?: string; defaultValue?: string; onChange?: (v: string, e: React.ChangeEvent) => void; placeholder?: string; autoComplete?: string }>;
+export interface WeekMeal { title: string; kcal: number; protein: number; status?: 'planned' | 'cooked' | 'eaten' | 'skipped'; href?: string; badges?: { label: string; tone?: Tone; icon?: string }[]; /** same id across cards cooked in one batch */ batch?: string; /** future day: Eat is aria-disabled with this hint */ eatHint?: string; /** offline: status change waiting to sync */ queued?: boolean }
+export declare const WeekTable: React.FC<{
+  days: { id: string; name: string; date: string; label?: string; today?: boolean; cook?: boolean; totals?: { kcal: number; protein: number } }[];
+  slots: { id: string; label: string }[];
+  meals: Record<string, Record<string, WeekMeal>>;
+  caption?: string; showCaption?: boolean; headingLevel?: 2 | 3; lang?: Lang;
+  /** auto: table at >= 1024 px viewport, list below */ layout?: 'auto' | 'table' | 'list';
+  onEat?: (dayId: string, slotId: string) => void; onOpen?: (dayId: string, slotId: string) => void;
+}>;
+export declare const OfflineBanner: React.FC<{ state?: 'none' | 'offline' | 'syncing' | 'synced' | 'stuck'; pending?: number; onRetry?: () => void; sticky?: boolean; lang?: Lang }>;
+export declare const InstallPrompt: React.FC<{ platform?: 'prompt' | 'ios' | 'none'; onInstall?: () => void; onDismiss?: () => void; lang?: Lang }>;
+export declare const ProfileFileCard: React.FC<{ mode?: 'both' | 'download' | 'load'; title?: string; lastDownloaded?: string; persistRefused?: boolean; error?: boolean | string; onDownload?: () => void; onLoad?: (file: File) => void; lang?: Lang }>;
+export declare const Tooltip: React.FC<{ label: string; children: React.ReactElement; placement?: 'bottom' | 'top' | 'end'; /** true: adds aria-describedby (extra info); false (default): visual repeat of the trigger's aria-label */ describe?: boolean; delay?: number; /** showcase / tests */ open?: boolean }>;

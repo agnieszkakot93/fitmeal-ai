@@ -36,7 +36,8 @@ Real copy to match:
 | No plan | *We couldn't build a 7-day plan. Too few breakfasts fit your exclusions and the 15-minute limit.* |
 | Import | *Recipe detected · 1 cup cheese — Which cheese?* |
 | Import fallback | *We can't read a recipe on this page. Paste the recipe text and we'll keep the link as the source.* |
-| Where data lives | *Your profile stays on this phone and syncs to your private iCloud. We receive it only to build a plan or swap, and don't keep it.* |
+| Where data lives (web) | *Your profile is saved in this browser on this device. We receive it only to build a plan or swap, and don't keep it.* · PL *Twój profil jest zapisany w tej przeglądarce na tym urządzeniu. Otrzymujemy go tylko, by ułożyć plan lub zamianę, i go nie przechowujemy.* |
+| Where data lives (iOS, if the native app returns) | *Your profile stays on this phone and syncs to your private iCloud. We receive it only to build a plan or swap, and don't keep it.* |
 | Swap | *Amounts are converted by protein, not 1:1* |
 | Paywall | *Economy version found · 34 → 23 unique items · same calories, same protein target* |
 | Meal prep | *Cook today: lunch and dinner cover Wed + Thu.* |
@@ -70,11 +71,77 @@ Donut follows Apple's Liquid Glass design language, in its light and clear form.
 - **Behaviour:** the tab bar shrinks to the active tab plus Add while scrolling down, and the accessory moves inline (`.tabBarMinimizeBehavior(.onScrollDown)`). Glass elements morph into each other when they appear or disappear (`glassEffectID`). A long-press lifts a card and shows a glass menu.
 - **Accessibility:** with Reduce Transparency, every glass element becomes solid `surface-raised` (built into `bundle.css` via `prefers-reduced-transparency`). With Increase Contrast, add a `line-strong` edge. With Reduce Motion, glass cross-fades instead of morphing.
 
+## Web (responsive PWA)
+
+The Product Owner switched the first client to a **mobile-first responsive web app**, installable as a PWA (see `docs/design/screens/README.md`). The bundle `window.Donut` is that web implementation. Everything above still applies (tokens, copy, severity, safety); this section adds what is web-specific. The accessibility target is **WCAG 2.2 AA**.
+
+### Breakpoints and layout
+
+| Name | Viewport (CSS px) | Shell | Gutter |
+| --- | --- | --- | --- |
+| `sm` | < 600 | `AppShell` single column, bottom `TabBar` with Add, `BottomAccessory` above it, sticky bottom CTA in onboarding. `Sheet` is a bottom sheet. | `space-5` |
+| `md` | 600–1023 | `SideNav` as a rail (`sidenav-rail`), content max `container-md`, two-column card grids where a spec says so. `Sheet` becomes a `Dialog`. `BottomAccessory` content moves inline. | `space-6` |
+| `lg` | ≥ 1024 | `SideNav` with labels (`sidenav-full`), content max `container-lg`, optional right rail `aside-lg` (sticky). Weekly Plan uses `WeekTable`. | `space-8` |
+
+- Tokens live in `tokens.json` (`breakpoint`, `layout`) and as CSS variables in `bundle.css`. Media and container queries can't read variables, so the numbers 600 and 1024 are repeated in the queries; change both together.
+- `AppShell` switches with **container queries** on its own width, so it also works inside showcase frames. `Sheet` and `WeekTable` use viewport media queries and take a `presentation` / `layout` override for showcases.
+- Onboarding uses one centred column of `container-onboarding` (560) at every size (`AppShell narrow nav={false}`). From `md` up, the primary button sits at the end of the form instead of sticking to the bottom.
+- Every page has one `<h1>` (the `TopBar` title), one `<main>` (from `AppShell`) and one `<nav aria-label="Main">`. On route change, move focus to the new `<h1>` (it has `tabIndex=-1`) and update `document.title` (*Calories · Donut*).
+
+### Focus and keyboard
+
+- Everything works by keyboard and in visual order. DOM order equals reading order; never reorder with CSS `order` or `row-reverse`. In `AppShell` the right rail comes after the top zone and before the main list in the DOM, so Tab goes notices → day summary → meals, which is what the specs ask for.
+- Focus is always visible: `focus-ring`, a 2px outline offset 2px, on every `a`, `button`, `input`, `select`, `textarea` and `[tabindex]` (`bundle.css`). On dark fills (`Toast`, `Tooltip`) the ring switches to `surface`. Never remove an outline without replacing it.
+- Nothing sticky may cover the focused element (2.4.11). Set `scroll-padding-top` / `scroll-padding-bottom` on `html` to the height of the sticky `OfflineBanner` / `TopBar` and of the phone `TabBar` (`size-tabbar` + `space-8`).
+- The first focusable element is the **skip link** *Skip to main content* / *Przejdź do treści* (`AppShell`).
+- Dialogs and sheets are native `<dialog>` opened with `showModal()`: the page behind is inert, `Esc` closes, focus starts on the title and returns to the control that opened it.
+- Composite widgets use arrow keys inside and one Tab stop in and out (`SegmentedControl`, `DayStrip`, menus). `WeekTable` adds arrow-key moves between meals but keeps every control in the Tab order.
+- Targets: at least 24×24 CSS px everywhere (2.5.8). Primary controls use `size-tap` (44) anyway; only the compact `WeekTable` pill at `lg` is 32.
+- Disabled primaries use `aria-disabled="true"` and stay focusable, with the reason in their description; use the native `disabled` only when the reason is shown next to the control.
+
+### Hover
+
+- Hover styles live in `@media (hover: hover) and (pointer: fine)` so a tap on a phone never leaves a control stuck in its hover look.
+- Hover is a hint, never information: filled buttons darken toward `ink` (`color-mix`), outlined and quiet controls get a `surface-sunken` fill, links and the `TopBar` back link underline. Selected states don't change on hover.
+- Use `Tooltip` for icon-only buttons on desktop. A tooltip repeats or adds to a label; it is never the only place for information, because touch users never see it.
+
+### Motion
+
+- With `prefers-reduced-motion: reduce`: no count-up of totals, no slide-in of dialogs, sheets and toasts, no button press scale. Change state instantly or cross-fade.
+- Otherwise keep motion short: 120–250 ms, ease-out. Nothing loops and nothing moves on its own except a progress indicator.
+
+### Browser zoom and text size
+
+- New web components size text in `rem`, so they follow the browser's font size. The older components in `bundle.css` still use px; convert them to rem (16px = 1rem) before launch.
+- Layouts hold at 200% zoom and reflow at 320 CSS px with no horizontal scroll (1.4.10). Zoom shrinks the viewport, so a desktop at 200% gets the `md` or `sm` layout; that is the intended fallback. The only horizontal scroller is the `WeekTable` grid, which is a labelled, focusable region.
+- Allow text to wrap everywhere (PL is about 30% longer). Never truncate allergy, intolerance or blocker text.
+- Text inputs are at least 16px (1rem), so iOS Safari doesn't zoom on focus.
+
+### Theme and transparency
+
+- `prefers-color-scheme` picks `light` or `dark` tokens, with a manual override in Profile (`data-theme`). The PWA manifest `theme_color` / `background_color` use `surface`.
+- `prefers-reduced-transparency` makes glass solid `surface-raised`; `prefers-contrast: more` adds a `line-strong` edge to glass and card borders (both in `bundle.css`).
+
+### iOS-only components on web
+
+| iOS component | On web |
+| --- | --- |
+| `PhoneFrame` | Showcase only, as before. Never in the app. Web showcases use plain frames at 375 / 768 / 1280 px with `AppShell contained`. |
+| Liquid Glass (`.fm-glass`) | Kept only for the phone `TabBar` and its Add button, which float over scrolling content. Everything else on web is solid: `SideNav`, `TopBar`, `Dialog`, `Sheet`, `Toast`. Backdrop blur is expensive in mobile browsers and hurts legibility over long text. Reduced-transparency and contrast fallbacks still apply. |
+| `NavBar` | Replaced by `TopBar`: a real `<header>` with the page `<h1>`, a back **link** (`<a href>`, so browser Back and deep links agree), and actions. `NavBar large` maps to `TopBar large`. The `Avatar` sits in `TopBar` on phone and moves to `SideNav` from `md`. |
+| `TabBar` | Kept for `sm` inside `AppShell` with `links` (real `<a href="/today">` …). From `md` it is replaced by `SideNav` with the same three destinations and Add. Minimize-on-scroll isn't used on web. |
+| `BottomAccessory` | Kept on `sm` above the `TabBar` (`AppShell accessory`). From `md`, show its content inline in the page (Today: an *Up next* row above Meals; at `lg`, in the right rail). |
+| Page sheet (Profile) | Proposed: Profile is its own route (`/profile`), not a sheet, so it has a URL and a Back. The screen specs still say "Profile sheet"; to be decided in the Profile spec. |
+| Floating glass sheet (decisions) | `Sheet`: a solid bottom sheet on `sm`, a `Dialog` from `md`. |
+| Context menu (long-press) | A `…` menu button (`aria-haspopup="menu"`). Right-click or long-press may open it too, but never as the only way. |
+| `SignInWithAppleButton`, StoreKit, iCloud, Share Extension, APNs | Not on web. Sign in with Apple JS, profile download/load (`ProfileFileCard`), Web Push where supported (open question in the screen specs). |
+
 ## Safety, privacy and consent
 
 - **Adults only.** Onboarding step 2 asks *Are you 18 or older?* with two equal buttons. *I'm under 18* ends onboarding on a kind stop screen, and there is no way around it. No date of birth is stored.
 - **Health-data consent (GDPR Art. 9)** has its own screen: a plain explanation, a **separate, unticked** checkbox and a Privacy link. It is never bundled with the terms. *Continue* stays disabled until it's ticked. Its footnote says where the profile lives (next point). This is the only consent in the app. Consent can be withdrawn in Profile › Privacy & health, which leads to account deletion.
-- **Where data lives.** Say it the same way everywhere (03, 05, 15, 37b, 38):
+- **Where data lives on web** (the current client, see *Web*). The nutrition profile is saved *in this browser on this device* (IndexedDB), with no server copy and no sync between browsers or devices. It is sent with each plan, transform, swap and rebalance request and not kept. Users are told so on onboarding step 03, in Profile › *Where your data lives* and in the no-profile state, and are offered *Download my profile* / *Load a profile file* (`ProfileFileCard`). Never say the profile is "stored in the EU", "on our servers" or "in iCloud" on web. The iOS wording below stays for the native app.
+- **Where data lives (iOS).** Say it the same way everywhere (03, 05, 15, 37b, 38):
   - *On this phone:* the nutrition profile (targets, exclusions with their tiers, optional body data). It syncs through the user's private iCloud, on by default and switchable in Profile; we can't read it. The server receives it with each plan, transform, swap and rebalance request and keeps nothing. The suggested-targets calculator runs on the phone.
   - *On our servers in the EU:* account, plans, meal status, saved and imported recipes, shopping lists, consent records.
   - *Never collected:* medical conditions, date of birth, device or advertising identifiers, PDF files.
@@ -161,6 +228,7 @@ The React bundle is `window.Donut` (React 18). It is the visual reference for th
 - **Monetization:** `PlanCard`, `LockedPreview`
 - **Navigation:** `SectionHeader`, `NavBar`, `Avatar`, `OnboardingProgress`, `TabBar`, `BottomAccessory`
 - **Layout:** `PhoneFrame`, for showcase pages only
+- **Web:** `AppShell`, `SideNav`, `TopBar`, `Dialog`, `Sheet`, `Toast` + `ToastRegion`, `TextField`, `Select`, `WeekTable`, `OfflineBanner`, `InstallPrompt`, `ProfileFileCard`, `Tooltip` (see *Web*). `TabBar` also takes `lang`, `links`, `hrefs`, `onNavigate` and `onAdd` on web.
 
 Helper classes in `bundle.css`: `.fm-glass` (the glass material), `.fm-glass-group` (toolbar capsule), `.fm-group` (inset list container), `.fm-changes` (ChangeItem list), `.fm-sheet` / `.fm-scrim` (floating glass sheet), `.fm-sticky` (bottom CTA over a fade), `.fm-cap` (caption label).
 

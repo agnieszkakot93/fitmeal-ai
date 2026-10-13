@@ -1,8 +1,18 @@
-/* @ds-bundle: {"format":4,"namespace":"Donut","components":[{"name":"Icon"},{"name":"Button"},{"name":"IconButton"},{"name":"Chip"},{"name":"SegmentedControl"},{"name":"SelectCard"},{"name":"Toggle"},{"name":"Checkbox"},{"name":"NumberField"},{"name":"ExclusionRow"},{"name":"DistributionEditor"},{"name":"MacroRing"},{"name":"MacroBar"},{"name":"MacroLine"},{"name":"Delta"},{"name":"Badge"},{"name":"Notice"},{"name":"MealCard"},{"name":"DayStrip"},{"name":"RebalanceProposal"},{"name":"IngredientRow"},{"name":"SwapOption"},{"name":"ChangeItem"},{"name":"CompareCard"},{"name":"ConfidencePrompt"},{"name":"ShoppingItem"},{"name":"StatTile"},{"name":"PlanCard"},{"name":"LockedPreview"},{"name":"SectionHeader"},{"name":"NavBar"},{"name":"Avatar"},{"name":"OnboardingProgress"},{"name":"TabBar"},{"name":"BottomAccessory"},{"name":"RecipeHero"},{"name":"PhoneFrame"}]} */
+/* @ds-bundle: {"format":4,"namespace":"Donut","components":[{"name":"Icon"},{"name":"Button"},{"name":"IconButton"},{"name":"Chip"},{"name":"SegmentedControl"},{"name":"SelectCard"},{"name":"Toggle"},{"name":"Checkbox"},{"name":"NumberField"},{"name":"ExclusionRow"},{"name":"DistributionEditor"},{"name":"MacroRing"},{"name":"MacroBar"},{"name":"MacroLine"},{"name":"Delta"},{"name":"Badge"},{"name":"Notice"},{"name":"MealCard"},{"name":"DayStrip"},{"name":"RebalanceProposal"},{"name":"IngredientRow"},{"name":"SwapOption"},{"name":"ChangeItem"},{"name":"CompareCard"},{"name":"ConfidencePrompt"},{"name":"ShoppingItem"},{"name":"StatTile"},{"name":"PlanCard"},{"name":"LockedPreview"},{"name":"SectionHeader"},{"name":"NavBar"},{"name":"Avatar"},{"name":"OnboardingProgress"},{"name":"TabBar"},{"name":"BottomAccessory"},{"name":"RecipeHero"},{"name":"PhoneFrame"},{"name":"AppShell"},{"name":"SideNav"},{"name":"TopBar"},{"name":"Dialog"},{"name":"Sheet"},{"name":"Toast"},{"name":"ToastRegion"},{"name":"TextField"},{"name":"Select"},{"name":"WeekTable"},{"name":"OfflineBanner"},{"name":"InstallPrompt"},{"name":"ProfileFileCard"},{"name":"Tooltip"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
   var useState = React.useState;
+  var useEffect = React.useEffect;
+  var useRef = React.useRef;
+
+  /* Stable id for label / aria-describedby wiring (no hydration, so a counter is enough). */
+  var uidSeq = 0;
+  function useUid(prefix) {
+    var r = useRef(null);
+    if (r.current == null) r.current = (prefix || 'fm') + '-' + (++uidSeq);
+    return r.current;
+  }
 
   function cx() {
     var out = [];
@@ -58,7 +68,9 @@
     play: 'M8 5.5v13l10.5-6.5z',
     'wifi-off': 'M3 3l18 18M8.5 16.5a5 5 0 017 0M5 12.9a10 10 0 015.2-2.8M16.8 10.4A10 10 0 0119 12.9M2 8.8a15 15 0 014.4-2.7M11 5.1A15 15 0 0122 8.8M12 19.5h.01',
     shield: 'M12 3l7 3v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z',
-    cloud: 'M7 19h10.5a4 4 0 000-8h-.3A5.5 5.5 0 006.6 9.6 4.75 4.75 0 007 19z'
+    cloud: 'M7 19h10.5a4 4 0 000-8h-.3A5.5 5.5 0 006.6 9.6 4.75 4.75 0 007 19z',
+    download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+    upload: 'M12 20V9M7 14l5-5 5 5M5 4h14'
   };
   function Icon(p) {
     var size = p.size || 22;
@@ -89,7 +101,9 @@
   function IconButton(p) {
     return h('button', {
       type: 'button', className: cx('fm-iconbtn', p.variant && 'fm-iconbtn-' + p.variant, p.variant && p.variant.indexOf('glass') === 0 && 'fm-glass', p.className),
-      'aria-label': p.label, onClick: p.onClick, disabled: p.disabled
+      'aria-label': p.label, onClick: p.onClick, disabled: p.disabled,
+      'aria-describedby': p['aria-describedby'], 'aria-disabled': p['aria-disabled'],
+      'aria-haspopup': p['aria-haspopup'], 'aria-expanded': p['aria-expanded']
     }, h(Icon, { name: p.icon, size: p.size || 22 }));
   }
 
@@ -162,15 +176,17 @@
   }
 
   function NumberField(p) {
+    var hintId = useUid('fm-nf') + '-d';
     return h('label', { className: cx('fm-field', p.large && 'fm-field-lg', p.error && 'is-error', p.className) },
       p.label && h('span', { className: 'fm-field-label' }, p.label),
       h('span', { className: 'fm-field-box' },
         h('input', {
           className: 'fm-field-input', inputMode: 'numeric', defaultValue: p.value, placeholder: p.placeholder,
-          'aria-invalid': p.error ? 'true' : undefined
+          'aria-invalid': p.error ? 'true' : undefined,
+          'aria-describedby': (p.error || p.hint) ? hintId : undefined
         }),
         p.unit && h('span', { className: 'fm-field-unit' }, p.unit)),
-      (p.error || p.hint) && h('span', { className: cx('fm-field-hint', p.error && 'is-error') },
+      (p.error || p.hint) && h('span', { id: hintId, className: cx('fm-field-hint', p.error && 'is-error') },
         p.error && h(Icon, { name: 'alert', size: 14 }), p.error || p.hint));
   }
 
@@ -582,14 +598,20 @@
   function TabBar(p) {
     var active = p.active || 'today';
     var min = !!p.minimized;
+    var copy = wc(p.lang);
     var tabs = min ? TABS.filter(function (t) { return t.id === active; }) : TABS;
-    var bar = h('nav', { className: cx('fm-glass', 'fm-tabbar', min && 'is-min'), 'aria-label': 'Main' },
+    var bar = h('nav', { className: cx('fm-glass', 'fm-tabbar', min && 'is-min'), 'aria-label': copy.nav },
       tabs.map(function (t) {
         var on = t.id === active;
-        return h('button', { key: t.id, type: 'button', className: cx('fm-tab', on && 'is-active'), 'aria-current': on ? 'page' : undefined, 'aria-label': t.label },
-          h(Icon, { name: t.icon, size: min ? 24 : 23, weight: on ? 2.1 : 1.7 }), !min && h('span', null, t.label));
+        var label = copy[t.id];
+        var props = { key: t.id, className: cx('fm-tab', on && 'is-active'), 'aria-current': on ? 'page' : undefined, 'aria-label': label };
+        var inner = [h(Icon, { key: 'i', name: t.icon, size: min ? 24 : 23, weight: on ? 2.1 : 1.7 }), !min && h('span', { key: 'l' }, label)];
+        /* Web: `links` renders real <a href> so Back, refresh and deep links work. */
+        return p.links
+          ? h('a', Object.assign(props, { href: (p.hrefs && p.hrefs[t.id]) || '/' + t.id, onClick: p.onNavigate ? function (e) { p.onNavigate(t.id, e); } : undefined }), inner)
+          : h('button', Object.assign(props, { type: 'button' }), inner);
       }));
-    var add = h('button', { type: 'button', className: 'fm-glass fm-glass-accent fm-tab-add', 'aria-label': 'Add recipe' },
+    var add = h('button', { type: 'button', className: 'fm-glass fm-glass-accent fm-tab-add', 'aria-label': copy.add, onClick: p.onAdd },
       h(Icon, { name: 'plus', size: 26, weight: 2.25 }));
     return h('div', { className: cx('fm-tabbar-wrap', min && 'is-min', p.className) },
       p.accessory && !min && h('div', { className: 'fm-tabbar-acc' }, p.accessory),
@@ -640,6 +662,520 @@
         h('div', { className: 'fm-phone-home' }, h('span'))));
   }
 
+  /* =====================================================================
+     Web (mobile-first responsive PWA). Breakpoints: sm < 600, md 600–1023,
+     lg >= 1024. Numbers repeat tokens.json `breakpoint-*`, because media and
+     container queries can't read CSS variables.
+     ===================================================================== */
+  var WEB_COPY = {
+    en: {
+      skip: 'Skip to main content', nav: 'Main', today: 'Today', plan: 'Plan', shopping: 'Shopping', add: 'Add recipe', profile: 'Profile',
+      backTo: 'Back to', close: 'Close', optional: 'optional', dismiss: 'Dismiss', notNow: 'Not now',
+      offline: 'You’re offline. Your plan and meal check-offs still work.',
+      pending: { one: '# change is waiting to sync.', other: '# changes are waiting to sync.' },
+      syncing: { one: 'You’re back online. Syncing # change…', other: 'You’re back online. Syncing # changes…' },
+      synced: 'You’re back online. Everything is synced.',
+      stuck: 'Some check-offs haven’t synced yet.', retry: 'Try again',
+      installTitle: 'Use your plan offline',
+      installBody: 'Add Donut to your home screen to use your plan without a connection.',
+      installCta: 'Install Donut',
+      installIos: 'In Safari, tap Share, then Add to Home Screen.',
+      pfTitle: 'Nutrition profile · In this browser',
+      pfWhere: 'Your profile is saved in this browser on this device. We receive it only to build a plan or swap, and don’t keep it.',
+      pfLoss: 'If you clear this site’s data, use private browsing, or switch browser or device, your profile won’t be there. Download a copy to keep it safe.',
+      pfDownload: 'Download my profile', pfLoad: 'Load a profile file',
+      pfWarn: 'This file contains your allergies and targets. Keep it private.',
+      pfLast: 'Last downloaded {date}', pfNever: 'Not downloaded yet',
+      pfInvalid: 'We can’t read this file. Choose a profile file downloaded from Donut (.json).',
+      pfPersist: 'Your browser may clear stored data when space runs low. Download a copy of your profile to be safe.',
+      wkCaption: 'Your plan', wkMeal: 'Meal', wkTotal: 'Day total', wkNoMeal: 'No meal', wkToday: 'Today', wkCook: 'Cook day',
+      eat: 'Eat', eaten: 'Eaten', skipped: 'Skipped', locked: 'Locked', queued: 'Saved on this device, will sync',
+      eatA11y: 'Eat {slot}, {day}'
+    },
+    pl: {
+      skip: 'Przejdź do treści', nav: 'Menu główne', today: 'Dzisiaj', plan: 'Plan', shopping: 'Zakupy', add: 'Dodaj przepis', profile: 'Profil',
+      backTo: 'Wróć do:', close: 'Zamknij', optional: 'opcjonalnie', dismiss: 'Zamknij', notNow: 'Nie teraz',
+      offline: 'Jesteś offline. Plan i odhaczanie posiłków nadal działają.',
+      pending: { one: '# zmiana czeka na synchronizację.', few: '# zmiany czekają na synchronizację.', many: '# zmian czeka na synchronizację.' },
+      syncing: { one: 'Znów jesteś online. Synchronizujemy # zmianę…', few: 'Znów jesteś online. Synchronizujemy # zmiany…', many: 'Znów jesteś online. Synchronizujemy # zmian…' },
+      synced: 'Znów jesteś online. Wszystko jest zsynchronizowane.',
+      stuck: 'Część odhaczonych posiłków jeszcze się nie zsynchronizowała.', retry: 'Spróbuj ponownie',
+      installTitle: 'Korzystaj z planu offline',
+      installBody: 'Dodaj Donut do ekranu początkowego, aby korzystać z planu bez internetu.',
+      installCta: 'Zainstaluj Donut',
+      installIos: 'W Safari stuknij Udostępnij, a potem Do ekranu początkowego.',
+      pfTitle: 'Profil żywieniowy · W tej przeglądarce',
+      pfWhere: 'Twój profil jest zapisany w tej przeglądarce na tym urządzeniu. Otrzymujemy go tylko, by ułożyć plan lub zamianę, i go nie przechowujemy.',
+      pfLoss: 'Jeśli wyczyścisz dane tej witryny, użyjesz trybu prywatnego albo zmienisz przeglądarkę lub urządzenie, profilu tam nie będzie. Pobierz kopię, aby go nie stracić.',
+      pfDownload: 'Pobierz mój profil', pfLoad: 'Wczytaj plik profilu',
+      pfWarn: 'Ten plik zawiera Twoje alergie i cele. Nie udostępniaj go.',
+      pfLast: 'Ostatnio pobrano: {date}', pfNever: 'Jeszcze nie pobrano',
+      pfInvalid: 'Nie możemy odczytać tego pliku. Wybierz plik profilu pobrany z Donut (.json).',
+      pfPersist: 'Przeglądarka może usunąć zapisane dane, gdy zabraknie miejsca. Pobierz kopię profilu na wszelki wypadek.',
+      wkCaption: 'Twój plan', wkMeal: 'Posiłek', wkTotal: 'Suma dnia', wkNoMeal: 'Brak posiłku', wkToday: 'Dzisiaj', wkCook: 'Dzień gotowania',
+      eat: 'Zjedz', eaten: 'Zjedzone', skipped: 'Pominięte', locked: 'Zablokowane', queued: 'Zapisano na tym urządzeniu, zsynchronizuje się później',
+      eatA11y: 'Zjedz: {slot}, {day}'
+    }
+  };
+  function wc(lang) { return WEB_COPY[lang === 'pl' ? 'pl' : 'en']; }
+  function fill(s, o) { return s.replace(/\{(\w+)\}/g, function (m, k) { return o[k] != null ? o[k] : m; }); }
+  /* ICU-style plural for integers: EN one/other, PL one/few/many. */
+  function plural(lang, n, f) {
+    var form;
+    if (lang === 'pl') {
+      var m10 = n % 10, m100 = n % 100;
+      form = n === 1 ? f.one : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? f.few : f.many;
+    } else form = n === 1 ? f.one : f.other;
+    return form.replace('#', String(n));
+  }
+  function useMedia(query) {
+    var get = function () { return !!(window.matchMedia && window.matchMedia(query).matches); };
+    var st = useState(get);
+    useEffect(function () {
+      if (!window.matchMedia) return;
+      var mq = window.matchMedia(query);
+      function on() { st[1](mq.matches); }
+      on();
+      if (mq.addEventListener) mq.addEventListener('change', on); else mq.addListener(on);
+      return function () { if (mq.removeEventListener) mq.removeEventListener('change', on); else mq.removeListener(on); };
+    }, [query]);
+    return st[0];
+  }
+
+  /* ---------- SideNav ---------- */
+  function SideNav(p) {
+    var t = wc(p.lang);
+    var active = p.active || 'today';
+    function item(tb) {
+      var on = tb.id === active;
+      return h('li', { key: tb.id },
+        h('a', {
+          href: (p.hrefs && p.hrefs[tb.id]) || '/' + tb.id, className: cx('fm-sidenav-item', on && 'is-active'),
+          'aria-current': on ? 'page' : undefined, onClick: p.onNavigate ? function (e) { p.onNavigate(tb.id, e); } : undefined
+        },
+          h('span', { className: 'fm-sidenav-ico' }, h(Icon, { name: tb.icon, size: 22, weight: on ? 2.1 : 1.75 })),
+          h('span', { className: 'fm-sidenav-label' }, t[tb.id])));
+    }
+    return h('nav', { className: cx('fm-sidenav', p.variant === 'rail' && 'is-rail', p.variant === 'full' && 'is-full', p.className), 'aria-label': t.nav },
+      h('span', { className: 'fm-sidenav-name' }, 'Donut'),
+      h('button', { type: 'button', className: 'fm-sidenav-add', onClick: p.onAdd },
+        h('span', { className: 'fm-sidenav-ico' }, h(Icon, { name: 'plus', size: 22, weight: 2.25 })),
+        h('span', { className: 'fm-sidenav-label' }, t.add)),
+      h('ul', { className: 'fm-sidenav-list' }, TABS.map(item)),
+      h('div', { className: 'fm-sidenav-foot' }, p.avatar || h(Avatar, { label: t.profile })));
+  }
+
+  /* ---------- TopBar ---------- */
+  function TopBar(p) {
+    var t = wc(p.lang);
+    var Hn = 'h' + (p.level || 1);
+    var back = p.back && h('a', { href: p.back.href || '#', className: 'fm-topbar-back', onClick: p.back.onClick },
+      h(Icon, { name: 'chevron-left', size: 20, weight: 2 }),
+      h('span', { className: 'fm-vh' }, t.backTo + ' '), h('span', null, p.back.label));
+    var actions = (p.actions || p.avatar) && h('div', { className: 'fm-topbar-actions' },
+      p.actions, p.avatar && h('span', { className: 'fm-topbar-avatar' }, p.avatar));
+    var title = h(Hn, { id: p.titleId, tabIndex: -1, className: p.large ? 'fm-topbar-large' : 'fm-topbar-title' }, p.title);
+    return h('header', { className: cx('fm-topbar', p.large && 'is-large', p.sticky && 'is-sticky', p.className) },
+      p.large
+        ? [back && h('div', { key: 'b', className: 'fm-topbar-row' }, back),
+           h('div', { key: 't', className: 'fm-topbar-row' }, title, actions)]
+        : h('div', { className: 'fm-topbar-row' }, back, title, actions),
+      p.subtitle && h('p', { className: 'fm-topbar-sub' }, p.subtitle));
+  }
+
+  /* ---------- Dialog and Sheet ---------- */
+  function DialogBase(p, kind) {
+    var t = wc(p.lang);
+    var ref = useRef(null);
+    var opener = useRef(null);
+    var titleId = useUid('fm-dlg');
+    var descId = titleId + '-d';
+    var wide = useMedia('(min-width: 600px)');
+    var pres = kind === 'sheet' ? (p.presentation && p.presentation !== 'auto' ? p.presentation : (wide ? 'modal' : 'sheet')) : 'modal';
+    var preview = !!p.preview;
+    function close(reason) { if (p.onClose) p.onClose(reason); }
+
+    useEffect(function () {
+      var d = ref.current;
+      if (!d || preview) return;
+      if (p.open && !d.open) {
+        opener.current = document.activeElement;
+        if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+        var target = d.querySelector('[data-autofocus]') || d.querySelector('.fm-dlg-title');
+        if (target) target.focus();
+      } else if (!p.open && d.open) {
+        if (d.close) d.close(); else d.removeAttribute('open');
+      }
+    }, [p.open, preview]);
+
+    useEffect(function () {
+      var d = ref.current;
+      if (!d || preview) return;
+      function onClosed() {
+        var o = opener.current;
+        opener.current = null;
+        if (o && o.focus && document.contains(o)) o.focus();
+      }
+      d.addEventListener('close', onClosed);
+      return function () { d.removeEventListener('close', onClosed); };
+    }, [preview]);
+
+    var panel = h('div', { className: 'fm-dlg-panel' },
+      h('div', { className: 'fm-dlg-head' },
+        h('h2', { id: titleId, className: 'fm-dlg-title', tabIndex: -1 }, p.title),
+        p.closeButton !== false && h(IconButton, { icon: 'close', label: t.close, onClick: function () { close('close'); } })),
+      p.description && h('p', { id: descId, className: 'fm-dlg-desc' }, p.description),
+      p.children && h('div', { className: 'fm-dlg-body' }, p.children),
+      p.actions && h('div', { className: 'fm-dlg-actions' }, p.actions));
+    var cls = cx('fm-dlg', 'is-' + pres, preview && 'is-preview', p.className);
+    var labels = { 'aria-labelledby': titleId, 'aria-describedby': p.description ? descId : undefined };
+    if (preview) return h('div', Object.assign({ className: cls, role: 'dialog' }, labels), panel);
+    return h('dialog', Object.assign({
+      ref: ref, className: cls, 'aria-modal': 'true',
+      onCancel: function (e) { if (p.onClose) { e.preventDefault(); close('escape'); } },
+      onClick: function (e) { if (e.target === ref.current && p.closeOnBackdrop !== false) close('backdrop'); }
+    }, labels), panel);
+  }
+  function Dialog(p) { return DialogBase(p, 'dialog'); }
+  function Sheet(p) { return DialogBase(p, 'sheet'); }
+
+  /* ---------- Toast ---------- */
+  function ToastRegion(p) {
+    /* Render once per page, empty, so screen readers register the live region before a toast appears. */
+    return h('div', { className: cx('fm-toasts', p.className), role: 'status', 'aria-live': 'polite', 'aria-atomic': 'false' },
+      h('div', { className: 'fm-toasts-stack' }, p.children));
+  }
+  function Toast(p) {
+    var t = wc(p.lang);
+    var dur = p.duration == null ? 10000 : p.duration;
+    var timer = useRef(null), left = useRef(dur), since = useRef(0), hover = useRef(false), focus = useRef(false);
+    function dismiss(reason) { if (p.onDismiss) p.onDismiss(reason); }
+    function stop() {
+      if (!timer.current) return;
+      clearTimeout(timer.current); timer.current = null;
+      left.current = Math.max(0, left.current - (Date.now() - since.current));
+    }
+    function go() {
+      if (!dur || !p.onDismiss || timer.current || hover.current || focus.current) return;
+      since.current = Date.now();
+      timer.current = setTimeout(function () { timer.current = null; dismiss('timeout'); }, left.current);
+    }
+    useEffect(function () {
+      go();
+      function onVis() { if (document.hidden) stop(); else go(); }
+      document.addEventListener('visibilitychange', onVis);
+      return function () { stop(); document.removeEventListener('visibilitychange', onVis); };
+    }, []);
+    return h('div', {
+      className: cx('fm-toast', p.className),
+      onMouseEnter: function () { hover.current = true; stop(); },
+      onMouseLeave: function () { hover.current = false; go(); },
+      onFocus: function () { focus.current = true; stop(); },
+      onBlur: function (e) { if (!e.currentTarget.contains(e.relatedTarget)) { focus.current = false; go(); } },
+      onKeyDown: function (e) { if (e.key === 'Escape') dismiss('escape'); }
+    },
+      p.icon && h(Icon, { name: p.icon, size: 18, weight: 2 }),
+      h('span', { className: 'fm-toast-msg' }, p.message),
+      p.action && h('button', {
+        type: 'button', className: 'fm-toast-action',
+        onClick: function () { if (p.action.onClick) p.action.onClick(); dismiss('action'); }
+      }, p.action.label),
+      p.onDismiss && h('button', { type: 'button', className: 'fm-toast-close', 'aria-label': t.dismiss, onClick: function () { dismiss('close'); } },
+        h(Icon, { name: 'close', size: 18, weight: 2 })));
+  }
+
+  /* ---------- TextField and Select ---------- */
+  function fieldIds(p, prefix, auto) {
+    var id = p.id || auto;
+    var hintId = id + '-hint', errId = id + '-err';
+    return { id: id, hintId: hintId, errId: errId, describedBy: [p.hint && hintId, p.error && errId].filter(Boolean).join(' ') || undefined };
+  }
+  function fieldShell(p, ids, t, control) {
+    return h('div', { className: cx('fm-tf', p.error && 'is-error', p.disabled && 'is-disabled', p.className) },
+      h('label', { htmlFor: ids.id, className: 'fm-field-label' }, p.label,
+        p.optional && h('span', { className: 'fm-tf-opt' }, ' (' + t.optional + ')')),
+      p.hint && h('span', { id: ids.hintId, className: 'fm-field-hint fm-tf-hint' }, p.hint),
+      control,
+      /* Always rendered so the polite live region exists before an error appears. */
+      h('span', { id: ids.errId, className: 'fm-field-hint is-error fm-tf-err', 'aria-live': 'polite' },
+        p.error && h(Icon, { name: 'alert', size: 14 }), p.error || null));
+  }
+  var FIELD_OWN = ['label', 'hint', 'error', 'optional', 'multiline', 'onChange', 'className', 'lang', 'options', 'placeholderOption'];
+  function omit(p, keys) { var r = Object.assign({}, p); keys.forEach(function (k) { delete r[k]; }); return r; }
+
+  function TextField(p) {
+    var t = wc(p.lang);
+    var ids = fieldIds(p, 'fm-tf', useUid('fm-tf'));
+    var rest = omit(p, FIELD_OWN);
+    var control = h(p.multiline ? 'textarea' : 'input', Object.assign(rest, {
+      id: ids.id, className: 'fm-tf-input', type: p.multiline ? undefined : (p.type || 'text'), rows: p.multiline ? (p.rows || 4) : undefined,
+      'aria-invalid': p.error ? 'true' : undefined, 'aria-describedby': ids.describedBy,
+      onChange: p.onChange ? function (e) { p.onChange(e.target.value, e); } : undefined
+    }));
+    return fieldShell(p, ids, t, control);
+  }
+
+  function Select(p) {
+    var t = wc(p.lang);
+    var ids = fieldIds(p, 'fm-sel', useUid('fm-sel'));
+    var rest = omit(p, FIELD_OWN.concat(['placeholder']));
+    if (rest.value == null && rest.defaultValue == null && p.placeholder) rest.defaultValue = '';
+    var control = h('span', { className: 'fm-select-box' },
+      h('select', Object.assign(rest, {
+        id: ids.id, className: 'fm-select',
+        'aria-invalid': p.error ? 'true' : undefined, 'aria-describedby': ids.describedBy,
+        onChange: p.onChange ? function (e) { p.onChange(e.target.value, e); } : undefined
+      }),
+        p.placeholder && h('option', { value: '', disabled: true }, p.placeholder),
+        (p.options || []).map(function (o) {
+          var v = o.value != null ? o.value : o;
+          return h('option', { key: String(v), value: v, disabled: o.disabled }, o.label != null ? o.label : o);
+        })),
+      h(Icon, { name: 'chevron-down', size: 20, className: 'fm-select-chev' }));
+    return fieldShell(p, ids, t, control);
+  }
+
+  /* ---------- Tooltip ---------- */
+  function Tooltip(p) {
+    var id = useUid('fm-tip');
+    var st = useState(false);
+    var shown = p.open != null ? p.open : st[0];
+    var delay = useRef(null);
+    function show(ms) { clearTimeout(delay.current); delay.current = setTimeout(function () { st[1](true); }, ms); }
+    function hide() { clearTimeout(delay.current); st[1](false); }
+    useEffect(function () {
+      if (!st[0]) return;
+      function onKey(e) { if (e.key === 'Escape') hide(); }
+      document.addEventListener('keydown', onKey);
+      return function () { document.removeEventListener('keydown', onKey); };
+    }, [st[0]]);
+    useEffect(function () { return function () { clearTimeout(delay.current); }; }, []);
+    var child = React.Children.only(p.children);
+    var trigger = p.describe ? React.cloneElement(child, { 'aria-describedby': id }) : child;
+    return h('span', {
+      className: cx('fm-tip-wrap', p.className),
+      onMouseEnter: function () { show(p.delay == null ? 400 : p.delay); },
+      onMouseLeave: hide,
+      onFocus: function (e) { var el = e.target; if (!el.matches || el.matches(':focus-visible')) show(0); },
+      onBlur: hide
+    },
+      trigger,
+      h('span', {
+        id: id, role: 'tooltip', className: cx('fm-tip', 'is-' + (p.placement || 'bottom'), shown && 'is-open'),
+        /* Label mode repeats the trigger's aria-label, so hide it from assistive tech to avoid a double read. */
+        'aria-hidden': p.describe ? undefined : 'true'
+      }, h('span', { className: 'fm-tip-bubble' }, p.label)));
+  }
+
+  /* ---------- WeekTable ---------- */
+  function WeekMeal(p) {
+    var m = p.meal, t = p.t;
+    var locked = m.status === 'eaten' || m.status === 'skipped';
+    var nav = { className: 'fm-wk-title', 'data-wk-r': p.r, 'data-wk-c': p.c };
+    var title = m.href
+      ? h('a', Object.assign({ href: m.href }, nav), m.title)
+      : h('button', Object.assign({ type: 'button', onClick: p.onOpen }, nav), m.title);
+    var status;
+    if (locked) {
+      status = h('span', { className: cx('fm-meal-eat', 'is-static', m.status === 'eaten' ? 'is-on' : 'is-skipped') },
+        h(Icon, { name: 'lock', size: 15, weight: 2.25, label: t.locked }), m.status === 'eaten' ? t.eaten : t.skipped);
+    } else {
+      var btn = h('button', {
+        type: 'button', className: cx('fm-meal-eat', m.eatHint && 'is-disabled'),
+        'aria-label': fill(t.eatA11y, { slot: String(p.slotLabel).toLocaleLowerCase(p.lang === 'pl' ? 'pl' : 'en'), day: p.dayLabel }),
+        'aria-disabled': m.eatHint ? 'true' : undefined, onClick: m.eatHint ? undefined : p.onEat
+      }, h(Icon, { name: 'check', size: 15, weight: 2.25 }), t.eat);
+      status = m.eatHint ? h(Tooltip, { label: m.eatHint, describe: true, placement: 'top' }, btn) : btn;
+    }
+    return h('div', { className: cx('fm-wk-meal', 'is-' + (m.status || 'planned'), m.batch && 'is-batch', p.joinsNext && 'joins-next') },
+      title,
+      h(MacroLine, { kcal: m.kcal, protein: m.protein }),
+      (m.badges && m.badges.length) ? h('div', { className: 'fm-meal-badges' }, m.badges.map(function (b, i) {
+        return h(Badge, { key: i, tone: b.tone, icon: b.icon }, b.label);
+      })) : null,
+      h('div', { className: 'fm-wk-status' }, status,
+        m.queued && h('span', { className: 'fm-wk-queued' }, h(Icon, { name: 'clock', size: 16, label: t.queued }))));
+  }
+
+  function WeekTable(p) {
+    var t = wc(p.lang);
+    var days = p.days || [], slots = p.slots || [], meals = p.meals || {};
+    var wide = useMedia('(min-width: 1024px)');
+    var layout = p.layout && p.layout !== 'auto' ? p.layout : (wide ? 'table' : 'list');
+    var uid = useUid('fm-wk');
+    var caption = p.caption || t.wkCaption;
+    function at(d, s) { return meals[d.id] && meals[d.id][s.id]; }
+    function dayBadges(d) {
+      return [d.today && h(Badge, { key: 't', tone: 'basil' }, t.wkToday), d.cook && h(Badge, { key: 'c', tone: 'paprika', icon: 'repeat' }, t.wkCook)];
+    }
+    function cell(d, di, s, si) {
+      var m = at(d, s);
+      if (!m) return h('span', { className: 'fm-wk-empty' }, h('span', { 'aria-hidden': 'true' }, '—'), h('span', { className: 'fm-vh' }, t.wkNoMeal));
+      var nd = days[di + 1], nm = nd && at(nd, s);
+      return h(WeekMeal, {
+        meal: m, t: t, lang: p.lang, r: si, c: di, slotLabel: s.label, dayLabel: d.label || d.name,
+        joinsNext: layout === 'table' && m.batch && nm && nm.batch === m.batch,
+        onEat: function () { if (p.onEat) p.onEat(d.id, s.id); },
+        onOpen: function () { if (p.onOpen) p.onOpen(d.id, s.id); }
+      });
+    }
+    /* Arrow keys move between meal titles; Tab still reaches every control. */
+    function onKey(e) {
+      var el = e.target;
+      if (!el || !el.getAttribute || el.getAttribute('data-wk-r') == null) return;
+      var root = e.currentTarget;
+      var all = Array.prototype.slice.call(root.querySelectorAll('[data-wk-r]'));
+      var r = +el.getAttribute('data-wk-r'), c = +el.getAttribute('data-wk-c'), k = e.key, next = null;
+      function get(rr, cc) { return root.querySelector('[data-wk-r="' + rr + '"][data-wk-c="' + cc + '"]'); }
+      function scan(dr, dc) {
+        for (var rr = r + dr, cc = c + dc; rr >= 0 && rr < slots.length && cc >= 0 && cc < days.length; rr += dr, cc += dc) {
+          var x = get(rr, cc); if (x) return x;
+        }
+        return null;
+      }
+      if ((k === 'Home' || k === 'End') && e.ctrlKey) next = k === 'Home' ? all[0] : all[all.length - 1];
+      else if (layout === 'table') {
+        if (k === 'ArrowRight') next = scan(0, 1);
+        else if (k === 'ArrowLeft') next = scan(0, -1);
+        else if (k === 'ArrowDown') next = scan(1, 0);
+        else if (k === 'ArrowUp') next = scan(-1, 0);
+        else if (k === 'Home') { for (var i = 0; i < days.length && !next; i++) next = get(r, i); }
+        else if (k === 'End') { for (var j = days.length - 1; j >= 0 && !next; j--) next = get(r, j); }
+      } else {
+        var idx = all.indexOf(el);
+        if (k === 'ArrowDown') next = all[idx + 1];
+        else if (k === 'ArrowUp') next = all[idx - 1];
+        else if (k === 'Home') next = all[0];
+        else if (k === 'End') next = all[all.length - 1];
+      }
+      if (next) { e.preventDefault(); next.focus(); }
+    }
+
+    if (layout === 'table') {
+      return h('div', {
+        className: cx('fm-wk', 'is-table', p.className), role: 'region', 'aria-labelledby': uid, tabIndex: 0,
+        onKeyDown: onKey, style: { '--wk-cols': days.length }
+      },
+        h('table', { className: 'fm-wk-table' },
+          h('caption', { id: uid, className: p.showCaption ? 'fm-wk-caption' : 'fm-vh' }, caption),
+          h('thead', null, h('tr', null,
+            h('th', { scope: 'col', className: 'fm-wk-corner' }, h('span', { className: 'fm-vh' }, t.wkMeal)),
+            days.map(function (d) {
+              return h('th', { key: d.id, scope: 'col', className: cx('fm-wk-dayhead', d.today && 'is-today'), 'aria-current': d.today ? 'date' : undefined },
+                h('span', { className: 'fm-wk-dname' }, d.name, ' ', h('span', { className: 'fm-wk-ddate' }, d.date)),
+                (d.today || d.cook) && h('span', { className: 'fm-wk-dbadges' }, dayBadges(d)));
+            }))),
+          h('tbody', null,
+            h('tr', { className: 'fm-wk-totals' },
+              h('th', { scope: 'row', className: 'fm-wk-slot' }, t.wkTotal),
+              days.map(function (d) { return h('td', { key: d.id }, d.totals && h(MacroLine, { kcal: d.totals.kcal, protein: d.totals.protein })); })),
+            slots.map(function (s, si) {
+              return h('tr', { key: s.id },
+                h('th', { scope: 'row', className: 'fm-wk-slot' }, s.label),
+                days.map(function (d, di) { return h('td', { key: d.id, className: d.today ? 'is-today' : undefined }, cell(d, di, s, si)); }));
+            }))));
+    }
+
+    var Hn = 'h' + (p.headingLevel || 2);
+    return h('div', { className: cx('fm-wk', 'is-list', p.className), onKeyDown: onKey },
+      h('ol', { className: 'fm-wk-days', 'aria-label': caption },
+        days.map(function (d, di) {
+          var hid = uid + '-d' + di;
+          return h('li', { key: d.id, className: cx('fm-wk-day', d.today && 'is-today') },
+            h('section', { 'aria-labelledby': hid },
+              h('div', { className: 'fm-wk-dayhead' },
+                h(Hn, { id: hid, className: 'fm-wk-dname', 'aria-current': d.today ? 'date' : undefined }, d.name, ' ', h('span', { className: 'fm-wk-ddate' }, d.date)),
+                dayBadges(d),
+                d.totals && h(MacroLine, { kcal: d.totals.kcal, protein: d.totals.protein })),
+              h('ol', { className: 'fm-wk-meals' }, slots.map(function (s, si) {
+                return h('li', { key: s.id, className: 'fm-wk-row' }, h('span', { className: 'fm-cap' }, s.label), cell(d, di, s, si));
+              }))));
+        })));
+  }
+
+  /* ---------- OfflineBanner ---------- */
+  function OfflineBanner(p) {
+    var lang = p.lang === 'pl' ? 'pl' : 'en';
+    var t = wc(lang);
+    var st = p.state || 'offline';
+    var n = p.pending || 0;
+    var icon = null, text = null, action = null, tone = st;
+    if (st === 'offline') { icon = 'wifi-off'; text = t.offline + (n ? ' ' + plural(lang, n, t.pending) : ''); }
+    else if (st === 'syncing') { icon = 'repeat'; tone = 'online'; text = plural(lang, n || 1, t.syncing); }
+    else if (st === 'synced') { icon = 'check'; tone = 'online'; text = t.synced; }
+    else if (st === 'stuck') { icon = 'alert'; text = t.stuck + (n ? ' ' + plural(lang, n, t.pending) : ''); action = h(Button, { variant: 'quiet', size: 'sm', onClick: p.onRetry }, t.retry); }
+    /* state 'none' keeps an empty live region mounted so the next change is announced. */
+    return h('div', { className: cx('fm-obanner', 'is-' + (st === 'none' ? 'empty' : tone), p.sticky && 'is-sticky', p.className), role: 'status' },
+      icon && h(Icon, { name: icon, size: 18, weight: 2 }),
+      text && h('p', { className: 'fm-obanner-text' }, text),
+      action);
+  }
+
+  /* ---------- InstallPrompt ---------- */
+  function InstallPrompt(p) {
+    var t = wc(p.lang);
+    var titleId = useUid('fm-install');
+    var platform = p.platform || 'prompt';
+    if (platform === 'none') return null;
+    return h('section', { className: cx('fm-install', p.className), 'aria-labelledby': titleId },
+      h('span', { className: 'fm-install-icon' }, h(Icon, { name: 'download', size: 18, weight: 2 })),
+      h('div', { className: 'fm-install-text' },
+        h('p', { id: titleId, className: 'fm-install-title' }, t.installTitle),
+        h('p', { className: 'fm-install-body' }, t.installBody),
+        platform === 'ios' && h('p', { className: 'fm-install-body fm-install-steps' }, t.installIos),
+        h('div', { className: 'fm-install-actions' },
+          platform === 'prompt' && h(Button, { variant: 'secondary', size: 'sm', icon: 'download', onClick: p.onInstall }, t.installCta),
+          h(Button, { variant: 'quiet', size: 'sm', onClick: p.onDismiss }, t.notNow))));
+  }
+
+  /* ---------- ProfileFileCard ---------- */
+  function ProfileFileCard(p) {
+    var t = wc(p.lang);
+    var input = useRef(null);
+    var titleId = useUid('fm-pfile');
+    var warnId = titleId + '-w';
+    var mode = p.mode || 'both';
+    var canDown = mode !== 'load', canLoad = mode !== 'download';
+    return h('section', { className: cx('fm-pfile', p.className), 'aria-labelledby': titleId },
+      h('div', { className: 'fm-pfile-head' },
+        h('span', { className: 'fm-pfile-icon' }, h(Icon, { name: 'user', size: 22 })),
+        h('div', null,
+          h('p', { id: titleId, className: 'fm-pfile-title' }, p.title || t.pfTitle),
+          canDown && h('p', { className: 'fm-pfile-meta' }, p.lastDownloaded ? fill(t.pfLast, { date: p.lastDownloaded }) : t.pfNever))),
+      h('p', { className: 'fm-pfile-body' }, t.pfWhere),
+      h('p', { className: 'fm-pfile-body' }, t.pfLoss),
+      p.persistRefused && h('p', { className: 'fm-pfile-meta' }, t.pfPersist),
+      h('div', { className: 'fm-pfile-actions' },
+        canDown && h(Button, { variant: 'secondary', icon: 'download', onClick: p.onDownload, 'aria-describedby': warnId }, t.pfDownload),
+        canLoad && h(Button, { variant: 'quiet', icon: 'upload', onClick: function () { if (input.current) input.current.click(); } }, t.pfLoad),
+        canLoad && h('input', {
+          ref: input, type: 'file', accept: '.json,application/json', className: 'fm-vh', tabIndex: -1, 'aria-hidden': 'true',
+          onChange: function (e) { var f = e.target.files && e.target.files[0]; if (f && p.onLoad) p.onLoad(f); e.target.value = ''; }
+        })),
+      canDown && h('p', { id: warnId, className: 'fm-pfile-warn' }, h(Icon, { name: 'lock', size: 14, weight: 2 }), t.pfWarn),
+      p.error && h('p', { className: 'fm-pfile-error', role: 'alert' }, h(Icon, { name: 'alert', size: 14, weight: 2 }), p.error === true ? t.pfInvalid : p.error));
+  }
+
+  /* ---------- AppShell ---------- */
+  function AppShell(p) {
+    var t = wc(p.lang);
+    var mainId = p.mainId || 'main';
+    var nav = p.nav !== false;
+    return h('div', { className: cx('fm-shell', p.contained && 'is-contained', p.accessory && 'has-acc', !nav && 'no-nav', p.className), style: p.style },
+      h('a', { href: '#' + mainId, className: 'fm-skip' }, t.skip),
+      h('div', { className: 'fm-shell-frame' },
+        nav && h('div', { className: 'fm-shell-side' },
+          h(SideNav, { active: p.active, lang: p.lang, hrefs: p.hrefs, onNavigate: p.onNavigate, onAdd: p.onAdd, avatar: p.avatar })),
+        h('main', { id: mainId, className: 'fm-shell-main', tabIndex: -1 },
+          h('div', { className: cx('fm-shell-content', p.aside && 'has-aside', p.narrow && 'is-narrow') },
+            (p.banner || p.header || p.notices) && h('div', { className: 'fm-shell-top' }, p.banner, p.header, p.notices),
+            p.aside && h('aside', { className: 'fm-shell-aside', 'aria-label': p.asideLabel }, p.aside),
+            h('div', { className: 'fm-shell-primary' }, p.children)),
+          h(ToastRegion, { className: 'fm-shell-toasts' }, p.toasts)),
+        nav && h('div', { className: 'fm-shell-bottom' },
+          h(TabBar, { active: p.active, lang: p.lang, links: true, hrefs: p.hrefs, onNavigate: p.onNavigate, onAdd: p.onAdd, accessory: p.accessory }))));
+  }
+
   var C = window;
   C.Donut = C.Donut || {};
   Object.assign(C.Donut, {
@@ -650,6 +1186,9 @@
     SwapOption: SwapOption, ChangeItem: ChangeItem, CompareCard: CompareCard, ConfidencePrompt: ConfidencePrompt,
     ShoppingItem: ShoppingItem, StatTile: StatTile, PlanCard: PlanCard, LockedPreview: LockedPreview,
     SectionHeader: SectionHeader, NavBar: NavBar, Avatar: Avatar, OnboardingProgress: OnboardingProgress, TabBar: TabBar,
-    BottomAccessory: BottomAccessory, RecipeHero: RecipeHero, PhoneFrame: PhoneFrame
+    BottomAccessory: BottomAccessory, RecipeHero: RecipeHero, PhoneFrame: PhoneFrame,
+    AppShell: AppShell, SideNav: SideNav, TopBar: TopBar, Dialog: Dialog, Sheet: Sheet, Toast: Toast, ToastRegion: ToastRegion,
+    TextField: TextField, Select: Select, WeekTable: WeekTable, OfflineBanner: OfflineBanner, InstallPrompt: InstallPrompt,
+    ProfileFileCard: ProfileFileCard, Tooltip: Tooltip
   });
 })();

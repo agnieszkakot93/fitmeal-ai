@@ -1,0 +1,28 @@
+<!-- @dsCard group="Status" height=420 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Toast — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.Donut, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+function Live(){
+  var s = React.useState([]);
+  function add(){ var id = Date.now(); s[1](s[0].concat([id])); }
+  function drop(id){ s[1](function(list){ return list.filter(function(x){ return x !== id; }); }); }
+  return h('div', {style:{position:'relative', height:150, border:'1px dashed var(--line-strong)', borderRadius:16, padding:12, display:'flex', flexDirection:'column', justifyContent:'space-between'}},
+    h(F.Button, {variant:'secondary', size:'sm', icon:'check', onClick:add}, 'Eat lunch'),
+    h(F.ToastRegion, null, s[0].map(function(id){
+      return h(F.Toast, {key:id, message:'Lunch marked as eaten', action:{label:'Undo'}, onDismiss:function(){ drop(id); }});
+    })));
+}
+function still(el){ return h('div', {style:{position:'relative', height:72, display:'flex', flexDirection:'column', justifyContent:'flex-end'}}, h(F.ToastRegion, null, el)); }
+root(h('div', {className:'fm-stack', style:{padding:16, maxWidth:440, gap:12}},
+  still(h(F.Toast, {message:'Lunch marked as eaten', action:{label:'Undo'}, duration:0, onDismiss:function(){}})),
+  still(h(F.Toast, {lang:'pl', message:'Obiad: oznaczono jako zjedzone', action:{label:'Cofnij'}, duration:0, onDismiss:function(){}})),
+  still(h(F.Toast, {icon:'clock', message:'Saved on this device, will sync', duration:0})),
+  h(Live)));
+</script>
+</body>
+</html>

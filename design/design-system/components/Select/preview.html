@@ -1,0 +1,22 @@
+<!-- @dsCard group="Inputs" height=420 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Select — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.Donut, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+var langs = [{value:'pl', label:'Polski'}, {value:'en', label:'English'}];
+root(h('div', {className:'fm-row', style:{padding:16, gap:32, alignItems:'flex-start'}},
+  h('div', {className:'fm-stack', style:{width:340, gap:20}},
+    h(F.Select, {label:'Language', options:langs, defaultValue:'en', hint:'Starts with your browser’s language.'}),
+    h(F.Select, {label:'Theme', options:[{value:'system', label:'Same as this device'}, {value:'light', label:'Light'}, {value:'dark', label:'Dark'}], defaultValue:'system'}),
+    h(F.Select, {label:'Meal type', placeholder:'Choose a meal', options:['Breakfast', 'Lunch', 'Dinner', 'Snack'], error:'Choose which meal this recipe is for.'})),
+  h('div', {className:'fm-stack', style:{width:340, gap:20}},
+    h(F.Select, {lang:'pl', label:'Język', options:langs, defaultValue:'pl', hint:'Na początek taki jak w przeglądarce.'}),
+    h(F.Select, {lang:'pl', label:'Motyw', options:[{value:'system', label:'Jak na tym urządzeniu'}, {value:'light', label:'Jasny'}, {value:'dark', label:'Ciemny'}], defaultValue:'system'}),
+    h(F.Select, {lang:'pl', label:'Rodzaj posiłku', placeholder:'Wybierz posiłek', options:['Śniadanie', 'Obiad', 'Kolacja', 'Przekąska'], error:'Wybierz, na który posiłek jest ten przepis.'}))));
+</script>
+</body>
+</html>
