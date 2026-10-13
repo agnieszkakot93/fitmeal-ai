@@ -1,10 +1,10 @@
 # Donut — Product Requirements Document
 
-24 Sept 2026 · @blvck
+24 Sept 2026 · @blvck · Updated 13 Oct 2026: web first (installable PWA), iOS app next phase (DEVELOPMENT_PLAN D11–D14).
 
 ## 1. Overview & Vision
 
-Donut is an intelligent meal planning app that turns any recipe — from social media, a PDF, or its own catalog — into a personalized plan matched to the user's calories, macros, allergies, budget, cooking time, and pantry.
+Donut is an intelligent meal planning app (first as a mobile-first web app installable as a PWA, then as a native iOS app) that turns any recipe — from social media, a PDF, or its own catalog — into a personalized plan matched to the user's calories, macros, allergies, budget, cooking time, and pantry.
 
 **Core promise:** "Eat what you feel like eating — matched to your plan." The app imports or suggests a recipe the user actually wants, adapts it to fit their targets, generates a compatible weekly plan, and produces a shopping list.
 
@@ -50,7 +50,7 @@ Metrics by category:
 - **Value/engagement:** meal swaps, ingredient swaps, rebalance proposals accepted/rejected, recipe imports, meal-prep usage, Economy Mode usage, Pantry usage (from Phase 2)
 - **Business/financial:** MRR, ARR, ARPU, ARPPU, CAC, LTV, churn, Free→Paid conversion, Standard→Premium conversion
 
-Metrics are computed from aggregated server data and App Store Connect; there is no analytics SDK and no device identifier, and no personal or health data is used (see §12.2).
+Metrics are computed from aggregated server data (and App Store Connect once the iOS app ships); there is no analytics SDK and no device identifier, and no personal or health data is used (see §12.2).
 
 **Retention loop** (weekly cycle): Thu/Fri generate next week → shopping list → weekend shopping → meal prep → daily use → feedback → next plan. If this loop holds, the subscription has natural recurring value.
 
@@ -69,9 +69,11 @@ Metrics are computed from aggregated server data and App Store Connect; there is
 
 ## 6. MVP Scope
 
-**Must have (v1.0):** onboarding (18+ age confirmation, health-data consent and general health notice, goal, optional body data for suggested targets, calories, macros, meals/day, calorie distribution) · allergies, exclusions, preferences · recipe database (owned catalog) · import via text / link / PDF · recipe personalization (transformation to user's targets) · ingredient substitutions · 3, 5 or 7-day plan generation · meal prep for 1–3 days · Economy Mode v1 (unique-ingredient minimization and ingredient reuse) · meal swap · shopping list · mark meal as eaten · proposed plan recalculation after any change, applied only after the user confirms · Sign in with Apple · paywall (Free + Standard) · in-app account deletion and data export · offline use of the current plan, saved recipes and shopping list.
+**Must have (v1.0):** onboarding (18+ age confirmation, health-data consent and general health notice, goal, optional body data for suggested targets, calories, macros, meals/day, calorie distribution) · allergies, exclusions, preferences · recipe database (owned catalog) · import via text / link / PDF · recipe personalization (transformation to user's targets) · ingredient substitutions · 3, 5 or 7-day plan generation · meal prep for 1–3 days · Economy Mode v1 (unique-ingredient minimization and ingredient reuse) · meal swap · shopping list · mark meal as eaten · proposed plan recalculation after any change, applied only after the user confirms · sign-in (providers open, §15) · paywall (Free + Standard, web payments through Stripe) · in-app account deletion and data export · offline use of the current plan, saved recipes and shopping list.
 
 **Nice to have (post-MVP — see §13):** Pantry Mode and "Cook from what I have" (Phase 2) · estimated pricing, including cost deltas on swaps (Phase 2) · package-size-aware optimization (Phase 2) · leftover/waste minimization (Phase 2) · custom and longer plan lengths (Phase 2) · feedback-based preference learning (Phase 3).
+
+**Next phase (after the web MVP):** native iOS app on the same backend (Share Extension, Sign in with Apple, StoreKit, push).
 
 **Later:** receipt scanning · grocery store integrations · automatic price updates · Apple Health integration · fridge photo scanning · couple/family planning · shared shopping lists · kitchen appliance integrations.
 
@@ -79,14 +81,14 @@ Metrics are computed from aggregated server data and App Store Connect; there is
 
 ## 7. Onboarding Requirements
 
-First launch builds the user's `NutritionProfile`, which is stored only on the phone (§12.2). Simple Mode with sensible defaults is the default path; Advanced options are opt-in. No account is needed to complete onboarding; Sign in with Apple is requested when the first plan is generated, so the plan can be saved and synced.
+First launch builds the user's `NutritionProfile`, which is stored in the user's account with health-data consent (§12.2). Simple Mode with sensible defaults is the default path; Advanced options are opt-in. Onboarding answers are collected first, without an account; then the user signs in, and only then is the first plan generated and saved. There is no plan preview before sign-in.
 
 - **Age confirmation (first step):** the user confirms they are 18 or older. Anyone who does not confirm cannot continue and sees a short explanation that Donut is designed for adults. If the user later enters an age under 18 in body data, the same block applies.
 - **Consent & health notice:**
-  - Explicit, separate, unticked consent to process health-related data (allergies, intolerances, body data, calorie/macro goals) under GDPR Art. 9 — not bundled with the terms of service. The consent text says that this data is stored only on the phone and is sent to Donut's servers only to compute plans and recipes, without being saved there. Without it the app cannot build a personalized profile (see §12.2).
+  - Explicit, separate, unticked consent to process health-related data (allergies, intolerances, body data, calorie/macro goals) under GDPR Art. 9 — not bundled with the terms of service. The consent text says that this data is stored in the user's Donut account (encrypted, in the EU) so it is available on every device, and can be deleted at any time. Without it the profile stays only in this browser and is sent to Donut's servers only to compute plans and recipes, without being saved there (see §12.2).
   - General notice: Donut gives general nutrition planning, not medical advice. If you are pregnant or breastfeeding, have or have had an eating disorder, have kidney disease, diabetes or another medical condition, or follow a medically prescribed diet, consult a doctor or registered dietitian before using the app. The app does **not** ask about or store any of these conditions.
 - **Goal:** cut / maintain / bulk, or a fully custom calorie/macro target.
-- **Body data (optional):** age, sex, weight, height, and activity level. If provided, the app calculates suggested calorie and macro targets on the phone (standard energy-expenditure equation + goal adjustment) and pre-fills the next screens. The user can skip this step and enter targets directly, and can override any suggested value.
+- **Body data (optional):** age, sex, weight, height, and activity level. If provided, the app calculates suggested calorie and macro targets on the device (standard energy-expenditure equation + goal adjustment) and pre-fills the next screens. The user can skip this step and enter targets directly, and can override any suggested value.
 - **Calories:** direct numeric input (e.g. 1500 kcal/day), pre-filled with the suggestion when body data was given. **Hard floor: 1200 kcal/day.** The app refuses any target below it (including a suggested value, which is clamped to 1200) and explains why: very low intakes need supervision from a doctor or dietitian, so Donut doesn't build plans below 1200 kcal a day.
 - **Macros — two modes:**
   1. Simple: standard / high protein / lower carb / balanced presets.
@@ -108,13 +110,13 @@ First launch builds the user's `NutritionProfile`, which is stored only on the p
 
 - **Preferences:** e.g. high protein, vegetarian, vegan, Mediterranean, quick meals, sweet/savory breakfast, meal-prep friendly, low-cost.
 - **Budget:** tier selector (Economy / Standard / Flexible) drives Economy Mode weighting. An explicit weekly budget (e.g. 180 PLN) arrives with estimated pricing (Phase 2); the MVP does not ask for an amount it cannot enforce.
-- **Cooking constraints:** max cooking time (15/30/45/60+ min), "cook once for N days" (1–3), available equipment (air fryer, oven, blender, microwave, Thermomix, none). This step also offers the Thursday "plan next week" reminder and triggers the iOS notification permission, with a "Not now" option (no new step; no marketing pushes, §12.2).
+- **Cooking constraints:** max cooking time (15/30/45/60+ min), "cook once for N days" (1–3), available equipment (air fryer, oven, blender, microwave, Thermomix, none). This step also offers the Thursday "plan next week" reminder and triggers the browser notification permission where web push is supported (the iOS permission in the iOS app), with a "Not now" option (no new step; no marketing pushes, §12.2).
 
 ## 8. Core Functional Requirements
 
 ### 8.1 Recipe sources & import
 
-Four input sources: (1) the app's own recipe database, (2) link import from pages that publish standard recipe data (schema.org `Recipe`: name, ingredients, quantities, servings, instructions, available nutrition, prep time); for other pages, or sites that opt out of text and data mining, the app asks the user to paste the recipe text, (3) PDF import from text-based PDFs (e-books, dietitian plans, personal documents): the text is extracted on the phone, the user picks the recipe pages, and only that text is sent; scanned PDFs are not supported at launch, (4) manual text entry / free-form paste, including captions shared from Instagram or TikTok (the post itself is never fetched).
+Four input sources: (1) the app's own recipe database, (2) link import from pages that publish standard recipe data (schema.org `Recipe`: name, ingredients, quantities, servings, instructions, available nutrition, prep time); for other pages, or sites that opt out of text and data mining, the app asks the user to paste the recipe text, (3) PDF import from text-based PDFs (e-books, dietitian plans, personal documents): the text is extracted on the user's device, the user picks the recipe pages, and only that text is sent; scanned PDFs are not supported at launch, (4) manual text entry / free-form paste, including captions copied or shared from Instagram or TikTok (the post itself is never fetched).
 
 **Import pipeline:** URL/PDF/Text → extract content → detect recipes → parse ingredients → normalize units → match to FoodItems → detect servings → calculate nutrition → AI culinary interpretation → validation → user preview. Low-confidence extractions (e.g. "1 cup cheese") open a clarification prompt rather than silently guessing; every parsed ingredient carries a confidence score (0–1).
 
@@ -195,7 +197,7 @@ Every planned meal can be marked cooked, eaten, or skipped from Today and Weekly
 
 ## 9. AI vs Deterministic Nutrition Engine
 
-**AI layer responsibilities:** understanding/interpreting recipe text, extracting ingredients, parsing recipe text (including text extracted from PDFs on the phone), classifying ingredient culinary roles, writing the app's own preparation instructions, generating culinarily sensible recipe variants, proposing substitutions, recognizing dish style, tagging.
+**AI layer responsibilities:** understanding/interpreting recipe text, extracting ingredients, parsing recipe text (including text extracted from PDFs on the device), classifying ingredient culinary roles, writing the app's own preparation instructions, generating culinarily sensible recipe variants, proposing substitutions, recognizing dish style, tagging.
 
 **Deterministic nutrition layer responsibilities:** calories, protein, fat, carbs, fiber, portion math, daily totals, allergen checks, constraint enforcement, optimization, tolerances (§8.3, §8.5, §8.6), and the 1200 kcal floor. The LLM is never the source of truth for nutrition values — all numeric outputs are computed and validated by the deterministic engine. Nutrition stated by an imported source is displayed for comparison only.
 
@@ -212,9 +214,9 @@ Every planned meal can be marked cooked, eaten, or skipped from Today and Weekly
 
 ## 10. Data Model & Architecture
 
-**Core entities:** User, ConsentRecord, NutritionProfile, DietaryRestriction, Allergy (these three stored only on the phone, §12.2), FoodPreference, FoodItem, FoodPackage, Recipe, RecipeIngredient, RecipeVariant, RecipeSource, MealPlan, MealPlanDay, MealSlot, ShoppingList, ShoppingItem, RecipeFeedback. Phase 2: PantryItem, PriceObservation.
+**Core entities:** User, ConsentRecord, NutritionProfile, DietaryRestriction, Allergy (these three stored in the account with health-data consent, encrypted, §12.2), FoodPreference, FoodItem, FoodPackage, Recipe, RecipeIngredient, RecipeVariant, RecipeSource, MealPlan, MealPlanDay, MealSlot, ShoppingList, ShoppingItem, RecipeFeedback. Phase 2: PantryItem, PriceObservation.
 
-**NutritionProfile** stores targets, whether each target is suggested or user-entered, optional body data, and exclusions with their severity tier (and, for intolerances, whether the user relaxed it to "avoid when possible"). It stores no medical conditions, and it lives only on the phone: the app sends it with each plan, personalization, swap or rebalance request, and the server uses it for that request without saving it.
+**NutritionProfile** stores targets, whether each target is suggested or user-entered, optional body data, and exclusions with their severity tier (and, for intolerances, whether the user relaxed it to "avoid when possible"). It stores no medical conditions. With health-data consent it is stored in the user's account (health fields encrypted) so it follows the user across devices, with a cached copy on the device for offline use; without consent it stays only in the browser and is sent with each request without being saved.
 
 **MealSlot** carries a status (planned / cooked / eaten / skipped); eaten and skipped slots are locked.
 
@@ -224,7 +226,8 @@ Every planned meal can be marked cooked, eaten, or skipped from Today and Weekly
 
 ```mermaid
 flowchart TD
-    A[iOS SwiftUI App] --> B[API / Backend]
+    A[Web app - PWA] --> B[API / Backend]
+    A2[iOS app - next phase] --> B
     B --> C[Recipe Service]
     B --> D[Nutrition Engine]
     B --> E[User Service]
@@ -234,9 +237,11 @@ flowchart TD
     F --> I[Import Pipeline]
 ```
 
-**iOS:** Swift, SwiftUI, async/await, SwiftData/Core Data for local cache, Keychain for tokens. Current plan, saved recipes, and shopping list should remain usable offline.
+**Web (MVP):** TypeScript, React, Vite; an installable PWA with a service worker and IndexedDB as the local cache; tokens in a secure HttpOnly cookie. Current plan, saved recipes, and shopping list should remain usable offline.
 
-**Offline behavior:** shopping-list checkmarks and meal-status events (cooked/eaten/skipped) queue offline and sync later. Plan generation, swaps, rebalancing, imports, and profile changes need network; while offline these actions show an offline state instead of failing silently.
+**iOS (next phase):** Swift, SwiftUI, async/await, SwiftData for local cache, Keychain for tokens, same API and the same offline rules.
+
+**Offline behavior** (web and iOS): shopping-list checkmarks and meal-status events (cooked/eaten/skipped) queue offline and sync later. Plan generation, swaps, rebalancing, imports, and profile changes need network; while offline these actions show an offline state instead of failing silently.
 
 **Offline conflict resolution:**
 
@@ -246,13 +251,13 @@ flowchart TD
 
 **Backend:** Python, FastAPI, PostgreSQL, Redis, object storage, background workers — chosen for strength in optimization, nutrition data processing, parsers, and AI pipelines.
 
-**Backend services:** User Service (account, preferences, consent, feedback; the health profile arrives with each request and is not stored) · Recipe Service (recipes, ingredients, variants, tags) · Import Service (schema.org links, text including PDF text, normalization) · Nutrition Service (food database, nutrition/portion calculations) · Planner Service (daily/weekly plan, swaps, rebalance proposals) · Optimization Service (macro/budget/package optimization) · Shopping Service (aggregation, package math; pantry subtraction from Phase 2).
+**Backend services:** User Service (account, health profile with consent, preferences, consent, feedback) · Recipe Service (recipes, ingredients, variants, tags) · Import Service (schema.org links, text including PDF text, normalization) · Nutrition Service (food database, nutrition/portion calculations) · Planner Service (daily/weekly plan, swaps, rebalance proposals) · Optimization Service (macro/budget/package optimization) · Shopping Service (aggregation, package math; pantry subtraction from Phase 2).
 
 **AI-call efficiency:** architecture should minimize LLM calls — the target flow is Recipe import → AI interpretation → Recipe Schema → save, with the Nutrition Engine, Optimizer, Substitution Engine, and Planner then running most operations without any LLM call (not one LLM round-trip per user action). Parsed imports of public URLs are cached and shared across users; private imports are not (§12.2).
 
 ## 11. Monetization & Subscription Tiers
 
-Freemium SaaS / iOS subscription, three tiers (PLN; prices are a starting point for A/B testing, not final):
+Freemium SaaS subscription (web through Stripe at MVP; App Store in-app purchase with the iOS app), three tiers (PLN; prices are a starting point for A/B testing, not final):
 
 | Plan | Monthly | Annual | Effective monthly (annual) |
 |---|---|---|---|
@@ -266,7 +271,7 @@ Freemium SaaS / iOS subscription, three tiers (PLN; prices are a starting point 
 
 **Premium — "Optimize my whole food + shopping system"** (Phase 2; shown as "Coming soon" at MVP launch): everything in Standard, plus longer and custom plan lengths (e.g. 14–30 days), high fair-use AI limit, advanced Economy Mode, estimated pricing and cost deltas on swaps, Pantry Mode and "Cook from what I have", Pantry First, package-size optimization, leftover minimization, advanced cost optimization, priority use of opened/near-expiry items, longer history, advanced stats. Phase 3 additions: preference learning (feedback-driven recommendations). Later Premium additions (roadmap, not MVP): photo analysis, fridge scan, receipt scan, store pricing, shopping integrations, Apple Health, family plans.
 
-**Paywall strategy:** show value before asking to pay — e.g. reveal an "optimized version found" preview (before/after kcal & protein) before gating it behind "Unlock with Standard," rather than a bare "Premium only" label. Same pattern for Economy Mode ("23 unique ingredients vs. 34, same macros — Unlock Economy Mode"). Every paywall shows price, billing period, trial terms (if any), restore purchases, and links to the terms of use and privacy policy (App Store requirements).
+**Paywall strategy:** show value before asking to pay — e.g. reveal an "optimized version found" preview (before/after kcal & protein) before gating it behind "Unlock with Standard," rather than a bare "Premium only" label. Same pattern for Economy Mode ("23 unique ingredients vs. 34, same macros — Unlock Economy Mode"). Every paywall shows price (with VAT), billing period, trial terms (if any), how to cancel, and links to the terms of use and privacy policy (EU consumer law). On web, checkout and subscription management use Stripe's hosted pages (cards, BLIK, Przelewy24); the iOS app adds restore purchases (App Store requirements).
 
 **Upgrade triggers:**
 
@@ -277,7 +282,7 @@ Freemium SaaS / iOS subscription, three tiers (PLN; prices are a starting point 
 
 **Unit economics targets:** Standard AI+backend+storage cost <3–4 zł/active user/month; Premium <5–8 zł/active user/month. Never market "unlimited AI" — use "high AI usage / fair-use" instead, with abuse detection.
 
-**Illustrative economics** (10,000 active users, 8,000/1,500/500 Free/Standard/Premium split): ~57,480 zł MRR (~690K zł annualized), before taxes, VAT, platform fees, AI, infra, support, marketing, and development costs.
+**Illustrative economics** (10,000 active users, 8,000/1,500/500 Free/Standard/Premium split): ~57,480 zł MRR (~690K zł annualized), before taxes, VAT, payment and platform fees, AI, infra, support, marketing, and development costs.
 
 ## 12. Risks, Mitigations & Nutrition Safety
 
@@ -303,28 +308,29 @@ Freemium SaaS / iOS subscription, three tiers (PLN; prices are a starting point 
 ### 12.2 Privacy & data protection
 
 - **GDPR Art. 9:** allergies, intolerances, body data, and diet goals are treated as health data. Processing requires explicit, separate, unticked consent at onboarding (§7), recorded with consent version and timestamp. Consent can be withdrawn in Profile/Settings, which stops processing and leads to account deletion.
-- **Health profile on the phone:** targets, body data and exclusions are stored only on the user's phone and synced through the user's own private iCloud (on by default, can be turned off in Profile). The server receives them with each request that needs them and never stores or logs them.
+- **Health profile in the account:** with explicit consent, targets, body data and exclusions are stored in the user's account so they follow the user across devices, as in other nutrition apps. Health fields are encrypted at rest with a key kept separate from the database credentials, never logged, included in data export, hard-deleted on account deletion, and not kept in backups beyond 30 days. The device keeps a cached copy for offline use. Without consent the profile stays only in the browser and is sent per request without being stored.
 - **Data minimization:** no medical conditions are collected; body data is optional; age is confirmed as 18+ without storing a date of birth.
-- **Hosting & processors:** data is hosted in the EU. A DPA is in place with every processor (Hetzner, Cloudflare, AWS for Claude on Bedrock in an EU region, Sentry in its EU region) before it receives any data. A privacy policy and App Store privacy nutrition labels are kept up to date.
-- **Account deletion and data export:** in-app account deletion removes the account, plans and private imports on the server and the health profile on the phone; consent records are kept only as long as needed to prove consent (the App Store subscription itself is managed and cancelled through Apple, and the app says so). Data export gives the user their data in a machine-readable format.
+- **Hosting & processors:** data is hosted in the EU. A DPA is in place with every processor (Hetzner, Cloudflare, AWS for Claude on Bedrock in an EU region, Sentry in its EU region) before it receives any data. Stripe (payments) and the sign-in and email providers are added to this list. A privacy policy (and, with the iOS app, App Store privacy nutrition labels) is kept up to date.
+- **Account deletion and data export:** in-app account deletion removes the account, health profile, plans and private imports on the server and the cached copy on the device; consent records are kept only as long as needed to prove consent. A web subscription is cancelled with the account (Stripe); an App Store subscription is managed and cancelled through Apple, and the app says so. Data export gives the user their data in a machine-readable format.
 - **LLM prompts:** only recipe content goes to the LLM — never the user's profile, allergies, body data, or identity.
-- **Analytics and error reporting:** no analytics SDK and no device identifiers; product metrics are aggregated from server data and App Store Connect. Error reports are scrubbed of personal data.
-- **No marketing messages at launch:** only the weekly "plan next week" reminder, through the iOS notification permission, which is requested during onboarding with a "Not now" option.
-- **Import cache:** parsed imports from **public URLs** are cached and shared across users (the cache holds only the recipe parsed from the public page). **Private text imports (including PDF text) are cached per user only** and never reused for anyone else. PDF files never leave the phone.
+- **Analytics and error reporting:** no analytics SDK and no device identifiers; product metrics are aggregated from server data (and App Store Connect for the iOS app). No third-party scripts or tracking cookies on web. Error reports are scrubbed of personal data.
+- **No marketing messages at launch:** only the weekly "plan next week" reminder, through web push where the browser supports it (the iOS notification permission in the iOS app), requested during onboarding with a "Not now" option.
+- **Import cache:** parsed imports from **public URLs** are cached and shared across users (the cache holds only the recipe parsed from the public page). **Private text imports (including PDF text) are cached per user only** and never reused for anyone else. PDF files never leave the user's device.
 
 ## 13. Roadmap & Phases
 
 **Product phases:**
 
 - **Phase 0 — Prototype:** validate that recipe transformation produces good results. Basic FoodItem database, Recipe Schema, parser, macro optimizer, simple substitution engine.
-- **Phase 1 — MVP:** iOS app, onboarding (18+, consent, suggested targets), profiles, recipes, import, 3/5/7-day planner, swaps with confirmed rebalancing, meal prep (1–3 days), Economy Mode v1, mark as eaten, shopping list.
+- **Phase 1 — MVP:** web app (mobile-first, installable PWA), onboarding (18+, consent, suggested targets), profiles, recipes, import, 3/5/7-day planner, swaps with confirmed rebalancing, meal prep (1–3 days), Economy Mode v1, mark as eaten, shopping list, Stripe paywall. Launches as a public web beta.
+- **Phase 1b — iOS app:** native SwiftUI app on the same backend, with Share Extension, Sign in with Apple, StoreKit and push; App Store launch.
 - **Phase 2 — Economy:** Pantry Mode and "Cook from what I have", estimated pricing (including swap cost deltas), package optimization, food-waste optimization, longer/custom plan lengths.
 - **Phase 3 — Intelligence:** feedback-driven personalization and preference learning, Recipe DNA, recommendation engine, smarter imports.
 - **Phase 4 — Ecosystem:** Health integrations, shopping integrations, family plans, partner/dietitian mode.
 
 **Monetization phases:** Phase 1 Free + Standard (Premium "Coming soon") → Phase 2 Premium ships with Pantry, pricing, package optimization, advanced Economy Mode → Phase 3 family / dietitian / trainer plans, B2B, partnerships.
 
-**Build order (technical):** Food database → Nutrition calculator → Recipe schema → Recipe optimizer → Substitution engine → Planner → Shopping aggregation → AI import → iOS UX. Do not start with a generative chatbot.
+**Build order (technical):** Food database → Nutrition calculator → Recipe schema → Recipe optimizer → Substitution engine → Planner → Shopping aggregation → AI import → web UX → iOS app. Do not start with a generative chatbot.
 
 ## 14. Definition of Done for MVP
 
@@ -348,8 +354,8 @@ A user can, end to end:
 - **Macro accuracy:** 100% of transformed recipes and generated plan days in the golden set and E2E runs are within ±5% kcal of target after rounding (±3% before rounding), with protein at or above the minimum; rebalances stay within ±20% per meal; no planned day is below 1200 kcal.
 - **Allergen safety:** 100% allergen-free across the golden set, property-based tests, and E2E runs — zero ALLERGY or strict-INTOLERANCE violations, including derived ingredients and (for ALLERGY) "may contain". A single violation fails the release.
 - **Performance:** single recipe transform < 300 ms p95; 7-day plan generation < 2 s p95.
-- **Stability:** crash-free sessions ≥ 99.5%.
-- **Phase 0 go/no-go (before iOS work):** ≥ 80% of transformed recipes rated "I'd cook this" by 5–10 target users; macros within ±5% of target; ≥ 90% ingredient match rate.
+- **Stability:** error-free sessions ≥ 99.5% (crash-free for the iOS app).
+- **Phase 0 go/no-go (before client work):** ≥ 80% of transformed recipes rated "I'd cook this" by 5–10 target users; macros within ±5% of target; ≥ 90% ingredient match rate.
 - **Instrumentation:** activation and North Star ("meal eaten") events visible in analytics, with no personal or health data in them.
 
 **Acceptance criteria:**
@@ -374,6 +380,8 @@ A user can, end to end:
 
 **Open decision:** go-to-market channel mix, and whether a referral program launches before or after retention is validated.
 
-**Open decision:** whether the user sees a preview of their first plan before Sign in with Apple, or signs in at the moment the plan is generated.
+**Decided (13 Oct 2026):** the user signs in after onboarding and before the first plan is generated; there is no plan preview before sign-in.
+
+**Open decision:** sign-in providers for web. Recommendation: Google + email magic link; Sign in with Apple arrives with the iOS app.
 
 **Open decision:** when Pantry Mode and preference learning ship (Phase 2/3), whether a basic version is included in Standard or they stay Premium-only.
