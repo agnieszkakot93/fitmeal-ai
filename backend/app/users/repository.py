@@ -14,6 +14,7 @@ from sqlalchemy.orm import selectinload
 
 from app.auth.models import RefreshToken
 from app.core.db import Base
+from app.plans.models import MealPlan, PlanSlot, SlotEvent
 from app.recipes.models import Recipe, RecipeSource, RecipeVariant
 from app.users.models import ConsentRecord, User
 from app.users.schemas import ConsentIn, ConsentOut, ExportOut, MeOut, SessionOut
@@ -95,6 +96,23 @@ async def export(session: AsyncSession, user: User) -> ExportOut:
             .order_by(RecipeVariant.created_at)
         )
     ).all()
+    plans = (
+        await session.scalars(
+            select(MealPlan)
+            .where(MealPlan.user_id == user.id)
+            .options(selectinload(MealPlan.slots))
+            .order_by(MealPlan.created_at)
+        )
+    ).all()
+    events: dict[int, list[SlotEvent]] = {}
+    for event in await session.scalars(
+        select(SlotEvent)
+        .join(PlanSlot)
+        .join(MealPlan)
+        .where(MealPlan.user_id == user.id)
+        .order_by(SlotEvent.received_at, SlotEvent.id)
+    ):
+        events.setdefault(event.slot_id, []).append(event)
     return ExportOut(
         exported_at=datetime.now(UTC),
         user=await me(session, user),
@@ -109,6 +127,16 @@ async def export(session: AsyncSession, user: User) -> ExportOut:
             for r in recipes
         ],
         recipe_variants=[_columns(v) for v in variants],
+        plans=[
+            {
+                **_columns(p),
+                "slots": [
+                    {**_columns(slot), "events": [_columns(e) for e in events.get(slot.id, [])]}
+                    for slot in p.slots
+                ],
+            }
+            for p in plans
+        ],
     )
 
 
@@ -116,8 +144,9 @@ async def erase(session: AsyncSession, user_id: uuid.UUID) -> None:
     """Delete the account and everything stored about it (GDPR Art. 17).
 
     Recipes and variants point at users without a foreign key (they predate
-    this table), so they are deleted here explicitly. Refresh tokens and
-    consent records go with the user row (ON DELETE CASCADE).
+    this table), so they are deleted here explicitly. Refresh tokens, consent
+    records and plans (with their slots and events) go with the user row
+    (ON DELETE CASCADE).
     """
     source_ids = (
         await session.scalars(select(Recipe.source_id).where(Recipe.owner_user_id == user_id))

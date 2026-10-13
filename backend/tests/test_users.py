@@ -13,6 +13,7 @@ from sqlalchemy.pool import NullPool
 
 from app.auth.models import RefreshToken
 from app.core.db import get_sessionmaker
+from app.plans.models import MealPlan, PlanSlot, SlotEvent
 from app.recipes.models import Recipe, RecipeSource, RecipeVariant
 from app.users.models import ConsentRecord, User
 from tests.conftest import BACKEND_DIR, TEST_DB_URL
@@ -105,6 +106,34 @@ async def _private_recipe(owner: uuid.UUID, title: str) -> None:
         await session.commit()
 
 
+async def _plan(owner: uuid.UUID, slot: str) -> None:
+    """A one-slot plan with one status event, stored directly: no catalog needed."""
+    async with get_sessionmaker()() as session:
+        plan = MealPlan(user_id=owner, days=3, prep_days=1, daily_kcal=2000, protein_min_g=100)
+        plan.slots.append(
+            PlanSlot(
+                position=0,
+                day=0,
+                slot=slot,
+                meal_type="breakfast",
+                portion=1.0,
+                kcal=500,
+                protein_g=30,
+                fat_g=15,
+                carbs_g=60,
+                fiber_g=5,
+                cook_day=0,
+                eat_by_day=0,
+                from_batch=False,
+                status="eaten",
+            )
+        )
+        session.add(plan)
+        await session.flush()
+        session.add(SlotEvent(id=uuid.uuid4(), slot_id=plan.slots[0].id, status="eaten"))
+        await session.commit()
+
+
 async def _cleanup(*titles: str) -> None:
     """Drop the recipes ``_private_recipe`` made (their content_hash is the title)."""
     async with get_sessionmaker()() as session:
@@ -123,6 +152,8 @@ async def test_export_contains_everything_stored(client: AsyncClient, apple: Fak
     await _consent(client, pair, {**HEALTH, "granted": False})
     await _private_recipe(uuid.UUID(me["id"]), "my soup")
     await _private_recipe(other_id, "their soup")
+    await _plan(uuid.UUID(me["id"]), "my breakfast")
+    await _plan(other_id, "their breakfast")
     try:
         res = await client.get("/v1/me/export", headers=bearer(pair))
         assert res.status_code == 200
@@ -138,6 +169,8 @@ async def test_export_contains_everything_stored(client: AsyncClient, apple: Fak
     assert [r["title_en"] for r in body["private_recipes"]] == ["my soup"]
     assert body["private_recipes"][0]["source"]["type"] == "text"
     assert [v["label"] for v in body["recipe_variants"]] == ["my soup v"]
+    assert [[s["slot"] for s in p["slots"]] for p in body["plans"]] == [["my breakfast"]]
+    assert [e["status"] for e in body["plans"][0]["slots"][0]["events"]] == ["eaten"]
 
 
 async def test_delete_removes_everything(client: AsyncClient, apple: FakeApple) -> None:
@@ -150,6 +183,8 @@ async def test_delete_removes_everything(client: AsyncClient, apple: FakeApple) 
     await _consent(client, other, HEALTH)
     await _private_recipe(user_id, "mine")
     await _private_recipe(other_id, "theirs")
+    await _plan(user_id, "mine")
+    await _plan(other_id, "theirs")
     try:
         res = await client.delete("/v1/me", headers=bearer(pair))
         assert res.status_code == 204
@@ -166,11 +201,15 @@ async def test_delete_removes_everything(client: AsyncClient, apple: FakeApple) 
             assert await count(Recipe, Recipe.owner_user_id == user_id) == 0
             assert await count(RecipeVariant, RecipeVariant.user_id == user_id) == 0
             assert await count(RecipeSource, RecipeSource.content_hash == "mine") == 0
+            assert await count(MealPlan, MealPlan.user_id == user_id) == 0
+            assert await count(PlanSlot, PlanSlot.slot == "mine") == 0
+            assert await count(SlotEvent) == 1
             # nobody else's data goes with it
             assert await count(User, User.id == other_id) == 1
             assert await count(ConsentRecord, ConsentRecord.user_id == other_id) == 1
             assert await count(Recipe, Recipe.owner_user_id == other_id) == 1
             assert await count(RecipeVariant, RecipeVariant.user_id == other_id) == 1
+            assert await count(MealPlan, MealPlan.user_id == other_id) == 1
     finally:
         await _cleanup("mine", "theirs")
 
