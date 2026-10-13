@@ -7,6 +7,7 @@ import {
   getAccessToken,
   refreshSession,
   setSession,
+  signOut,
 } from "./session";
 
 const BASE = "https://api.example.test";
@@ -71,6 +72,27 @@ describe("session", () => {
   it("signs out when the refresh is rejected", async () => {
     setSession(pair("old"));
     expect(await refreshSession(BASE, async () => json({ detail: "invalid" }, 401))).toBe(false);
+    expect(getAccessToken()).toBeNull();
+  });
+});
+
+describe("signOut", () => {
+  it("drops the token and asks the server to revoke and clear the cookie", async () => {
+    setSession(pair("a1"));
+    const fetchImpl = vi.fn(async (_req: Request) => new Response(null, { status: 204 }));
+    await signOut(BASE, fetchImpl);
+    expect(getAccessToken()).toBeNull();
+    const req = fetchImpl.mock.calls[0]![0];
+    expect(req.url).toBe(`${BASE}/v1/auth/logout`);
+    expect(req.method).toBe("POST");
+    expect(req.credentials).toBe("include");
+  });
+
+  it("still signs out locally when offline", async () => {
+    setSession(pair("a1"));
+    await signOut(BASE, async () => {
+      throw new TypeError("Failed to fetch");
+    });
     expect(getAccessToken()).toBeNull();
   });
 });
