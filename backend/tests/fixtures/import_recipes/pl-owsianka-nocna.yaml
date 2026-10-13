@@ -1,0 +1,12 @@
+title: "Owsianka nocna z malinami"
+language: pl
+source: caption
+servings: 1
+expected_per_serving: {kcal: 400, protein_g: 26.7}
+lines:
+  - {line: "40 g płatków owsianych górskich", slug: oats-rolled, grams: 40}
+  - {line: "150 g jogurtu greckiego", slug: greek-yogurt-nonfat, grams: 150}
+  - {line: "100 ml mleka", slug: milk-2, grams: 103}
+  - {line: "1 łyżka nasion chia", slug: chia-seeds, grams: 12}
+  - {line: "1 łyżeczka miodu", slug: honey, grams: 7.1}
+  - {line: "garść malin", slug: raspberries, grams: 50}

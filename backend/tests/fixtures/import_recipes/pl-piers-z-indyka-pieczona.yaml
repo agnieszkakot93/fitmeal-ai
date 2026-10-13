@@ -1,0 +1,13 @@
+title: "Pieczona pierś z indyka w miodzie i musztardzie"
+language: pl
+source: blog
+servings: 4
+expected_per_serving: {kcal: 310, protein_g: 47.6}
+lines:
+  - {line: "800g piersi z indyka", slug: turkey-breast-raw, grams: 800}
+  - {line: "2 łyżki oliwy", slug: olive-oil, grams: 27.3}
+  - {line: "1 łyżeczka papryki słodkiej", slug: paprika-sweet, grams: 2.3}
+  - {line: "1/2 łyżeczki czosnku granulowanego", slug: garlic-powder, grams: 1.55}
+  - {line: "1 łyżeczka ziół prowansalskich", slug: null}
+  - {line: "1 łyżka miodu", slug: honey, grams: 21.3}
+  - {line: "1 łyżka musztardy dijon", slug: mustard, grams: 15}

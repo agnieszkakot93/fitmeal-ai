@@ -1,0 +1,13 @@
+title: "Łosoś pieczony ze szparagami"
+language: pl
+source: blog
+servings: 2
+expected_per_serving: {kcal: 629, protein_g: 41.8}
+lines:
+  - {line: "2 filety z łososia (ok. 300 g)", slug: salmon-atlantic-raw, grams: 300}
+  - {line: "500 g młodych ziemniaków", slug: potatoes, grams: 500}
+  - {line: "pęczek szparagów", slug: asparagus, grams: 500}
+  - {line: "1 łyżka oliwy", slug: olive-oil, grams: 13.65}
+  - {line: "1 cytryna", slug: lemon, grams: 60}
+  - {line: "2 ząbki czosnku", slug: garlic, grams: 8}
+  - {line: "świeży koperek", slug: null}

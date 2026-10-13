@@ -1,0 +1,12 @@
+title: "Two-ingredient banana pancakes, upgraded"
+language: en
+source: caption
+servings: 2
+expected_per_serving: {kcal: 199, protein_g: 7.6}
+lines:
+  - {line: "2 ripe bananas", slug: banana, grams: 240}
+  - {line: "2 eggs", slug: egg-whole-raw, grams: 100}
+  - {line: "1/2 cup oat flour", slug: null}
+  - {line: "1 tsp baking powder", slug: baking-powder, grams: 4.6}
+  - {line: "pinch of cinnamon", slug: cinnamon, grams: 0.2}
+  - {line: "1 tsp coconut oil for the pan", slug: coconut-oil, grams: 4.5}

@@ -1,0 +1,15 @@
+title: "Chicken Caesar salad"
+language: en
+source: cookbook
+servings: 2
+expected_per_serving: {kcal: 384, protein_g: 32.5}
+lines:
+  - {line: "1 head romaine lettuce", slug: romaine-lettuce, grams: 400}
+  - {line: "200 g chicken breast", slug: chicken-breast-raw, grams: 200}
+  - {line: "2 slices white bread, cubed", slug: bread-white-wheat, grams: 60}
+  - {line: "25 g parmesan, shaved", slug: parmesan, grams: 25}
+  - {line: "2 tbsp mayonnaise", slug: mayonnaise, grams: 28}
+  - {line: "1 tsp Dijon mustard", slug: mustard, grams: 5}
+  - {line: "1 tbsp lemon juice", slug: lemon-juice, grams: 15.45}
+  - {line: "1 anchovy fillet", slug: null}
+  - {line: "1 garlic clove, crushed", slug: garlic, grams: 4}

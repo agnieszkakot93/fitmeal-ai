@@ -1,0 +1,12 @@
+title: "Kanapki z awokado i jajkiem"
+language: pl
+source: caption
+servings: 2
+expected_per_serving: {kcal: 449, protein_g: 23.1}
+lines:
+  - {line: "4 kromki chleba pełnoziarnistego", slug: bread-wholewheat, grams: 140}
+  - {line: "1 dojrzałe awokado", slug: avocado, grams: 150}
+  - {line: "4 jajka ugotowane na twardo", slug: egg-whole-raw, grams: 200}
+  - {line: "pomidorki koktajlowe, garść", slug: cherry-tomatoes, grams: 90}
+  - {line: "sok z cytryny", slug: null}
+  - {line: "płatki chili do smaku", slug: cayenne-pepper, grams: 0.1}

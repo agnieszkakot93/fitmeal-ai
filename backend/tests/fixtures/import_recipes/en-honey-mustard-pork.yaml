@@ -1,0 +1,13 @@
+title: "Honey mustard pork tenderloin with green beans"
+language: en
+source: cookbook
+servings: 4
+expected_per_serving: {kcal: 216, protein_g: 26.4}
+lines:
+  - {line: "1 pork tenderloin (about 450 g)", slug: pork-tenderloin-raw, grams: 450}
+  - {line: "2 tbsp Dijon mustard", slug: mustard, grams: 30}
+  - {line: "1 tbsp honey", slug: honey, grams: 21.3}
+  - {line: "1 tbsp olive oil", slug: olive-oil, grams: 13.65}
+  - {line: "500g green beans, trimmed", slug: green-beans, grams: 500}
+  - {line: "1 tsp dried oregano", slug: oregano, grams: 1}
+  - {line: "salt and freshly ground black pepper", slug: null}

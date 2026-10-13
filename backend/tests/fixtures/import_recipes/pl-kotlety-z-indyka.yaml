@@ -1,0 +1,14 @@
+title: "Kotlety mielone z indyka"
+language: pl
+source: blog
+servings: 4
+expected_per_serving: {kcal: 327, protein_g: 28.3}
+lines:
+  - {line: "500 g mięsa mielonego z indyka", slug: turkey-ground-raw, grams: 500}
+  - {line: "1 jajko", slug: egg-whole-raw, grams: 50}
+  - {line: "1 bułka (kajzerka)", slug: kaiser-roll, grams: 50}
+  - {line: "3 łyżki bułki tartej", slug: breadcrumbs, grams: 21}
+  - {line: "1/2 cebuli", slug: onion, grams: 55}
+  - {line: "1 łyżeczka majeranku", slug: marjoram, grams: 0.6}
+  - {line: "2 łyżki oleju do smażenia", slug: rapeseed-oil, grams: 27.6}
+  - {line: "sól i pieprz", slug: null}

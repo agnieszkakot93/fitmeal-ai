@@ -1,0 +1,14 @@
+title: "Salmon quinoa bowl"
+language: en
+source: blog
+servings: 2
+expected_per_serving: {kcal: 733, protein_g: 41.7}
+lines:
+  - {line: "2 salmon fillets (about 250 g)", slug: salmon-atlantic-raw, grams: 250}
+  - {line: "1 cup quinoa", slug: quinoa-dry, grams: 170}
+  - {line: "2 cups water", slug: water, grams: 480}
+  - {line: "1 avocado", slug: avocado, grams: 150}
+  - {line: "1 cucumber", slug: cucumber, grams: 300}
+  - {line: "2 tbsp soy sauce", slug: soy-sauce, grams: 34.5}
+  - {line: "1 tbsp lemon juice", slug: lemon-juice, grams: 15.45}
+  - {line: "1 tsp sesame seeds", slug: sesame-seeds, grams: 3}

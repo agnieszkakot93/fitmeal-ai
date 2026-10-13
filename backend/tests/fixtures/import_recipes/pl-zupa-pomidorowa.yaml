@@ -1,0 +1,14 @@
+title: "Zupa pomidorowa z ryżem"
+language: pl
+source: cookbook
+servings: 4
+expected_per_serving: {kcal: 273, protein_g: 5.4}
+lines:
+  - {line: "1,5 l bulionu warzywnego", slug: null}
+  - {line: "500 ml passaty pomidorowej", slug: tomato-passata, grams: 520}
+  - {line: "100 g ryżu", slug: rice-white-dry, grams: 100}
+  - {line: "200 ml śmietany 18%", slug: sour-cream, grams: 202}
+  - {line: "1 marchewka", slug: carrot, grams: 70}
+  - {line: "1 łyżka masła", slug: butter, grams: 14}
+  - {line: "natka pietruszki do posypania", slug: null}
+  - {line: "sól, pieprz", slug: null}

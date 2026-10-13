@@ -1,0 +1,12 @@
+title: "Owsianka bananowa z masłem orzechowym"
+language: pl
+source: caption
+servings: 1
+expected_per_serving: {kcal: 550, protein_g: 20.4}
+lines:
+  - {line: "50g płatków owsianych", slug: oats-rolled, grams: 50}
+  - {line: "1 szklanka mleka", slug: milk-2, grams: 257.5}
+  - {line: "1 banan", slug: banana, grams: 120}
+  - {line: "1 łyżka masła orzechowego", slug: peanut-butter, grams: 16}
+  - {line: "garść borówek", slug: blueberries, grams: 50}
+  - {line: "szczypta cynamonu", slug: cinnamon, grams: 0.2}

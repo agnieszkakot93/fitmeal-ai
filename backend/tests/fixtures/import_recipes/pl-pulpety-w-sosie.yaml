@@ -1,0 +1,15 @@
+title: "Pulpety w sosie pomidorowym"
+language: pl
+source: blog
+servings: 4
+html: pl-pulpety-w-sosie.html
+expected_per_serving: {kcal: 489, protein_g: 25.8}
+lines:
+  - {line: "500 g mięsa mielonego wieprzowego", slug: pork-ground-raw, grams: 500}
+  - {line: "1 jajko", slug: egg-whole-raw, grams: 50}
+  - {line: "3 łyżki bułki tartej", slug: breadcrumbs, grams: 21}
+  - {line: "1 cebula", slug: onion, grams: 110}
+  - {line: "500 ml passaty", slug: tomato-passata, grams: 520}
+  - {line: "1 łyżeczka majeranku", slug: marjoram, grams: 0.6}
+  - {line: "2 łyżki oleju", slug: rapeseed-oil, grams: 27.6}
+  - {line: "sól, pieprz", slug: null}

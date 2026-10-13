@@ -1,0 +1,16 @@
+title: "Shakshuka"
+language: en
+source: blog
+servings: 2
+expected_per_serving: {kcal: 294, protein_g: 16.3}
+lines:
+  - {line: "1 tbsp olive oil", slug: olive-oil, grams: 13.65}
+  - {line: "1 onion, diced", slug: onion, grams: 110}
+  - {line: "1 red pepper, chopped", slug: bell-pepper-red, grams: 180}
+  - {line: "2 garlic cloves", slug: garlic, grams: 8}
+  - {line: "1 tsp cumin", slug: cumin, grams: 2.1}
+  - {line: "1 tsp smoked paprika", slug: paprika-sweet, grams: 2.3}
+  - {line: "1 can (400g) chopped tomatoes", slug: tomatoes-canned, grams: 400}
+  - {line: "4 eggs", slug: egg-whole-raw, grams: 200}
+  - {line: "feta, to serve", slug: null}
+  - {line: "salt & pepper", slug: null}

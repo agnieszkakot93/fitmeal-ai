@@ -1,0 +1,13 @@
+title: "Chunky guacamole"
+language: en
+source: caption
+servings: 4
+expected_per_serving: {kcal: 191, protein_g: 2.7}
+lines:
+  - {line: "3 ripe avocados", slug: avocado, grams: 450}
+  - {line: "1 lime, juiced", slug: null}
+  - {line: "½ red onion, finely diced", slug: onion, grams: 55}
+  - {line: "1 tomato", slug: tomato, grams: 120}
+  - {line: "1 jalapeño", slug: null}
+  - {line: "handful of fresh cilantro", slug: null}
+  - {line: "salt to taste", slug: salt, grams: 0.4}

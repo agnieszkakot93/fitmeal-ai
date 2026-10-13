@@ -1,0 +1,13 @@
+title: "Beef tacos"
+language: en
+source: blog
+servings: 4
+expected_per_serving: {kcal: 685, protein_g: 36.2}
+lines:
+  - {line: "500g lean ground beef", slug: beef-ground-90-raw, grams: 500}
+  - {line: "8 flour tortillas", slug: tortilla-wheat, grams: 480}
+  - {line: "1 tbsp taco seasoning", slug: null}
+  - {line: "100 g shredded lettuce", slug: romaine-lettuce, grams: 100}
+  - {line: "1 tomato, diced", slug: tomato, grams: 120}
+  - {line: "50g cheddar, grated", slug: cheddar, grams: 50}
+  - {line: "4 tbsp sour cream", slug: sour-cream, grams: 60.6}

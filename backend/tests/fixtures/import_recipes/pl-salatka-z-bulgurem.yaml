@@ -1,0 +1,15 @@
+title: "Sałatka z kaszą bulgur i warzywami"
+language: pl
+source: cookbook
+servings: 4
+html: pl-salatka-z-bulgurem.html
+expected_per_serving: {kcal: 256, protein_g: 6.4}
+lines:
+  - {line: "150 g kaszy bulgur", slug: bulgur-dry, grams: 150}
+  - {line: "1 ogórek", slug: cucumber, grams: 300}
+  - {line: "2 pomidory", slug: tomato, grams: 240}
+  - {line: "1 papryka", slug: bell-pepper-red, grams: 180}
+  - {line: "pęczek natki pietruszki", slug: parsley, grams: 50}
+  - {line: "pęczek mięty", slug: null}
+  - {line: "3 łyżki oliwy", slug: olive-oil, grams: 40.95}
+  - {line: "sok z 1 cytryny", slug: null}

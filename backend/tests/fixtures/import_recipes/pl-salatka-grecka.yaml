@@ -1,0 +1,15 @@
+title: "Sałatka grecka"
+language: pl
+source: cookbook
+servings: 2
+expected_per_serving: {kcal: 355, protein_g: 10.5}
+lines:
+  - {line: "2 pomidory", slug: tomato, grams: 240}
+  - {line: "1 ogórek zielony", slug: cucumber, grams: 300}
+  - {line: "1/2 czerwonej cebuli", slug: onion, grams: 55}
+  - {line: "1 papryka czerwona", slug: bell-pepper-red, grams: 180}
+  - {line: "100 g sera feta", slug: feta, grams: 100}
+  - {line: "10 czarnych oliwek", slug: olives-black, grams: 40}
+  - {line: "2 łyżki oliwy z oliwek", slug: olive-oil, grams: 27.3}
+  - {line: "1 łyżeczka oregano suszonego", slug: oregano, grams: 1}
+  - {line: "sok z 1/2 cytryny", slug: null}

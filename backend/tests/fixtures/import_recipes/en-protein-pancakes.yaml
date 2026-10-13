@@ -1,0 +1,12 @@
+title: "Protein pancakes"
+language: en
+source: caption
+servings: 1
+expected_per_serving: {kcal: 373, protein_g: 30.0}
+lines:
+  - {line: "1 scoop vanilla protein powder", slug: whey-protein-isolate, grams: 30}
+  - {line: "1 egg", slug: egg-whole-raw, grams: 50}
+  - {line: "1/2 banana, mashed", slug: banana, grams: 60}
+  - {line: "30g oats", slug: oats-rolled, grams: 30}
+  - {line: "50ml milk", slug: milk-2, grams: 51.5}
+  - {line: "1/2 tsp baking powder", slug: baking-powder, grams: 2.3}

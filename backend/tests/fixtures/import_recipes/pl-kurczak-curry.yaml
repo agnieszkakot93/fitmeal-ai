@@ -1,0 +1,17 @@
+title: "Kurczak curry z ryżem"
+language: pl
+source: blog
+servings: 4
+expected_per_serving: {kcal: 619, protein_g: 41.5}
+lines:
+  - {line: "600 g piersi z kurczaka, pokrojonej w kostkę", slug: chicken-breast-raw, grams: 600}
+  - {line: "1 puszka mleczka kokosowego (400 ml)", slug: coconut-milk-canned, grams: 392}
+  - {line: "1 cebula", slug: onion, grams: 110}
+  - {line: "3 ząbki czosnku", slug: garlic, grams: 12}
+  - {line: "kawałek imbiru (ok. 3 cm)", slug: null}
+  - {line: "2 łyżeczki kurkumy", slug: turmeric, grams: 6}
+  - {line: "1 łyżeczka kminu rzymskiego", slug: cumin, grams: 2.1}
+  - {line: "1 łyżka oleju rzepakowego", slug: rapeseed-oil, grams: 13.8}
+  - {line: "200 g szpinaku", slug: spinach, grams: 200}
+  - {line: "2 łyżki pasty curry", slug: null}
+  - {line: "200 g ryżu basmati", slug: rice-white-dry, grams: 200}

@@ -1,0 +1,12 @@
+title: "Blueberry overnight oats"
+language: en
+source: caption
+servings: 1
+expected_per_serving: {kcal: 313, protein_g: 14.6}
+lines:
+  - {line: "½ cup rolled oats", slug: oats-rolled, grams: 40}
+  - {line: "½ cup unsweetened almond milk", slug: almond-drink-unsweetened, grams: 121.2}
+  - {line: "¼ cup Greek yogurt", slug: greek-yogurt-nonfat, grams: 63}
+  - {line: "1 tbsp chia seeds", slug: chia-seeds, grams: 12}
+  - {line: "1 tsp maple syrup", slug: maple-syrup, grams: 6.65}
+  - {line: "a handful of blueberries", slug: blueberries, grams: 50}

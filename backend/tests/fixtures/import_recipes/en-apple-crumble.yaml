@@ -1,0 +1,13 @@
+title: "Apple crumble"
+language: en
+source: cookbook
+servings: 6
+expected_per_serving: {kcal: 309, protein_g: 3.8}
+lines:
+  - {line: "4 apples, peeled and sliced", slug: apple, grams: 720}
+  - {line: "1 tbsp lemon juice", slug: lemon-juice, grams: 15.45}
+  - {line: "1 tsp cinnamon", slug: cinnamon, grams: 2.6}
+  - {line: "100 g plain flour", slug: flour-wheat, grams: 100}
+  - {line: "75 g rolled oats", slug: oats-rolled, grams: 75}
+  - {line: "75 g cold butter, cubed", slug: butter, grams: 75}
+  - {line: "75 g brown sugar", slug: sugar-brown, grams: 75}
