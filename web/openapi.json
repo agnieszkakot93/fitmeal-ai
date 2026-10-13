@@ -590,17 +590,24 @@
           "auth"
         ],
         "summary": "Refresh",
-        "description": "Rotate a refresh token. Each one works once; reusing one ends the session.",
+        "description": "Rotate a refresh token. Each one works once; reusing one ends the session.\n\niOS sends the token in the body and gets the next one in the body. The web\nsends no body: the token comes from the HttpOnly cookie, the next one goes\nback in the cookie, and the response body carries only the access token.",
         "operationId": "refresh_v1_auth_refresh_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RefreshIn"
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/RefreshIn"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -612,6 +619,48 @@
                 }
               }
             }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logout",
+        "description": "Sign out this device: revoke its refresh token family and clear the cookie.\n\nAlways 204, so it also works with an unknown or already revoked token.",
+        "operationId": "logout_v1_auth_logout_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/RefreshIn"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
           },
           "422": {
             "description": "Validation Error",
@@ -3234,7 +3283,14 @@
             "title": "Access Token"
           },
           "refresh_token": {
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Refresh Token"
           },
           "token_type": {
@@ -3255,7 +3311,6 @@
         "type": "object",
         "required": [
           "access_token",
-          "refresh_token",
           "expires_in",
           "refresh_expires_in"
         ],

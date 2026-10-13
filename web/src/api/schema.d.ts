@@ -200,8 +200,34 @@ export interface paths {
         /**
          * Refresh
          * @description Rotate a refresh token. Each one works once; reusing one ends the session.
+         *
+         *     iOS sends the token in the body and gets the next one in the body. The web
+         *     sends no body: the token comes from the HttpOnly cookie, the next one goes
+         *     back in the cookie, and the response body carries only the access token.
          */
         post: operations["refresh_v1_auth_refresh_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Logout
+         * @description Sign out this device: revoke its refresh token family and clear the cookie.
+         *
+         *     Always 204, so it also works with an unknown or already revoked token.
+         */
+        post: operations["logout_v1_auth_logout_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1229,7 +1255,7 @@ export interface components {
             /** Access Token */
             access_token: string;
             /** Refresh Token */
-            refresh_token: string;
+            refresh_token?: string | null;
             /**
              * Token Type
              * @default bearer
@@ -1718,9 +1744,9 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody: {
+        requestBody?: {
             content: {
-                "application/json": components["schemas"]["RefreshIn"];
+                "application/json": components["schemas"]["RefreshIn"] | null;
             };
         };
         responses: {
@@ -1732,6 +1758,37 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TokenPair"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    logout_v1_auth_logout_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["RefreshIn"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {

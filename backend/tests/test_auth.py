@@ -356,3 +356,112 @@ def test_dev_secret_is_refused_outside_dev() -> None:
     settings = get_settings().model_copy(update={"env": "prod"})
     with pytest.raises(RuntimeError):
         tokens.issue_access(uuid.uuid4(), settings)
+
+
+# ── web: refresh token in the HttpOnly cookie ───────────────────────────────
+
+
+@pytest.fixture
+async def web(client: AsyncClient) -> AsyncIterator[AsyncClient]:
+    """A browser-like client on https, so Secure cookies are sent back.
+
+    The stdlib cookie jar files a dotless host such as ``test`` under
+    ``test.local``, so cookies set by hand use that domain.
+    """
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="https://test") as c:
+        yield c
+
+
+def _cookie_attrs(res: httpx.Response) -> dict[str, str]:
+    header = res.headers["set-cookie"]
+    parts = [p.strip() for p in header.split(";")]
+    attrs = {p.split("=", 1)[0].lower(): (p.split("=", 1)[1] if "=" in p else "") for p in parts}
+    return attrs
+
+
+async def _web_session(web: AsyncClient, apple: FakeApple) -> Json:
+    # Web sign-in endpoints (Google, magic link) will set the cookie; until they
+    # exist, start from an Apple pair and hand its refresh token to the cookie jar.
+    pair = await login(web, apple)
+    web.cookies.set("refresh_token", pair["refresh_token"], domain="test.local", path="/v1/auth")
+    return pair
+
+
+async def test_cookie_refresh_rotates_and_keeps_the_token_out_of_the_body(
+    web: AsyncClient, apple: FakeApple
+) -> None:
+    first = await _web_session(web, apple)
+    res = await web.post("/v1/auth/refresh")
+    assert res.status_code == 200, res.text
+    body = res.json()
+    assert "refresh_token" not in body
+    assert (await web.get("/v1/me", headers=bearer(body))).status_code == 200
+
+    attrs = _cookie_attrs(res)
+    new_token = attrs["refresh_token"]
+    assert new_token and new_token != first["refresh_token"]
+    assert {"httponly", "secure"} <= attrs.keys()
+    assert attrs["samesite"].lower() == "strict"
+    assert attrs["path"] == "/v1/auth"
+    assert int(attrs["max-age"]) == get_settings().refresh_token_ttl_s
+
+    # the jar now holds the rotated token, so the next refresh works too
+    assert (await web.post("/v1/auth/refresh")).status_code == 200
+
+
+async def test_cookie_reuse_revokes_and_clears_the_cookie(
+    web: AsyncClient, apple: FakeApple
+) -> None:
+    first = await _web_session(web, apple)
+    assert (await web.post("/v1/auth/refresh")).status_code == 200
+    web.cookies.set("refresh_token", first["refresh_token"], domain="test.local", path="/v1/auth")
+    res = await web.post("/v1/auth/refresh")
+    assert res.status_code == 401
+    attrs = _cookie_attrs(res)
+    assert attrs["refresh_token"] in ("", '""')
+    assert attrs["max-age"] == "0"
+
+
+async def test_refresh_without_any_token_is_401(web: AsyncClient) -> None:
+    res = await web.post("/v1/auth/refresh")
+    assert res.status_code == 401
+    assert "set-cookie" not in res.headers
+
+
+async def test_oversized_cookie_is_rejected_without_a_lookup(web: AsyncClient) -> None:
+    web.cookies.set("refresh_token", "x" * 1000, domain="test.local", path="/v1/auth")
+    res = await web.post("/v1/auth/refresh")
+    assert res.status_code == 401
+    assert "x" * 50 not in res.text
+
+
+async def test_body_token_still_wins_for_ios(web: AsyncClient, apple: FakeApple) -> None:
+    await _web_session(web, apple)
+    other = await login(web, apple, "apple-sub-2")
+    res = await web.post("/v1/auth/refresh", json={"refresh_token": other["refresh_token"]})
+    assert res.status_code == 200
+    assert res.json()["refresh_token"]
+    assert "set-cookie" not in res.headers
+
+
+async def test_logout_revokes_the_family_and_clears_the_cookie(
+    web: AsyncClient, apple: FakeApple
+) -> None:
+    first = await _web_session(web, apple)
+    other_device = await login(web, apple)
+    res = await web.post("/v1/auth/logout")
+    assert res.status_code == 204
+    assert _cookie_attrs(res)["max-age"] == "0"
+    assert (await _refresh(web, first["refresh_token"])).status_code == 401
+    assert (await _refresh(web, other_device["refresh_token"])).status_code == 200
+
+
+async def test_logout_with_a_body_token_and_without_any_token(
+    web: AsyncClient, apple: FakeApple
+) -> None:
+    pair = await login(web, apple)
+    assert (
+        await web.post("/v1/auth/logout", json={"refresh_token": pair["refresh_token"]})
+    ).status_code == 204
+    assert (await _refresh(web, pair["refresh_token"])).status_code == 401
+    assert (await web.post("/v1/auth/logout")).status_code == 204

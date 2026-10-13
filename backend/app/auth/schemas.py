@@ -21,7 +21,8 @@ class RefreshIn(_In):
 
 class TokenPair(BaseModel):
     access_token: str
-    refresh_token: str
+    # Left out of the body when the refresh token travels in the HttpOnly cookie (web).
+    refresh_token: str | None = None
     token_type: Literal["bearer"] = "bearer"
     # seconds until the access token expires
     expires_in: int
