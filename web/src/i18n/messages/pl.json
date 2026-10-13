@@ -1,0 +1,23 @@
+{
+  "app.name": "Donut",
+  "app.documentTitle": "{page} · Donut",
+  "shell.settings": "Ustawienia",
+  "shell.placeholder": "Ten ekran jest w przygotowaniu.",
+  "onb.welcome.title": "Twoje ulubione jedzenie. Twoje makro.",
+  "onb.welcome.subtitle": "Dodaj dowolny przepis. Donut dopasuje go do Twoich kalorii, białka, alergii i tygodnia.",
+  "onb.welcome.cta": "Zaczynamy",
+  "today.title": "Dzisiaj",
+  "today.empty.title": "Nie masz jeszcze planu",
+  "plan.title": "Plan",
+  "plan.empty.title": "Nie masz jeszcze planu",
+  "recipe.title": "Przepis",
+  "shopping.title": "Zakupy",
+  "settings.title": "Ustawienia",
+  "settings.language.label": "Język",
+  "settings.language.hint": "Język aplikacji na tym urządzeniu.",
+  "settings.language.pl": "Polski",
+  "settings.language.en": "English",
+  "notFound.title": "Nie znaleziono strony",
+  "notFound.body": "Ta strona nie istnieje albo została przeniesiona.",
+  "notFound.home": "Przejdź do ekranu Dzisiaj"
+}

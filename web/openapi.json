@@ -1,0 +1,2611 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Donut API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/v1/foods/search": {
+      "get": {
+        "tags": [
+          "foods"
+        ],
+        "summary": "Search Foods",
+        "operationId": "search_foods_v1_foods_search_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "title": "Q"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "en",
+                    "pl"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Lang"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FoodSearchHit"
+                  },
+                  "title": "Response Search Foods V1 Foods Search Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/foods/{slug}": {
+      "get": {
+        "tags": [
+          "foods"
+        ],
+        "summary": "Get Food",
+        "operationId": "get_food_v1_foods__slug__get",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slug"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoodDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/nutrition/calculate": {
+      "post": {
+        "tags": [
+          "nutrition"
+        ],
+        "summary": "Calculate Nutrition",
+        "operationId": "calculate_nutrition_v1_nutrition_calculate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalculateIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalculateOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/recipes": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "List Recipes",
+        "description": "The catalog without exclusions; use `POST /v1/recipes/search` to apply them.",
+        "operationId": "list_recipes_v1_recipes_get",
+        "parameters": [
+          {
+            "name": "tag",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 10,
+              "description": "All must match",
+              "default": [],
+              "title": "Tag"
+            },
+            "description": "All must match"
+          },
+          {
+            "name": "max_total_minutes",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "maximum": 1440,
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Max Total Minutes"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 10000,
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/recipes/search": {
+      "post": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Search Recipes",
+        "description": "The catalog filtered by the user's exclusions (sent per request, never stored).\n\nRecipes with an excluded required ingredient are left out.",
+        "operationId": "search_recipes_v1_recipes_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/recipes/{recipe_id}": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Get Recipe",
+        "operationId": "get_recipe_v1_recipes__recipe_id__get",
+        "parameters": [
+          {
+            "name": "recipe_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Recipe Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/recipes/{recipe_id}/personalize": {
+      "post": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Personalize",
+        "description": "Propose one serving adjusted to the meal target. Nothing is stored (D8).\n\nExcluded optional ingredients are left out. A recipe with an excluded\nrequired ingredient answers 409 with the ingredients to substitute first\n(see the substitutions endpoint).",
+        "operationId": "personalize_v1_recipes__recipe_id__personalize_post",
+        "parameters": [
+          {
+            "name": "recipe_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Recipe Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonalizeIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalizeOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlockedOut"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/recipes/{recipe_id}/substitutions": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Get Substitutions",
+        "description": "Ranked substitutes for one ingredient, without exclusions.\n\nUse `POST` on the same path to send the user's exclusions.",
+        "operationId": "get_substitutions_v1_recipes__recipe_id__substitutions_get",
+        "parameters": [
+          {
+            "name": "recipe_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Recipe Id"
+            }
+          },
+          {
+            "name": "ingredient",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000,
+              "minimum": 0,
+              "description": "The ingredient's `position`",
+              "title": "Ingredient"
+            },
+            "description": "The ingredient's `position`"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 20,
+              "minimum": 1,
+              "default": 5,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubstitutionsOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Post Substitutions",
+        "description": "Ranked substitutes for one ingredient that respect the user's exclusions.\n\nAn excluded ingredient gets the fix from the exclusion check (`remove` for\nan optional one, else safe substitutes); allergy and strict-intolerance\nconflicts are never offered, dislikes are ranked down.",
+        "operationId": "post_substitutions_v1_recipes__recipe_id__substitutions_post",
+        "parameters": [
+          {
+            "name": "recipe_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Recipe Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubstitutionsIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubstitutionsOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/apple": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Sign In With Apple",
+        "description": "Exchange an Apple identity token for our access and refresh tokens.",
+        "operationId": "sign_in_with_apple_v1_auth_apple_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppleLoginIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPair"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/refresh": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Refresh",
+        "description": "Rotate a refresh token. Each one works once; reusing one ends the session.",
+        "operationId": "refresh_v1_auth_refresh_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPair"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get Me",
+        "operationId": "get_me_v1_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Delete Me",
+        "description": "Delete the account and all data stored about it. This can't be undone.",
+        "operationId": "delete_me_v1_me_delete",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/me/export": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Export Me",
+        "operationId": "export_me_v1_me_export_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/me/consents": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Record Consents",
+        "description": "Append consent answers (grant or withdrawal); returns the current state per type.",
+        "operationId": "record_consents_v1_me_consents_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsentsIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ConsentOut"
+                  },
+                  "type": "array",
+                  "title": "Response Record Consents V1 Me Consents Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/healthz": {
+      "get": {
+        "tags": [
+          "ops"
+        ],
+        "summary": "Healthz",
+        "operationId": "healthz_healthz_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Healthz Healthz Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AppleLoginIn": {
+        "properties": {
+          "identity_token": {
+            "type": "string",
+            "maxLength": 8192,
+            "minLength": 1,
+            "title": "Identity Token"
+          },
+          "nonce": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 256,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nonce"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "identity_token"
+        ],
+        "title": "AppleLoginIn"
+      },
+      "BlockedDetail": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "must_substitute": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Must Substitute",
+            "description": "Keys of the excluded required ingredients",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "BlockedDetail"
+      },
+      "BlockedOut": {
+        "properties": {
+          "detail": {
+            "$ref": "#/components/schemas/BlockedDetail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "BlockedOut"
+      },
+      "CalculateIn": {
+        "properties": {
+          "servings": {
+            "type": "integer",
+            "maximum": 50.0,
+            "minimum": 1.0,
+            "title": "Servings",
+            "default": 1
+          },
+          "ingredients": {
+            "items": {
+              "$ref": "#/components/schemas/IngredientIn"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "minItems": 1,
+            "title": "Ingredients"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ingredients"
+        ],
+        "title": "CalculateIn"
+      },
+      "CalculateOut": {
+        "properties": {
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/LineOut"
+            },
+            "type": "array",
+            "title": "Lines"
+          },
+          "total": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          },
+          "per_serving": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          },
+          "total_grams": {
+            "type": "number",
+            "title": "Total Grams"
+          }
+        },
+        "type": "object",
+        "required": [
+          "lines",
+          "total",
+          "per_serving",
+          "total_grams"
+        ],
+        "title": "CalculateOut"
+      },
+      "ChangeOut": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "original_g": {
+            "type": "number",
+            "title": "Original G"
+          },
+          "grams": {
+            "type": "number",
+            "title": "Grams"
+          },
+          "reason": {
+            "$ref": "#/components/schemas/ChangeReason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "original_g",
+          "grams",
+          "reason"
+        ],
+        "title": "ChangeOut"
+      },
+      "ChangeReason": {
+        "type": "string",
+        "enum": [
+          "raise_protein",
+          "cut_calories",
+          "add_calories",
+          "lower_fat",
+          "adjust_carbs",
+          "more_volume",
+          "removed_optional",
+          "rounding",
+          "excluded"
+        ],
+        "title": "ChangeReason",
+        "description": "Why an amount changed: the engine's reasons plus removal for an exclusion."
+      },
+      "ConflictOut": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "verdict": {
+            "$ref": "#/components/schemas/Verdict"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "verdict",
+          "optional"
+        ],
+        "title": "ConflictOut"
+      },
+      "ConsentIn": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ConsentType"
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._-]{1,32}$",
+            "title": "Version"
+          },
+          "granted": {
+            "type": "boolean",
+            "title": "Granted"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "type",
+          "version",
+          "granted"
+        ],
+        "title": "ConsentIn"
+      },
+      "ConsentOut": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ConsentType"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "granted": {
+            "type": "boolean",
+            "title": "Granted"
+          },
+          "recorded_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Recorded At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "version",
+          "granted",
+          "recorded_at"
+        ],
+        "title": "ConsentOut"
+      },
+      "ConsentType": {
+        "type": "string",
+        "enum": [
+          "health_data",
+          "age_18_plus",
+          "terms_of_use",
+          "privacy_policy"
+        ],
+        "title": "ConsentType"
+      },
+      "ConsentsIn": {
+        "properties": {
+          "consents": {
+            "items": {
+              "$ref": "#/components/schemas/ConsentIn"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "minItems": 1,
+            "title": "Consents"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "consents"
+        ],
+        "title": "ConsentsIn",
+        "description": "Answers from one consent screen, recorded together."
+      },
+      "CulinaryRole": {
+        "type": "string",
+        "enum": [
+          "main_protein",
+          "carb_base",
+          "vegetable",
+          "aromatic",
+          "fruit",
+          "cooking_fat",
+          "creamy_base",
+          "cheese",
+          "binder",
+          "sauce_base",
+          "seasoning",
+          "sweetener",
+          "liquid",
+          "topping",
+          "leavening",
+          "acid"
+        ],
+        "title": "CulinaryRole",
+        "description": "What an ingredient does in a dish; bounds how the optimizer may change it."
+      },
+      "ExclusionCategory": {
+        "type": "string",
+        "enum": [
+          "gluten",
+          "crustaceans",
+          "eggs",
+          "fish",
+          "peanuts",
+          "soy",
+          "milk",
+          "tree_nuts",
+          "celery",
+          "mustard",
+          "sesame",
+          "sulphites",
+          "lupin",
+          "molluscs",
+          "shellfish",
+          "meat",
+          "dairy",
+          "nuts",
+          "other"
+        ],
+        "title": "ExclusionCategory",
+        "description": "The checklist the user sees in onboarding (PRD §7).\n\nEvery EU allergen is its own category, with the same value as its\n:class:`Allergen`. ``shellfish``, ``meat``, ``dairy`` and ``nuts`` are the\nbroader groups the checklist also shows; ``other`` is a free-text term the\nuser types in (see :class:`Exclusion`)."
+      },
+      "ExclusionIn": {
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/ExclusionCategory"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/Severity"
+          },
+          "term": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 60,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Term",
+            "description": "Only for category `other`"
+          },
+          "relaxed": {
+            "type": "boolean",
+            "title": "Relaxed",
+            "description": "Only an intolerance can be relaxed",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "category",
+          "severity"
+        ],
+        "title": "ExclusionIn"
+      },
+      "ExportOut": {
+        "properties": {
+          "exported_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Exported At"
+          },
+          "user": {
+            "$ref": "#/components/schemas/MeOut"
+          },
+          "consent_history": {
+            "items": {
+              "$ref": "#/components/schemas/ConsentOut"
+            },
+            "type": "array",
+            "title": "Consent History"
+          },
+          "sessions": {
+            "items": {
+              "$ref": "#/components/schemas/SessionOut"
+            },
+            "type": "array",
+            "title": "Sessions"
+          },
+          "private_recipes": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Private Recipes"
+          },
+          "recipe_variants": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Recipe Variants"
+          }
+        },
+        "type": "object",
+        "required": [
+          "exported_at",
+          "user",
+          "consent_history",
+          "sessions",
+          "private_recipes",
+          "recipe_variants"
+        ],
+        "title": "ExportOut",
+        "description": "Everything the server stores about the user (GDPR Art. 15 and 20).\n\nThe health profile is not here because the server never has it; the app\nexports it from the phone (D8)."
+      },
+      "FoodDetail": {
+        "properties": {
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "name_en": {
+            "type": "string",
+            "title": "Name En"
+          },
+          "name_pl": {
+            "type": "string",
+            "title": "Name Pl"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "per_100g": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          },
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "allergens": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Allergens",
+            "description": "Effective allergens, including inherited ones"
+          },
+          "may_contain": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "May Contain",
+            "description": "Effective \"may contain\" (trace) allergens, including inherited ones. Never repeats an entry of `allergens`."
+          },
+          "trace_status": {
+            "$ref": "#/components/schemas/TraceStatus",
+            "description": "Whether the \"may contain\" data is known, including inherited status. `unknown`: nobody has checked this food or something it is made from, so any allergen could be a trace (not the same as none); an ALLERGY exclusion never allows it. `none_declared`: checked, no traces. `declared`: checked, listed in `may_contain`."
+          },
+          "culinary_roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Culinary Roles"
+          },
+          "substitution_groups": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Substitution Groups"
+          },
+          "density_g_per_ml": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Density G Per Ml"
+          },
+          "portions_g": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Portions G"
+          },
+          "packages_g": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Packages G"
+          },
+          "aliases": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Aliases"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "source_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Ref"
+          }
+        },
+        "type": "object",
+        "required": [
+          "slug",
+          "name_en",
+          "name_pl",
+          "category",
+          "per_100g",
+          "origin",
+          "allergens",
+          "may_contain",
+          "trace_status",
+          "culinary_roles",
+          "substitution_groups",
+          "density_g_per_ml",
+          "portions_g",
+          "packages_g",
+          "aliases",
+          "source",
+          "source_ref"
+        ],
+        "title": "FoodDetail"
+      },
+      "FoodRef": {
+        "properties": {
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "name_en": {
+            "type": "string",
+            "title": "Name En"
+          },
+          "name_pl": {
+            "type": "string",
+            "title": "Name Pl"
+          }
+        },
+        "type": "object",
+        "required": [
+          "slug",
+          "name_en",
+          "name_pl"
+        ],
+        "title": "FoodRef"
+      },
+      "FoodSearchHit": {
+        "properties": {
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "name_en": {
+            "type": "string",
+            "title": "Name En"
+          },
+          "name_pl": {
+            "type": "string",
+            "title": "Name Pl"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "per_100g": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          }
+        },
+        "type": "object",
+        "required": [
+          "slug",
+          "name_en",
+          "name_pl",
+          "category",
+          "per_100g",
+          "score"
+        ],
+        "title": "FoodSearchHit"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "IngredientIn": {
+        "properties": {
+          "food": {
+            "type": "string",
+            "title": "Food",
+            "description": "Food slug"
+          },
+          "amount": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Amount"
+          },
+          "unit": {
+            "type": "string",
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Unit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "food",
+          "amount",
+          "unit"
+        ],
+        "title": "IngredientIn"
+      },
+      "IngredientOut": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key",
+            "description": "`<position>:<food slug>`, as used by personalize"
+          },
+          "position": {
+            "type": "integer",
+            "title": "Position"
+          },
+          "food": {
+            "$ref": "#/components/schemas/FoodRef"
+          },
+          "amount_g": {
+            "type": "number",
+            "title": "Amount G",
+            "description": "For the whole recipe"
+          },
+          "per_serving_g": {
+            "type": "number",
+            "title": "Per Serving G"
+          },
+          "display_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Amount"
+          },
+          "display_unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Unit"
+          },
+          "culinary_role": {
+            "$ref": "#/components/schemas/CulinaryRole"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional"
+          },
+          "prep_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prep Note"
+          },
+          "allergens": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Allergens"
+          },
+          "may_contain": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "May Contain"
+          },
+          "trace_status": {
+            "$ref": "#/components/schemas/TraceStatus"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "position",
+          "food",
+          "amount_g",
+          "per_serving_g",
+          "display_amount",
+          "display_unit",
+          "culinary_role",
+          "optional",
+          "prep_note",
+          "allergens",
+          "may_contain",
+          "trace_status"
+        ],
+        "title": "IngredientOut"
+      },
+      "LineOut": {
+        "properties": {
+          "food": {
+            "type": "string",
+            "title": "Food"
+          },
+          "grams": {
+            "type": "number",
+            "title": "Grams"
+          },
+          "nutrients": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          }
+        },
+        "type": "object",
+        "required": [
+          "food",
+          "grams",
+          "nutrients"
+        ],
+        "title": "LineOut"
+      },
+      "MeOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "email_relay": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email Relay"
+          },
+          "consents": {
+            "items": {
+              "$ref": "#/components/schemas/ConsentOut"
+            },
+            "type": "array",
+            "title": "Consents"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "email_relay",
+          "consents"
+        ],
+        "title": "MeOut"
+      },
+      "MealTarget": {
+        "properties": {
+          "kcal": {
+            "type": "number",
+            "maximum": 3000.0,
+            "minimum": 100.0,
+            "title": "Kcal"
+          },
+          "protein_min_g": {
+            "type": "number",
+            "maximum": 250.0,
+            "minimum": 0.0,
+            "title": "Protein Min G"
+          },
+          "fat_g": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 300.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fat G"
+          },
+          "carbs_g": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 500.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Carbs G"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kcal",
+          "protein_min_g"
+        ],
+        "title": "MealTarget",
+        "description": "One serving's target."
+      },
+      "Metric": {
+        "type": "string",
+        "enum": [
+          "kcal",
+          "protein"
+        ],
+        "title": "Metric"
+      },
+      "MissOut": {
+        "properties": {
+          "metric": {
+            "$ref": "#/components/schemas/Metric"
+          },
+          "target": {
+            "type": "number",
+            "title": "Target"
+          },
+          "actual": {
+            "type": "number",
+            "title": "Actual"
+          }
+        },
+        "type": "object",
+        "required": [
+          "metric",
+          "target",
+          "actual"
+        ],
+        "title": "MissOut"
+      },
+      "NutrientsOut": {
+        "properties": {
+          "kcal": {
+            "type": "number",
+            "title": "Kcal"
+          },
+          "protein_g": {
+            "type": "number",
+            "title": "Protein G"
+          },
+          "fat_g": {
+            "type": "number",
+            "title": "Fat G"
+          },
+          "carbs_g": {
+            "type": "number",
+            "title": "Carbs G",
+            "description": "Available carbohydrate, excluding fiber (EU label style)"
+          },
+          "fiber_g": {
+            "type": "number",
+            "title": "Fiber G"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kcal",
+          "protein_g",
+          "fat_g",
+          "carbs_g",
+          "fiber_g"
+        ],
+        "title": "NutrientsOut"
+      },
+      "NutritionOut": {
+        "properties": {
+          "total": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          },
+          "per_serving": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          },
+          "total_grams": {
+            "type": "number",
+            "title": "Total Grams"
+          }
+        },
+        "type": "object",
+        "required": [
+          "total",
+          "per_serving",
+          "total_grams"
+        ],
+        "title": "NutritionOut"
+      },
+      "PersonalizeIn": {
+        "properties": {
+          "target": {
+            "$ref": "#/components/schemas/MealTarget"
+          },
+          "exclusions": {
+            "items": {
+              "$ref": "#/components/schemas/ExclusionIn"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Exclusions",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target"
+        ],
+        "title": "PersonalizeIn"
+      },
+      "PersonalizeOut": {
+        "properties": {
+          "recipe_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Recipe Id"
+          },
+          "ingredients": {
+            "items": {
+              "$ref": "#/components/schemas/ProposedIngredient"
+            },
+            "type": "array",
+            "title": "Ingredients"
+          },
+          "changes": {
+            "items": {
+              "$ref": "#/components/schemas/ChangeOut"
+            },
+            "type": "array",
+            "title": "Changes"
+          },
+          "swaps": {
+            "items": {
+              "$ref": "#/components/schemas/SwapOut"
+            },
+            "type": "array",
+            "title": "Swaps"
+          },
+          "original_nutrition": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          },
+          "nutrition": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          },
+          "on_target": {
+            "type": "boolean",
+            "title": "On Target"
+          },
+          "misses": {
+            "items": {
+              "$ref": "#/components/schemas/MissOut"
+            },
+            "type": "array",
+            "title": "Misses"
+          }
+        },
+        "type": "object",
+        "required": [
+          "recipe_id",
+          "ingredients",
+          "changes",
+          "swaps",
+          "original_nutrition",
+          "nutrition",
+          "on_target",
+          "misses"
+        ],
+        "title": "PersonalizeOut",
+        "description": "A proposal for one serving. Nothing is stored until the user confirms."
+      },
+      "ProposedIngredient": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key",
+            "description": "The original ingredient's key"
+          },
+          "position": {
+            "type": "integer",
+            "title": "Position"
+          },
+          "food": {
+            "$ref": "#/components/schemas/FoodRef",
+            "description": "The food used in the proposal (the substitute if swapped)"
+          },
+          "original_food": {
+            "type": "string",
+            "title": "Original Food"
+          },
+          "original_g": {
+            "type": "number",
+            "title": "Original G",
+            "description": "Per serving"
+          },
+          "grams": {
+            "type": "number",
+            "title": "Grams",
+            "description": "Per serving in the proposal; 0 when removed"
+          },
+          "removed": {
+            "type": "boolean",
+            "title": "Removed"
+          },
+          "swapped": {
+            "type": "boolean",
+            "title": "Swapped"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "position",
+          "food",
+          "original_food",
+          "original_g",
+          "grams",
+          "removed",
+          "swapped"
+        ],
+        "title": "ProposedIngredient"
+      },
+      "RecipeDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "slug": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Slug"
+          },
+          "title_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title En"
+          },
+          "title_pl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title Pl"
+          },
+          "servings": {
+            "type": "integer",
+            "title": "Servings"
+          },
+          "prep_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prep Minutes"
+          },
+          "cook_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cook Minutes"
+          },
+          "total_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total Minutes"
+          },
+          "difficulty": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Difficulty"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags"
+          },
+          "per_serving": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NutrientsOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "None until nutrition is computed"
+          },
+          "allergens": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Allergens"
+          },
+          "may_contain": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "May Contain"
+          },
+          "trace_status": {
+            "$ref": "#/components/schemas/TraceStatus"
+          },
+          "conflicts": {
+            "items": {
+              "$ref": "#/components/schemas/ConflictOut"
+            },
+            "type": "array",
+            "title": "Conflicts",
+            "description": "Ingredients the request's exclusions affect: `excluded` optional ones are left out when personalizing, `penalised` ones are dislikes. Recipes with an excluded required ingredient are not listed.",
+            "default": []
+          },
+          "instructions_en": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Instructions En"
+          },
+          "instructions_pl": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Instructions Pl"
+          },
+          "equipment": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Equipment"
+          },
+          "fridge_days": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fridge Days"
+          },
+          "freezer_friendly": {
+            "type": "boolean",
+            "title": "Freezer Friendly"
+          },
+          "meal_prep_score": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Meal Prep Score"
+          },
+          "ingredients": {
+            "items": {
+              "$ref": "#/components/schemas/IngredientOut"
+            },
+            "type": "array",
+            "title": "Ingredients"
+          },
+          "nutrition": {
+            "$ref": "#/components/schemas/NutritionOut"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "slug",
+          "title_en",
+          "title_pl",
+          "servings",
+          "prep_minutes",
+          "cook_minutes",
+          "total_minutes",
+          "difficulty",
+          "tags",
+          "per_serving",
+          "allergens",
+          "may_contain",
+          "trace_status",
+          "instructions_en",
+          "instructions_pl",
+          "equipment",
+          "fridge_days",
+          "freezer_friendly",
+          "meal_prep_score",
+          "ingredients",
+          "nutrition"
+        ],
+        "title": "RecipeDetail"
+      },
+      "RecipeList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeSummary"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total"
+        ],
+        "title": "RecipeList"
+      },
+      "RecipeSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "slug": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Slug"
+          },
+          "title_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title En"
+          },
+          "title_pl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title Pl"
+          },
+          "servings": {
+            "type": "integer",
+            "title": "Servings"
+          },
+          "prep_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prep Minutes"
+          },
+          "cook_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cook Minutes"
+          },
+          "total_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total Minutes"
+          },
+          "difficulty": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Difficulty"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags"
+          },
+          "per_serving": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NutrientsOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "None until nutrition is computed"
+          },
+          "allergens": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Allergens"
+          },
+          "may_contain": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "May Contain"
+          },
+          "trace_status": {
+            "$ref": "#/components/schemas/TraceStatus"
+          },
+          "conflicts": {
+            "items": {
+              "$ref": "#/components/schemas/ConflictOut"
+            },
+            "type": "array",
+            "title": "Conflicts",
+            "description": "Ingredients the request's exclusions affect: `excluded` optional ones are left out when personalizing, `penalised` ones are dislikes. Recipes with an excluded required ingredient are not listed.",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "slug",
+          "title_en",
+          "title_pl",
+          "servings",
+          "prep_minutes",
+          "cook_minutes",
+          "total_minutes",
+          "difficulty",
+          "tags",
+          "per_serving",
+          "allergens",
+          "may_contain",
+          "trace_status"
+        ],
+        "title": "RecipeSummary"
+      },
+      "RefreshIn": {
+        "properties": {
+          "refresh_token": {
+            "type": "string",
+            "maxLength": 256,
+            "minLength": 1,
+            "title": "Refresh Token"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "refresh_token"
+        ],
+        "title": "RefreshIn"
+      },
+      "SearchIn": {
+        "properties": {
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Tags",
+            "default": []
+          },
+          "max_total_minutes": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1440.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Total Minutes"
+          },
+          "exclusions": {
+            "items": {
+              "$ref": "#/components/schemas/ExclusionIn"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Exclusions",
+            "default": []
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "default": 50
+          },
+          "offset": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Offset",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "SearchIn"
+      },
+      "SessionOut": {
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "used_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Used At"
+          },
+          "revoked_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Revoked At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "created_at",
+          "expires_at",
+          "used_at",
+          "revoked_at"
+        ],
+        "title": "SessionOut"
+      },
+      "Severity": {
+        "type": "string",
+        "enum": [
+          "allergy",
+          "intolerance",
+          "dislike",
+          "prefer_not"
+        ],
+        "title": "Severity",
+        "description": "How strongly the user wants to avoid a category (PRD §7)."
+      },
+      "SubstitutionOption": {
+        "properties": {
+          "food": {
+            "$ref": "#/components/schemas/FoodRef"
+          },
+          "grams": {
+            "type": "number",
+            "title": "Grams",
+            "description": "Per serving, scaled to do the same job"
+          },
+          "same_group": {
+            "type": "boolean",
+            "title": "Same Group"
+          },
+          "disliked": {
+            "type": "boolean",
+            "title": "Disliked"
+          },
+          "delta": {
+            "$ref": "#/components/schemas/NutrientsOut",
+            "description": "Substitute minus original, per serving"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score",
+            "description": "Lower ranks first"
+          }
+        },
+        "type": "object",
+        "required": [
+          "food",
+          "grams",
+          "same_group",
+          "disliked",
+          "delta",
+          "score"
+        ],
+        "title": "SubstitutionOption"
+      },
+      "SubstitutionsIn": {
+        "properties": {
+          "ingredient": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 0.0,
+            "title": "Ingredient",
+            "description": "The ingredient's `position`"
+          },
+          "exclusions": {
+            "items": {
+              "$ref": "#/components/schemas/ExclusionIn"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Exclusions",
+            "default": []
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "default": 5
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "ingredient"
+        ],
+        "title": "SubstitutionsIn"
+      },
+      "SubstitutionsOut": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "position": {
+            "type": "integer",
+            "title": "Position"
+          },
+          "food": {
+            "$ref": "#/components/schemas/FoodRef"
+          },
+          "grams": {
+            "type": "number",
+            "title": "Grams",
+            "description": "Per serving"
+          },
+          "culinary_role": {
+            "$ref": "#/components/schemas/CulinaryRole"
+          },
+          "excluded": {
+            "type": "boolean",
+            "title": "Excluded",
+            "description": "The request's exclusions rule this ingredient out"
+          },
+          "remove": {
+            "type": "boolean",
+            "title": "Remove",
+            "description": "Excluded and optional: leaving it out is the fix"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/SubstitutionOption"
+            },
+            "type": "array",
+            "title": "Options"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "position",
+          "food",
+          "grams",
+          "culinary_role",
+          "excluded",
+          "remove",
+          "options"
+        ],
+        "title": "SubstitutionsOut"
+      },
+      "SwapOut": {
+        "properties": {
+          "original_key": {
+            "type": "string",
+            "title": "Original Key"
+          },
+          "replacement_key": {
+            "type": "string",
+            "title": "Replacement Key"
+          },
+          "food": {
+            "$ref": "#/components/schemas/FoodRef"
+          },
+          "grams": {
+            "type": "number",
+            "title": "Grams",
+            "description": "Amount doing the same job, before adjusting to the target"
+          }
+        },
+        "type": "object",
+        "required": [
+          "original_key",
+          "replacement_key",
+          "food",
+          "grams"
+        ],
+        "title": "SwapOut"
+      },
+      "TokenPair": {
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
+          "refresh_token": {
+            "type": "string",
+            "title": "Refresh Token"
+          },
+          "token_type": {
+            "type": "string",
+            "const": "bearer",
+            "title": "Token Type",
+            "default": "bearer"
+          },
+          "expires_in": {
+            "type": "integer",
+            "title": "Expires In"
+          },
+          "refresh_expires_in": {
+            "type": "integer",
+            "title": "Refresh Expires In"
+          }
+        },
+        "type": "object",
+        "required": [
+          "access_token",
+          "refresh_token",
+          "expires_in",
+          "refresh_expires_in"
+        ],
+        "title": "TokenPair"
+      },
+      "TraceStatus": {
+        "type": "string",
+        "enum": [
+          "unknown",
+          "none_declared",
+          "declared"
+        ],
+        "title": "TraceStatus",
+        "description": "What is known about a food's \"may contain\" (trace) allergens."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "Verdict": {
+        "type": "string",
+        "enum": [
+          "allowed",
+          "penalised",
+          "excluded"
+        ],
+        "title": "Verdict",
+        "description": "What one exclusion means for one ingredient, from least to most strict."
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

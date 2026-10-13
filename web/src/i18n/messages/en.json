@@ -1,0 +1,23 @@
+{
+  "app.name": "Donut",
+  "app.documentTitle": "{page} · Donut",
+  "shell.settings": "Settings",
+  "shell.placeholder": "This screen is coming soon.",
+  "onb.welcome.title": "Your favourite food. Your macros.",
+  "onb.welcome.subtitle": "Bring any recipe. Donut fits it to your calories, protein, allergies and week.",
+  "onb.welcome.cta": "Get started",
+  "today.title": "Today",
+  "today.empty.title": "No plan yet",
+  "plan.title": "Plan",
+  "plan.empty.title": "No plan yet",
+  "recipe.title": "Recipe",
+  "shopping.title": "Shopping",
+  "settings.title": "Settings",
+  "settings.language.label": "Language",
+  "settings.language.hint": "The app language on this device.",
+  "settings.language.pl": "Polski",
+  "settings.language.en": "English",
+  "notFound.title": "Page not found",
+  "notFound.body": "This page doesn't exist or has moved.",
+  "notFound.home": "Go to Today"
+}
