@@ -12,6 +12,10 @@ pnpm dev                 # http://localhost:5173, proxies /v1 to the API on :800
 
 The API (see [../backend/README.md](../backend/README.md)) runs separately. Set `VITE_API_BASE_URL` to call an API on another origin; by default the app calls its own origin (Caddy in production, the Vite proxy in dev).
 
+## Crash reporting
+
+Sentry (`src/monitoring/`) runs only in production builds with `VITE_SENTRY_DSN` set to an **EU-region** DSN (`*.de.sentry.io`); any other DSN is refused. It never collects user data, cookies, headers, bodies, query strings or local variables, takes no UI or console breadcrumbs, and redacts ids from URLs (`scrub.ts`, unit-tested). No tracing, no session replay. A deploy that sets `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT` uploads hidden source maps and deletes them from `dist/`; set `VITE_RELEASE` (e.g. the git SHA) to tie events to a release. When the CSP is added, allow the DSN's ingest host in `connect-src`.
+
 ## Checks
 
 ```bash

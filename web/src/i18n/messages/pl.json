@@ -20,5 +20,8 @@
   "settings.language.en": "English",
   "notFound.title": "Nie znaleziono strony",
   "notFound.body": "Ta strona nie istnieje albo została przeniesiona.",
-  "notFound.home": "Przejdź do ekranu Dzisiaj"
+  "notFound.home": "Przejdź do ekranu Dzisiaj",
+  "error.title": "Coś poszło nie tak",
+  "error.body": "Odśwież stronę. Twój plan i dane są bezpieczne.",
+  "error.reload": "Odśwież"
 }

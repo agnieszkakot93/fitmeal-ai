@@ -8,6 +8,14 @@ html {
     scroll-padding-bottom: 0;
   }
 }
+.dn-error {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: var(--container-onboarding);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-5);
+}
 .dn-avatar-link {
   display: inline-flex;
 }
