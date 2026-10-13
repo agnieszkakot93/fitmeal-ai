@@ -12,6 +12,7 @@ type TokenPair = components["schemas"]["TokenPair"];
 type Fetch = (input: Request) => Promise<Response>;
 
 export const REFRESH_PATH = "/v1/auth/refresh";
+export const LOGOUT_PATH = "/v1/auth/logout";
 const AUTH_PREFIX = "/v1/auth/";
 
 let accessToken: string | null = null;
@@ -64,6 +65,21 @@ export function refreshSession(baseUrl: string, fetchImpl: Fetch = defaultFetch)
     }
   })();
   return refreshing;
+}
+
+/**
+ * Sign out this browser: the server revokes the refresh token family and
+ * clears the cookie. The in-memory token is dropped even if the call fails.
+ */
+export async function signOut(baseUrl: string, fetchImpl: Fetch = defaultFetch): Promise<void> {
+  clearSession();
+  try {
+    await fetchImpl(
+      new Request(new URL(LOGOUT_PATH, baseUrl), { method: "POST", credentials: "include" }),
+    );
+  } catch {
+    // Offline: the cookie stays until it expires or the next sign-out.
+  }
 }
 
 function withBearer(request: Request, token: string | null): Request {
