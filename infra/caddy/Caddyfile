@@ -1,0 +1,50 @@
+# Edge proxy for the Donut API (Development Plan §6.4, §7.7).
+# DONUT_API_DOMAIN and ACME_EMAIL come from infra/.env.prod via compose.
+{
+	email {$ACME_EMAIL}
+	admin off
+	servers {
+		# only Caddy talks to the api; never trust client-supplied forwarding headers
+		trusted_proxies static private_ranges
+	}
+}
+
+{$DONUT_API_DOMAIN} {
+	# D8: health data must never land in logs. Caddy never logs bodies; we also drop
+	# the query string and every request header (Authorization, Cookie, ...).
+	log {
+		output stdout
+		format filter {
+			wrap json
+			fields {
+				request>uri regexp \?.*$ ""
+				request>headers delete
+				request>tls delete
+				resp_headers delete
+			}
+		}
+	}
+
+	request_body {
+		max_size 5MB
+	}
+
+	header {
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "no-referrer"
+		Content-Security-Policy "default-src 'none'; frame-ancestors 'none'"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		Cross-Origin-Resource-Policy "same-origin"
+		-Server
+		-Via
+	}
+
+	encode zstd gzip
+
+	reverse_proxy api:8000 {
+		health_uri /healthz
+		health_interval 15s
+	}
+}
