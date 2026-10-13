@@ -94,6 +94,17 @@ async def rotate(session: AsyncSession, presented: str, settings: Settings) -> T
     return pair
 
 
+async def revoke(session: AsyncSession, presented: str) -> None:
+    """Sign out: revoke ``presented`` and the rest of its family; commits."""
+    token_hash = tokens.hash_refresh_token(presented)
+    family_id = await session.scalar(
+        select(RefreshToken.family_id).where(RefreshToken.token_hash == token_hash)
+    )
+    if family_id is not None:
+        await revoke_family(session, family_id, datetime.now(UTC))
+        await session.commit()
+
+
 async def revoke_family(session: AsyncSession, family_id: uuid.UUID, now: datetime) -> None:
     await session.execute(
         update(RefreshToken)
