@@ -1,0 +1,10 @@
+[Unit]
+Description=Donut nightly encrypted Postgres backup to R2
+Wants=network-online.target
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+User=deploy
+WorkingDirectory=/opt/donut
+ExecStart=/usr/bin/docker compose --env-file infra/.env.prod -f infra/docker-compose.prod.yml --profile backup run --rm backup
