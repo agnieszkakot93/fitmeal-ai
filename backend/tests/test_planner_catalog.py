@@ -22,7 +22,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.foods import importer
 from app.foods.curated import load_curated
 from app.foods.fdc import load_fdc_dirs
-from app.foods.repository import to_allergens
 from app.nutrition.allergens import (
     Allergen,
     Exclusion,
@@ -37,6 +36,7 @@ from app.planner.inputs import Candidate, MealSlot, MealType, Profile
 from app.planner.plan import plan, verify
 from app.planner.result import Action, Infeasible, Plan
 from app.planner.solve import SolverConfig
+from app.plans.repository import to_candidate
 from app.recipes import catalog, repository
 from app.recipes.models import Recipe
 from app.recipes.safety import CheckLine
@@ -134,26 +134,6 @@ def load_extract() -> list[Candidate]:
         return [from_json(r) for r in json.load(fh)["recipes"]]
 
 
-def candidate_from_recipe(recipe: Recipe) -> Candidate:
-    """The planner's view of a stored recipe; needs ``repository.get`` loading."""
-    return Candidate(
-        id=recipe.slug or str(recipe.id),
-        tags=frozenset(recipe.tags),
-        per_serving=repository.compute_nutrition(recipe).per_serving,
-        servings=recipe.servings,
-        fridge_days=recipe.fridge_days or 0,
-        freezer_friendly=recipe.freezer_friendly,
-        meal_prep_score=recipe.meal_prep_score or 0,
-        total_minutes=(recipe.prep_minutes or 0) + (recipe.cook_minutes or 0),
-        equipment=frozenset(recipe.equipment),
-        allergen_lines=tuple(
-            CheckLine(f"{i.position}:{i.food.slug}", to_allergens(i.food), i.optional)
-            for i in recipe.ingredients
-        ),
-        ingredient_ids=frozenset(i.food.slug for i in recipe.ingredients),
-    )
-
-
 async def test_extract_matches_catalog(db_session: AsyncSession) -> None:
     report = importer.resolve(load_curated(CURATED), load_fdc_dirs([SNAPSHOT]))
     await importer.apply(db_session, report.resolved)
@@ -166,7 +146,7 @@ async def test_extract_matches_catalog(db_session: AsyncSession) -> None:
     for recipe_id in list(ids):
         recipe = await repository.get(db_session, recipe_id)
         assert recipe is not None
-        live.append(to_json(candidate_from_recipe(recipe)))
+        live.append(to_json(to_candidate(recipe)))
     if os.environ.get("DONUT_WRITE_PLANNER_FIXTURE"):
         EXTRACT.parent.mkdir(parents=True, exist_ok=True)
         rows = ",\n".join(json.dumps(r, ensure_ascii=False) for r in live)

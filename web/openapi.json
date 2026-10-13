@@ -1443,6 +1443,14 @@
             },
             "type": "array",
             "title": "Recipe Variants"
+          },
+          "plans": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Plans"
           }
         },
         "type": "object",
@@ -1452,7 +1460,8 @@
           "consent_history",
           "sessions",
           "private_recipes",
-          "recipe_variants"
+          "recipe_variants",
+          "plans"
         ],
         "title": "ExportOut",
         "description": "Everything the server stores about the user (GDPR Art. 15 and 20).\n\nThe health profile is not here because the server never has it; the app\nexports it from the phone (D8)."
