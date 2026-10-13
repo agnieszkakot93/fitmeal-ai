@@ -42,3 +42,55 @@ def test_parse_line(
 )
 def test_several_ingredients_in_one_line(raw: str, several: bool) -> None:
     assert parse_line(raw).several is several
+
+
+@pytest.mark.parametrize(
+    ("raw", "amount", "unit", "name"),
+    [
+        ("1 garlic clove, crushed", 1, "clove", "garlic"),
+        ("3 garlic cloves", 3, "clove", "garlic"),
+        ("2 celery stalks", 2, "stalk", "celery"),
+        ("1 ½ cups blueberries", 1.5, "cup", "blueberries"),
+        ("a handful of blueberries", 1, "handful", "blueberries"),
+        ("pół kilo ziemniaków", 0.5, "kg", "ziemniaków"),
+        ("pomidorki koktajlowe, garść", 1, "handful", "pomidorki koktajlowe"),
+        ("½ kostki masła (100 g)", 0.5, "pack", "masła"),
+        ("1 tsp coconut oil for the pan", 1, "tsp", "coconut oil"),
+        ("1 head romaine lettuce", 1, "piece", "romaine lettuce"),
+    ],
+)
+def test_units_written_around_the_name(raw: str, amount: float, unit: str, name: str) -> None:
+    parsed = parse_line(raw)
+    assert parsed.amount == pytest.approx(amount)
+    assert (parsed.unit, parsed.name) == (unit, name)
+
+
+@pytest.mark.parametrize(
+    ("raw", "weight_g"),
+    [
+        ("2 cukinie (ok. 600 g)", 600),
+        ("1 can (28 oz) crushed tomatoes", 793.786),
+        ("1 opakowanie tofu naturalnego (180 g)", 180),
+        ("2 fillets (150 g each)", 300),
+        ("1 can (400 g) chickpeas, drained", None),  # the can's weight includes the liquid
+        ("2 jajka (rozmiar M)", None),
+        ("3 eggs", None),
+    ],
+)
+def test_weight_stated_in_a_note(raw: str, weight_g: float | None) -> None:
+    got = parse_line(raw).weight_g
+    assert got == (pytest.approx(weight_g, rel=1e-4) if weight_g is not None else None)
+
+
+@pytest.mark.parametrize(
+    ("raw", "several"),
+    [
+        ("sól, pieprz", True),
+        ("sól, pieprz do smaku", True),
+        ("fresh basil, chopped", False),
+        ("parmesan, for serving", False),
+        ("2 ząbki czosnku, posiekane", False),
+    ],
+)
+def test_comma_list_without_amount(raw: str, several: bool) -> None:
+    assert parse_line(raw).several is several

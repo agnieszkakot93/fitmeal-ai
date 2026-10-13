@@ -3,10 +3,9 @@
 The Sprint 3 go/no-go gates (Development Plan §9): at least 90% of ingredient
 lines match the right food and grams without a clarification prompt, every
 must-ask line asks, and at least 90% of recipes land within ±5% of the
-expected per-serving kcal. Gates the current matcher misses are marked
-``xfail(strict=True)``, so they flip to failures (to be un-marked) as soon as
-the matcher reaches them. The floors below are the rates measured when the set
-was added (2026-10-13): raise them when the matcher improves, never lower them.
+expected per-serving kcal. A gate the matcher misses is marked
+``xfail(strict=True)`` until it reaches it. The floors below are the measured
+rates: raise them when the matcher improves, never lower them.
 """
 
 from pathlib import Path
@@ -27,8 +26,9 @@ SNAPSHOT = ROOT / "data" / "foods" / "fdc_snapshot"
 
 MATCH_RATE_GATE = 0.9
 KCAL_WITHIN_GATE = 0.9
-# measured 2026-10-13: match 84.3%, must-ask 87.3%, kcal within ±5% 42.6%
-FLOORS = {"match_rate": 0.842, "must_ask_rate": 0.872, "kcal_within": 0.425}
+# measured 2026-10-13 when the set was added: match 84.3%, must-ask 87.3%, kcal 42.6%;
+# after whole-word (inflection-aware) matching: 100% on all three
+FLOORS = {"match_rate": 1.0, "must_ask_rate": 1.0, "kcal_within": 1.0}
 
 
 @pytest.fixture
@@ -100,20 +100,13 @@ async def test_rates_do_not_regress(report: evaluate.Report) -> None:
         assert getattr(report, name) >= floor, rendered
 
 
-@pytest.mark.xfail(
-    strict=True, reason="matcher at 84.3%: Polish case endings, clove/can/handful units"
-)
 async def test_gate_match_rate(report: evaluate.Report) -> None:
     assert report.match_rate >= MATCH_RATE_GATE, evaluate.render(report)
 
 
-@pytest.mark.xfail(
-    strict=True, reason="silent guesses on 'sól, pieprz', sesame oil, broth, oat flour"
-)
 async def test_gate_must_ask_lines_ask(report: evaluate.Report) -> None:
     assert report.must_ask_rate == 1.0, evaluate.render(report)
 
 
-@pytest.mark.xfail(strict=True, reason="42.6% of recipes within ±5% kcal; false asks drop lines")
 async def test_gate_kcal_within_5_percent(report: evaluate.Report) -> None:
     assert report.kcal_within >= KCAL_WITHIN_GATE, evaluate.render(report)
