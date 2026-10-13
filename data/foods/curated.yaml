@@ -570,7 +570,7 @@ foods:
     culinary_roles: [cooking_fat]
     substitution_groups: [cooking_fat]
     density_g_per_ml: 0.91
-    portions: {tbsp: 14, tsp: 5}
+    portions: {tbsp: 14, tsp: 5, pack: 200}  # pack: a 200 g kostka
     packages_g: [200]
     fdc: {description: "Butter, without salt"}
     review: {status: draft}
@@ -1318,7 +1318,7 @@ foods:
 
   - slug: bell-pepper-red
     name: {en: "Red bell pepper", pl: "Papryka czerwona"}
-    aliases: {en: [bell pepper, red pepper, red bell pepper, pepper], pl: [papryka, papryka czerwona, papryka słodka]}
+    aliases: {en: [bell pepper, red pepper, red bell pepper, pepper], pl: [papryka, papryka czerwona]}
     category: vegetables
     origin: plant
     traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
@@ -1368,13 +1368,13 @@ foods:
 
   - slug: broccoli
     name: {en: "Broccoli", pl: "Brokuł"}
-    aliases: {en: [broccoli], pl: [brokuł, brokuły, różyczki brokuła]}
+    aliases: {en: [broccoli, broccoli florets], pl: [brokuł, brokuły, różyczki brokuła]}
     category: vegetables
     origin: plant
     traces: {status: none_declared, source: {type: policy, ref: "TRACE_POLICY.md#fresh-produce"}}
     culinary_roles: [vegetable]
     substitution_groups: [brassica]
-    portions: {piece: 400, handful: 60}
+    portions: {piece: 400, handful: 60, cup: 91}  # 1 cup chopped florets (USDA)
     packages_g: [450]
     fdc: {description: "Broccoli, raw"}
     review: {status: draft}
@@ -1506,7 +1506,7 @@ foods:
 
   - slug: sweet-corn-canned-drained
     name: {en: "Sweet corn, canned, drained", pl: "Kukurydza konserwowa, odsączona"}
-    aliases: {en: [corn, sweet corn, canned corn], pl: [kukurydza, kukurydza konserwowa, kukurydza z puszki]}
+    aliases: {en: [corn, sweet corn, sweetcorn, canned corn], pl: [kukurydza, kukurydza konserwowa, kukurydza z puszki]}
     category: vegetables
     origin: plant
     traces: {status: unknown}
@@ -2738,7 +2738,7 @@ foods:
     origin: other
     traces: {status: unknown}
     culinary_roles: [seasoning]
-    portions: {tsp: 6, pinch: 0.4}
+    portions: {tbsp: 18, tsp: 6, pinch: 0.4}
     packages_g: [1000]
     fdc: {description: "Salt, table"}
     review: {status: draft}
@@ -2751,20 +2751,20 @@ foods:
     may_contain: [celery, mustard, gluten, sesame]
     traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
-    portions: {tsp: 2.3, pinch: 0.1}
+    portions: {tbsp: 6.9, tsp: 2.3, pinch: 0.1}
     packages_g: [20, 50]
     fdc: {description: "Spices, pepper, black"}
     review: {status: draft}
 
   - slug: paprika-sweet
     name: {en: "Paprika", pl: "Papryka słodka mielona"}
-    aliases: {en: [paprika, sweet paprika, smoked paprika], pl: [papryka mielona, papryka słodka mielona, papryka wędzona]}
+    aliases: {en: [paprika, sweet paprika, smoked paprika], pl: [papryka mielona, papryka słodka, papryka słodka mielona, papryka wędzona]}
     category: spices
     origin: plant
     may_contain: [celery, mustard, gluten, sesame]
     traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
-    portions: {tsp: 2.3, pinch: 0.2}
+    portions: {tbsp: 6.9, tsp: 2.3, pinch: 0.2}
     packages_g: [20, 50]
     fdc: {description: "Spices, paprika"}
     review: {status: draft}
@@ -2777,7 +2777,7 @@ foods:
     may_contain: [celery, mustard, gluten, sesame]
     traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
-    portions: {tsp: 2.6, pinch: 0.2}
+    portions: {tbsp: 7.8, tsp: 2.6, pinch: 0.2}
     packages_g: [15, 50]
     fdc: {description: "Spices, cinnamon, ground"}
     review: {status: draft}
@@ -2790,7 +2790,7 @@ foods:
     may_contain: [celery, mustard, gluten, sesame]
     traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
-    portions: {tsp: 2.1, pinch: 0.2}
+    portions: {tbsp: 6.3, tsp: 2.1, pinch: 0.2}
     packages_g: [20]
     fdc: {description: "Spices, cumin seed"}
     review: {status: draft}
@@ -2803,7 +2803,7 @@ foods:
     may_contain: [celery, mustard, gluten, sesame]
     traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
-    portions: {tsp: 3, pinch: 0.2}
+    portions: {tbsp: 9, tsp: 3, pinch: 0.2}
     packages_g: [20, 50]
     fdc: {description: "Spices, turmeric, ground"}
     review: {status: draft}
@@ -2816,7 +2816,7 @@ foods:
     may_contain: [celery, mustard, gluten, sesame]
     traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
-    portions: {tsp: 1.8, pinch: 0.1}
+    portions: {tbsp: 5.4, tsp: 1.8, pinch: 0.1}
     packages_g: [15, 20]
     fdc: {description: "Spices, ginger, ground"}
     review: {status: draft}
@@ -2829,7 +2829,7 @@ foods:
     may_contain: [celery, mustard, gluten, sesame]
     traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
-    portions: {tsp: 2.2, pinch: 0.1}
+    portions: {tbsp: 6.6, tsp: 2.2, pinch: 0.1}
     packages_g: [10, 15]
     fdc: {description: "Spices, nutmeg, ground"}
     review: {status: draft}
@@ -2856,7 +2856,7 @@ foods:
     may_contain: [celery, mustard, gluten, sesame]
     traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
-    portions: {tsp: 1.8, pinch: 0.1}
+    portions: {tbsp: 5.4, tsp: 1.8, pinch: 0.1}
     packages_g: [15, 20]
     fdc: {description: "Spices, pepper, red or cayenne"}
     energy_exception: "high fiber: FDC uses food-specific energy factors"
@@ -2870,7 +2870,7 @@ foods:
     may_contain: [celery, mustard, gluten, sesame]
     traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
-    portions: {tsp: 2.1, pinch: 0.2}
+    portions: {tbsp: 6.3, tsp: 2.1, pinch: 0.2}
     packages_g: [20, 30]
     fdc: {description: "Spices, caraway seed"}
     review: {status: draft}
@@ -2883,7 +2883,7 @@ foods:
     may_contain: [celery, mustard, gluten, sesame]
     traces: {status: declared, source: {type: policy, ref: "TRACE_POLICY.md#ground-spices"}}
     culinary_roles: [seasoning]
-    portions: {tsp: 3.1, pinch: 0.2}
+    portions: {tbsp: 9.3, tsp: 3.1, pinch: 0.2}
     packages_g: [20, 30]
     fdc: {description: "Spices, garlic powder"}
     review: {status: draft}
@@ -2924,7 +2924,7 @@ foods:
     origin: plant
     traces: {status: unknown}
     culinary_roles: [seasoning]
-    portions: {tsp: 0.6, pinch: 0.1}
+    portions: {tbsp: 1.8, tsp: 0.6, pinch: 0.1}
     packages_g: [8, 10]
     fdc: {description: "Spices, marjoram, dried"}
     review: {status: draft}
@@ -2936,7 +2936,7 @@ foods:
     origin: plant
     traces: {status: unknown}
     culinary_roles: [seasoning]
-    portions: {tsp: 1, pinch: 0.1}
+    portions: {tbsp: 3, tsp: 1, pinch: 0.1}
     packages_g: [10]
     fdc: {description: "Spices, oregano, dried"}
     review: {status: draft}

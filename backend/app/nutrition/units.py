@@ -87,15 +87,19 @@ UNIT_ALIASES: dict[str, str] = {
     "pinch": "pinch", "szczypta": "pinch", "szczypty": "pinch", "szczypte": "pinch",
     "piece": "piece", "pieces": "piece", "pc": "piece", "pcs": "piece", "szt": "piece",
     "szt.": "piece", "sztuka": "piece", "sztuki": "piece", "sztuk": "piece", "whole": "piece",
+    "head": "piece", "heads": "piece", "glowka": "piece", "glowki": "piece",
     "clove": "clove", "cloves": "clove", "zabek": "clove", "zabki": "clove", "zabkow": "clove",
     "slice": "slice", "slices": "slice", "plaster": "slice", "plastry": "slice",
     "plastrow": "slice", "kromka": "slice", "kromki": "slice", "kromek": "slice",
     "scoop": "scoop", "scoops": "scoop", "miarka": "scoop", "miarki": "scoop", "miarek": "scoop",
     "handful": "handful", "handfuls": "handful", "garsc": "handful", "garscie": "handful",
+    "garsci": "handful",
     "can": "can", "cans": "can", "tin": "can", "puszka": "can", "puszki": "can",
+    "puszek": "can", "puszke": "can",
     "bunch": "bunch", "peczek": "bunch", "peczki": "bunch",
     "stalk": "stalk", "stalks": "stalk", "lodyga": "stalk", "lodygi": "stalk",
     "pack": "pack", "package": "pack", "opakowanie": "pack", "opakowania": "pack",
+    "kostka": "pack", "kostki": "pack", "kostke": "pack", "kostek": "pack",
 }  # fmt: skip
 
 

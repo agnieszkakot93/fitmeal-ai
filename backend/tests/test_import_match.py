@@ -57,3 +57,52 @@ async def test_golden_set(foods: AsyncSession) -> None:
     assert rate >= MATCH_RATE_GATE and not [f for f in failures if "guessed" in f], (
         f"match rate {rate:.0%}\n" + "\n".join(failures)
     )
+
+
+@pytest.mark.parametrize(
+    ("line", "slug", "grams"),
+    [
+        # Polish cases and adjective endings match whole words, not trigrams
+        ("2 łyżki oliwy", "olive-oil", 27.3),
+        ("500 g mąki pszennej", "flour-wheat", 500),
+        ("1 łyżka mąki", "flour-wheat", 8),  # not "mak" (poppy seed)
+        ("2 łyżki cukru", "sugar-white", 25),
+        ("10 czarnych oliwek", "olives-black", 40),
+        ("1 łyżka masła", "butter", 14),  # not "maślanka" (buttermilk)
+        # descriptor words don't make a line unknown
+        ("250 ml ciepłego mleka", "milk-2", 257.5),
+        ("100g mrożonych truskawek", "strawberries", 100),
+        ("100 g shredded lettuce", "romaine-lettuce", 100),
+        # the more specific alias wins a tie
+        ("1 łyżeczka imbiru mielonego", "ginger-ground", 1.8),
+        ("1 łyżeczka papryki słodkiej", "paprika-sweet", 2.3),
+        # units after the name, in a note, or as the only amount
+        ("2 garlic cloves", "garlic", 8),
+        ("2 cukinie (ok. 600 g)", "zucchini", 600),
+        ("a handful of baby spinach", "spinach", 30),
+        # a can picks the canned food
+        ("1 puszka pomidorów", "tomatoes-canned", 400),
+        ("1 can (28 oz) crushed tomatoes", "tomatoes-canned", 793.8),
+    ],
+)
+async def test_matches_without_asking(
+    foods: AsyncSession, line: str, slug: str, grams: float
+) -> None:
+    match = await match_line(foods, parse_line(line))
+    assert (match.slug, match.needs_clarification) == (slug, False), match
+    assert match.grams == pytest.approx(grams, rel=0.05)
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        "sól, pieprz",
+        "6 cups vegetable broth",  # not "vegetable oil"
+        "1 tbsp sesame oil",  # not sesame seeds
+        "1/2 cup oat flour",  # not wheat flour
+        "1 cup rice flour",
+    ],
+)
+async def test_asks_instead_of_a_wrong_food(foods: AsyncSession, line: str) -> None:
+    match = await match_line(foods, parse_line(line))
+    assert match.needs_clarification, match
