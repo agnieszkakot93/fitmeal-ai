@@ -169,6 +169,7 @@ These components already support the Phase 2 versions (`Delta` with `PLN`, `Shop
 
 - **Display — Bricolage Grotesque** (700/650): screen titles, meal and recipe names, and every large numeral. It's friendly, a little editorial, and its figures read well big.
 - **Text — Figtree** (400–700): everything else. On iOS, ship both as bundled fonts registered with Dynamic Type through `UIFontMetrics`. SF Pro is the fallback.
+- **Web:** both fonts are self-hosted from `fonts/` (variable woff2, latin + latin-ext for Polish) and declared in `bundle.css`. Never load them from Google Fonts: the app makes no third-party requests.
 - **Scale:** `display-xl` 40 (onboarding questions, paywall hero) · `display` 32 (tab roots) · `title-1` 24 (recipe, sheet titles) · `title-2` 19 (cards) · `numeral-xl` 44 · `numeral` 22 · `headline` 17 · `body` 16 · `callout` 15 · `subhead` 14 · `footnote` 13 · `caption` 12 (UPPERCASE, +0.06em) · `micro` 11 (tab labels).
 - **Numerals** are always tabular (`font-variant-numeric: tabular-nums`; `.monospacedDigit()` in SwiftUI), so totals don't jitter while rebalancing.
 - Use one `display-xl` or `display` per screen. Don't stack two display sizes.
