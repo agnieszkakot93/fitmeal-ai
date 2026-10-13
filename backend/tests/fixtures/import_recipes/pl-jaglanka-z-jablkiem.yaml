@@ -1,0 +1,12 @@
+title: "Jaglanka z jabłkiem i cynamonem"
+language: pl
+source: caption
+servings: 1
+expected_per_serving: {kcal: 459, protein_g: 15.0}
+lines:
+  - {line: "50g kaszy jaglanej", slug: millet-dry, grams: 50}
+  - {line: "250 ml mleka", slug: milk-2, grams: 257.5}
+  - {line: "1 jabłko", slug: apple, grams: 180}
+  - {line: "1/2 łyżeczki cynamonu", slug: cinnamon, grams: 1.3}
+  - {line: "1 łyżka rodzynek", slug: raisins, grams: 9}
+  - {line: "1 łyżeczka syropu klonowego", slug: maple-syrup, grams: 6.65}

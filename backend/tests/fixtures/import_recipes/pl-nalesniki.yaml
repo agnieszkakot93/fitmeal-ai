@@ -1,0 +1,14 @@
+title: "Naleśniki z twarogiem"
+language: pl
+source: cookbook
+servings: 4
+expected_per_serving: {kcal: 268, protein_g: 9.4}
+lines:
+  - {line: "1 szklanka mąki pszennej", slug: flour-wheat, grams: 160}
+  - {line: "1 szklanka mleka", slug: milk-2, grams: 257.5}
+  - {line: "1/2 szklanki wody gazowanej", slug: water, grams: 125}
+  - {line: "2 jajka", slug: egg-whole-raw, grams: 100}
+  - {line: "szczypta soli", slug: salt, grams: 0.4}
+  - {line: "1 łyżka oleju", slug: rapeseed-oil, grams: 13.8}
+  - {line: "250 g twarogu", slug: null}
+  - {line: "2 łyżki cukru", slug: sugar-white, grams: 25}

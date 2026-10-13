@@ -1,0 +1,12 @@
+title: "Spinach and mushroom omelette"
+language: en
+source: caption
+servings: 1
+expected_per_serving: {kcal: 268, protein_g: 21.6}
+lines:
+  - {line: "2 eggs", slug: egg-whole-raw, grams: 100}
+  - {line: "1 egg white", slug: egg-white-raw, grams: 33}
+  - {line: "a handful of baby spinach", slug: spinach, grams: 30}
+  - {line: "3 mushrooms, sliced", slug: mushrooms-white, grams: 54}
+  - {line: "20 g feta", slug: feta, grams: 20}
+  - {line: "1 tsp butter", slug: butter, grams: 5}

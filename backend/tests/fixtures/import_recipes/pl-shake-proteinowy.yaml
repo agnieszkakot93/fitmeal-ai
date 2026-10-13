@@ -1,0 +1,11 @@
+title: "Shake bananowy z odżywką"
+language: pl
+source: caption
+servings: 1
+expected_per_serving: {kcal: 465, protein_g: 32.7}
+lines:
+  - {line: "1 miarka odżywki białkowej", slug: whey-protein-isolate, grams: 30}
+  - {line: "300 ml mleka 2%", slug: milk-2, grams: 309}
+  - {line: "1 banan", slug: banana, grams: 120}
+  - {line: "1 łyżka masła orzechowego", slug: peanut-butter, grams: 16}
+  - {line: "kilka kostek lodu", slug: null}

@@ -1,0 +1,17 @@
+title: "Gulasz wieprzowy z papryką"
+language: pl
+source: blog
+servings: 4
+expected_per_serving: {kcal: 629, protein_g: 36.7}
+lines:
+  - {line: "800 g łopatki wieprzowej", slug: pork-shoulder-raw, grams: 800}
+  - {line: "2 cebule", slug: onion, grams: 220}
+  - {line: "2 papryki czerwone", slug: bell-pepper-red, grams: 360}
+  - {line: "3 łyżki oleju", slug: rapeseed-oil, grams: 41.4}
+  - {line: "1 łyżka papryki słodkiej mielonej", slug: paprika-sweet, grams: 6.9}
+  - {line: "2 łyżki koncentratu", slug: tomato-paste, grams: 32}
+  - {line: "2 liście laurowe", slug: bay-leaf, grams: 0.4}
+  - {line: "3 ziela angielskie", slug: allspice, grams: 0.6}
+  - {line: "1 łyżka mąki", slug: flour-wheat, grams: 8}
+  - {line: "500 ml wody", slug: water, grams: 500}
+  - {line: "sól i pieprz do smaku", slug: null}

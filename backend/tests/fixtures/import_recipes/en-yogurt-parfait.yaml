@@ -1,0 +1,11 @@
+title: "Greek yogurt parfait"
+language: en
+source: caption
+servings: 1
+expected_per_serving: {kcal: 316, protein_g: 23.6}
+lines:
+  - {line: "200g Greek yogurt", slug: greek-yogurt-nonfat, grams: 200}
+  - {line: "1 tbsp honey", slug: honey, grams: 21.3}
+  - {line: "30g granola", slug: null}
+  - {line: "100g strawberries, sliced", slug: strawberries, grams: 100}
+  - {line: "15g walnuts, chopped", slug: walnuts, grams: 15}

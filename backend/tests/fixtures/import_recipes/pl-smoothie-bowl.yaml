@@ -1,0 +1,13 @@
+title: "Smoothie bowl truskawkowe"
+language: pl
+source: caption
+servings: 1
+expected_per_serving: {kcal: 291, protein_g: 7.4}
+lines:
+  - {line: "1 mrożony banan", slug: banana, grams: 120}
+  - {line: "100g mrożonych truskawek", slug: strawberries, grams: 100}
+  - {line: "100 ml napoju migdałowego", slug: almond-drink-unsweetened, grams: 101}
+  - {line: "1 łyżka masła orzechowego", slug: peanut-butter, grams: 16}
+  - {line: "1 łyżka płatków owsianych", slug: oats-rolled, grams: 6}
+  - {line: "1 łyżeczka nasion chia", slug: chia-seeds, grams: 4}
+  - {line: "granola do posypania", slug: null}

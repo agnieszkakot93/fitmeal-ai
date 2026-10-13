@@ -1,0 +1,13 @@
+title: "Placki ziemniaczane"
+language: pl
+source: cookbook
+servings: 4
+expected_per_serving: {kcal: 360, protein_g: 10.4}
+lines:
+  - {line: "1 kg ziemniaków", slug: potatoes, grams: 1000}
+  - {line: "1 cebula", slug: onion, grams: 110}
+  - {line: "2 jajka", slug: egg-whole-raw, grams: 100}
+  - {line: "3 łyżki mąki pszennej", slug: flour-wheat, grams: 24}
+  - {line: "1/2 łyżeczki soli", slug: salt, grams: 3}
+  - {line: "olej do smażenia", slug: null}
+  - {line: "200 g kwaśnej śmietany", slug: sour-cream, grams: 200}

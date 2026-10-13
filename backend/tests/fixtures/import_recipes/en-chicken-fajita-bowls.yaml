@@ -1,0 +1,16 @@
+title: "Chicken fajita bowls"
+language: en
+source: blog
+servings: 4
+html: en-chicken-fajita-bowls.html
+expected_per_serving: {kcal: 477, protein_g: 33.5}
+lines:
+  - {line: "500 g chicken breast, sliced", slug: chicken-breast-raw, grams: 500}
+  - {line: "2 bell peppers, sliced", slug: bell-pepper-red, grams: 360}
+  - {line: "1 red onion", slug: onion, grams: 110}
+  - {line: "2 tbsp olive oil", slug: olive-oil, grams: 27.3}
+  - {line: "1 tsp smoked paprika", slug: paprika-sweet, grams: 2.3}
+  - {line: "1 tsp ground cumin", slug: cumin, grams: 2.1}
+  - {line: "1 cup long grain rice", slug: rice-white-dry, grams: 185}
+  - {line: "1 can black beans", slug: null}
+  - {line: "1 avocado", slug: avocado, grams: 150}

@@ -1,0 +1,14 @@
+title: "Placki z cukinii z parmezanem"
+language: pl
+source: blog
+servings: 3
+html: pl-placki-z-cukinii.html
+expected_per_serving: {kcal: 268, protein_g: 13.8}
+lines:
+  - {line: "2 cukinie (ok. 600 g)", slug: zucchini, grams: 600}
+  - {line: "2 jajka", slug: egg-whole-raw, grams: 100}
+  - {line: "4 łyżki mąki pszennej", slug: flour-wheat, grams: 32}
+  - {line: "50 g parmezanu", slug: parmesan, grams: 50}
+  - {line: "1 ząbek czosnku", slug: garlic, grams: 4}
+  - {line: "2 łyżki oliwy", slug: olive-oil, grams: 27.3}
+  - {line: "sól do smaku", slug: salt, grams: 0.4}

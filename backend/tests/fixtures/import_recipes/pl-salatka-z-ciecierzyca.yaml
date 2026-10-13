@@ -1,0 +1,15 @@
+title: "Sałatka z ciecierzycą i rukolą"
+language: pl
+source: blog
+servings: 2
+expected_per_serving: {kcal: 341, protein_g: 11.1}
+lines:
+  - {line: "1 puszka ciecierzycy, odsączonej", slug: chickpeas-canned-drained, grams: 240}
+  - {line: "1 ogórek", slug: cucumber, grams: 300}
+  - {line: "1/2 czerwonej cebuli", slug: onion, grams: 55}
+  - {line: "150 g pomidorków koktajlowych", slug: cherry-tomatoes, grams: 150}
+  - {line: "50 g rukoli", slug: arugula, grams: 50}
+  - {line: "2 łyżki oliwy", slug: olive-oil, grams: 27.3}
+  - {line: "1 łyżka soku z cytryny", slug: lemon-juice, grams: 15.45}
+  - {line: "1 łyżeczka musztardy", slug: mustard, grams: 5}
+  - {line: "garść natki pietruszki", slug: null}

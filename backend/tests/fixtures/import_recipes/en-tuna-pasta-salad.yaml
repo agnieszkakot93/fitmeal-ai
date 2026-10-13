@@ -1,0 +1,12 @@
+title: "Tuna pasta salad"
+language: en
+source: caption
+servings: 2
+expected_per_serving: {kcal: 480, protein_g: 23.2}
+lines:
+  - {line: "150g pasta", slug: pasta-dry, grams: 150}
+  - {line: "1 can tuna in water, drained", slug: tuna-canned-water, grams: 120}
+  - {line: "100g sweetcorn", slug: sweet-corn-canned-drained, grams: 100}
+  - {line: "2 tbsp mayo", slug: mayonnaise, grams: 28}
+  - {line: "1/2 red onion", slug: onion, grams: 55}
+  - {line: "handful of cherry tomatoes", slug: cherry-tomatoes, grams: 90}

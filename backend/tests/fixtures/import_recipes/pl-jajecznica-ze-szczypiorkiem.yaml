@@ -1,0 +1,13 @@
+title: "Jajecznica ze szczypiorkiem i szynką"
+language: pl
+source: caption
+servings: 1
+expected_per_serving: {kcal: 566, protein_g: 36.8}
+lines:
+  - {line: "3 jajka", slug: egg-whole-raw, grams: 150}
+  - {line: "1 łyżeczka masła", slug: butter, grams: 5}
+  - {line: "2 plastry szynki", slug: ham-deli-lean, grams: 20}
+  - {line: "5 dkg sera żółtego, startego", slug: cheddar, grams: 50}
+  - {line: "szczypiorek", slug: null}
+  - {line: "sól do smaku", slug: salt, grams: 0.4}
+  - {line: "1 kromka chleba żytniego", slug: bread-rye, grams: 35}

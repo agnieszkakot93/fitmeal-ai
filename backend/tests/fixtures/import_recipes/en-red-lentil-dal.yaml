@@ -1,0 +1,17 @@
+title: "Spiced red lentil dal"
+language: en
+source: blog
+servings: 4
+html: en-red-lentil-dal.html
+expected_per_serving: {kcal: 470, protein_g: 18.3}
+lines:
+  - {line: "250g red lentils", slug: lentils-red-dry, grams: 250}
+  - {line: "1 onion, finely chopped", slug: onion, grams: 110}
+  - {line: "3 garlic cloves, crushed", slug: garlic, grams: 12}
+  - {line: "thumb-sized piece of ginger", slug: null}
+  - {line: "1 tsp turmeric", slug: turmeric, grams: 3}
+  - {line: "1 tsp ground cumin", slug: cumin, grams: 2.1}
+  - {line: "400 ml coconut milk", slug: coconut-milk-canned, grams: 392}
+  - {line: "500 ml water", slug: water, grams: 500}
+  - {line: "100 g baby spinach", slug: spinach, grams: 100}
+  - {line: "1 tbsp ghee", slug: ghee, grams: 12.8}

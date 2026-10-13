@@ -1,0 +1,14 @@
+title: "Chicken and pepper stir-fry"
+language: en
+source: blog
+servings: 2
+expected_per_serving: {kcal: 631, protein_g: 55.3}
+lines:
+  - {line: "2 chicken breasts, thinly sliced", slug: chicken-breast-raw, grams: 400}
+  - {line: "1 red bell pepper", slug: bell-pepper-red, grams: 180}
+  - {line: "1 cup broccoli florets", slug: broccoli, grams: 91}
+  - {line: "2 tbsp soy sauce", slug: soy-sauce, grams: 34.5}
+  - {line: "1 tbsp sesame oil", slug: null}
+  - {line: "2 cloves garlic, minced", slug: garlic, grams: 8}
+  - {line: "1 tsp grated fresh ginger", slug: ginger-root, grams: 2}
+  - {line: "1 cup jasmine rice", slug: rice-white-dry, grams: 185}

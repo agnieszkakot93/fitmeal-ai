@@ -1,0 +1,14 @@
+title: "Krem z dyni z mleczkiem kokosowym"
+language: pl
+source: blog
+servings: 4
+expected_per_serving: {kcal: 237, protein_g: 4.0}
+lines:
+  - {line: "1 kg dyni (miąższ)", slug: pumpkin, grams: 1000}
+  - {line: "1 cebula", slug: onion, grams: 110}
+  - {line: "2 ząbki czosnku", slug: garlic, grams: 8}
+  - {line: "1 l bulionu", slug: null}
+  - {line: "200 ml mleczka kokosowego", slug: coconut-milk-canned, grams: 196}
+  - {line: "1 łyżeczka imbiru mielonego", slug: ginger-ground, grams: 1.8}
+  - {line: "2 łyżki oliwy", slug: olive-oil, grams: 27.3}
+  - {line: "pestki dyni do podania", slug: null}

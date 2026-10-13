@@ -1,0 +1,13 @@
+title: "Kasza gryczana z pieczarkami"
+language: pl
+source: caption
+servings: 2
+expected_per_serving: {kcal: 412, protein_g: 16.0}
+lines:
+  - {line: "150g kaszy gryczanej", slug: buckwheat-groats, grams: 150}
+  - {line: "400g pieczarek", slug: mushrooms-white, grams: 400}
+  - {line: "1 cebula", slug: onion, grams: 110}
+  - {line: "1 łyżka masła klarowanego", slug: ghee, grams: 12.8}
+  - {line: "2 łyżki śmietany 18%", slug: sour-cream, grams: 30.3}
+  - {line: "koperek do posypania", slug: null}
+  - {line: "sól, pieprz", slug: null}

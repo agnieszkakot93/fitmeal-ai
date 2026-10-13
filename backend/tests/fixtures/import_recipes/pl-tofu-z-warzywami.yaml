@@ -1,0 +1,14 @@
+title: "Tofu z warzywami po azjatycku"
+language: pl
+source: caption
+servings: 2
+expected_per_serving: {kcal: 502, protein_g: 27.5}
+lines:
+  - {line: "1 opakowanie tofu naturalnego (180 g)", slug: tofu-firm, grams: 180}
+  - {line: "1 brokuł", slug: broccoli, grams: 400}
+  - {line: "1 marchewka", slug: carrot, grams: 70}
+  - {line: "3 łyżki sosu sojowego", slug: soy-sauce, grams: 51.75}
+  - {line: "1 łyżeczka miodu", slug: honey, grams: 7.1}
+  - {line: "1 łyżka sezamu", slug: sesame-seeds, grams: 9}
+  - {line: "100g ryżu jaśminowego", slug: rice-white-dry, grams: 100}
+  - {line: "1 łyżka oleju", slug: rapeseed-oil, grams: 13.8}

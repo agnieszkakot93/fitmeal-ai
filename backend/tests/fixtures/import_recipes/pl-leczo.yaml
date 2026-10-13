@@ -1,0 +1,14 @@
+title: "Leczo z cukinią"
+language: pl
+source: blog
+servings: 3
+expected_per_serving: {kcal: 195, protein_g: 5.4}
+lines:
+  - {line: "2 cukinie", slug: zucchini, grams: 500}
+  - {line: "3 papryki (czerwona, żółta, zielona)", slug: bell-pepper-red, grams: 540}
+  - {line: "1 cebula", slug: onion, grams: 110}
+  - {line: "200 g kiełbasy", slug: null}
+  - {line: "400 g pomidorów z puszki", slug: tomatoes-canned, grams: 400}
+  - {line: "2 łyżki oleju rzepakowego", slug: rapeseed-oil, grams: 27.6}
+  - {line: "1 łyżeczka papryki wędzonej", slug: paprika-sweet, grams: 2.3}
+  - {line: "sól", slug: salt, grams: 0.4}

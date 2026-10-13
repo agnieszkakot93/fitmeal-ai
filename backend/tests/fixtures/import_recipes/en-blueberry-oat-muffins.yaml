@@ -1,0 +1,16 @@
+title: "Blueberry oat muffins"
+language: en
+source: cookbook
+servings: 12
+html: en-blueberry-oat-muffins.html
+expected_per_serving: {kcal: 221, protein_g: 4.9}
+lines:
+  - {line: "2 cups all-purpose flour", slug: flour-wheat, grams: 250}
+  - {line: "1 cup rolled oats", slug: oats-rolled, grams: 80}
+  - {line: "½ cup sugar", slug: sugar-white, grams: 100}
+  - {line: "2 tsp baking powder", slug: baking-powder, grams: 9.2}
+  - {line: "2 eggs", slug: egg-whole-raw, grams: 100}
+  - {line: "1 cup milk", slug: milk-2, grams: 247.2}
+  - {line: "1/3 cup vegetable oil", slug: rapeseed-oil, grams: 73.6}
+  - {line: "1 ½ cups blueberries", slug: blueberries, grams: 222}
+  - {line: "1 tsp vanilla extract", slug: null}

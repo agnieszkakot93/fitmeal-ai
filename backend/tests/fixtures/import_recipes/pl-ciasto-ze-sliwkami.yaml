@@ -1,0 +1,15 @@
+title: "Ciasto drożdżowe ze śliwkami"
+language: pl
+source: cookbook
+servings: 12
+expected_per_serving: {kcal: 300, protein_g: 6.9}
+lines:
+  - {line: "500 g mąki pszennej", slug: flour-wheat, grams: 500}
+  - {line: "25 g świeżych drożdży", slug: yeast-fresh, grams: 25}
+  - {line: "250 ml ciepłego mleka", slug: milk-2, grams: 257.5}
+  - {line: "80 g cukru", slug: sugar-white, grams: 80}
+  - {line: "2 jajka", slug: egg-whole-raw, grams: 100}
+  - {line: "½ kostki masła (100 g), roztopionego", slug: butter, grams: 100}
+  - {line: "1 kg śliwek węgierek", slug: plums, grams: 1000}
+  - {line: "szczypta soli", slug: salt, grams: 0.4}
+  - {line: "cukier puder do posypania", slug: null}

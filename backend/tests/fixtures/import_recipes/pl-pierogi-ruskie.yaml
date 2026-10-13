@@ -1,0 +1,15 @@
+title: "Pierogi ruskie"
+language: pl
+source: cookbook
+servings: 4
+expected_per_serving: {kcal: 648, protein_g: 15.8}
+lines:
+  - {line: "500 g mąki pszennej", slug: flour-wheat, grams: 500}
+  - {line: "250 ml ciepłej wody", slug: water, grams: 250}
+  - {line: "2 łyżki oleju", slug: rapeseed-oil, grams: 27.6}
+  - {line: "500 g ziemniaków", slug: potatoes, grams: 500}
+  - {line: "250 g twarogu półtłustego", slug: null}
+  - {line: "1 cebula", slug: onion, grams: 110}
+  - {line: "1 łyżka masła", slug: butter, grams: 14}
+  - {line: "pieprz do smaku", slug: black-pepper, grams: 0.1}
+  - {line: "1 łyżeczka soli", slug: salt, grams: 6}

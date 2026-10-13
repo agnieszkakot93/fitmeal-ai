@@ -1,0 +1,14 @@
+title: "Classic hummus"
+language: en
+source: cookbook
+servings: 6
+expected_per_serving: {kcal: 143, protein_g: 4.2}
+lines:
+  - {line: "1 can (400 g) chickpeas, drained", slug: chickpeas-canned-drained, grams: 240}
+  - {line: "3 tbsp tahini", slug: tahini, grams: 45}
+  - {line: "2 tbsp lemon juice", slug: lemon-juice, grams: 30.9}
+  - {line: "1 garlic clove", slug: garlic, grams: 4}
+  - {line: "2 tbsp extra virgin olive oil", slug: olive-oil, grams: 27.3}
+  - {line: "2–3 tbsp cold water", slug: water, grams: 37.5}
+  - {line: "½ tsp ground cumin", slug: cumin, grams: 1.05}
+  - {line: "salt to taste", slug: salt, grams: 0.4}

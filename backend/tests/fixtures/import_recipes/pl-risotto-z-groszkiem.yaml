@@ -1,0 +1,13 @@
+title: "Risotto z groszkiem i parmezanem"
+language: pl
+source: cookbook
+servings: 3
+expected_per_serving: {kcal: 498, protein_g: 15.4}
+lines:
+  - {line: "250 g ryżu arborio", slug: rice-arborio-dry, grams: 250}
+  - {line: "1 l bulionu drobiowego", slug: null}
+  - {line: "200 g mrożonego groszku", slug: peas-frozen, grams: 200}
+  - {line: "1 cebula", slug: onion, grams: 110}
+  - {line: "50 g parmezanu", slug: parmesan, grams: 50}
+  - {line: "2 łyżki masła", slug: butter, grams: 28}
+  - {line: "100 ml białego wina", slug: null}

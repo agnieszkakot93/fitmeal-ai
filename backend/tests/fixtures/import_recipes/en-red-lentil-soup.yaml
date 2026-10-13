@@ -1,0 +1,16 @@
+title: "Red lentil soup"
+language: en
+source: cookbook
+servings: 4
+expected_per_serving: {kcal: 223, protein_g: 13.2}
+lines:
+  - {line: "1 cup red lentils, rinsed", slug: lentils-red-dry, grams: 190}
+  - {line: "1 onion", slug: onion, grams: 110}
+  - {line: "2 carrots, diced", slug: carrot, grams: 140}
+  - {line: "2 celery stalks", slug: celery-stalk, grams: 80}
+  - {line: "3 cloves garlic", slug: garlic, grams: 12}
+  - {line: "1 tsp turmeric", slug: turmeric, grams: 3}
+  - {line: "1 tsp ground cumin", slug: cumin, grams: 2.1}
+  - {line: "6 cups vegetable broth", slug: null}
+  - {line: "1 can diced tomatoes", slug: tomatoes-canned, grams: 400}
+  - {line: "juice of 1 lemon", slug: null}

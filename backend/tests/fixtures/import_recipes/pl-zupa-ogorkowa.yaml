@@ -1,0 +1,14 @@
+title: "Zupa ogórkowa"
+language: pl
+source: cookbook
+servings: 4
+expected_per_serving: {kcal: 185, protein_g: 3.6}
+lines:
+  - {line: "1,5 l wody", slug: water, grams: 1500}
+  - {line: "4 ogórki kiszone", slug: pickled-cucumbers, grams: 240}
+  - {line: "pół kilo ziemniaków", slug: potatoes, grams: 500}
+  - {line: "1 marchewka", slug: carrot, grams: 70}
+  - {line: "1 pietruszka (korzeń)", slug: null}
+  - {line: "100 ml śmietany 18%", slug: sour-cream, grams: 101}
+  - {line: "1 łyżka masła", slug: butter, grams: 14}
+  - {line: "koperek", slug: null}

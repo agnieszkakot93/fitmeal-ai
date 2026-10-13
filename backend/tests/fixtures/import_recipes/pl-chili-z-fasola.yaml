@@ -1,0 +1,15 @@
+title: "Chili z fasolą i kukurydzą"
+language: pl
+source: caption
+servings: 4
+expected_per_serving: {kcal: 442, protein_g: 16.1}
+lines:
+  - {line: "2 puszki czerwonej fasoli", slug: kidney-beans-canned-drained, grams: 480}
+  - {line: "1 puszka kukurydzy", slug: sweet-corn-canned-drained, grams: 285}
+  - {line: "1 puszka pomidorów", slug: tomatoes-canned, grams: 400}
+  - {line: "1 cebula", slug: onion, grams: 110}
+  - {line: "2 ząbki czosnku", slug: garlic, grams: 8}
+  - {line: "1 łyżeczka kuminu", slug: cumin, grams: 2.1}
+  - {line: "1/2 łyżeczki chili mielonego", slug: cayenne-pepper, grams: 0.9}
+  - {line: "200 g ryżu", slug: rice-white-dry, grams: 200}
+  - {line: "1 łyżka oliwy", slug: olive-oil, grams: 13.65}

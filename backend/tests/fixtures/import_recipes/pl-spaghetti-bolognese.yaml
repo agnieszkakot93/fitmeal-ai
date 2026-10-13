@@ -1,0 +1,17 @@
+title: "Spaghetti bolognese"
+language: pl
+source: blog
+servings: 4
+expected_per_serving: {kcal: 714, protein_g: 37.5}
+lines:
+  - {line: "400 g makaronu spaghetti", slug: pasta-dry, grams: 400}
+  - {line: "500 g mielonej wołowiny", slug: beef-ground-90-raw, grams: 500}
+  - {line: "1 cebula, posiekana", slug: onion, grams: 110}
+  - {line: "2-3 ząbki czosnku", slug: garlic, grams: 10}
+  - {line: "1 marchewka, starta na tarce", slug: carrot, grams: 70}
+  - {line: "1 puszka pomidorów krojonych", slug: tomatoes-canned, grams: 400}
+  - {line: "2 łyżki koncentratu pomidorowego", slug: tomato-paste, grams: 32}
+  - {line: "2 łyżki oliwy", slug: olive-oil, grams: 27.3}
+  - {line: "1 łyżeczka oregano", slug: oregano, grams: 1}
+  - {line: "sól, pieprz do smaku", slug: null}
+  - {line: "parmezan do podania", slug: null}

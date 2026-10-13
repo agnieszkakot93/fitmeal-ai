@@ -1,0 +1,14 @@
+title: "Peanut noodles"
+language: en
+source: caption
+servings: 2
+expected_per_serving: {kcal: 645, protein_g: 24.1}
+lines:
+  - {line: "200g egg noodles", slug: egg-noodles-dry, grams: 200}
+  - {line: "3 tbsp peanut butter", slug: peanut-butter, grams: 48}
+  - {line: "2 tbsp soy sauce", slug: soy-sauce, grams: 34.5}
+  - {line: "1 tbsp honey", slug: honey, grams: 21.3}
+  - {line: "1 tbsp sriracha", slug: null}
+  - {line: "2 spring onions, sliced", slug: spring-onion, grams: 30}
+  - {line: "1 carrot, julienned", slug: carrot, grams: 70}
+  - {line: "20g roasted peanuts", slug: peanuts, grams: 20}

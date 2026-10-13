@@ -1,0 +1,13 @@
+title: "Chicken thigh and sweet potato traybake"
+language: en
+source: blog
+servings: 4
+expected_per_serving: {kcal: 471, protein_g: 46.1}
+lines:
+  - {line: "8 boneless chicken thighs", slug: chicken-thigh-raw, grams: 880}
+  - {line: "600 g sweet potatoes, cubed", slug: sweet-potato, grams: 600}
+  - {line: "1 red onion, cut into wedges", slug: onion, grams: 110}
+  - {line: "2 tbsp olive oil", slug: olive-oil, grams: 27.3}
+  - {line: "1 tsp garlic powder", slug: garlic-powder, grams: 3.1}
+  - {line: "1 tsp smoked paprika", slug: paprika-sweet, grams: 2.3}
+  - {line: "a few sprigs of thyme", slug: null}

@@ -1,0 +1,14 @@
+title: "Mediterranean cod traybake"
+language: en
+source: blog
+servings: 2
+expected_per_serving: {kcal: 330, protein_g: 30.1}
+lines:
+  - {line: "2 cod fillets", slug: cod-raw, grams: 300}
+  - {line: "300 g cherry tomatoes", slug: cherry-tomatoes, grams: 300}
+  - {line: "1 courgette, sliced", slug: zucchini, grams: 250}
+  - {line: "10 green olives", slug: olives-green, grams: 40}
+  - {line: "1 tbsp capers", slug: null}
+  - {line: "2 tbsp olive oil", slug: olive-oil, grams: 27.3}
+  - {line: "1 lemon, sliced", slug: lemon, grams: 60}
+  - {line: "fresh basil leaves", slug: null}

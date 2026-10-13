@@ -1,0 +1,14 @@
+title: "Turkey and bean chili"
+language: en
+source: blog
+servings: 6
+expected_per_serving: {kcal: 293, protein_g: 23.6}
+lines:
+  - {line: "1 lb ground turkey", slug: turkey-ground-raw, grams: 453.6}
+  - {line: "1 tbsp vegetable oil", slug: rapeseed-oil, grams: 13.8}
+  - {line: "1 onion, chopped", slug: onion, grams: 110}
+  - {line: "2 cans kidney beans, drained and rinsed", slug: kidney-beans-canned-drained, grams: 480}
+  - {line: "1 can (28 oz) crushed tomatoes", slug: tomatoes-canned, grams: 793.8}
+  - {line: "2 tbsp chili powder", slug: null}
+  - {line: "1 tsp cumin", slug: cumin, grams: 2.1}
+  - {line: "1 can sweet corn, drained", slug: sweet-corn-canned-drained, grams: 285}
