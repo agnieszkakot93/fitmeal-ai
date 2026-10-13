@@ -4,5 +4,6 @@ export const paths = {
   plan: "/plan",
   shopping: "/shopping",
   settings: "/settings",
+  import: "/import",
   recipe: (recipeId: string) => `/recipes/${encodeURIComponent(recipeId)}`,
 } as const;
