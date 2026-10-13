@@ -66,3 +66,5 @@ class ExportOut(BaseModel):
     sessions: list[SessionOut]
     private_recipes: list[dict[str, Any]]
     recipe_variants: list[dict[str, Any]]
+    # each with its slots, and each slot with its status events
+    plans: list[dict[str, Any]]
