@@ -1,0 +1,36 @@
+<!-- @dsCard group="Overlays" height=760 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Sheet — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.Donut, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+function phone(el){ return h('div', {style:{width:375, height:520, display:'flex', flexDirection:'column', justifyContent:'flex-end', padding:8, boxSizing:'border-box', background:'var(--scrim)', borderRadius:24}}, el); }
+function Live(){
+  var s = React.useState(false);
+  return h('div', null,
+    h(F.Button, {variant:'secondary', onClick:function(){ s[1](true); }}, 'Open the real sheet'),
+    h(F.Sheet, {open:s[0], onClose:function(){ s[1](false); }, title:'Change lactose to “avoid when possible”?',
+      description:'Lactose may appear when nothing else fits, always labelled. Your allergies don’t change.',
+      actions:[h(F.Button, {key:1, variant:'primary', onClick:function(){ s[1](false); }}, 'Change to avoid when possible'),
+               h(F.Button, {key:2, variant:'quiet', onClick:function(){ s[1](false); }}, 'Keep as intolerance')]}));
+}
+var opts = [
+  h(F.SwapOption, {key:1, title:'Turkey breast', amount:'160 g', best:true, selected:true, delta:[{value:-40, unit:'kcal', tone:'good'}, {value:2, unit:'g', letter:'P', tone:'good'}]}),
+  h(F.SwapOption, {key:2, title:'Firm tofu', amount:'220 g', delta:[{value:30, unit:'kcal'}, {value:-6, unit:'g', letter:'P'}], note:'Amounts are converted by protein, not 1:1'})];
+root(h('div', {className:'fm-stack', style:{padding:16, gap:20}},
+  h('div', {className:'fm-row', style:{gap:20, alignItems:'flex-start'}},
+    phone(h(F.Sheet, {preview:true, presentation:'sheet', title:'Swap chicken breast',
+      actions:[h(F.Button, {key:1, variant:'primary', block:true}, 'Use turkey breast'), h('p', {key:2, className:'fm-foot', style:{textAlign:'center'}}, 'Nothing changes until you confirm.')]}, opts)),
+    phone(h(F.Sheet, {preview:true, presentation:'sheet', lang:'pl', title:'Zmienić laktożę na „unikaj, gdy to możliwe”?',
+      description:'Laktoza może się pojawić, gdy nic innego nie pasuje – zawsze z oznaczeniem. Twoje alergie się nie zmieniają.',
+      actions:[h(F.Button, {key:1, variant:'primary'}, 'Zmień na „unikaj, gdy to możliwe”'), h(F.Button, {key:2, variant:'quiet'}, 'Zostaw jako nietolerancję')]}))),
+  h('div', {style:{width:440}}, h(F.Sheet, {preview:true, presentation:'modal', title:'Change lactose to “avoid when possible”?',
+    description:'Lactose may appear when nothing else fits, always labelled. Your allergies don’t change.',
+    actions:[h(F.Button, {key:1, variant:'primary'}, 'Change to avoid when possible'), h(F.Button, {key:2, variant:'quiet'}, 'Keep as intolerance')]})),
+  h(Live)));
+</script>
+</body>
+</html>

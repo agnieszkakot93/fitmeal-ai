@@ -1,0 +1,43 @@
+<!-- @dsCard group="Meals" height=1780 width=1340 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>WeekTable — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.Donut, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+var names = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+var full = ['Monday 12 October','Tuesday 13 October','Wednesday 14 October','Thursday 15 October','Friday 16 October','Saturday 17 October','Sunday 18 October'];
+var days = names.map(function(n, i){ return {id:'d'+i, name:n, date:(12+i)+' Oct', label:full[i], today:i===2, cook:i===0||i===3, totals:{kcal:[1498,1512,1505,1490,1521,1487,1509][i], protein:[118,121,119,116,124,115,120][i]}}; });
+var slots = [{id:'b', label:'Breakfast'}, {id:'l', label:'Lunch'}, {id:'d', label:'Dinner'}];
+var breakfasts = ['Overnight oats with skyr','Scrambled eggs on rye','Overnight oats with skyr','Cottage cheese bowl','Protein pancakes','Scrambled eggs on rye','Shakshuka'];
+var dinners = ['Salmon, rice and greens','Turkey chilli','Turkey chilli','Lentil dal','Lentil dal','Beef stir-fry','Baked cod with potatoes'];
+function prep(i){ if (i < 3) return {label: i===0 ? 'Cook today · eat by Wed' : 'Cooked Mon · eat by Wed', batch:'curry'}; if (i < 6) return {label: i===3 ? 'Cook today · eat by Sat' : 'Cooked Thu · eat by Sat', batch:'pasta'}; return null; }
+var meals = {};
+days.forEach(function(d, i){
+  var status = i < 2 ? 'eaten' : (i === 2 ? 'planned' : 'planned');
+  var future = i > 2 ? 'You can check this off on ' + names[i] + '.' : undefined;
+  var p = prep(i);
+  meals[d.id] = {
+    b: {title:breakfasts[i], kcal:420, protein:32, status: i===1 ? 'skipped' : status, eatHint:future, href:'#', badges: i===4 ? [{label:'Contains lactose · avoid when possible', tone:'warning', icon:'alert'}] : []},
+    l: {title: i < 3 ? 'Chicken curry' : (i < 6 ? 'Tuna pasta bake' : 'Chickpea salad'), kcal:548, protein:49, status: i < 2 ? 'eaten' : 'planned', eatHint:future, href:'#', batch: p && p.batch, queued: i===2,
+        badges: p ? [{label:p.label, tone:'paprika', icon:'repeat'}] : [{label:'Prepare fresh', tone:'neutral'}]},
+    d: {title:dinners[i], kcal:544, protein:37, status: i < 2 ? 'eaten' : 'planned', eatHint:future, href:'#'}
+  };
+});
+var plDays = [{id:'d2', name:'Śr', date:'14 paź', label:'Środa 14 października', today:true, totals:{kcal:1505, protein:119}},
+              {id:'d3', name:'Czw', date:'15 paź', label:'Czwartek 15 października', cook:true, totals:{kcal:1490, protein:116}}];
+var plSlots = [{id:'b', label:'Śniadanie'}, {id:'l', label:'Obiad'}, {id:'d', label:'Kolacja'}];
+var plMeals = {
+  d2: {b:{title:'Owsianka nocna ze skyrem', kcal:420, protein:32, href:'#'}, l:{title:'Curry z kurczakiem', kcal:548, protein:49, href:'#', batch:'curry', queued:true, badges:[{label:'Ugotowane: pn · zjedz dzisiaj', tone:'paprika', icon:'repeat'}]}, d:{title:'Łosoś z ryżem i warzywami', kcal:544, protein:37, href:'#'}},
+  d3: {b:{title:'Miska z twarogiem', kcal:420, protein:32, href:'#', eatHint:'Odhaczysz to w dniu: czw.'}, l:{title:'Zapiekanka z tuńczykiem', kcal:548, protein:49, href:'#', eatHint:'Odhaczysz to w dniu: czw.', badges:[{label:'Ugotuj dziś · zjedz do: sob', tone:'paprika', icon:'repeat'}, {label:'Zawiera: laktoza · unikaj, gdy to możliwe', tone:'warning', icon:'alert'}]}, d:{title:'Dal z soczewicy', kcal:544, protein:37, href:'#', eatHint:'Odhaczysz to w dniu: czw.'}}
+};
+root(h('div', {className:'fm-stack', style:{padding:16, gap:32}},
+  h('div', {style:{width:1300}}, h(F.WeekTable, {layout:'table', showCaption:true, caption:'Your plan · 12–18 Oct', days:days, slots:slots, meals:meals})),
+  h('div', {className:'fm-row', style:{gap:32, alignItems:'flex-start'}},
+    h('div', {style:{width:375}}, h(F.WeekTable, {layout:'list', days:days.slice(2, 4), slots:slots, meals:meals})),
+    h('div', {style:{width:375}}, h(F.WeekTable, {layout:'list', lang:'pl', caption:'Twój plan', days:plDays, slots:plSlots, meals:plMeals})))));
+</script>
+</body>
+</html>

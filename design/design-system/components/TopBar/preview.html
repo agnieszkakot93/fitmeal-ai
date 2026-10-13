@@ -1,0 +1,21 @@
+<!-- @dsCard group="Navigation" height=560 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>TopBar — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.Donut, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+function box(w, el){ return h('div', {style:{width:w, padding:'0 20px', background:'var(--surface)', border:'1px solid var(--line)', borderRadius:16}}, el); }
+root(h('div', {className:'fm-stack', style:{padding:16, gap:16}},
+  box(375, h(F.TopBar, {large:true, level:2, title:'Today', subtitle:'Wed, 14 Oct · Day 3 of 7', avatar:h(F.Avatar, {initials:'AK'})})),
+  box(375, h(F.TopBar, {large:true, level:2, lang:'pl', title:'Dzisiaj', subtitle:'Śr, 14 paź · Dzień 3 z 7', avatar:h(F.Avatar, {initials:'AK', label:'Profil'})})),
+  box(375, h(F.TopBar, {level:2, title:'New plan', back:{label:'Plan', href:'#'}})),
+  box(375, h(F.TopBar, {level:2, lang:'pl', title:'Nowy plan', back:{label:'Plan', href:'#'}})),
+  box(900, h(F.TopBar, {large:true, level:2, title:'Plan', subtitle:'12 – 18 Oct · 7 days',
+    actions:[h(F.Button, {key:'n', variant:'secondary', size:'sm', icon:'plus'}, 'New plan'),
+             h(F.Tooltip, {key:'m', label:'More actions'}, h(F.IconButton, {icon:'more', label:'More actions', variant:'raised'}))]}))));
+</script>
+</body>
+</html>

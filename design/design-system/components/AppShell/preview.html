@@ -1,0 +1,44 @@
+<!-- @dsCard group="Layout" height=1580 width=1340 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>AppShell — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.Donut, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+function frame(w, hgt, label, el){
+  return h('div', {className:'fm-stack', style:{gap:8}},
+    h('p', {className:'fm-cap', style:{margin:0}}, label),
+    h('div', {style:{width:w, height:hgt, border:'1px solid var(--line)', borderRadius:16, overflow:'hidden'}}, el)); }
+function summary(){
+  return h('section', {className:'fm-meal'},
+    h('div', {className:'fm-row', style:{gap:16, alignItems:'center'}},
+      h(F.MacroRing, {value:640, target:1500, size:120}),
+      h('div', {className:'fm-stack', style:{flex:1, minWidth:160, gap:10}},
+        h(F.MacroBar, {macro:'protein', value:48, target:115, mode:'min', compact:true}),
+        h(F.MacroBar, {macro:'carbs', value:70, target:150, compact:true}),
+        h(F.MacroBar, {macro:'fat', value:20, target:50, compact:true}))),
+    h('p', {className:'fm-foot'}, 'Planned today: 1,512 kcal · 118 P · 150 C · 52 F')); }
+function meals(){
+  return [
+    h(F.SectionHeader, {key:'s', title:'Meals'}),
+    h(F.MealCard, {key:1, slot:'Breakfast', time:'8:00', title:'Overnight oats with skyr', kcal:420, protein:32, carbs:52, fat:9, status:'eaten'}),
+    h(F.MealCard, {key:2, slot:'Lunch', time:'13:30', title:'Chicken curry', kcal:548, protein:49, carbs:55, fat:14, prep:{portion:'2/3', cook:'Mon', eatBy:'Wed'}}),
+    h(F.MealCard, {key:3, slot:'Dinner', time:'19:00', title:'Salmon, rice and greens', kcal:544, protein:37, carbs:43, fat:29})]; }
+function shell(id, extra){
+  return h(F.AppShell, Object.assign({
+    contained:true, mainId:id, active:'today', avatar:h(F.Avatar, {initials:'AK'}),
+    banner:h(F.OfflineBanner, {state:'offline', pending:2, sticky:true}),
+    header:h(F.TopBar, {large:true, title:'Today', subtitle:'Wed, 14 Oct · Day 3 of 7', avatar:h(F.Avatar, {initials:'AK'})}),
+    aside:summary(), asideLabel:'Day summary'}, extra), meals()); }
+root(h('div', {className:'fm-stack', style:{padding:16, gap:24}},
+  h('div', {className:'fm-row', style:{gap:24, alignItems:'flex-start', flexWrap:'nowrap'}},
+    frame(375, 720, 'Phone · < 600 · bottom TabBar', shell('main-sm', {
+      accessory:h(F.BottomAccessory, {icon:'clock', title:'Up next · Lunch', subtitle:'Chicken curry'}),
+      toasts:h(F.Toast, {message:'Breakfast marked as eaten', action:{label:'Undo'}, duration:0})})),
+    frame(768, 720, 'Tablet · 600–1023 · SideNav rail', shell('main-md'))),
+  frame(1280, 760, 'Desktop · ≥ 1024 · SideNav with labels and a right rail', shell('main-lg'))));
+</script>
+</body>
+</html>

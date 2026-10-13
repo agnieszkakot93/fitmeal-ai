@@ -1,0 +1,19 @@
+<!-- @dsCard group="Overlays" height=200 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Tooltip — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.Donut, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-row', style:{padding:'16px 16px 80px', gap:48, alignItems:'flex-start'}},
+  h(F.Tooltip, {label:'More actions', open:true}, h(F.IconButton, {icon:'more', label:'More actions', variant:'raised'})),
+  h(F.Tooltip, {label:'Więcej działań', open:true}, h(F.IconButton, {icon:'more', label:'Więcej działań', variant:'raised'})),
+  h(F.Tooltip, {label:'You can check this off on Fri.', describe:true, open:true},
+    h('button', {type:'button', className:'fm-meal-eat is-disabled', 'aria-disabled':'true', 'aria-label':'Eat lunch, Friday 16 October'}, h(F.Icon, {name:'check', size:15, weight:2.25}), 'Eat')),
+  h(F.Tooltip, {label:'Swap lunch'}, h(F.IconButton, {icon:'swap', label:'Swap lunch', variant:'raised'})),
+  h('p', {className:'fm-foot', style:{maxWidth:220}}, 'The last button shows its tooltip on hover or keyboard focus.')));
+</script>
+</body>
+</html>

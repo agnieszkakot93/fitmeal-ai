@@ -1,0 +1,21 @@
+<!-- @dsCard group="Inputs" height=560 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>TextField — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.Donut, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+root(h('div', {className:'fm-row', style:{padding:16, gap:32, alignItems:'flex-start'}},
+  h('div', {className:'fm-stack', style:{width:340, gap:20}},
+    h(F.TextField, {label:'Something else to avoid', hint:'Type a food, for example coriander.', type:'search', placeholder:'Search foods', autoComplete:'off'}),
+    h(F.TextField, {label:'Recipe link', type:'url', inputMode:'url', autoComplete:'off', defaultValue:'mojprzepis kurczak', error:'This doesn’t look like a link. It should start with https://'}),
+    h(F.TextField, {label:'Recipe link', type:'url', disabled:true, defaultValue:'https://example.com/curry'})),
+  h('div', {className:'fm-stack', style:{width:340, gap:20}},
+    h(F.TextField, {lang:'pl', label:'Inne produkty do wykluczenia', hint:'Wpisz produkt, np. kolendra.', type:'search', placeholder:'Szukaj produktów', autoComplete:'off'}),
+    h(F.TextField, {lang:'pl', label:'Link do przepisu', type:'url', inputMode:'url', autoComplete:'off', defaultValue:'mojprzepis kurczak', error:'To nie wygląda na link. Powinien zaczynać się od https://'}),
+    h(F.TextField, {lang:'pl', label:'Tekst przepisu', multiline:true, rows:4, optional:true, placeholder:'Wklej składniki i kroki'}))));
+</script>
+</body>
+</html>

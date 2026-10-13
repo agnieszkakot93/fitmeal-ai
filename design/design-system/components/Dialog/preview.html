@@ -1,0 +1,40 @@
+<!-- @dsCard group="Overlays" height=760 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Dialog — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+var F = window.Donut, h = React.createElement;
+function root(el){ ReactDOM.createRoot(document.getElementById('root')).render(el); }
+function Live(){
+  var s = React.useState(false);
+  return h('div', null,
+    h(F.Button, {variant:'secondary', onClick:function(){ s[1](true); }}, 'Open the real dialog'),
+    h(F.Dialog, {open:s[0], onClose:function(){ s[1](false); }, title:'Replace your current plan?', description:'Meals you’ve already marked stay in your history.',
+      actions:[h(F.Button, {key:1, variant:'primary', onClick:function(){ s[1](false); }}, 'Replace plan'),
+               h(F.Button, {key:2, variant:'quiet', 'data-autofocus':true, onClick:function(){ s[1](false); }}, 'Keep current plan')]}));
+}
+function summaryRow(label, value){ return h('div', {className:'fm-row', style:{justifyContent:'space-between', gap:8}}, h('span', {className:'fm-callout'}, label), h('b', null, value)); }
+root(h('div', {className:'fm-stack', style:{padding:16, gap:20}},
+  h('div', {className:'fm-row', style:{gap:20, alignItems:'flex-start'}},
+    h('div', {style:{width:440}}, h(F.Dialog, {preview:true, title:'Replace your current plan?', description:'Meals you’ve already marked stay in your history.',
+      actions:[h(F.Button, {key:1, variant:'primary'}, 'Replace plan'), h(F.Button, {key:2, variant:'quiet'}, 'Keep current plan')]})),
+    h('div', {style:{width:440}}, h(F.Dialog, {preview:true, lang:'pl', title:'Zastąpić obecny plan?', description:'Odhaczone posiłki zostaną w historii.',
+      actions:[h(F.Button, {key:1, variant:'primary'}, 'Zastąp plan'), h(F.Button, {key:2, variant:'quiet'}, 'Zostaw obecny plan')]}))),
+  h('div', {className:'fm-row', style:{gap:20, alignItems:'flex-start'}},
+    h('div', {style:{width:440}}, h(F.Dialog, {preview:true, title:'Use this profile?', description:'This replaces the profile in this browser.',
+      actions:[h(F.Button, {key:1, variant:'primary'}, 'Use this profile'), h(F.Button, {key:2, variant:'quiet'}, 'Choose another file')]},
+      h('div', {className:'fm-group fm-stack', style:{padding:16, gap:10}},
+        summaryRow('Calories', '1,500 kcal'),
+        summaryRow('Protein', 'at least 115 g'),
+        h('div', {className:'fm-row', style:{gap:6}},
+          h(F.Badge, {tone:'danger', icon:'alert'}, 'Peanuts · allergy'),
+          h(F.Badge, {tone:'warning'}, 'Lactose · intolerance'),
+          h(F.Badge, {tone:'neutral'}, 'Mushrooms · don’t like'))))),
+    h('div', {style:{width:440}}, h(F.Dialog, {preview:true, title:'Download your profile?', description:'This file contains your allergies and targets. Keep it private.',
+      actions:[h(F.Button, {key:1, variant:'primary', icon:'download'}, 'Download my profile'), h(F.Button, {key:2, variant:'quiet'}, 'Not now')]}))),
+  h(Live)));
+</script>
+</body>
+</html>

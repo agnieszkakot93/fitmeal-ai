@@ -11,3 +11,5 @@ The iOS 26 tab bar: a floating Liquid Glass capsule with three tabs (Today, Plan
 - The selected tab is `basil` on the `glass-selected` lens. Other tabs stay `ink`, not muted, so they stay legible on glass.
 - Add is never "active". It opens the Add Recipe sheet. In SwiftUI it is a `Tab(role: .search)`-style separate item.
 - With Reduce Transparency on, the glass turns into solid `surface-raised`.
+
+**On web** (phone layout, < 600 px; `AppShell` renders it): `links` turns the tabs into real `<a href>` (`/today`, `/plan`, `/shopping`, or `hrefs`), `onNavigate(id, event)` hooks client-side routing, `onAdd` opens Add recipe, and `lang` (`en` / `pl`: *Dzisiaj · Plan · Zakupy · Dodaj przepis*) sets the labels. From 600 px `SideNav` replaces it. `minimized` isn't used on web.
