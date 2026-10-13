@@ -20,10 +20,12 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
+from app.auth import models as auth_models  # noqa: E402, F401
 from app.core.config import get_settings  # noqa: E402
 from app.core.db import Base  # noqa: E402
 from app.foods import models  # noqa: E402, F401
 from app.recipes import models as recipe_models  # noqa: E402, F401
+from app.users import models as user_models  # noqa: E402, F401
 
 config.set_main_option("sqlalchemy.url", get_settings().database_url)
 target_metadata = Base.metadata
