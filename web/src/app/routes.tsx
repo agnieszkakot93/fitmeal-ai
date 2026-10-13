@@ -1,6 +1,7 @@
 import { Navigate } from "react-router";
 import type { RouteObject } from "react-router";
 
+import { ImportPage } from "../features/import/ImportPage";
 import { NotFoundPage } from "../features/not-found/NotFoundPage";
 import { OnboardingPage } from "../features/onboarding/OnboardingPage";
 import { PlanPage } from "../features/plan/PlanPage";
@@ -41,6 +42,11 @@ export const routes: RouteObject[] = [
         path: "recipes/:recipeId",
         element: <RecipePage />,
         handle: handle({ titleId: "recipe.title" }),
+      },
+      {
+        path: "import",
+        element: <ImportPage />,
+        handle: handle({ titleId: "import.title" }),
       },
       {
         path: "shopping",
