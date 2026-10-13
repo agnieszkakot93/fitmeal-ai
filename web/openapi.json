@@ -747,6 +747,156 @@
         ]
       }
     },
+    "/v1/plans": {
+      "post": {
+        "tags": [
+          "plans"
+        ],
+        "summary": "Create Plan",
+        "description": "Generate a plan from the profile snapshot, save it as the current plan and return it.",
+        "operationId": "create_plan_v1_plans_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "No plan fits the profile's hard constraints, or the body is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/InfeasibleOut"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidBodyOut"
+                    }
+                  ],
+                  "title": "Response 422 Create Plan V1 Plans Post"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/plans/current": {
+      "get": {
+        "tags": [
+          "plans"
+        ],
+        "summary": "Current Plan",
+        "description": "The user's latest plan.",
+        "operationId": "current_plan_v1_plans_current_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/plans/{plan_id}/slots/{slot}": {
+      "patch": {
+        "tags": [
+          "plans"
+        ],
+        "summary": "Set Slot Status",
+        "description": "Mark a meal cooked, eaten or skipped.\n\nIdempotent per ``event_id``: replaying an event (an offline outbox retrying)\nreturns the slot unchanged. Reusing an event id for a different change is a 409.",
+        "operationId": "set_slot_status_v1_plans__plan_id__slots__slot__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "plan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Plan Id"
+            }
+          },
+          {
+            "name": "slot",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Slot"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SlotStatusIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SlotOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/healthz": {
       "get": {
         "tags": [
@@ -775,6 +925,20 @@
   },
   "components": {
     "schemas": {
+      "Action": {
+        "type": "string",
+        "enum": [
+          "max_minutes",
+          "add_equipment",
+          "relax_intolerance",
+          "shorten_plan",
+          "lower_protein",
+          "change_kcal",
+          "add_recipes",
+          "retry"
+        ],
+        "title": "Action"
+      },
       "AppleLoginIn": {
         "properties": {
           "identity_token": {
@@ -837,6 +1001,47 @@
           "detail"
         ],
         "title": "BlockedOut"
+      },
+      "BlockerKind": {
+        "type": "string",
+        "enum": [
+          "no_recipes",
+          "filtered",
+          "protein",
+          "kcal",
+          "kcal_and_protein",
+          "timeout"
+        ],
+        "title": "BlockerKind"
+      },
+      "BlockerOut": {
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/BlockerKind"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "meal": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Meal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "message",
+          "meal"
+        ],
+        "title": "BlockerOut"
       },
       "CalculateIn": {
         "properties": {
@@ -1061,6 +1266,31 @@
         ],
         "title": "CulinaryRole",
         "description": "What an ingredient does in a dish; bounds how the optimizer may change it."
+      },
+      "DayOut": {
+        "properties": {
+          "day": {
+            "type": "integer",
+            "title": "Day"
+          },
+          "totals": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          },
+          "slots": {
+            "items": {
+              "$ref": "#/components/schemas/SlotOut"
+            },
+            "type": "array",
+            "title": "Slots"
+          }
+        },
+        "type": "object",
+        "required": [
+          "day",
+          "totals",
+          "slots"
+        ],
+        "title": "DayOut"
       },
       "ExclusionCategory": {
         "type": "string",
@@ -1383,6 +1613,40 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
+      "InfeasibleOut": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/Status"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "blockers": {
+            "items": {
+              "$ref": "#/components/schemas/BlockerOut"
+            },
+            "type": "array",
+            "title": "Blockers"
+          },
+          "suggestions": {
+            "items": {
+              "$ref": "#/components/schemas/SuggestionOut"
+            },
+            "type": "array",
+            "title": "Suggestions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "message",
+          "blockers",
+          "suggestions"
+        ],
+        "title": "InfeasibleOut",
+        "description": "No plan fits the hard constraints: what blocked it and what to change (PRD §8.5)."
+      },
       "IngredientIn": {
         "properties": {
           "food": {
@@ -1509,6 +1773,24 @@
         ],
         "title": "IngredientOut"
       },
+      "InvalidBodyOut": {
+        "properties": {
+          "detail": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "InvalidBodyOut",
+        "description": "FastAPI's validation error, without the submitted values."
+      },
       "LineOut": {
         "properties": {
           "food": {
@@ -1571,6 +1853,35 @@
         ],
         "title": "MeOut"
       },
+      "MealIn": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "pattern": "^[a-z0-9_]+$",
+            "title": "Name"
+          },
+          "meal_type": {
+            "$ref": "#/components/schemas/MealType"
+          },
+          "kcal_share": {
+            "type": "number",
+            "maximum": 1.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Kcal Share",
+            "description": "Share of the daily calories, 0-1"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "meal_type",
+          "kcal_share"
+        ],
+        "title": "MealIn"
+      },
       "MealTarget": {
         "properties": {
           "kcal": {
@@ -1620,6 +1931,16 @@
         ],
         "title": "MealTarget",
         "description": "One serving's target."
+      },
+      "MealType": {
+        "type": "string",
+        "enum": [
+          "breakfast",
+          "lunch",
+          "dinner",
+          "snack"
+        ],
+        "title": "MealType"
       },
       "Metric": {
         "type": "string",
@@ -1787,6 +2108,162 @@
         ],
         "title": "PersonalizeOut",
         "description": "A proposal for one serving. Nothing is stored until the user confirms."
+      },
+      "PlanIn": {
+        "properties": {
+          "days": {
+            "type": "integer",
+            "enum": [
+              3,
+              5,
+              7
+            ],
+            "title": "Days"
+          },
+          "prep_days": {
+            "type": "integer",
+            "maximum": 3.0,
+            "minimum": 1.0,
+            "title": "Prep Days",
+            "description": "\"Cook once for N days\"",
+            "default": 1
+          },
+          "profile": {
+            "$ref": "#/components/schemas/ProfileIn"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "days",
+          "profile"
+        ],
+        "title": "PlanIn"
+      },
+      "PlanOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "days": {
+            "type": "integer",
+            "title": "Days"
+          },
+          "prep_days": {
+            "type": "integer",
+            "title": "Prep Days"
+          },
+          "targets": {
+            "$ref": "#/components/schemas/TargetsOut"
+          },
+          "notices": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notices",
+            "description": "Soft goals that had to be relaxed, in plain words"
+          },
+          "relaxed": {
+            "items": {
+              "$ref": "#/components/schemas/Rule"
+            },
+            "type": "array",
+            "title": "Relaxed"
+          },
+          "plan_days": {
+            "items": {
+              "$ref": "#/components/schemas/DayOut"
+            },
+            "type": "array",
+            "title": "Plan Days"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "days",
+          "prep_days",
+          "targets",
+          "notices",
+          "relaxed",
+          "plan_days"
+        ],
+        "title": "PlanOut"
+      },
+      "ProfileIn": {
+        "properties": {
+          "daily_kcal": {
+            "type": "number",
+            "maximum": 6000.0,
+            "minimum": 1200.0,
+            "title": "Daily Kcal"
+          },
+          "protein_min_g": {
+            "type": "number",
+            "maximum": 400.0,
+            "minimum": 0.0,
+            "title": "Protein Min G"
+          },
+          "meals": {
+            "items": {
+              "$ref": "#/components/schemas/MealIn"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 2,
+            "title": "Meals"
+          },
+          "max_minutes": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1440.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Minutes",
+            "description": "None: no limit"
+          },
+          "equipment": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Equipment",
+            "default": []
+          },
+          "exclusions": {
+            "items": {
+              "$ref": "#/components/schemas/ExclusionIn"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Exclusions",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "daily_kcal",
+          "protein_min_g",
+          "meals"
+        ],
+        "title": "ProfileIn",
+        "description": "The parts of the nutrition profile the planner needs (PRD §7)."
       },
       "ProposedIngredient": {
         "properties": {
@@ -2245,6 +2722,16 @@
         ],
         "title": "RefreshIn"
       },
+      "Rule": {
+        "type": "string",
+        "enum": [
+          "kcal",
+          "protein",
+          "variety"
+        ],
+        "title": "Rule",
+        "description": "Constraints that the infeasibility diagnosis may switch off one at a time."
+      },
       "SearchIn": {
         "properties": {
           "tags": {
@@ -2353,6 +2840,190 @@
         ],
         "title": "Severity",
         "description": "How strongly the user wants to avoid a category (PRD §7)."
+      },
+      "SlotOut": {
+        "properties": {
+          "position": {
+            "type": "integer",
+            "title": "Position",
+            "description": "The slot's address in `/slots/{slot}`"
+          },
+          "day": {
+            "type": "integer",
+            "title": "Day",
+            "description": "0-based"
+          },
+          "slot": {
+            "type": "string",
+            "title": "Slot"
+          },
+          "meal_type": {
+            "$ref": "#/components/schemas/MealType"
+          },
+          "recipe_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipe Id",
+            "description": "None if the recipe was deleted since"
+          },
+          "recipe_slug": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipe Slug"
+          },
+          "title_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title En"
+          },
+          "title_pl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title Pl"
+          },
+          "portion": {
+            "type": "number",
+            "title": "Portion",
+            "description": "Servings of the recipe"
+          },
+          "nutrition": {
+            "$ref": "#/components/schemas/NutrientsOut"
+          },
+          "cook_day": {
+            "type": "integer",
+            "title": "Cook Day"
+          },
+          "eat_by_day": {
+            "type": "integer",
+            "title": "Eat By Day"
+          },
+          "from_batch": {
+            "type": "boolean",
+            "title": "From Batch"
+          },
+          "leave_out": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Leave Out",
+            "description": "Optional ingredient keys to leave out"
+          },
+          "labels": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Labels",
+            "description": "Soft exclusions the recipe touches. Only in the response that created the plan: they come from the profile, which is not stored.",
+            "default": []
+          },
+          "status": {
+            "$ref": "#/components/schemas/SlotStatus"
+          },
+          "status_updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "position",
+          "day",
+          "slot",
+          "meal_type",
+          "recipe_id",
+          "recipe_slug",
+          "title_en",
+          "title_pl",
+          "portion",
+          "nutrition",
+          "cook_day",
+          "eat_by_day",
+          "from_batch",
+          "leave_out",
+          "status",
+          "status_updated_at"
+        ],
+        "title": "SlotOut"
+      },
+      "SlotStatus": {
+        "type": "string",
+        "enum": [
+          "planned",
+          "cooked",
+          "eaten",
+          "skipped"
+        ],
+        "title": "SlotStatus"
+      },
+      "SlotStatusIn": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "cooked",
+              "eaten",
+              "skipped"
+            ],
+            "title": "Status"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Event Id",
+            "description": "Client-generated, unique per change: a replay with the same id is a no-op"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "event_id"
+        ],
+        "title": "SlotStatusIn"
+      },
+      "Status": {
+        "type": "string",
+        "enum": [
+          "solved",
+          "infeasible",
+          "timeout"
+        ],
+        "title": "Status"
       },
       "SubstitutionOption": {
         "properties": {
@@ -2478,6 +3149,38 @@
         ],
         "title": "SubstitutionsOut"
       },
+      "SuggestionOut": {
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/Action"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action",
+          "message",
+          "value"
+        ],
+        "title": "SuggestionOut"
+      },
       "SwapOut": {
         "properties": {
           "original_key": {
@@ -2505,6 +3208,24 @@
           "grams"
         ],
         "title": "SwapOut"
+      },
+      "TargetsOut": {
+        "properties": {
+          "daily_kcal": {
+            "type": "number",
+            "title": "Daily Kcal"
+          },
+          "protein_min_g": {
+            "type": "number",
+            "title": "Protein Min G"
+          }
+        },
+        "type": "object",
+        "required": [
+          "daily_kcal",
+          "protein_min_g"
+        ],
+        "title": "TargetsOut"
       },
       "TokenPair": {
         "properties": {
