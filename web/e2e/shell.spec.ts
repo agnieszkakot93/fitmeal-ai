@@ -1,11 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-// The design-system fonts come from Google Fonts; keep the smoke test offline.
-test.beforeEach(async ({ page }) => {
-  await page.route(/fonts\.(googleapis|gstatic)\.com/, (route) => route.abort());
-});
-
 test("loads the shell in Polish with landmarks and a skip link", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/today$/);
@@ -83,4 +78,25 @@ test("ships a manifest and registers the service worker", async ({ page }) => {
   expect(await manifest.json()).toMatchObject({ name: "Donut", start_url: "/today" });
   const scope = await page.evaluate(async () => (await navigator.serviceWorker.ready).scope);
   expect(scope).toMatch(/\/$/);
+});
+
+test("loads everything, fonts included, from its own origin", async ({ page, baseURL }) => {
+  const foreign: string[] = [];
+  page.on("request", (req) => {
+    if (!req.url().startsWith(baseURL!) && !req.url().startsWith("data:")) foreign.push(req.url());
+  });
+  const fonts: string[] = [];
+  page.on("response", (res) => {
+    if (res.url().endsWith(".woff2") && res.ok()) fonts.push(res.url());
+  });
+  await page.goto("/settings");
+  await page.evaluate(() => document.fonts.ready);
+  // Polish letters come from the latin-ext subset, loaded on demand.
+  const loaded = await page.evaluate(async () =>
+    (await document.fonts.load('700 32px "Bricolage Grotesque"', "Żółć")).map((f) => f.status),
+  );
+  expect(loaded.length).toBeGreaterThan(0);
+  expect(loaded.every((status) => status === "loaded")).toBe(true);
+  expect(foreign).toEqual([]);
+  expect(fonts.some((url) => url.includes("figtree"))).toBe(true);
 });

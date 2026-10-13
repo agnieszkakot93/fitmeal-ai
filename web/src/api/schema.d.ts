@@ -560,6 +560,10 @@ export interface components {
             recipe_variants: {
                 [key: string]: unknown;
             }[];
+            /** Plans */
+            plans: {
+                [key: string]: unknown;
+            }[];
         };
         /** FoodDetail */
         FoodDetail: {
