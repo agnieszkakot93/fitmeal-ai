@@ -25,6 +25,7 @@ describe("router", () => {
     ["/plan", "Plan"],
     ["/shopping", "Zakupy"],
     ["/recipes/abc-123", "Przepis"],
+    ["/import", "Dodaj przepis"],
     ["/settings", "Ustawienia"],
     ["/onboarding", "Twoje ulubione jedzenie. Twoje makro."],
     ["/no-such-page", "Nie znaleziono strony"],
@@ -53,6 +54,17 @@ describe("router", () => {
     for (const nav of mainNavs()) {
       expect(within(nav).queryByRole("link", { current: "page" })).toBeNull();
     }
+  });
+
+  it("opens Add recipe from the Add button", async () => {
+    const { router } = await renderApp("/today");
+    // TabBar (phone) and SideNav (md+) each have one; jsdom renders both.
+    const adds = screen.getAllByRole("button", { name: "Dodaj przepis" });
+    expect(adds).toHaveLength(2);
+    await userEvent.click(adds[0]!);
+    expect(router.state.location.pathname).toBe("/import");
+    expect(h1()).toHaveTextContent("Dodaj przepis");
+    expect(h1()).toHaveFocus();
   });
 
   it("hides the navigation during onboarding", async () => {

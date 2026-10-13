@@ -83,6 +83,14 @@ test.describe("after onboarding", () => {
     await expect(page.getByRole("heading", { level: 1, name: "Settings" })).toBeVisible();
   });
 
+  test("the Add button opens Add recipe", async ({ page }) => {
+    await page.goto("/today");
+    // One visible Add per size: the TabBar's on phone, the SideNav's from md.
+    await page.getByRole("button", { name: "Dodaj przepis" }).locator("visible=true").click();
+    await expect(page).toHaveURL(/\/import$/);
+    await expect(page.getByRole("heading", { level: 1, name: "Dodaj przepis" })).toBeFocused();
+  });
+
   test("deep links and unknown URLs render inside the shell", async ({ page }) => {
     await page.goto("/recipes/abc-123");
     await expect(page.getByRole("heading", { level: 1, name: "Przepis" })).toBeVisible();

@@ -33,7 +33,7 @@ pnpm api:generate        # needs uv; exports app.openapi() to openapi.json, then
 
 Commit `openapi.json` and `src/api/schema.d.ts`; CI fails if they don't match the backend. The script imports the FastAPI app read-only.
 
-Use the client from `src/api/client.ts` (`api.GET("/v1/foods/search", …)`). Auth (`src/api/session.ts`): the access JWT stays in memory; on a 401 the client refreshes once through `POST /v1/auth/refresh` with the HttpOnly cookie scoped to `/v1/auth`, then retries. `signOut()` calls `POST /v1/auth/logout`, which revokes the token family and clears the cookie. Tokens never go to localStorage, sessionStorage or IndexedDB.
+Read server data through TanStack Query (`src/api/queries.ts`: `useMe()`, `unwrap()`, `queryKeys`; client set up in `queryClient.ts`, no retries on 4xx). Use the client from `src/api/client.ts` (`api.GET("/v1/foods/search", …)`). Auth (`src/api/session.ts`): the access JWT stays in memory; on a 401 the client refreshes once through `POST /v1/auth/refresh` with the HttpOnly cookie scoped to `/v1/auth`, then retries. `signOut()` calls `POST /v1/auth/logout`, which revokes the token family and clears the cookie. Tokens never go to localStorage, sessionStorage or IndexedDB.
 
 ## Layout
 

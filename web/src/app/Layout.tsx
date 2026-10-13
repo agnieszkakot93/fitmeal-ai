@@ -85,6 +85,7 @@ export function Layout() {
       active={handle.active ?? NO_TAB}
       hrefs={HREFS}
       onNavigate={onNavigate}
+      onAdd={() => void navigate(paths.import)}
       nav={nav}
       narrow={handle.narrow ?? false}
       avatar={nav ? avatar : undefined}
