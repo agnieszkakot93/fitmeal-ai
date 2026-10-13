@@ -2,6 +2,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath, URL } from "node:url";
 
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import type { Plugin } from "vite";
@@ -27,6 +28,21 @@ function donutTokens(): Plugin {
     },
   };
 }
+
+// Source maps go to Sentry only from a deploy that sets SENTRY_AUTH_TOKEN,
+// SENTRY_ORG and SENTRY_PROJECT (EU region). They are uploaded, then deleted
+// from dist/, so they are never served. Without the token: no source maps.
+const sentryUpload = process.env.SENTRY_AUTH_TOKEN
+  ? sentryVitePlugin({
+      url: "https://de.sentry.io/",
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      release: { name: process.env.VITE_RELEASE },
+      sourcemaps: { filesToDeleteAfterUpload: ["dist/**/*.map"] },
+      telemetry: false,
+    })
+  : null;
 
 // The theme colour is the light `surface` token (design-system README, "Theme").
 const surface = "#f6f3ec";
@@ -67,7 +83,9 @@ export default defineConfig({
       },
       devOptions: { enabled: false },
     }),
+    sentryUpload,
   ],
+  build: { sourcemap: sentryUpload ? "hidden" : false },
   server: {
     // The design system lives outside web/ (design/design-system/).
     fs: { allow: [repoRoot] },

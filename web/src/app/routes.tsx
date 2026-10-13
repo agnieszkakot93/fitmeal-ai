@@ -12,6 +12,7 @@ import { RecipePage } from "../features/recipe/RecipePage";
 import { SettingsPage } from "../features/settings/SettingsPage";
 import { ShoppingPage } from "../features/shopping/ShoppingPage";
 import { TodayPage } from "../features/today/TodayPage";
+import { RouteError } from "./ErrorFallback";
 import type { RouteHandle } from "./handle";
 import { Layout } from "./Layout";
 
@@ -26,6 +27,7 @@ export const routes: RouteObject[] = [
   {
     element: <Layout />,
     HydrateFallback: () => null,
+    errorElement: <RouteError />,
     children: [
       { index: true, loader: rootLoader },
       {
