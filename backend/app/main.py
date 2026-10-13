@@ -7,12 +7,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db import get_session
 from app.foods.nutrition_router import router as nutrition_router
 from app.foods.router import router as foods_router
+from app.recipes.router import router as recipes_router
 
 # One router per feature. A feature adds its import above and one line here;
 # keep it the only change a feature makes to this file.
 ROUTERS = [
     foods_router,
     nutrition_router,
+    recipes_router,
 ]
 
 
