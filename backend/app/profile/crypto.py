@@ -3,12 +3,14 @@
 AES-256-GCM with a 96-bit random nonce per value. The associated data binds each
 ciphertext to its user, column and row version, so a value copied to another
 row or column, or an older value spliced into a newer row, fails to decrypt.
-The key is an application secret kept apart from the database credentials
-(``DONUT_PROFILE_KEY``, base64 of 32 bytes, e.g. ``openssl rand -base64 32``)
-and has an id stored with every row, so it can be rotated: set the new key and
-id, move the old key to ``DONUT_PROFILE_OLD_KEYS`` (``{"<id>": "<base64 key>"}``)
-and re-encrypt with :func:`app.profile.repository.reencrypt`. There is no default key: without
-one the profile can be neither read nor written (fail closed).
+The key is an application secret kept apart from the database credentials:
+``DONUT_PROFILE_KEY`` or the Docker secret ``donut_profile_key``, base64 of
+32 bytes (``openssl rand -base64 32``). Its id is stored with every row, so it
+can be rotated: set the new key and id, move the old key to
+``DONUT_PROFILE_OLD_KEYS`` (``{"<id>": "<base64 key>"}``) and run
+``python -m app.profile.cli rotate`` (docs/ops/PROFILE_KEY.md). There is no
+default key: without one the profile can be neither read nor written (fail
+closed).
 """
 
 from __future__ import annotations
@@ -19,6 +21,7 @@ import json
 import os
 import uuid
 from functools import lru_cache
+from pathlib import Path
 from typing import Any
 
 from cryptography.exceptions import InvalidTag
@@ -35,6 +38,12 @@ class KeyUnavailable(Exception):
 
 class DecryptionFailed(Exception):
     """A stored value didn't authenticate under its key (wrong key or tampered row)."""
+
+
+# Docker secrets (infra/docker-compose.prod.yml): one file per setting, named
+# like the variable in lower case, e.g. ``donut_profile_key``. Environment
+# variables win over files.
+SECRETS_DIR = Path("/run/secrets")
 
 
 class ProfileKeySettings(BaseSettings):
@@ -104,4 +113,5 @@ def cipher_from(settings: ProfileKeySettings) -> ProfileCipher:
 @lru_cache
 def get_cipher() -> ProfileCipher:
     """The process-wide cipher. Raises :class:`KeyUnavailable` until a key is configured."""
-    return cipher_from(ProfileKeySettings())
+    secrets = SECRETS_DIR if SECRETS_DIR.is_dir() else None
+    return cipher_from(ProfileKeySettings(_secrets_dir=secrets))

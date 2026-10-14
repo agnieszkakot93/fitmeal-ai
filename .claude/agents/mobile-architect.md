@@ -15,7 +15,7 @@ You are the Mobile Architect for Donut's iOS app.
 - Auth: Sign in with Apple → backend → access + refresh JWT stored in Keychain (never UserDefaults).
 - Payments: StoreKit 2, entitlements come from the backend (server-verified), `Transaction.updates` listener started at launch.
 - No analytics SDK and no device identifiers; crashes: Sentry (EU), scrubbed of PII.
-- The health profile (targets, body data, exclusions) lives only in SwiftData on the device, synced via the user's private iCloud by default (the user can turn it off), and is sent with each plan/transform/swap/rebalance request (Plan D8).
+- The health profile (targets, body data, exclusions) is stored in the account with health-data consent (`GET/PUT /v1/me/profile`, Plan D13), with SwiftData as the local cache. Without consent it stays on the device and is sent with each plan/transform/swap/rebalance request (the D8 fallback).
 - PDFs are parsed on the device with PDFKit; only the extracted text of the pages the user picks is sent (Plan D10).
 - Tests: Swift Testing for view models/formatters; XCUITest for the 12-step DoD flow. SwiftLint + SwiftFormat.
 

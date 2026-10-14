@@ -456,6 +456,19 @@ export interface components {
             /** Activity Level */
             activity_level?: ("sedentary" | "light" | "moderate" | "active" | "very_active") | null;
         };
+        /** BodyDataOut */
+        BodyDataOut: {
+            /** Age */
+            age: number | null;
+            /** Sex */
+            sex: ("female" | "male") | null;
+            /** Weight Kg */
+            weight_kg: number | null;
+            /** Height Cm */
+            height_cm: number | null;
+            /** Activity Level */
+            activity_level: ("sedentary" | "light" | "moderate" | "active" | "very_active") | null;
+        };
         /** CalculateIn */
         CalculateIn: {
             /**
@@ -572,6 +585,15 @@ export interface components {
              * @description Only an intolerance can be relaxed
              * @default false
              */
+            relaxed: boolean;
+        };
+        /** ExclusionOut */
+        ExclusionOut: {
+            category: components["schemas"]["ExclusionCategory"];
+            severity: components["schemas"]["Severity"];
+            /** Term */
+            term: string | null;
+            /** Relaxed */
             relaxed: boolean;
         };
         /**
@@ -711,23 +733,14 @@ export interface components {
             /** Protein Min G */
             protein_min_g: number;
             /** Meals */
-            meals: components["schemas"]["MealIn"][];
-            /**
-             * Max Minutes
-             * @description None: no limit
-             */
-            max_minutes?: number | null;
-            /**
-             * Equipment
-             * @default []
-             */
+            meals: components["schemas"]["MealOut"][];
+            /** Max Minutes */
+            max_minutes: number | null;
+            /** Equipment */
             equipment: string[];
-            /**
-             * Exclusions
-             * @default []
-             */
-            exclusions: components["schemas"]["ExclusionIn"][];
-            body?: components["schemas"]["BodyDataIn"] | null;
+            /** Exclusions */
+            exclusions: components["schemas"]["ExclusionOut"][];
+            body: components["schemas"]["BodyDataOut"] | null;
             /**
              * Version
              * @description Bumped on every save
@@ -840,6 +853,14 @@ export interface components {
              * Kcal Share
              * @description Share of the daily calories, 0-1
              */
+            kcal_share: number;
+        };
+        /** MealOut */
+        MealOut: {
+            /** Name */
+            name: string;
+            meal_type: components["schemas"]["MealType"];
+            /** Kcal Share */
             kcal_share: number;
         };
         /**
@@ -1411,6 +1432,7 @@ export type SchemaBlockedOut = components['schemas']['BlockedOut'];
 export type SchemaBlockerKind = components['schemas']['BlockerKind'];
 export type SchemaBlockerOut = components['schemas']['BlockerOut'];
 export type SchemaBodyDataIn = components['schemas']['BodyDataIn'];
+export type SchemaBodyDataOut = components['schemas']['BodyDataOut'];
 export type SchemaCalculateIn = components['schemas']['CalculateIn'];
 export type SchemaCalculateOut = components['schemas']['CalculateOut'];
 export type SchemaChangeOut = components['schemas']['ChangeOut'];
@@ -1424,6 +1446,7 @@ export type SchemaCulinaryRole = components['schemas']['CulinaryRole'];
 export type SchemaDayOut = components['schemas']['DayOut'];
 export type SchemaExclusionCategory = components['schemas']['ExclusionCategory'];
 export type SchemaExclusionIn = components['schemas']['ExclusionIn'];
+export type SchemaExclusionOut = components['schemas']['ExclusionOut'];
 export type SchemaExportOut = components['schemas']['ExportOut'];
 export type SchemaFoodDetail = components['schemas']['FoodDetail'];
 export type SchemaFoodRef = components['schemas']['FoodRef'];
@@ -1438,6 +1461,7 @@ export type SchemaInvalidBodyOut = components['schemas']['InvalidBodyOut'];
 export type SchemaLineOut = components['schemas']['LineOut'];
 export type SchemaMeOut = components['schemas']['MeOut'];
 export type SchemaMealIn = components['schemas']['MealIn'];
+export type SchemaMealOut = components['schemas']['MealOut'];
 export type SchemaMealTarget = components['schemas']['MealTarget'];
 export type SchemaMealType = components['schemas']['MealType'];
 export type SchemaMetric = components['schemas']['Metric'];

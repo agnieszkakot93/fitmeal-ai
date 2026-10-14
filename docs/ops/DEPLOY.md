@@ -72,6 +72,9 @@ compose file.
   Template: `infra/.env.prod.example`. Never commit it, never paste it into tickets or chat.
 - Generate each secret with `openssl rand -hex 32`. `DONUT_JWT_SECRET` must not be the
   dev default (the app refuses it outside dev/test).
+- The health profile key is the exception: it is a secret file in `infra/secrets/`,
+  not in `.env.prod`, and it is base64 (`openssl rand -base64 32`). Setup, escrow and
+  rotation: [PROFILE_KEY.md](PROFILE_KEY.md). Without it, profile endpoints answer 503.
 - A copy of `.env.prod` and the backup age **private** key go in the team password
   manager **[PO: choose/own it]**. The age private key is never stored on the VPS.
 - Rotation: edit `.env.prod`, then `up -d` (recreates affected containers). Rotating
@@ -84,6 +87,7 @@ compose file.
 sudo install -d -o deploy -g deploy /opt/donut
 git clone <repo> /opt/donut && cd /opt/donut   # [PO] grant the server a read-only deploy key
 cp infra/.env.prod.example infra/.env.prod && chmod 600 infra/.env.prod && $EDITOR infra/.env.prod
+# health profile key files: PROFILE_KEY.md "First setup"
 echo "$GHCR_READ_TOKEN" | docker login ghcr.io -u <user> --password-stdin   # read:packages only
 alias dc='docker compose --env-file infra/.env.prod -f infra/docker-compose.prod.yml'
 dc config -q && dc pull && dc up -d
@@ -126,7 +130,7 @@ Then install the backup timer (BACKUPS.md §2).
 - **API docs in prod:** Caddy's CSP is `default-src 'none'`, which blocks Swagger UI
   assets at `/docs`. Intentional for an API-only host; the OpenAPI JSON stays available.
 - **Logs:** uvicorn's access log is off; Caddy's access log strips query strings and all
-  request/response headers (D8). Do not raise app log levels to debug in prod.
+  request/response headers (D8, D13). Do not raise app log levels to debug in prod.
 - **Caddy user:** runs as root in its container (to own its volume) with all capabilities
   dropped except `NET_BIND_SERVICE` and a read-only root FS. api, migrate and worker run
   as uid 1000 with a read-only FS; postgres and redis drop privileges in their entrypoints.
