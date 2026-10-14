@@ -30,3 +30,12 @@ html {
 .fm-shell:not(.is-contained) > .fm-shell-frame {
   min-height: 100dvh;
 }
+.dn-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.dn-progress {
+  width: 100%;
+  accent-color: var(--basil);
+}
