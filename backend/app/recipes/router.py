@@ -54,6 +54,8 @@ from app.recipes.schemas import (
     nutrients_out,
     to_exclusions,
 )
+from app.variants import service as variants
+from app.variants.deps import OptionalUser
 
 
 class _HideInputRoute(APIRoute):
@@ -238,19 +240,31 @@ async def get_recipe(session: Session, recipe_id: uuid.UUID) -> RecipeDetail:
 @router.post(
     "/{recipe_id}/personalize",
     response_model=PersonalizeOut,
-    responses={404: {}, 409: {"model": BlockedOut}},
+    responses={
+        401: {"description": "`save` without sign-in"},
+        404: {},
+        409: {"model": BlockedOut},
+    },
 )
 async def personalize(
-    session: Session, recipe_id: uuid.UUID, body: PersonalizeIn
+    session: Session, recipe_id: uuid.UUID, body: PersonalizeIn, user: OptionalUser
 ) -> PersonalizeOut:
-    """Propose one serving adjusted to the meal target. Nothing is stored (D8).
+    """Propose one serving adjusted to the meal target, every change explained.
+
+    Nothing is stored unless `save` is sent (signed in): then the proposal is
+    saved as the user's variant, with only the meal target it was computed for.
+    A signed-in user's stored profile with health-data consent supplies the
+    exclusions (D13); otherwise the body's snapshot does (D8 fallback).
 
     Excluded optional ingredients are left out. A recipe with an excluded
     required ingredient answers 409 with the ingredients to substitute first
     (see the substitutions endpoint).
     """
+    if body.save is not None and user is None:
+        raise HTTPException(status_code=401, detail="sign in to save a variant")
+    user_id = user.id if user else None
     recipe = await _get(session, recipe_id)
-    exclusions = to_exclusions(body.exclusions)
+    exclusions = await variants.exclusions(session, user_id, body.exclusions)
     checked = repository.check_exclusions(recipe, exclusions)
     if checked.blocked:
         raise HTTPException(
@@ -316,7 +330,7 @@ async def personalize(
         )
         for c in result.changes
     ]
-    return PersonalizeOut(
+    out = PersonalizeOut(
         recipe_id=recipe.id,
         ingredients=ingredients,
         changes=changes,
@@ -337,6 +351,16 @@ async def personalize(
             for m in result.misses
         ],
     )
+    foods = {i.food.slug: i.food for i in recipe.ingredients} | new_foods
+    explanations = variants.explain_personalized(recipe, out, foods)
+    out.explanations = [variants.explanation_out(e) for e in explanations]
+    if body.save is not None and user_id is not None:
+        variant = await variants.save_personalized(
+            session, user_id, recipe, body.target, out, body.save, explanations, foods
+        )
+        out.variant_id = variant.id
+        await session.commit()
+    return out
 
 
 def _swapped_slug(alt_key: str) -> str:

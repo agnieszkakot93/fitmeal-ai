@@ -73,6 +73,7 @@ class ExportOut(BaseModel):
     sessions: list[SessionOut]
     health_profile: HealthProfileOut | None
     private_recipes: list[dict[str, Any]]
+    # each with the plan slots cooked from it
     recipe_variants: list[dict[str, Any]]
     # each with its slots, and each slot with its status events
     plans: list[dict[str, Any]]

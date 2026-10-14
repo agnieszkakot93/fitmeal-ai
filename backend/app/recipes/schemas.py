@@ -18,6 +18,7 @@ from app.foods.vocab import CulinaryRole
 from app.nutrition.allergens import Exclusion, ExclusionCategory, Severity, TraceStatus, Verdict
 from app.nutrition.nutrients import Nutrients
 from app.optimizer.transform import Metric, Reason
+from app.variants.explain import Kind
 
 
 class _Snapshot(BaseModel):
@@ -66,9 +67,31 @@ class SearchIn(_Snapshot):
     offset: int = Field(default=0, ge=0, le=10_000)
 
 
+class SaveIn(_Snapshot):
+    label: str | None = Field(default=None, min_length=1, max_length=80)
+    plan_id: uuid.UUID | None = Field(default=None, description="With `slot`: cook it there")
+    slot: int | None = Field(default=None, ge=0, le=1000, description="The slot's position")
+
+    @model_validator(mode="after")
+    def _both(self) -> Self:
+        if (self.plan_id is None) != (self.slot is None):
+            raise ValueError("plan_id and slot go together")
+        return self
+
+
 class PersonalizeIn(_Snapshot):
     target: MealTarget
-    exclusions: Exclusions = Field(default=[], max_length=MAX_EXCLUSIONS)
+    exclusions: Exclusions = Field(
+        default=[],
+        max_length=MAX_EXCLUSIONS,
+        description="Used without a stored profile with health-data consent (D8 fallback); "
+        "ignored for a signed-in user who has one.",
+    )
+    save: SaveIn | None = Field(
+        default=None,
+        description="Save the proposal as the user's variant (sign-in required), optionally "
+        "as the recipe of one of their plan slots. Only the meal target is stored with it.",
+    )
 
 
 class SubstitutionsIn(_Snapshot):
@@ -202,8 +225,18 @@ class MissOut(BaseModel):
     actual: float
 
 
+class ExplanationOut(BaseModel):
+    """One change in plain words ("Why did Donut change this?")."""
+
+    key: str = Field(description="The ingredient's key")
+    kind: Kind
+    message: str
+    delta: NutrientsOut = Field(description="The change's effect on one serving")
+    reason: ChangeReason | None = Field(description="For `amount` changes")
+
+
 class PersonalizeOut(BaseModel):
-    """A proposal for one serving. Nothing is stored until the user confirms."""
+    """A proposal for one serving. Nothing is stored unless the request asks to save it."""
 
     recipe_id: uuid.UUID
     ingredients: list[ProposedIngredient]
@@ -213,6 +246,8 @@ class PersonalizeOut(BaseModel):
     nutrition: NutrientsOut
     on_target: bool
     misses: list[MissOut]
+    explanations: list[ExplanationOut] = Field(default=[], description="Every change, in words")
+    variant_id: uuid.UUID | None = Field(default=None, description="Set when saved")
 
 
 class SubstitutionOption(BaseModel):

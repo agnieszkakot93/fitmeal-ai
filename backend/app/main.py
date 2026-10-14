@@ -12,6 +12,7 @@ from app.plans.router import router as plans_router
 from app.profile.router import router as profile_router
 from app.recipes.router import router as recipes_router
 from app.users.router import router as users_router
+from app.variants.router import router as variants_router
 
 # One router per feature. A feature adds its import above and one line here;
 # keep it the only change a feature makes to this file.
@@ -23,6 +24,7 @@ ROUTERS = [
     users_router,
     plans_router,
     profile_router,
+    variants_router,
 ]
 
 

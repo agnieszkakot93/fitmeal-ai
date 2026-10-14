@@ -38,6 +38,14 @@ from app.plans.schemas import (
 )
 from app.profile import service as profile_service
 from app.recipes.schemas import nutrients_out
+from app.variants import slots as slot_swaps
+from app.variants.schemas import (
+    RebalanceApplyIn,
+    SwapIn,
+    SwapOptionsIn,
+    SwapOptionsOut,
+    SwapOut,
+)
 
 router = APIRouter(prefix="/v1/plans", tags=["plans"], route_class=HideInputRoute)
 
@@ -195,3 +203,55 @@ async def set_slot_status(
     await session.commit()
     await session.refresh(found, ["recipe"])
     return _slot_out(found, {})
+
+
+_SLOT_ERRORS: dict[int | str, dict[str, Any]] = {
+    status.HTTP_404_NOT_FOUND: {"description": "No such plan or slot for this user"},
+    status.HTTP_409_CONFLICT: {"description": "The meal is already eaten or skipped"},
+}
+
+
+@router.post(
+    "/{plan_id}/slots/{slot}/swap-options", response_model=SwapOptionsOut, responses=_SLOT_ERRORS
+)
+async def swap_options(
+    plan_id: uuid.UUID, slot: int, body: SwapOptionsIn, user: CurrentUser, session: Session
+) -> SwapOptionsOut:
+    """Recipes that could replace the meal, best fit first, sized like it (PRD §8.6).
+
+    Only recipes that pass the profile's hard constraints are offered. The
+    profile is the stored one with health-data consent, else the body's snapshot.
+    """
+    found, options = await slot_swaps.options(session, user.id, plan_id, slot, body)
+    out = SwapOptionsOut(slot=_slot_out(found, {}), options=options)
+    await session.rollback()  # nothing changed; release the plan lock
+    return out
+
+
+@router.post("/{plan_id}/slots/{slot}/swap", response_model=SwapOut, responses=_SLOT_ERRORS)
+async def swap_slot(
+    plan_id: uuid.UUID, slot: int, body: SwapIn, user: CurrentUser, session: Session
+) -> SwapOut:
+    """Put another recipe in the meal and propose a rebalance of the day's other meals.
+
+    The swap is saved; the rebalance is only a proposal, applied through
+    `POST /v1/plans/{id}/rebalance/apply` (PRD §8.6).
+    """
+    _, found, proposal = await slot_swaps.swap(session, user.id, plan_id, slot, body)
+    out = SwapOut(slot=_slot_out(found, {}), rebalance=proposal)
+    await session.commit()
+    return out
+
+
+@router.post("/{plan_id}/rebalance/apply", response_model=PlanOut, responses=_SLOT_ERRORS)
+async def apply_rebalance(
+    plan_id: uuid.UUID, body: RebalanceApplyIn, user: CurrentUser, session: Session
+) -> PlanOut:
+    """Apply the portion adjustments the user accepted from a rebalance proposal.
+
+    Each may move a meal's portion by at most 20%, never on an eaten or skipped
+    meal, and never take the day below 1200 kcal.
+    """
+    plan = await slot_swaps.apply_rebalance(session, user.id, plan_id, body)
+    await session.commit()
+    return _plan_out(await repository.get(session, plan.id))

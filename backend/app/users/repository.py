@@ -20,6 +20,7 @@ from app.profile import service as profile_service
 from app.recipes.models import Recipe, RecipeSource, RecipeVariant
 from app.users.models import ConsentRecord, ConsentType, User
 from app.users.schemas import ConsentIn, ConsentOut, ExportOut, MeOut, SessionOut
+from app.variants.models import PlanSlotVariant
 
 
 async def consent_history(session: AsyncSession, user_id: uuid.UUID) -> Sequence[ConsentRecord]:
@@ -102,6 +103,15 @@ async def export(session: AsyncSession, user: User) -> ExportOut:
             .order_by(RecipeVariant.created_at)
         )
     ).all()
+    variant_slots: dict[uuid.UUID, list[dict[str, Any]]] = {}
+    for variant_id, plan_id, position in await session.execute(
+        select(PlanSlotVariant.variant_id, PlanSlot.plan_id, PlanSlot.position)
+        .join(PlanSlot, PlanSlot.id == PlanSlotVariant.slot_id)
+        .join(MealPlan)
+        .where(MealPlan.user_id == user.id)
+        .order_by(PlanSlot.plan_id, PlanSlot.position)
+    ):
+        variant_slots.setdefault(variant_id, []).append({"plan_id": str(plan_id), "slot": position})
     plans = (
         await session.scalars(
             select(MealPlan)
@@ -133,7 +143,9 @@ async def export(session: AsyncSession, user: User) -> ExportOut:
             for r in recipes
         ],
         health_profile=await profile_service.load(session, user.id),
-        recipe_variants=[_columns(v) for v in variants],
+        recipe_variants=[
+            {**_columns(v), "plan_slots": variant_slots.get(v.id, [])} for v in variants
+        ],
         plans=[
             {
                 **_columns(p),
@@ -151,7 +163,8 @@ async def erase(session: AsyncSession, user_id: uuid.UUID) -> None:
     """Delete the account and everything stored about it (GDPR Art. 17).
 
     Recipes and variants point at users without a foreign key (they predate
-    this table), so they are deleted here explicitly. Refresh tokens, consent
+    this table), so they are deleted here explicitly; their links to plan slots
+    go with them (ON DELETE CASCADE). Refresh tokens, consent
     records and plans (with their slots and events) go with the user row
     (ON DELETE CASCADE). The health profile would too; it is deleted explicitly
     so its hard deletion doesn't hang on the cascade.
