@@ -1,7 +1,7 @@
 """import jobs and the import cache
 
 Revision ID: 0010
-Revises: 0007
+Revises: 0011
 Create Date: 2026-10-14 13:38:26.462382
 
 """
@@ -15,7 +15,7 @@ from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = "0010"
-down_revision: str | Sequence[str] | None = "0007"
+down_revision: str | Sequence[str] | None = "0011"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

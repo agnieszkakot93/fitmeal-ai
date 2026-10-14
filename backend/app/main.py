@@ -12,6 +12,7 @@ from app.importjobs.router import router as imports_router
 from app.plans.router import router as plans_router
 from app.profile.router import router as profile_router
 from app.recipes.router import router as recipes_router
+from app.shoppinglist.router import router as shoppinglist_router
 from app.users.router import router as users_router
 
 # One router per feature. A feature adds its import above and one line here;
@@ -24,6 +25,7 @@ ROUTERS = [
     users_router,
     plans_router,
     profile_router,
+    shoppinglist_router,
     imports_router,
 ]
 

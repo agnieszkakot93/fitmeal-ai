@@ -1032,6 +1032,190 @@
         ]
       }
     },
+    "/v1/plans/{plan_id}/shopping-list": {
+      "get": {
+        "tags": [
+          "shopping"
+        ],
+        "summary": "Shopping List",
+        "description": "The plan's shopping list by store section, with checkmarks.\n\nRegenerated from the plan each time: foods still on it keep their id and\ncheckmark, foods no longer needed drop off.",
+        "operationId": "shopping_list_v1_plans__plan_id__shopping_list_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "plan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Plan Id"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "en",
+                    "pl"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Language of the item names; overrides Accept-Language",
+              "title": "Lang"
+            },
+            "description": "Language of the item names; overrides Accept-Language"
+          },
+          {
+            "name": "accept-language",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Accept-Language"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShoppingListOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/shopping-items/{item_id}": {
+      "patch": {
+        "tags": [
+          "shopping"
+        ],
+        "summary": "Check Item",
+        "description": "Check or uncheck an item.\n\nIdempotent per ``event_id``: replaying an event (an offline outbox retrying)\nreturns the item unchanged. Reusing an event id for a different change is a 409.",
+        "operationId": "check_item_v1_shopping_items__item_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Item Id"
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "en",
+                    "pl"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Language of the item names; overrides Accept-Language",
+              "title": "Lang"
+            },
+            "description": "Language of the item names; overrides Accept-Language"
+          },
+          {
+            "name": "accept-language",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Accept-Language"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShoppingItemCheckIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShoppingItemOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/imports": {
       "post": {
         "tags": [
@@ -1238,6 +1422,24 @@
           "retry"
         ],
         "title": "Action"
+      },
+      "AmountOut": {
+        "properties": {
+          "value": {
+            "type": "number",
+            "title": "Value",
+            "description": "Whole except for kg and l, which have one decimal"
+          },
+          "unit": {
+            "$ref": "#/components/schemas/DisplayUnit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "unit"
+        ],
+        "title": "AmountOut"
       },
       "AnswerIn": {
         "properties": {
@@ -1856,6 +2058,18 @@
         ],
         "title": "DayOut"
       },
+      "DisplayUnit": {
+        "type": "string",
+        "enum": [
+          "g",
+          "kg",
+          "ml",
+          "l",
+          "piece",
+          "can"
+        ],
+        "title": "DisplayUnit"
+      },
       "ExclusionCategory": {
         "type": "string",
         "enum": [
@@ -1991,6 +2205,27 @@
         ],
         "title": "ExportOut",
         "description": "Everything the server stores about the user (GDPR Art. 15 and 20).\n\nThe health profile is decrypted here (D13); ``None`` when none is stored."
+      },
+      "FoodCategory": {
+        "type": "string",
+        "enum": [
+          "vegetables",
+          "fruit",
+          "meat_fish",
+          "dairy_eggs",
+          "bakery",
+          "grains_pasta",
+          "legumes",
+          "nuts_seeds",
+          "oils_fats",
+          "condiments",
+          "spices",
+          "sweets_baking",
+          "beverages",
+          "other"
+        ],
+        "title": "FoodCategory",
+        "description": "Also the shopping-list sections, in store-walk order."
       },
       "FoodDetail": {
         "properties": {
@@ -2923,6 +3158,56 @@
           "total_grams"
         ],
         "title": "NutritionOut"
+      },
+      "PackageCountOut": {
+        "properties": {
+          "size_g": {
+            "type": "integer",
+            "title": "Size G"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "size_g",
+          "count"
+        ],
+        "title": "PackageCountOut"
+      },
+      "PackagesOut": {
+        "properties": {
+          "buy": {
+            "items": {
+              "$ref": "#/components/schemas/PackageCountOut"
+            },
+            "type": "array",
+            "title": "Buy",
+            "description": "Package sizes to buy, largest first"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          },
+          "total_g": {
+            "type": "integer",
+            "title": "Total G"
+          },
+          "leftover_g": {
+            "type": "number",
+            "title": "Leftover G"
+          }
+        },
+        "type": "object",
+        "required": [
+          "buy",
+          "count",
+          "total_g",
+          "leftover_g"
+        ],
+        "title": "PackagesOut"
       },
       "PersonalizeIn": {
         "properties": {
@@ -3889,6 +4174,26 @@
         "type": "object",
         "title": "SearchIn"
       },
+      "SectionOut": {
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/FoodCategory"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ShoppingItemOut"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category",
+          "items"
+        ],
+        "title": "SectionOut"
+      },
       "SessionOut": {
         "properties": {
           "created_at": {
@@ -3945,6 +4250,130 @@
         ],
         "title": "Severity",
         "description": "How strongly the user wants to avoid a category (PRD §7)."
+      },
+      "ShoppingItemCheckIn": {
+        "properties": {
+          "checked": {
+            "type": "boolean",
+            "title": "Checked"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Event Id",
+            "description": "Client-generated, unique per change: a replay with the same id is a no-op"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "checked",
+          "event_id"
+        ],
+        "title": "ShoppingItemCheckIn"
+      },
+      "ShoppingItemOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id",
+            "description": "Stable across regenerations while the food stays listed"
+          },
+          "food_slug": {
+            "type": "string",
+            "title": "Food Slug"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "In the list's language"
+          },
+          "category": {
+            "$ref": "#/components/schemas/FoodCategory"
+          },
+          "grams": {
+            "type": "number",
+            "title": "Grams",
+            "description": "The exact total over the plan"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/AmountOut",
+            "description": "Rounded up for display"
+          },
+          "packages": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PackagesOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "None when no package sizes are known"
+          },
+          "checked": {
+            "type": "boolean",
+            "title": "Checked"
+          },
+          "checked_updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checked Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "food_slug",
+          "name",
+          "category",
+          "grams",
+          "amount",
+          "packages",
+          "checked",
+          "checked_updated_at"
+        ],
+        "title": "ShoppingItemOut"
+      },
+      "ShoppingListOut": {
+        "properties": {
+          "plan_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Plan Id"
+          },
+          "lang": {
+            "type": "string",
+            "enum": [
+              "en",
+              "pl"
+            ],
+            "title": "Lang"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/SectionOut"
+            },
+            "type": "array",
+            "title": "Sections",
+            "description": "Store sections in store-walk order"
+          }
+        },
+        "type": "object",
+        "required": [
+          "plan_id",
+          "lang",
+          "sections"
+        ],
+        "title": "ShoppingListOut"
       },
       "SlotOut": {
         "properties": {

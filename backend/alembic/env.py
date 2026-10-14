@@ -28,6 +28,7 @@ from app.importjobs import models as import_job_models  # noqa: E402, F401
 from app.plans import models as plan_models  # noqa: E402, F401
 from app.profile import models as profile_models  # noqa: E402, F401
 from app.recipes import models as recipe_models  # noqa: E402, F401
+from app.shoppinglist import models as shoppinglist_models  # noqa: E402, F401
 from app.users import models as user_models  # noqa: E402, F401
 
 config.set_main_option("sqlalchemy.url", get_settings().database_url)

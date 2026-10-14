@@ -18,6 +18,7 @@ from app.plans.models import MealPlan, PlanSlot, SlotEvent
 from app.profile import repository as profile_repository
 from app.profile import service as profile_service
 from app.recipes.models import Recipe, RecipeSource, RecipeVariant
+from app.shoppinglist.models import ShoppingItemEvent, ShoppingListItem
 from app.users.models import ConsentRecord, ConsentType, User
 from app.users.schemas import ConsentIn, ConsentOut, ExportOut, MeOut, SessionOut
 
@@ -119,6 +120,24 @@ async def export(session: AsyncSession, user: User) -> ExportOut:
         .order_by(SlotEvent.received_at, SlotEvent.id)
     ):
         events.setdefault(event.slot_id, []).append(event)
+    items: dict[uuid.UUID, list[ShoppingListItem]] = {}
+    for item in await session.scalars(
+        select(ShoppingListItem)
+        .join(MealPlan)
+        .where(MealPlan.user_id == user.id)
+        .options(selectinload(ShoppingListItem.food))
+        .order_by(ShoppingListItem.id)
+    ):
+        items.setdefault(item.plan_id, []).append(item)
+    checks: dict[uuid.UUID, list[ShoppingItemEvent]] = {}
+    for check in await session.scalars(
+        select(ShoppingItemEvent)
+        .join(ShoppingListItem)
+        .join(MealPlan)
+        .where(MealPlan.user_id == user.id)
+        .order_by(ShoppingItemEvent.received_at, ShoppingItemEvent.id)
+    ):
+        checks.setdefault(check.item_id, []).append(check)
     return ExportOut(
         exported_at=datetime.now(UTC),
         user=await me(session, user),
@@ -141,6 +160,14 @@ async def export(session: AsyncSession, user: User) -> ExportOut:
                     {**_columns(slot), "events": [_columns(e) for e in events.get(slot.id, [])]}
                     for slot in p.slots
                 ],
+                "shopping_items": [
+                    {
+                        **_columns(i),
+                        "food_slug": i.food.slug,
+                        "events": [_columns(e) for e in checks.get(i.id, [])],
+                    }
+                    for i in items.get(p.id, [])
+                ],
             }
             for p in plans
         ],
@@ -152,7 +179,7 @@ async def erase(session: AsyncSession, user_id: uuid.UUID) -> None:
 
     Recipes and variants point at users without a foreign key (they predate
     this table), so they are deleted here explicitly. Refresh tokens, consent
-    records and plans (with their slots and events) go with the user row
+    records and plans (with their slots, shopping items and events) go with the user row
     (ON DELETE CASCADE). The health profile would too; it is deleted explicitly
     so its hard deletion doesn't hang on the cascade.
     """

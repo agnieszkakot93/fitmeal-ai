@@ -379,6 +379,52 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/plans/{plan_id}/shopping-list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Shopping List
+         * @description The plan's shopping list by store section, with checkmarks.
+         *
+         *     Regenerated from the plan each time: foods still on it keep their id and
+         *     checkmark, foods no longer needed drop off.
+         */
+        get: operations["shopping_list_v1_plans__plan_id__shopping_list_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/shopping-items/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Check Item
+         * @description Check or uncheck an item.
+         *
+         *     Idempotent per ``event_id``: replaying an event (an offline outbox retrying)
+         *     returns the item unchanged. Reusing an event id for a different change is a 409.
+         */
+        patch: operations["check_item_v1_shopping_items__item_id__patch"];
+        trace?: never;
+    };
     "/v1/imports": {
         parameters: {
             query?: never;
@@ -462,6 +508,15 @@ export interface components {
          * @enum {string}
          */
         Action: "max_minutes" | "add_equipment" | "relax_intolerance" | "shorten_plan" | "lower_protein" | "change_kcal" | "add_recipes" | "retry";
+        /** AmountOut */
+        AmountOut: {
+            /**
+             * Value
+             * @description Whole except for kg and l, which have one decimal
+             */
+            value: number;
+            unit: components["schemas"]["DisplayUnit"];
+        };
         /** AnswerIn */
         AnswerIn: {
             /** Position */
@@ -679,6 +734,11 @@ export interface components {
             slots: components["schemas"]["SlotOut"][];
         };
         /**
+         * DisplayUnit
+         * @enum {string}
+         */
+        DisplayUnit: "g" | "kg" | "ml" | "l" | "piece" | "can";
+        /**
          * ExclusionCategory
          * @description The checklist the user sees in onboarding (PRD §7).
          *
@@ -736,6 +796,12 @@ export interface components {
                 [key: string]: unknown;
             }[];
         };
+        /**
+         * FoodCategory
+         * @description Also the shopping-list sections, in store-walk order.
+         * @enum {string}
+         */
+        FoodCategory: "vegetables" | "fruit" | "meat_fish" | "dairy_eggs" | "bakery" | "grains_pasta" | "legumes" | "nuts_seeds" | "oils_fats" | "condiments" | "spices" | "sweets_baking" | "beverages" | "other";
         /** FoodDetail */
         FoodDetail: {
             /** Slug */
@@ -1089,6 +1155,27 @@ export interface components {
             /** Total Grams */
             total_grams: number;
         };
+        /** PackageCountOut */
+        PackageCountOut: {
+            /** Size G */
+            size_g: number;
+            /** Count */
+            count: number;
+        };
+        /** PackagesOut */
+        PackagesOut: {
+            /**
+             * Buy
+             * @description Package sizes to buy, largest first
+             */
+            buy: components["schemas"]["PackageCountOut"][];
+            /** Count */
+            count: number;
+            /** Total G */
+            total_g: number;
+            /** Leftover G */
+            leftover_g: number;
+        };
         /** PersonalizeIn */
         PersonalizeIn: {
             target: components["schemas"]["MealTarget"];
@@ -1406,6 +1493,12 @@ export interface components {
              */
             offset: number;
         };
+        /** SectionOut */
+        SectionOut: {
+            category: components["schemas"]["FoodCategory"];
+            /** Items */
+            items: components["schemas"]["ShoppingItemOut"][];
+        };
         /** SessionOut */
         SessionOut: {
             /**
@@ -1429,6 +1522,65 @@ export interface components {
          * @enum {string}
          */
         Severity: "allergy" | "intolerance" | "dislike" | "prefer_not";
+        /** ShoppingItemCheckIn */
+        ShoppingItemCheckIn: {
+            /** Checked */
+            checked: boolean;
+            /**
+             * Event Id
+             * Format: uuid
+             * @description Client-generated, unique per change: a replay with the same id is a no-op
+             */
+            event_id: string;
+        };
+        /** ShoppingItemOut */
+        ShoppingItemOut: {
+            /**
+             * Id
+             * Format: uuid
+             * @description Stable across regenerations while the food stays listed
+             */
+            id: string;
+            /** Food Slug */
+            food_slug: string;
+            /**
+             * Name
+             * @description In the list's language
+             */
+            name: string;
+            category: components["schemas"]["FoodCategory"];
+            /**
+             * Grams
+             * @description The exact total over the plan
+             */
+            grams: number;
+            /** @description Rounded up for display */
+            amount: components["schemas"]["AmountOut"];
+            /** @description None when no package sizes are known */
+            packages: components["schemas"]["PackagesOut"] | null;
+            /** Checked */
+            checked: boolean;
+            /** Checked Updated At */
+            checked_updated_at: string | null;
+        };
+        /** ShoppingListOut */
+        ShoppingListOut: {
+            /**
+             * Plan Id
+             * Format: uuid
+             */
+            plan_id: string;
+            /**
+             * Lang
+             * @enum {string}
+             */
+            lang: "en" | "pl";
+            /**
+             * Sections
+             * @description Store sections in store-walk order
+             */
+            sections: components["schemas"]["SectionOut"][];
+        };
         /** SlotOut */
         SlotOut: {
             /**
@@ -1657,6 +1809,7 @@ export interface components {
     pathItems: never;
 }
 export type SchemaAction = components['schemas']['Action'];
+export type SchemaAmountOut = components['schemas']['AmountOut'];
 export type SchemaAnswerIn = components['schemas']['AnswerIn'];
 export type SchemaAppleLoginIn = components['schemas']['AppleLoginIn'];
 export type SchemaBlockedDetail = components['schemas']['BlockedDetail'];
@@ -1680,9 +1833,11 @@ export type SchemaConsentType = components['schemas']['ConsentType'];
 export type SchemaConsentsIn = components['schemas']['ConsentsIn'];
 export type SchemaCulinaryRole = components['schemas']['CulinaryRole'];
 export type SchemaDayOut = components['schemas']['DayOut'];
+export type SchemaDisplayUnit = components['schemas']['DisplayUnit'];
 export type SchemaExclusionCategory = components['schemas']['ExclusionCategory'];
 export type SchemaExclusionIn = components['schemas']['ExclusionIn'];
 export type SchemaExportOut = components['schemas']['ExportOut'];
+export type SchemaFoodCategory = components['schemas']['FoodCategory'];
 export type SchemaFoodDetail = components['schemas']['FoodDetail'];
 export type SchemaFoodRef = components['schemas']['FoodRef'];
 export type SchemaFoodSearchHit = components['schemas']['FoodSearchHit'];
@@ -1707,6 +1862,8 @@ export type SchemaMetric = components['schemas']['Metric'];
 export type SchemaMissOut = components['schemas']['MissOut'];
 export type SchemaNutrientsOut = components['schemas']['NutrientsOut'];
 export type SchemaNutritionOut = components['schemas']['NutritionOut'];
+export type SchemaPackageCountOut = components['schemas']['PackageCountOut'];
+export type SchemaPackagesOut = components['schemas']['PackagesOut'];
 export type SchemaPersonalizeIn = components['schemas']['PersonalizeIn'];
 export type SchemaPersonalizeOut = components['schemas']['PersonalizeOut'];
 export type SchemaPlanIn = components['schemas']['PlanIn'];
@@ -1721,8 +1878,12 @@ export type SchemaRecipeSummary = components['schemas']['RecipeSummary'];
 export type SchemaRefreshIn = components['schemas']['RefreshIn'];
 export type SchemaRule = components['schemas']['Rule'];
 export type SchemaSearchIn = components['schemas']['SearchIn'];
+export type SchemaSectionOut = components['schemas']['SectionOut'];
 export type SchemaSessionOut = components['schemas']['SessionOut'];
 export type SchemaSeverity = components['schemas']['Severity'];
+export type SchemaShoppingItemCheckIn = components['schemas']['ShoppingItemCheckIn'];
+export type SchemaShoppingItemOut = components['schemas']['ShoppingItemOut'];
+export type SchemaShoppingListOut = components['schemas']['ShoppingListOut'];
 export type SchemaSlotOut = components['schemas']['SlotOut'];
 export type SchemaSlotStatus = components['schemas']['SlotStatus'];
 export type SchemaSlotStatusIn = components['schemas']['SlotStatusIn'];
@@ -2440,6 +2601,82 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    shopping_list_v1_plans__plan_id__shopping_list_get: {
+        parameters: {
+            query?: {
+                /** @description Language of the item names; overrides Accept-Language */
+                lang?: ("en" | "pl") | null;
+            };
+            header?: {
+                "accept-language"?: string | null;
+            };
+            path: {
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    check_item_v1_shopping_items__item_id__patch: {
+        parameters: {
+            query?: {
+                /** @description Language of the item names; overrides Accept-Language */
+                lang?: ("en" | "pl") | null;
+            };
+            header?: {
+                "accept-language"?: string | null;
+            };
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShoppingItemCheckIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShoppingItemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
             };
         };
     };
