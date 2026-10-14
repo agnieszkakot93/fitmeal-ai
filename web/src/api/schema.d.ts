@@ -425,6 +425,63 @@ export interface paths {
         patch: operations["check_item_v1_shopping_items__item_id__patch"];
         trace?: never;
     };
+    "/v1/imports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create Import
+         * @description Queue an import. Poll `GET /v1/imports/{id}` until it is `ready` or `failed`.
+         */
+        post: operations["create_import_v1_imports_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/imports/{import_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Import */
+        get: operations["get_import_v1_imports__import_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/imports/{import_id}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirm Import
+         * @description Save the preview with the answers as the user's private recipe.
+         */
+        post: operations["confirm_import_v1_imports__import_id__confirm_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/healthz": {
         parameters: {
             query?: never;
@@ -459,6 +516,24 @@ export interface components {
              */
             value: number;
             unit: components["schemas"]["DisplayUnit"];
+        };
+        /** AnswerIn */
+        AnswerIn: {
+            /** Position */
+            position: number;
+            /**
+             * Skip
+             * @description Leave this line out of the recipe
+             * @default false
+             */
+            skip: boolean;
+            /** Food Slug */
+            food_slug?: string | null;
+            /**
+             * Grams
+             * @description For the whole recipe; omit to use the line's own amount
+             */
+            grams?: number | null;
         };
         /** AppleLoginIn */
         AppleLoginIn: {
@@ -530,6 +605,17 @@ export interface components {
             /** Total Grams */
             total_grams: number;
         };
+        /** Candidate */
+        Candidate: {
+            /** Slug */
+            slug: string;
+            /** Name En */
+            name_en: string;
+            /** Name Pl */
+            name_pl: string;
+            /** Score */
+            score: number;
+        };
         /** ChangeOut */
         ChangeOut: {
             /** Key */
@@ -546,6 +632,51 @@ export interface components {
          * @enum {string}
          */
         ChangeReason: "raise_protein" | "cut_calories" | "add_calories" | "lower_fat" | "adjust_carbs" | "more_volume" | "removed_optional" | "rounding" | "excluded";
+        /** Clarification */
+        Clarification: {
+            kind: components["schemas"]["ClarificationKind"];
+            /**
+             * Position
+             * @description The ingredient line, for `ingredient`
+             */
+            position: number | null;
+            /**
+             * Question
+             * @description Why we ask, e.g. `which ingredient?`, `how much?`
+             */
+            question: string;
+            /**
+             * Candidates
+             * @default []
+             */
+            candidates: components["schemas"]["Candidate"][];
+        };
+        /**
+         * ClarificationKind
+         * @enum {string}
+         */
+        ClarificationKind: "ingredient" | "servings" | "title";
+        /** ConfirmIn */
+        ConfirmIn: {
+            /** Title */
+            title?: string | null;
+            /** Servings */
+            servings?: number | null;
+            /**
+             * Answers
+             * @default []
+             */
+            answers: components["schemas"]["AnswerIn"][];
+        };
+        /** ConfirmOut */
+        ConfirmOut: {
+            /**
+             * Import Id
+             * Format: uuid
+             */
+            import_id: string;
+            recipe: components["schemas"]["RecipeSummary"];
+        };
         /** ConflictOut */
         ConflictOut: {
             /** Key */
@@ -805,6 +936,67 @@ export interface components {
              */
             updated_at: string;
         };
+        /** ImportIn */
+        ImportIn: {
+            type: components["schemas"]["ImportType"];
+            origin: components["schemas"]["ImportOrigin"];
+            /**
+             * Url
+             * @description The page to read (`link`), or a shared post's URL kept as the source reference only and never fetched (`text`)
+             */
+            url?: string | null;
+            /**
+             * Text
+             * @description Recipe text (`text` only), at most 204800 bytes as UTF-8
+             */
+            text?: string | null;
+        };
+        /**
+         * ImportOrigin
+         * @enum {string}
+         */
+        ImportOrigin: "paste" | "share" | "pdf";
+        /** ImportOut */
+        ImportOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            type: components["schemas"]["ImportType"];
+            origin: components["schemas"]["ImportOrigin"];
+            status: components["schemas"]["ImportStatus"];
+            /**
+             * Error
+             * @description Why it failed: `no_recipe`, `tdm_opt_out`, `robots_disallowed` and the fetch errors mean the app offers to paste the recipe text instead
+             */
+            error: string | null;
+            /** Cached */
+            cached: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            preview: components["schemas"]["PreviewOut"] | null;
+            /** Recipe Id */
+            recipe_id: string | null;
+        };
+        /**
+         * ImportStatus
+         * @enum {string}
+         */
+        ImportStatus: "queued" | "running" | "ready" | "failed" | "confirmed";
+        /**
+         * ImportType
+         * @enum {string}
+         */
+        ImportType: "link" | "text";
         /**
          * InfeasibleOut
          * @description No plan fits the hard constraints: what blocked it and what to change (PRD §8.5).
@@ -1058,6 +1250,57 @@ export interface components {
             relaxed: components["schemas"]["Rule"][];
             /** Plan Days */
             plan_days: components["schemas"]["DayOut"][];
+        };
+        /** PreviewLine */
+        PreviewLine: {
+            /** Position */
+            position: number;
+            /** Raw */
+            raw: string;
+            /** Amount */
+            amount: number | null;
+            /** Unit */
+            unit: string | null;
+            /** Name */
+            name: string;
+            /** Note */
+            note: string | null;
+            /** Optional */
+            optional: boolean;
+            /** Weight G */
+            weight_g: number | null;
+            /** @description The matched food, if any */
+            food: components["schemas"]["Candidate"] | null;
+            /** Grams */
+            grams: number | null;
+            /** Confidence */
+            confidence: number;
+            /** Needs Clarification */
+            needs_clarification: boolean;
+            /** Candidates */
+            candidates: components["schemas"]["Candidate"][];
+        };
+        /** PreviewOut */
+        PreviewOut: {
+            /** Title */
+            title: string | null;
+            /** Servings */
+            servings: number | null;
+            /** Language */
+            language: string;
+            /** Source Url */
+            source_url: string | null;
+            /** Instructions */
+            instructions: string[];
+            /** Ingredients */
+            ingredients: components["schemas"]["PreviewLine"][];
+            /** Clarifications */
+            clarifications: components["schemas"]["Clarification"][];
+            /**
+             * Confidence
+             * @description The lowest line confidence
+             */
+            confidence: number;
         };
         /**
          * ProfileIn
@@ -1530,6 +1773,15 @@ export interface components {
          * @enum {string}
          */
         TraceStatus: "unknown" | "none_declared" | "declared";
+        /** UnansweredOut */
+        UnansweredOut: {
+            /** Detail */
+            detail: string;
+            /** Positions */
+            positions: number[];
+            /** Missing */
+            missing: components["schemas"]["ClarificationKind"][];
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -1558,6 +1810,7 @@ export interface components {
 }
 export type SchemaAction = components['schemas']['Action'];
 export type SchemaAmountOut = components['schemas']['AmountOut'];
+export type SchemaAnswerIn = components['schemas']['AnswerIn'];
 export type SchemaAppleLoginIn = components['schemas']['AppleLoginIn'];
 export type SchemaBlockedDetail = components['schemas']['BlockedDetail'];
 export type SchemaBlockedOut = components['schemas']['BlockedOut'];
@@ -1566,8 +1819,13 @@ export type SchemaBlockerOut = components['schemas']['BlockerOut'];
 export type SchemaBodyDataIn = components['schemas']['BodyDataIn'];
 export type SchemaCalculateIn = components['schemas']['CalculateIn'];
 export type SchemaCalculateOut = components['schemas']['CalculateOut'];
+export type SchemaCandidate = components['schemas']['Candidate'];
 export type SchemaChangeOut = components['schemas']['ChangeOut'];
 export type SchemaChangeReason = components['schemas']['ChangeReason'];
+export type SchemaClarification = components['schemas']['Clarification'];
+export type SchemaClarificationKind = components['schemas']['ClarificationKind'];
+export type SchemaConfirmIn = components['schemas']['ConfirmIn'];
+export type SchemaConfirmOut = components['schemas']['ConfirmOut'];
 export type SchemaConflictOut = components['schemas']['ConflictOut'];
 export type SchemaConsentIn = components['schemas']['ConsentIn'];
 export type SchemaConsentOut = components['schemas']['ConsentOut'];
@@ -1586,6 +1844,11 @@ export type SchemaFoodSearchHit = components['schemas']['FoodSearchHit'];
 export type SchemaHttpValidationError = components['schemas']['HTTPValidationError'];
 export type SchemaHealthProfileIn = components['schemas']['HealthProfileIn'];
 export type SchemaHealthProfileOut = components['schemas']['HealthProfileOut'];
+export type SchemaImportIn = components['schemas']['ImportIn'];
+export type SchemaImportOrigin = components['schemas']['ImportOrigin'];
+export type SchemaImportOut = components['schemas']['ImportOut'];
+export type SchemaImportStatus = components['schemas']['ImportStatus'];
+export type SchemaImportType = components['schemas']['ImportType'];
 export type SchemaInfeasibleOut = components['schemas']['InfeasibleOut'];
 export type SchemaIngredientIn = components['schemas']['IngredientIn'];
 export type SchemaIngredientOut = components['schemas']['IngredientOut'];
@@ -1605,6 +1868,8 @@ export type SchemaPersonalizeIn = components['schemas']['PersonalizeIn'];
 export type SchemaPersonalizeOut = components['schemas']['PersonalizeOut'];
 export type SchemaPlanIn = components['schemas']['PlanIn'];
 export type SchemaPlanOut = components['schemas']['PlanOut'];
+export type SchemaPreviewLine = components['schemas']['PreviewLine'];
+export type SchemaPreviewOut = components['schemas']['PreviewOut'];
 export type SchemaProfileIn = components['schemas']['ProfileIn'];
 export type SchemaProposedIngredient = components['schemas']['ProposedIngredient'];
 export type SchemaRecipeDetail = components['schemas']['RecipeDetail'];
@@ -1631,6 +1896,7 @@ export type SchemaSwapOut = components['schemas']['SwapOut'];
 export type SchemaTargetsOut = components['schemas']['TargetsOut'];
 export type SchemaTokenPair = components['schemas']['TokenPair'];
 export type SchemaTraceStatus = components['schemas']['TraceStatus'];
+export type SchemaUnansweredOut = components['schemas']['UnansweredOut'];
 export type SchemaValidationError = components['schemas']['ValidationError'];
 export type SchemaVerdict = components['schemas']['Verdict'];
 export type $defs = Record<string, never>;
@@ -2410,6 +2676,145 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_import_v1_imports_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImportIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportOut"];
+                };
+            };
+            /** @description Body over the size cap */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Invalid body, or `detail` `blocked_url` (a link we never fetch) or `platform_link` (a social post: paste its caption as text instead) */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Daily import quota reached */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The import queue is unavailable; nothing was counted */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_import_v1_imports__import_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                import_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportOut"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    confirm_import_v1_imports__import_id__confirm_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                import_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConfirmIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConfirmOut"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The import is not ready, or already confirmed */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Clarifications left unanswered */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnansweredOut"];
                 };
             };
         };

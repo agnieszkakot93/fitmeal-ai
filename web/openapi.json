@@ -1216,6 +1216,171 @@
         }
       }
     },
+    "/v1/imports": {
+      "post": {
+        "tags": [
+          "imports"
+        ],
+        "summary": "Create Import",
+        "description": "Queue an import. Poll `GET /v1/imports/{id}` until it is `ready` or `failed`.",
+        "operationId": "create_import_v1_imports_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportOut"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body over the size cap"
+          },
+          "422": {
+            "description": "Invalid body, or `detail` `blocked_url` (a link we never fetch) or `platform_link` (a social post: paste its caption as text instead)"
+          },
+          "429": {
+            "description": "Daily import quota reached"
+          },
+          "503": {
+            "description": "The import queue is unavailable; nothing was counted"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/imports/{import_id}": {
+      "get": {
+        "tags": [
+          "imports"
+        ],
+        "summary": "Get Import",
+        "operationId": "get_import_v1_imports__import_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "import_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Import Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/imports/{import_id}/confirm": {
+      "post": {
+        "tags": [
+          "imports"
+        ],
+        "summary": "Confirm Import",
+        "description": "Save the preview with the answers as the user's private recipe.",
+        "operationId": "confirm_import_v1_imports__import_id__confirm_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "import_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Import Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfirmOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "409": {
+            "description": "The import is not ready, or already confirmed"
+          },
+          "422": {
+            "description": "Clarifications left unanswered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnansweredOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/healthz": {
       "get": {
         "tags": [
@@ -1275,6 +1440,54 @@
           "unit"
         ],
         "title": "AmountOut"
+      },
+      "AnswerIn": {
+        "properties": {
+          "position": {
+            "type": "integer",
+            "exclusiveMaximum": 200.0,
+            "minimum": 0.0,
+            "title": "Position"
+          },
+          "skip": {
+            "type": "boolean",
+            "title": "Skip",
+            "description": "Leave this line out of the recipe",
+            "default": false
+          },
+          "food_slug": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Food Slug"
+          },
+          "grams": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 10000.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grams",
+            "description": "For the whole recipe; omit to use the line's own amount"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "position"
+        ],
+        "title": "AnswerIn"
       },
       "AppleLoginIn": {
         "properties": {
@@ -1514,6 +1727,34 @@
         ],
         "title": "CalculateOut"
       },
+      "Candidate": {
+        "properties": {
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "name_en": {
+            "type": "string",
+            "title": "Name En"
+          },
+          "name_pl": {
+            "type": "string",
+            "title": "Name Pl"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          }
+        },
+        "type": "object",
+        "required": [
+          "slug",
+          "name_en",
+          "name_pl",
+          "score"
+        ],
+        "title": "Candidate"
+      },
       "ChangeOut": {
         "properties": {
           "key": {
@@ -1556,6 +1797,114 @@
         ],
         "title": "ChangeReason",
         "description": "Why an amount changed: the engine's reasons plus removal for an exclusion."
+      },
+      "Clarification": {
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/ClarificationKind"
+          },
+          "position": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Position",
+            "description": "The ingredient line, for `ingredient`"
+          },
+          "question": {
+            "type": "string",
+            "title": "Question",
+            "description": "Why we ask, e.g. `which ingredient?`, `how much?`"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/Candidate"
+            },
+            "type": "array",
+            "title": "Candidates",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "position",
+          "question"
+        ],
+        "title": "Clarification"
+      },
+      "ClarificationKind": {
+        "type": "string",
+        "enum": [
+          "ingredient",
+          "servings",
+          "title"
+        ],
+        "title": "ClarificationKind"
+      },
+      "ConfirmIn": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 300,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "servings": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Servings"
+          },
+          "answers": {
+            "items": {
+              "$ref": "#/components/schemas/AnswerIn"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Answers",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "ConfirmIn"
+      },
+      "ConfirmOut": {
+        "properties": {
+          "import_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Import Id"
+          },
+          "recipe": {
+            "$ref": "#/components/schemas/RecipeSummary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "import_id",
+          "recipe"
+        ],
+        "title": "ConfirmOut"
       },
       "ConflictOut": {
         "properties": {
@@ -2245,6 +2594,157 @@
         ],
         "title": "HealthProfileOut"
       },
+      "ImportIn": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ImportType"
+          },
+          "origin": {
+            "$ref": "#/components/schemas/ImportOrigin"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url",
+            "description": "The page to read (`link`), or a shared post's URL kept as the source reference only and never fetched (`text`)"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 204800
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text",
+            "description": "Recipe text (`text` only), at most 204800 bytes as UTF-8"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "type",
+          "origin"
+        ],
+        "title": "ImportIn"
+      },
+      "ImportOrigin": {
+        "type": "string",
+        "enum": [
+          "paste",
+          "share",
+          "pdf"
+        ],
+        "title": "ImportOrigin"
+      },
+      "ImportOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ImportType"
+          },
+          "origin": {
+            "$ref": "#/components/schemas/ImportOrigin"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ImportStatus"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error",
+            "description": "Why it failed: `no_recipe`, `tdm_opt_out`, `robots_disallowed` and the fetch errors mean the app offers to paste the recipe text instead"
+          },
+          "cached": {
+            "type": "boolean",
+            "title": "Cached"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "preview": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PreviewOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recipe_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipe Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "origin",
+          "status",
+          "error",
+          "cached",
+          "created_at",
+          "expires_at",
+          "preview",
+          "recipe_id"
+        ],
+        "title": "ImportOut"
+      },
+      "ImportStatus": {
+        "type": "string",
+        "enum": [
+          "queued",
+          "running",
+          "ready",
+          "failed",
+          "confirmed"
+        ],
+        "title": "ImportStatus"
+      },
+      "ImportType": {
+        "type": "string",
+        "enum": [
+          "link",
+          "text"
+        ],
+        "title": "ImportType"
+      },
       "InfeasibleOut": {
         "properties": {
           "status": {
@@ -2887,6 +3387,207 @@
           "plan_days"
         ],
         "title": "PlanOut"
+      },
+      "PreviewLine": {
+        "properties": {
+          "position": {
+            "type": "integer",
+            "title": "Position"
+          },
+          "raw": {
+            "type": "string",
+            "title": "Raw"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "optional": {
+            "type": "boolean",
+            "title": "Optional"
+          },
+          "weight_g": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight G"
+          },
+          "food": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Candidate"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The matched food, if any"
+          },
+          "grams": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grams"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence"
+          },
+          "needs_clarification": {
+            "type": "boolean",
+            "title": "Needs Clarification"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/Candidate"
+            },
+            "type": "array",
+            "title": "Candidates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "position",
+          "raw",
+          "amount",
+          "unit",
+          "name",
+          "note",
+          "optional",
+          "weight_g",
+          "food",
+          "grams",
+          "confidence",
+          "needs_clarification",
+          "candidates"
+        ],
+        "title": "PreviewLine"
+      },
+      "PreviewOut": {
+        "properties": {
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "servings": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Servings"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "instructions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Instructions"
+          },
+          "ingredients": {
+            "items": {
+              "$ref": "#/components/schemas/PreviewLine"
+            },
+            "type": "array",
+            "title": "Ingredients"
+          },
+          "clarifications": {
+            "items": {
+              "$ref": "#/components/schemas/Clarification"
+            },
+            "type": "array",
+            "title": "Clarifications"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "description": "The lowest line confidence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "servings",
+          "language",
+          "source_url",
+          "instructions",
+          "ingredients",
+          "clarifications",
+          "confidence"
+        ],
+        "title": "PreviewOut"
       },
       "ProfileIn": {
         "properties": {
@@ -4109,6 +4810,35 @@
         ],
         "title": "TraceStatus",
         "description": "What is known about a food's \"may contain\" (trace) allergens."
+      },
+      "UnansweredOut": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          },
+          "positions": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Positions"
+          },
+          "missing": {
+            "items": {
+              "$ref": "#/components/schemas/ClarificationKind"
+            },
+            "type": "array",
+            "title": "Missing"
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail",
+          "positions",
+          "missing"
+        ],
+        "title": "UnansweredOut"
       },
       "ValidationError": {
         "properties": {

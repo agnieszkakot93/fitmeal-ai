@@ -27,7 +27,10 @@ class Base(DeclarativeBase):
 
 @lru_cache
 def get_engine() -> AsyncEngine:
-    return create_async_engine(get_settings().database_url, pool_pre_ping=True)
+    # errors never quote bound parameters: they can be imported text or health data
+    return create_async_engine(
+        get_settings().database_url, pool_pre_ping=True, hide_parameters=True
+    )
 
 
 @lru_cache
