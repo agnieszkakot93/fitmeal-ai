@@ -20,8 +20,8 @@ x-app: &app
   cap_drop: [ALL]
   environment:
     DONUT_ENV: ${DONUT_ENV:-prod}
-    DONUT_DATABASE_URL: ${DONUT_DATABASE_URL:?set DONUT_DATABASE_URL} POSTGRES_USER}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:?set POSTGRES_DB}
-    DONUT_REDIS_URL: ${DONUT_REDIS_URL:?set DONUT_REDIS_URL} REDIS_PASSWORD}@redis:6379/0
+    DONUT_DATABASE_URL: ${DONUT_DATABASE_URL:?set DONUT_DATABASE_URL}
+    DONUT_REDIS_URL: ${DONUT_REDIS_URL:?set DONUT_REDIS_URL}
     DONUT_JWT_SECRET: ${DONUT_JWT_SECRET:?set DONUT_JWT_SECRET}
     DONUT_IMPORT_BLOCKED_DOMAINS: ${DONUT_IMPORT_BLOCKED_DOMAINS:-[]}
     DONUT_APPLE_CLIENT_IDS: ${DONUT_APPLE_CLIENT_IDS:-[]}
@@ -66,19 +66,24 @@ services:
   api:
     <<: *app
     # --no-access-log: Caddy writes the (query-stripped) access log; health data
-    # must never reach logs (D8).
+    # must never reach logs (D8, D13).
     command:
       - sh
       - -c
       - exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers "$${API_WORKERS:-2}" --proxy-headers --forwarded-allow-ips '*' --no-access-log --no-server-header
     environment:
       DONUT_ENV: ${DONUT_ENV:-prod}
-      DONUT_DATABASE_URL: ${DONUT_DATABASE_URL:?set DONUT_DATABASE_URL} POSTGRES_USER}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:?set POSTGRES_DB}
-      DONUT_REDIS_URL: ${DONUT_REDIS_URL:?set DONUT_REDIS_URL} REDIS_PASSWORD}@redis:6379/0
+      DONUT_DATABASE_URL: ${DONUT_DATABASE_URL:?set DONUT_DATABASE_URL}
+      DONUT_REDIS_URL: ${DONUT_REDIS_URL:?set DONUT_REDIS_URL}
       DONUT_JWT_SECRET: ${DONUT_JWT_SECRET:?set DONUT_JWT_SECRET}
       DONUT_IMPORT_BLOCKED_DOMAINS: ${DONUT_IMPORT_BLOCKED_DOMAINS:-[]}
       DONUT_APPLE_CLIENT_IDS: ${DONUT_APPLE_CLIENT_IDS:-[]}
       API_WORKERS: ${API_WORKERS:-2}
+      # the health profile key itself is a secret file below, not an env var (D13)
+      DONUT_PROFILE_KEY_ID: ${DONUT_PROFILE_KEY_ID:?set DONUT_PROFILE_KEY_ID}
+    # Only the api reads health profiles: the key is mounted here and nowhere else,
+    # kept apart from .env.prod and the DB credentials (docs/ops/PROFILE_KEY.md).
+    secrets: [donut_profile_key, donut_profile_old_keys]
     healthcheck:
       test: ["CMD", "python", "-c", "import sys, urllib.request; sys.exit(urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=3).status != 200)"]
       interval: 15s
@@ -180,6 +185,14 @@ services:
     deploy:
       resources:
         limits: {cpus: "0.5", memory: 512M}
+
+secrets:
+  # base64 of 32 random bytes; files owned by uid 1000, mode 400 (docs/ops/PROFILE_KEY.md)
+  donut_profile_key:
+    file: ./secrets/donut_profile_key
+  # retired keys as JSON, {"<id>": "<base64 key>"}; `{}` outside a rotation
+  donut_profile_old_keys:
+    file: ./secrets/donut_profile_old_keys
 
 networks:
   # Not `internal: true`: the api needs egress for link import and Apple JWKS, and

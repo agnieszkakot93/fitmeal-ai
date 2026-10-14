@@ -8,6 +8,7 @@ import logging
 import os
 import uuid
 from collections.abc import Iterator
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -16,7 +17,7 @@ from sqlalchemy import func, select, text
 
 from app.core.db import get_sessionmaker
 from app.plans.models import MealPlan
-from app.profile import repository
+from app.profile import cli, crypto, repository
 from app.profile.crypto import (
     DecryptionFailed,
     KeyUnavailable,
@@ -374,11 +375,25 @@ def test_cipher_rejects_tampering() -> None:
 
 
 async def test_key_rotation(
-    client: AsyncClient, apple: FakeApple, monkeypatch: pytest.MonkeyPatch, profile_key: str
+    client: AsyncClient,
+    apple: FakeApple,
+    monkeypatch: pytest.MonkeyPatch,
+    profile_key: str,
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     pair = await login(client, apple)
-    await _consent(client, pair, HEALTH)
+    other = await login(client, apple, "someone-else")
+    for p in (pair, other):
+        await _consent(client, p, HEALTH)
     saved = (await _put(client, pair)).json()
+    await _put(client, other)
+    # a row under a key nobody has any more: reported, and it doesn't stall the rest
+    async with get_sessionmaker()() as session:
+        await session.execute(
+            text("UPDATE health_profiles SET key_id = 'lost' WHERE user_id = :u"),
+            {"u": await _user_id(client, other)},
+        )
+        await session.commit()
 
     # a new current key, the old one kept for reading
     monkeypatch.setenv("DONUT_PROFILE_KEY", _key())
@@ -387,17 +402,37 @@ async def test_key_rotation(
     get_cipher.cache_clear()
     assert (await client.get("/v1/me/profile", headers=bearer(pair))).json() == saved
 
+    assert await cli.rotate(batch=1) == 1  # the lost row is left
+    out = capsys.readouterr()
+    assert "re-encrypted 1 profile(s)" in out.out
+    assert str(await _user_id(client, other)) in out.err
+    for value in SECRETS:
+        assert value not in out.out + out.err
     async with get_sessionmaker()() as session:
-        assert await repository.reencrypt(session, get_cipher()) == 1
-        await session.commit()
-        assert await repository.reencrypt(session, get_cipher()) == 0
-        row = (await session.scalars(select(HealthProfile))).one()
-        assert row.key_id == "k2"
+        keys = sorted((await session.scalars(select(HealthProfile.key_id))).all())
+    assert keys == ["k2", "lost"]
 
     # the old key is no longer needed; content, version and update time are unchanged
     monkeypatch.delenv("DONUT_PROFILE_OLD_KEYS")
     get_cipher.cache_clear()
     assert (await client.get("/v1/me/profile", headers=bearer(pair))).json() == saved
+
+
+async def test_rotation_without_a_key_does_nothing(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("DONUT_PROFILE_KEY")
+    get_cipher.cache_clear()
+    assert await cli.rotate() == 1
+
+
+def test_key_from_a_secret_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Docker secrets: the key can live in a file instead of the environment."""
+    monkeypatch.delenv("DONUT_PROFILE_KEY")
+    (tmp_path / "donut_profile_key").write_text(_key() + "\n")
+    settings = ProfileKeySettings(_secrets_dir=tmp_path)
+    assert cipher_from(settings).key_id == "k1"
+    monkeypatch.setattr(crypto, "SECRETS_DIR", tmp_path)
+    get_cipher.cache_clear()
+    assert get_cipher().key_id == "k1"
 
 
 # ── logs ────────────────────────────────────────────────────────────────────
@@ -524,6 +559,33 @@ async def test_plan_without_consent_ignores_a_leftover_row(
         await session.commit()
     res = await _plan(api, pair, BODY)
     assert res.json()["targets"]["daily_kcal"] == PROFILE["daily_kcal"]
+
+
+async def test_profile_saved_under_older_rules(api: AsyncClient, apple: FakeApple) -> None:
+    """A rule tightened after a save: the profile stays readable, but isn't planned from."""
+    pair = await login(api, apple)
+    await _consent(api, pair, HEALTH)
+    user_id = await _user_id(api, pair)
+    # what an older, looser schema would have accepted
+    old = HealthProfileIn.model_construct(
+        **{**HealthProfileIn.model_validate(STORED).__dict__, "daily_kcal": 1000.0}
+    )
+    async with get_sessionmaker()() as session:
+        await repository.lock_user(session, user_id)
+        await repository.put(session, get_cipher(), user_id, old)
+        await session.commit()
+
+    got = await api.get("/v1/me/profile", headers=bearer(pair))
+    assert got.status_code == 200 and got.json()["daily_kcal"] == 1000
+    export = await api.get("/v1/me/export", headers=bearer(pair))
+    assert export.json()["health_profile"]["daily_kcal"] == 1000
+    # the stored profile (with its allergies) still wins over a snapshot
+    res = await _plan(api, pair, BODY)
+    assert res.status_code == 422
+    assert res.json()["detail"][0]["type"] == "outdated"
+    # saving it again under the current rules fixes it
+    assert (await _put(api, pair, {**STORED, "exclusions": []})).status_code == 200
+    assert (await _plan(api, pair, BODY)).status_code == 201
 
 
 async def _count_plans() -> int:

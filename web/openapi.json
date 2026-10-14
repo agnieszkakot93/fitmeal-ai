@@ -1258,6 +1258,85 @@
         "title": "BodyDataIn",
         "description": "Optional; used only to suggest targets. Every field may be left out."
       },
+      "BodyDataOut": {
+        "properties": {
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "sex": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "female",
+                  "male"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sex"
+          },
+          "weight_kg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight Kg"
+          },
+          "height_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height Cm"
+          },
+          "activity_level": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "sedentary",
+                  "light",
+                  "moderate",
+                  "active",
+                  "very_active"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Activity Level"
+          }
+        },
+        "type": "object",
+        "required": [
+          "age",
+          "sex",
+          "weight_kg",
+          "height_cm",
+          "activity_level"
+        ],
+        "title": "BodyDataOut"
+      },
       "CalculateIn": {
         "properties": {
           "servings": {
@@ -1569,6 +1648,39 @@
           "severity"
         ],
         "title": "ExclusionIn"
+      },
+      "ExclusionOut": {
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/ExclusionCategory"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/Severity"
+          },
+          "term": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Term"
+          },
+          "relaxed": {
+            "type": "boolean",
+            "title": "Relaxed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category",
+          "severity",
+          "term",
+          "relaxed"
+        ],
+        "title": "ExclusionOut"
       },
       "ExportOut": {
         "properties": {
@@ -1927,61 +2039,48 @@
         "properties": {
           "daily_kcal": {
             "type": "number",
-            "maximum": 6000.0,
-            "minimum": 1200.0,
             "title": "Daily Kcal"
           },
           "protein_min_g": {
             "type": "number",
-            "maximum": 400.0,
-            "minimum": 0.0,
             "title": "Protein Min G"
           },
           "meals": {
             "items": {
-              "$ref": "#/components/schemas/MealIn"
+              "$ref": "#/components/schemas/MealOut"
             },
             "type": "array",
-            "maxItems": 5,
-            "minItems": 2,
             "title": "Meals"
           },
           "max_minutes": {
             "anyOf": [
               {
-                "type": "integer",
-                "maximum": 1440.0,
-                "minimum": 1.0
+                "type": "integer"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Max Minutes",
-            "description": "None: no limit"
+            "title": "Max Minutes"
           },
           "equipment": {
             "items": {
               "type": "string"
             },
             "type": "array",
-            "maxItems": 20,
-            "title": "Equipment",
-            "default": []
+            "title": "Equipment"
           },
           "exclusions": {
             "items": {
-              "$ref": "#/components/schemas/ExclusionIn"
+              "$ref": "#/components/schemas/ExclusionOut"
             },
             "type": "array",
-            "maxItems": 40,
-            "title": "Exclusions",
-            "default": []
+            "title": "Exclusions"
           },
           "body": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/BodyDataIn"
+                "$ref": "#/components/schemas/BodyDataOut"
               },
               {
                 "type": "null"
@@ -1999,12 +2098,15 @@
             "title": "Updated At"
           }
         },
-        "additionalProperties": false,
         "type": "object",
         "required": [
           "daily_kcal",
           "protein_min_g",
           "meals",
+          "max_minutes",
+          "equipment",
+          "exclusions",
+          "body",
           "version",
           "updated_at"
         ],
@@ -2278,6 +2380,28 @@
           "kcal_share"
         ],
         "title": "MealIn"
+      },
+      "MealOut": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "meal_type": {
+            "$ref": "#/components/schemas/MealType"
+          },
+          "kcal_share": {
+            "type": "number",
+            "title": "Kcal Share"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "meal_type",
+          "kcal_share"
+        ],
+        "title": "MealOut"
       },
       "MealTarget": {
         "properties": {

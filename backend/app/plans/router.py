@@ -52,6 +52,13 @@ _NO_PROFILE = [
         "msg": "no stored profile with health-data consent: send a profile snapshot",
     }
 ]
+_OUTDATED_PROFILE = [
+    {
+        "type": "outdated",
+        "loc": ["profile"],
+        "msg": "the stored profile no longer passes validation: save it again",
+    }
+]
 _INFEASIBLE: dict[int | str, dict[str, Any]] = {
     status.HTTP_422_UNPROCESSABLE_CONTENT: {
         "model": InfeasibleOut | InvalidBodyOut,
@@ -138,7 +145,11 @@ async def create_plan(body: PlanIn, user: CurrentUser, session: Session) -> Plan
     active, else from the request's profile snapshot.
     """
     user_id = user.id  # the rollback below expires every loaded row
-    source = await profile_service.for_planning(session, user_id) or body.profile
+    try:
+        stored = await profile_service.for_planning(session, user_id)
+    except profile_service.ProfileOutdated:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, _OUTDATED_PROFILE) from None
+    source = stored or body.profile
     if source is None:
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, _NO_PROFILE)
     profile = body.to_profile(source)

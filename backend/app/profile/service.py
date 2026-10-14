@@ -9,12 +9,13 @@ import logging
 import uuid
 
 from fastapi import HTTPException, status
+from pydantic import ValidationError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.plans.schemas import ProfileIn
 from app.profile import repository
 from app.profile.crypto import DecryptionFailed, KeyUnavailable, ProfileCipher, get_cipher
-from app.profile.schemas import HealthProfileOut
+from app.profile.schemas import HealthProfileIn, HealthProfileOut
 
 log = logging.getLogger(__name__)
 
@@ -47,8 +48,25 @@ async def load(session: AsyncSession, user_id: uuid.UUID) -> HealthProfileOut | 
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, UNAVAILABLE) from None
 
 
+class ProfileOutdated(Exception):
+    """The stored profile no longer passes the current rules; the user has to save it again."""
+
+
 async def for_planning(session: AsyncSession, user_id: uuid.UUID) -> ProfileIn | None:
-    """The stored profile if there is one and health-data consent is active, else ``None``."""
+    """The stored profile if there is one and health-data consent is active, else ``None``.
+
+    Raises :class:`ProfileOutdated` rather than plan from a profile the current
+    rules reject. The stored one still wins over a request snapshot then: it
+    holds the user's allergies.
+    """
     if not await repository.has_health_consent(session, user_id):
         return None
-    return await load(session, user_id)
+    stored = await load(session, user_id)
+    if stored is None:
+        return None
+    try:
+        return HealthProfileIn.model_validate(
+            stored.model_dump(mode="json", exclude={"version", "updated_at"})
+        )
+    except ValidationError:
+        raise ProfileOutdated from None

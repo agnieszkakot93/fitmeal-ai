@@ -6,13 +6,15 @@ Nothing here logs: profile values, decrypted or not, never reach a log line.
 from __future__ import annotations
 
 import uuid
+from collections.abc import Collection
+from dataclasses import dataclass
 from typing import Any
 
 from sqlalchemy import delete, func, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.profile.crypto import ProfileCipher
+from app.profile.crypto import DecryptionFailed, KeyUnavailable, ProfileCipher
 from app.profile.models import ENCRYPTED, HealthProfile
 from app.profile.schemas import HealthProfileIn, HealthProfileOut
 from app.users.models import ConsentRecord, ConsentType, User
@@ -111,26 +113,46 @@ async def delete_profile(session: AsyncSession, user_id: uuid.UUID) -> None:
     await session.execute(delete(HealthProfile).where(HealthProfile.user_id == user_id))
 
 
-async def reencrypt(session: AsyncSession, cipher: ProfileCipher, batch: int = 500) -> int:
-    """Re-encrypt rows still under a retired key with the current one; returns how many.
+@dataclass
+class Rotated:
+    done: int
+    # rows that didn't decrypt (unknown key id, wrong key, tampered); left as they are
+    failed: list[uuid.UUID]
 
-    The rows are locked one batch at a time, so the caller commits between calls
-    until it returns 0.
+
+async def reencrypt(
+    session: AsyncSession,
+    cipher: ProfileCipher,
+    batch: int = 500,
+    skip: Collection[uuid.UUID] = (),
+) -> Rotated:
+    """Re-encrypt one batch of rows still under a retired key with the current one.
+
+    Rows are locked with ``SKIP LOCKED``, so a save in progress is left for the
+    next batch. The caller commits between batches and passes the rows that
+    failed so far in ``skip``, so one bad row can't stall the rotation.
     """
-    rows = (
-        await session.scalars(
-            select(HealthProfile)
-            .where(HealthProfile.key_id != cipher.key_id)
-            .limit(batch)
-            .with_for_update(skip_locked=True)
-        )
-    ).all()
+    stmt = select(HealthProfile).where(HealthProfile.key_id != cipher.key_id)
+    if skip:
+        stmt = stmt.where(HealthProfile.user_id.not_in(skip))
+    rows = (await session.scalars(stmt.limit(batch).with_for_update(skip_locked=True))).all()
+    result = Rotated(done=0, failed=[])
     for row in rows:
-        fields = {
-            c: cipher.decrypt(row.key_id, row.user_id, c, row.version, getattr(row, c))
-            for c in ENCRYPTED
-        }
+        try:
+            fields = {
+                c: cipher.decrypt(row.key_id, row.user_id, c, row.version, getattr(row, c))
+                for c in ENCRYPTED
+            }
+        except (KeyUnavailable, DecryptionFailed):
+            result.failed.append(row.user_id)
+            continue
         for column, value in _seal(cipher, row.user_id, row.version, fields).items():
             setattr(row, column, value)
+        result.done += 1
     await session.flush()
-    return len(rows)
+    return result
+
+
+async def count_under_other_keys(session: AsyncSession, key_id: str) -> int:
+    stmt = select(func.count()).select_from(HealthProfile).where(HealthProfile.key_id != key_id)
+    return int(await session.scalar(stmt) or 0)
