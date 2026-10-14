@@ -6,6 +6,7 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.profile.schemas import HealthProfileOut
 from app.users.models import ConsentType
 
 
@@ -55,8 +56,7 @@ class SessionOut(BaseModel):
 class ExportOut(BaseModel):
     """Everything the server stores about the user (GDPR Art. 15 and 20).
 
-    The health profile is not here because the server never has it; the app
-    exports it from the phone (D8).
+    The health profile is decrypted here (D13); ``None`` when none is stored.
     """
 
     exported_at: datetime
@@ -64,6 +64,7 @@ class ExportOut(BaseModel):
     consent_history: list[ConsentOut]
     # refresh tokens, without their hashes
     sessions: list[SessionOut]
+    health_profile: HealthProfileOut | None
     private_recipes: list[dict[str, Any]]
     recipe_variants: list[dict[str, Any]]
     # each with its slots, and each slot with its status events

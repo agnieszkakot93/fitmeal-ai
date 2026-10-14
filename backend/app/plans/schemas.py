@@ -1,9 +1,8 @@
 """Request and response schemas for the plans API.
 
 The profile snapshot in :class:`PlanIn` is used in memory to build the plan and
-never stored or logged (D8 fallback, until the stored profile of D13 is wired
-in). It rejects unknown fields, bounds every number and hides its input in
-errors.
+never stored or logged (D8 fallback, when there is no stored D13 profile). It
+rejects unknown fields, bounds every number and hides its input in errors.
 """
 
 from __future__ import annotations
@@ -43,28 +42,37 @@ class ProfileIn(_Snapshot):
     exclusions: Exclusions = Field(default=[], max_length=MAX_EXCLUSIONS)
 
 
+def to_profile(p: ProfileIn, days: int, prep_days: int) -> Profile:
+    """The planner's profile; raises ValueError with the rule that was broken."""
+    return Profile(
+        daily_kcal=p.daily_kcal,
+        protein_min_g=p.protein_min_g,
+        meals=tuple(MealSlot(m.name, m.meal_type, m.kcal_share) for m in p.meals),
+        days=days,
+        prep_days=prep_days,
+        max_minutes=p.max_minutes,
+        equipment=frozenset(p.equipment),
+        exclusions=tuple(to_exclusions(p.exclusions)),
+    )
+
+
 class PlanIn(_Snapshot):
     days: Literal[3, 5, 7]
     prep_days: int = Field(default=1, ge=1, le=3, description='"Cook once for N days"')
-    profile: ProfileIn
+    profile: ProfileIn | None = Field(
+        default=None,
+        description="Snapshot used when there is no stored profile with health-data consent "
+        "(D8 fallback). Ignored when there is one.",
+    )
 
     @model_validator(mode="after")
     def _valid(self) -> Self:
-        self.to_profile()  # raises ValueError with the rule that was broken
+        if self.profile is not None:
+            self.to_profile(self.profile)  # raises ValueError with the rule that was broken
         return self
 
-    def to_profile(self) -> Profile:
-        p = self.profile
-        return Profile(
-            daily_kcal=p.daily_kcal,
-            protein_min_g=p.protein_min_g,
-            meals=tuple(MealSlot(m.name, m.meal_type, m.kcal_share) for m in p.meals),
-            days=self.days,
-            prep_days=self.prep_days,
-            max_minutes=p.max_minutes,
-            equipment=frozenset(p.equipment),
-            exclusions=tuple(to_exclusions(p.exclusions)),
-        )
+    def to_profile(self, p: ProfileIn) -> Profile:
+        return to_profile(p, self.days, self.prep_days)
 
 
 class SlotOut(BaseModel):

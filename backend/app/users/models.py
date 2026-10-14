@@ -1,7 +1,7 @@
 """Account and consent tables (Development Plan §7.1).
 
 Only what the account needs: the Apple subject, an optional Apple private-relay
-address and the consent history. The health profile stays on the phone (D8).
+address and the consent history. The health profile is in :mod:`app.profile` (D13).
 """
 
 from __future__ import annotations

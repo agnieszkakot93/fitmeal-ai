@@ -1,8 +1,9 @@
 """Plans: generate, read the current one, and mark meals cooked, eaten or skipped.
 
 Sign-in is required throughout; there is no anonymous plan endpoint (D12).
-Until the stored health profile is wired in, ``POST /v1/plans`` carries a
-profile snapshot that is used in memory only (D8 fallback).
+``POST /v1/plans`` uses the stored health profile when there is one and the
+health-data consent is active (D13); otherwise the request's profile snapshot,
+used in memory only (D8 fallback).
 """
 
 from __future__ import annotations
@@ -35,6 +36,7 @@ from app.plans.schemas import (
     SuggestionOut,
     TargetsOut,
 )
+from app.profile import service as profile_service
 from app.recipes.schemas import nutrients_out
 
 router = APIRouter(prefix="/v1/plans", tags=["plans"], route_class=HideInputRoute)
@@ -42,6 +44,14 @@ router = APIRouter(prefix="/v1/plans", tags=["plans"], route_class=HideInputRout
 Session = Annotated[AsyncSession, Depends(get_session)]
 
 _PLAN_NOT_FOUND = "plan not found"
+# the shape of a validation error, as the 422 response documents
+_NO_PROFILE = [
+    {
+        "type": "missing",
+        "loc": ["body", "profile"],
+        "msg": "no stored profile with health-data consent: send a profile snapshot",
+    }
+]
 _INFEASIBLE: dict[int | str, dict[str, Any]] = {
     status.HTTP_422_UNPROCESSABLE_CONTENT: {
         "model": InfeasibleOut | InvalidBodyOut,
@@ -122,9 +132,16 @@ def _infeasible_out(report: Infeasible) -> InfeasibleOut:
 
 @router.post("", response_model=PlanOut, status_code=status.HTTP_201_CREATED, responses=_INFEASIBLE)
 async def create_plan(body: PlanIn, user: CurrentUser, session: Session) -> PlanOut | JSONResponse:
-    """Generate a plan from the profile snapshot, save it as the current plan and return it."""
-    profile = body.to_profile()
+    """Generate a plan, save it as the current plan and return it.
+
+    Built from the stored profile when there is one and health-data consent is
+    active, else from the request's profile snapshot.
+    """
     user_id = user.id  # the rollback below expires every loaded row
+    source = await profile_service.for_planning(session, user_id) or body.profile
+    if source is None:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, _NO_PROFILE)
+    profile = body.to_profile(source)
     recipes = await repository.candidates(session, user_id)
     candidates = [repository.to_candidate(r) for r in recipes.values()]
     recipe_ids = {key: r.id for key, r in recipes.items()}
