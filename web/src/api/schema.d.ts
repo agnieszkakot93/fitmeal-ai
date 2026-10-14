@@ -2280,14 +2280,12 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Validation Error */
+            /** @description Invalid body, or `detail` `blocked_url` (a link we never fetch) or `platform_link` (a social post: paste its caption as text instead) */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
+                content?: never;
             };
             /** @description Daily import quota reached */
             429: {

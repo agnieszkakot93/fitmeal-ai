@@ -978,21 +978,14 @@
           "413": {
             "description": "Body over the size cap"
           },
+          "422": {
+            "description": "Invalid body, or `detail` `blocked_url` (a link we never fetch) or `platform_link` (a social post: paste its caption as text instead)"
+          },
           "429": {
             "description": "Daily import quota reached"
           },
           "503": {
             "description": "The import queue is unavailable; nothing was counted"
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1164,7 +1157,7 @@
         "properties": {
           "position": {
             "type": "integer",
-            "maximum": 200.0,
+            "exclusiveMaximum": 200.0,
             "minimum": 0.0,
             "title": "Position"
           },

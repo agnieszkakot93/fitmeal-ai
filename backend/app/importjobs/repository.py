@@ -99,6 +99,31 @@ async def claim(session: AsyncSession, import_id: uuid.UUID, retry: bool) -> Imp
     return await session.get(ImportJob, claimed) if claimed else None
 
 
+STALE_AFTER = timedelta(minutes=15)
+
+
+async def fail_stale(session: AsyncSession) -> int:
+    """Fail jobs a worker never finished (timeout, crash, lost from Redis) and drop their text.
+
+    A cancelled task skips ``run_import``'s handlers, so this is what keeps the
+    raw text from outliving the run (§7.2).
+    """
+    result = await session.execute(
+        update(ImportJob)
+        .where(
+            ImportJob.status.in_([ImportStatus.QUEUED.value, ImportStatus.RUNNING.value]),
+            ImportJob.created_at < datetime.now(UTC) - STALE_AFTER,
+        )
+        .values(
+            status=ImportStatus.FAILED.value,
+            error="timeout",
+            input_text=None,
+            finished_at=datetime.now(UTC),
+        )
+    )
+    return int(getattr(result, "rowcount", 0) or 0)
+
+
 async def purge_expired(session: AsyncSession) -> int:
     """Delete unconfirmed jobs past their expiry, with their previews."""
     result = await session.execute(

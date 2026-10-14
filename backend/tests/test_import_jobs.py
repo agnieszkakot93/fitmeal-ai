@@ -54,7 +54,8 @@ PAGE = """<html><head><script type="application/ld+json">
  "recipeIngredient": ["3 eggs", "2 tbsp peanut butter", "1 cup cheese"],
  "recipeInstructions": [{"@type": "HowToStep", "text": "Mix."}]}
 </script></head><body>x</body></html>"""
-URL = "https://www.example.com/recipes/peanut-eggs?id=7&utm_source=ig"
+URL = "https://www.example.com/recipes/peanut-eggs?id=7&utm_source=ig&fbclid=abc"
+CLEAN_URL = "https://www.example.com/recipes/peanut-eggs?id=7"  # stored and fetched
 CHEESE = 2
 
 
@@ -152,6 +153,7 @@ async def test_sign_in_required(api: AsyncClient) -> None:
         {"type": "text", "origin": "paste", "text": "ą" * 150_000},  # 300 KB as UTF-8
         {"type": "text", "origin": "fax", "text": "x"},
         {"type": "text", "origin": "paste", "text": "x", "public": True},
+        {"type": "link", "origin": "paste", "url": "https://www.example.com/a\u0000b"},
     ],
 )
 async def test_bad_bodies_are_refused_without_echo(
@@ -174,6 +176,36 @@ async def test_blocked_links_fail_before_queueing(
     res = await submit(api, pair, type="link", origin="paste", url=url)
     assert (res.status_code, res.json()["detail"]) == (422, "blocked_url")
     assert queue.ids == []
+
+
+@pytest.mark.parametrize(
+    "url", ["https://www.instagram.com/p/abc/", "https://vm.tiktok.com/x", "https://x.com/a/1"]
+)
+async def test_social_posts_are_never_fetched(
+    api: AsyncClient, apple: FakeApple, queue: FakeQueue, url: str
+) -> None:
+    pair = await login(api, apple)
+    res = await submit(api, pair, type="link", origin="share", url=url)
+    assert (res.status_code, res.json()["detail"]) == (422, "platform_link")
+    assert queue.ids == []
+
+
+async def test_nul_and_controls_never_reach_the_database_or_logs(
+    api: AsyncClient, apple: FakeApple, caplog: pytest.LogCaptureFixture
+) -> None:
+    pair = await login(api, apple)
+    canary = "Anna Kowalska CANARY-7731"
+    out = await imported(
+        api, pair, type="text", origin="pdf", text=TEXT.replace("Porcje", f"{canary}\x00\x0cPorcje")
+    )
+    assert out["status"] == "ready"
+    res = await api.post(
+        f"/v1/imports/{out['id']}/confirm",
+        json={"title": f"{canary}\u0000", "answers": [{"position": SWEET, "skip": True}]},
+        headers=bearer(pair),
+    )
+    assert res.status_code == 422 and canary not in res.text
+    assert canary not in caplog.text
 
 
 async def test_oversized_declared_body_is_413(api: AsyncClient, apple: FakeApple) -> None:
@@ -287,7 +319,7 @@ async def test_link_import_reads_json_ld(api: AsyncClient, apple: FakeApple) -> 
     assert (preview["title"], preview["servings"], preview["source_url"]) == (
         "Peanut eggs",
         2,
-        URL,
+        CLEAN_URL,
     )
     lines = preview["ingredients"]
     assert lines[0]["food"]["slug"] == "egg-whole-raw"
@@ -457,7 +489,7 @@ async def test_confirm_stores_a_private_recipe(api: AsyncClient, apple: FakeAppl
         assert (source.type, source.public_usage_status, source.reference) == (
             "link",
             "private_only",
-            URL,
+            CLEAN_URL,
         )
     job = await stored(out["id"])
     assert (job.status, job.preview, str(job.recipe_id)) == ("confirmed", None, recipe["id"])
@@ -526,3 +558,39 @@ async def test_account_erasure_removes_imports(api: AsyncClient, apple: FakeAppl
     async with get_sessionmaker()() as session:
         assert await session.scalar(select(func.count()).select_from(ImportJob)) == 0
         assert await session.scalar(select(func.count()).select_from(ImportCacheEntry)) == 0
+
+
+async def test_personal_data_is_cut_from_steps(api: AsyncClient, apple: FakeApple) -> None:
+    pair = await login(api, apple)
+    note = "Klientka: tel. 600 123 456, anna.k@example.com, https://example.com/plan?u=1"
+    out = await imported(api, pair, type="text", origin="paste", text=TEXT + note + "\n")
+    steps = " ".join(out["preview"]["instructions"])
+    assert "600" not in steps and "@" not in steps and "https" not in steps
+    assert "Zagotuj mleko." in steps
+
+
+async def test_shared_link_entries_hold_no_steps(api: AsyncClient, apple: FakeApple) -> None:
+    pair = await login(api, apple)
+    out = await imported(api, pair, site(), type="link", origin="paste", url=URL)
+    assert out["preview"]["instructions"] == ["Mix."]
+    async with get_sessionmaker()() as session:
+        entry = await session.scalar(select(ImportCacheEntry))
+        assert entry is not None and entry.user_id is None
+        assert entry.recipe["instructions"] == []
+        assert entry.recipe["ingredients"] == ["3 eggs", "2 tbsp peanut butter", "1 cup cheese"]
+
+
+async def test_stale_jobs_fail_and_lose_their_text(api: AsyncClient, apple: FakeApple) -> None:
+    pair = await login(api, apple)
+    res = await submit(api, pair, type="text", origin="paste", text=TEXT)
+    job_id = res.json()["id"]
+    async with get_sessionmaker()() as session:
+        await session.execute(
+            update(ImportJob).values(
+                status="running", created_at=func.now() - text("interval '20 minutes'")
+            )
+        )
+        await session.commit()
+    await worker.purge_expired({})
+    job = await stored(job_id)
+    assert (job.status, job.error, job.input_text) == ("failed", "timeout", None)

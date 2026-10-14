@@ -7,9 +7,10 @@ from datetime import datetime
 from enum import StrEnum
 from typing import Self
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from app.importjobs.models import ImportOrigin, ImportStatus, ImportType
+from app.importjobs.scrub import CONTROLS, controls
 from app.imports.page import MAX_LINES, MAX_NAME_CHARS
 from app.recipes.schemas import RecipeSummary
 
@@ -21,6 +22,13 @@ MAX_SERVINGS = 100
 
 class _In(BaseModel):
     model_config = ConfigDict(extra="forbid", hide_input_in_errors=True)
+
+
+def _no_controls(value: str | None) -> str | None:
+    # Postgres refuses NUL, and the failed insert's error would quote the input
+    if value is not None and CONTROLS.search(value):
+        raise ValueError("control characters are not allowed")
+    return value
 
 
 class ImportIn(_In):
@@ -37,6 +45,14 @@ class ImportIn(_In):
         max_length=MAX_TEXT_BYTES,
         description=f"Recipe text (`text` only), at most {MAX_TEXT_BYTES} bytes as UTF-8",
     )
+
+    _url_ok = field_validator("url")(_no_controls)
+
+    @field_validator("text")
+    @classmethod
+    def _text_controls(cls, value: str | None) -> str | None:
+        # PDF text carries form feeds and the like: spaces, not an error
+        return controls(value) if value is not None else None
 
     @model_validator(mode="after")
     def _shape(self) -> Self:
@@ -118,7 +134,7 @@ class ImportOut(BaseModel):
 
 
 class AnswerIn(_In):
-    position: int = Field(ge=0, le=MAX_LINES)
+    position: int = Field(ge=0, lt=MAX_LINES)
     skip: bool = Field(default=False, description="Leave this line out of the recipe")
     food_slug: str | None = Field(default=None, max_length=200)
     grams: float | None = Field(
@@ -127,6 +143,8 @@ class AnswerIn(_In):
         le=MAX_GRAMS,
         description="For the whole recipe; omit to use the line's own amount",
     )
+
+    _slug_ok = field_validator("food_slug")(_no_controls)
 
     @model_validator(mode="after")
     def _shape(self) -> Self:
@@ -141,6 +159,8 @@ class ConfirmIn(_In):
     title: str | None = Field(default=None, min_length=1, max_length=MAX_NAME_CHARS)
     servings: int | None = Field(default=None, ge=1, le=MAX_SERVINGS)
     answers: list[AnswerIn] = Field(default=[], max_length=MAX_LINES)
+
+    _title_ok = field_validator("title")(_no_controls)
 
 
 class UnansweredOut(BaseModel):

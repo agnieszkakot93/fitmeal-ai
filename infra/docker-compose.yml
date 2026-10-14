@@ -31,7 +31,7 @@ services:
     build:
       context: ..
       dockerfile: backend/Dockerfile
-    environment:
+    environment: &app-env
       DONUT_DATABASE_URL: postgresql+asyncpg://donut:donut@postgres:5432/donut
       DONUT_REDIS_URL: redis://:${REDIS_PASSWORD:-donut}@redis:6379/0
     ports: ["8000:8000"]
@@ -52,9 +52,7 @@ services:
     build:
       context: ..
       dockerfile: backend/Dockerfile
-    environment:
-      DONUT_DATABASE_URL: postgresql+asyncpg://donut:donut@postgres:5432/donut
-      DONUT_REDIS_URL: redis://:${REDIS_PASSWORD:-donut}@redis:6379/0
+    environment: *app-env
     depends_on:
       api: {condition: service_started}  # api runs the migrations
       redis: {condition: service_started}

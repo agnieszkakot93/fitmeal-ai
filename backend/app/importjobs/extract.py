@@ -10,10 +10,11 @@ from the model.
 from __future__ import annotations
 
 import re
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from typing import Any
 
 from app.core.text import fold
+from app.importjobs.scrub import scrub
 from app.imports.page import MAX_LINE_CHARS, MAX_LINES, MAX_NAME_CHARS, PageRecipe
 from app.imports.parse import parse_line
 
@@ -37,7 +38,8 @@ _FIRST_INT = re.compile(r"\d{1,3}")
 _BULLET = re.compile(r"^\s*(?:[-•*·]\s*|\d{1,2}[.)]\s+)")
 _POLISH = re.compile(r"[ąćęłńóśźż]", re.IGNORECASE)
 _MAX_TITLE_WORDS = 12
-_MAX_SHORT_INGREDIENT_WORDS = 4  # "sól", "salt and pepper": no amount, still an ingredient
+_MAX_SHORT_INGREDIENT_WORDS = 4
+_MAX_SCANNED_LINES = 4 * MAX_LINES  # "sól", "salt and pepper": no amount, still an ingredient
 
 
 @dataclass(frozen=True, slots=True)
@@ -57,6 +59,15 @@ class Draft:
     def from_json(cls, data: dict[str, Any]) -> Draft:
         return cls(**data)
 
+    def scrubbed(self) -> Draft:
+        """Personal data and links cut out of every text field (``scrub``)."""
+        return replace(
+            self,
+            title=scrub(self.title) or None if self.title else None,
+            ingredients=[t for t in map(scrub, self.ingredients) if t],
+            instructions=[t for t in map(scrub, self.instructions) if t],
+        )
+
 
 def servings_from(value: str | None) -> int | None:
     """ "4", "4 porcje", ["2", "2 servings"] already flattened by ``page``."""
@@ -74,13 +85,14 @@ def _language(declared: str | None, sample: str) -> str:
 
 
 def from_page(page: PageRecipe) -> Draft:
-    return Draft(
+    draft = Draft(
         title=page.name,
         ingredients=page.ingredients,
         instructions=page.instructions,
         servings=servings_from(page.servings),
         language=_language(page.language, " ".join([page.name or "", *page.ingredients])),
     )
+    return draft.scrubbed()
 
 
 def llm_extract(text: str) -> Draft | None:
@@ -125,7 +137,8 @@ def split_text(text: str) -> Draft:
     lines read as ingredients until the first long line without an amount,
     which starts the steps.
     """
-    lines = [" ".join(raw.split())[:MAX_LINE_CHARS] for raw in text.splitlines()]
+    raw_lines = text.splitlines()[:_MAX_SCANNED_LINES]
+    lines = [" ".join(raw.split())[:MAX_LINE_CHARS] for raw in raw_lines]
     lines = [line for line in lines if line]
     title: str | None = None
     servings: int | None = None
@@ -165,4 +178,4 @@ def split_text(text: str) -> Draft:
 
 
 def from_text(text: str) -> Draft:
-    return llm_extract(text) or split_text(text)
+    return (llm_extract(text) or split_text(text)).scrubbed()

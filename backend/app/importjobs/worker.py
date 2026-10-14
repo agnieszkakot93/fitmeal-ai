@@ -10,6 +10,7 @@ from __future__ import annotations
 import logging
 import time
 import uuid
+from dataclasses import replace
 from datetime import UTC, datetime, timedelta
 from typing import Any, ClassVar
 
@@ -71,7 +72,9 @@ async def _draft(
     if not draft.ingredients:
         raise NoRecipe
     ttl = timedelta(days=get_import_settings().import_cache_ttl_days)
-    await cache.put(session, key, owner, draft, ttl)
+    # a shared entry holds parsed facts only, never the site's own wording (§7.3)
+    entry = draft if private else replace(draft, instructions=[])
+    await cache.put(session, key, owner, entry, ttl)
     return draft, False
 
 
@@ -107,6 +110,7 @@ async def run_import(ctx: dict[str, Any], import_id: str) -> None:
             job.status = ImportStatus.READY.value
             job.input_text = None  # the raw text goes as soon as parsing ends (§7.2)
             job.finished_at = datetime.now(UTC)
+            await session.commit()
             if hit:
                 outcome = "ready_cached"
         except (PageUnusable, FetchError) as e:
@@ -119,7 +123,7 @@ async def run_import(ctx: dict[str, Any], import_id: str) -> None:
             log.error("import %s raised %s", job_id, type(e).__name__)
         if outcome not in ("ready", "ready_cached"):
             await _fail(session, job_id, outcome)
-        await session.commit()
+            await session.commit()
         log.info(
             "import %s type=%s size=%d duration_ms=%d outcome=%s",
             job_id,
@@ -132,15 +136,22 @@ async def run_import(ctx: dict[str, Any], import_id: str) -> None:
 
 async def purge_expired(ctx: dict[str, Any]) -> None:
     async with _sessionmaker(ctx)() as session:
+        stale = await repository.fail_stale(session)
         jobs = await repository.purge_expired(session)
         entries = await cache.purge_expired(session)
         await session.commit()
-    log.info("purged %d expired imports and %d cache entries", jobs, entries)
+    log.info(
+        "failed %d stale imports, purged %d expired imports and %d cache entries",
+        stale,
+        jobs,
+        entries,
+    )
 
 
 class WorkerSettings:
     functions: ClassVar = [func(run_import, name=TASK)]
-    cron_jobs: ClassVar = [cron(purge_expired, minute={17})]  # hourly
+    # every 10 minutes: a timed-out or lost job's text doesn't wait for expiry
+    cron_jobs: ClassVar = [cron(purge_expired, minute=set(range(7, 60, 10)))]
     redis_settings = redis_settings()
     keep_result = 0  # no job results (or arguments) left in Redis (§7.7)
     job_timeout = 60

@@ -29,10 +29,12 @@ from app.importjobs.models import ImportCacheEntry
 # bump when extraction changes; the LLM step adds its prompt, model and schema versions
 PIPELINE_VERSION = "deterministic-1"
 _DEFAULT_PORTS = {"http": 80, "https": 443}
+# click ids identify the person who shared or clicked a link (§7.2)
+_TRACKING = {"fbclid", "gclid", "dclid", "msclkid", "yclid", "igshid", "mc_eid", "_hsenc"}
 
 
 def normalise_url(url: str) -> str:
-    """Lower-case scheme and host, drop the default port, fragment and ``utm_*``.
+    """Lower-case scheme and host, drop the default port, fragment, ``utm_*`` and click ids.
 
     Path and query keep their case and order: ``?p=123`` often names the recipe.
     """
@@ -40,10 +42,13 @@ def normalise_url(url: str) -> str:
     scheme = parts.scheme.lower()
     host = (parts.hostname or "").rstrip(".")
     netloc = host if parts.port in (None, _DEFAULT_PORTS.get(scheme)) else f"{host}:{parts.port}"
-    query = "&".join(
-        p for p in parts.query.split("&") if p and not p.split("=", 1)[0].lower().startswith("utm_")
-    )
+    query = "&".join(p for p in parts.query.split("&") if p and not _tracking(p))
     return urlunsplit((scheme, netloc, parts.path or "/", query, ""))
+
+
+def _tracking(param: str) -> bool:
+    name = param.split("=", 1)[0].lower()
+    return name.startswith("utm_") or name in _TRACKING
 
 
 def normalise_text(text: str) -> str:

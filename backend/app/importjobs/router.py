@@ -16,7 +16,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.auth.deps import CurrentUser
 from app.auth.routing import HideInputRoute
 from app.core.db import get_session
-from app.importjobs import repository
+from app.importjobs import cache, repository
 from app.importjobs.models import ImportJob, ImportOrigin, ImportStatus, ImportType
 from app.importjobs.queue import Queue, get_queue
 from app.importjobs.schemas import (
@@ -67,8 +67,28 @@ def _out(job: ImportJob) -> ImportOut:
     )
 
 
-def _blocked() -> HTTPException:
-    return HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, detail="blocked_url")
+def _unusable(reason: str) -> HTTPException:
+    return HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, detail=reason)
+
+
+# never fetched (§2.3, §7.3): the app asks for the caption text instead
+_PLATFORMS = (
+    "instagram.com",
+    "tiktok.com",
+    "facebook.com",
+    "fb.watch",
+    "threads.net",
+    "x.com",
+    "twitter.com",
+    "youtube.com",
+    "youtu.be",
+    "pinterest.com",
+    "pin.it",
+)
+
+
+def _is_platform(host: str) -> bool:
+    return any(host == p or host.endswith("." + p) for p in _PLATFORMS)
 
 
 @router.post(
@@ -78,6 +98,10 @@ def _blocked() -> HTTPException:
     dependencies=[Depends(_body_size)],
     responses={
         413: {"description": "Body over the size cap"},
+        422: {
+            "description": "Invalid body, or `detail` `blocked_url` (a link we never fetch) "
+            "or `platform_link` (a social post: paste its caption as text instead)"
+        },
         429: {"description": "Daily import quota reached"},
         503: {"description": "The import queue is unavailable; nothing was counted"},
     },
@@ -89,14 +113,19 @@ async def create_import(
     queue: Annotated[Queue, Depends(get_queue)],
 ) -> ImportOut:
     """Queue an import. Poll `GET /v1/imports/{id}` until it is `ready` or `failed`."""
-    if body.url is not None:
+    url = body.url
+    if url is not None:
         try:
             # a link we'd never fetch fails now; a shared post's URL must at least be a web URL
-            check_url(body.url, FetchLimits.from_settings().blocked_domains)
+            host = check_url(url, FetchLimits.from_settings().blocked_domains).host.lower()
         except BlockedURL:
-            raise _blocked() from None
+            raise _unusable("blocked_url") from None
+        if body.type is ImportType.LINK and _is_platform(host):
+            raise _unusable("platform_link")
+        # stored and fetched without tracking parameters (§7.2)
+        url = cache.normalise_url(url)
     try:
-        job = await repository.create(session, user.id, body.type, body.origin, body.url, body.text)
+        job = await repository.create(session, user.id, body.type, body.origin, url, body.text)
     except repository.QuotaExceeded:
         raise HTTPException(
             status.HTTP_429_TOO_MANY_REQUESTS, detail="daily import quota reached"

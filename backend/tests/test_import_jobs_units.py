@@ -81,3 +81,26 @@ def test_text_key_is_per_user_and_keyed() -> None:
     assert key.startswith("text:")
     # not a plain hash of the content: a leaked key says nothing about the text
     assert "2 eggs" not in key
+
+
+@pytest.mark.parametrize(
+    ("line", "expected"),
+    [
+        ("Zadzwoń: +48 600 123 456 albo 600-123-456.", "Zadzwoń: albo ."),
+        ("PESEL 90010112345, mail a.b+c@example.co.uk", "PESEL , mail"),
+        ("Więcej na https://blog.example.com/x?y=1 i www.example.org", "Więcej na i"),
+        ("IBAN PL61 1090 1014 0000 0712 1981 2874", "IBAN"),
+        ("Piecz 25 minut w 180 stopniach.", "Piecz 25 minut w 180 stopniach."),
+        ("2 1/2 szklanki mąki, 200 g masła", "2 1/2 szklanki mąki, 200 g masła"),
+        ("a\x00b\x0cc", "a b c"),
+    ],
+)
+def test_scrub(line: str, expected: str) -> None:
+    from app.importjobs.scrub import scrub
+
+    assert scrub(line) == expected
+
+
+def test_normalise_url_drops_click_ids() -> None:
+    url = "https://example.com/r?id=1&fbclid=x&gclid=y&igshid=z"
+    assert cache.normalise_url(url) == "https://example.com/r?id=1"
