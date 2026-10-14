@@ -15,8 +15,10 @@ from sqlalchemy.orm import selectinload
 from app.auth.models import RefreshToken
 from app.core.db import Base
 from app.plans.models import MealPlan, PlanSlot, SlotEvent
+from app.profile import repository as profile_repository
+from app.profile import service as profile_service
 from app.recipes.models import Recipe, RecipeSource, RecipeVariant
-from app.users.models import ConsentRecord, User
+from app.users.models import ConsentRecord, ConsentType, User
 from app.users.schemas import ConsentIn, ConsentOut, ExportOut, MeOut, SessionOut
 
 
@@ -41,6 +43,10 @@ async def add_consents(
 ) -> None:
     # one timestamp for one screen's answers; never an UPDATE (append-only)
     now = datetime.now(UTC)
+    if any(c.type == ConsentType.HEALTH_DATA and not c.granted for c in consents):
+        # withdrawal hard-deletes the stored profile (D13), serialized with profile saves
+        await profile_repository.lock_user(session, user_id)
+        await profile_repository.delete_profile(session, user_id)
     session.add_all(
         ConsentRecord(
             user_id=user_id,
@@ -126,6 +132,7 @@ async def export(session: AsyncSession, user: User) -> ExportOut:
             }
             for r in recipes
         ],
+        health_profile=await profile_service.load(session, user.id),
         recipe_variants=[_columns(v) for v in variants],
         plans=[
             {
@@ -146,7 +153,8 @@ async def erase(session: AsyncSession, user_id: uuid.UUID) -> None:
     Recipes and variants point at users without a foreign key (they predate
     this table), so they are deleted here explicitly. Refresh tokens, consent
     records and plans (with their slots and events) go with the user row
-    (ON DELETE CASCADE).
+    (ON DELETE CASCADE). The health profile would too; it is deleted explicitly
+    so its hard deletion doesn't hang on the cascade.
     """
     source_ids = (
         await session.scalars(select(Recipe.source_id).where(Recipe.owner_user_id == user_id))
@@ -162,4 +170,5 @@ async def erase(session: AsyncSession, user_id: uuid.UUID) -> None:
                 ~exists().where(Recipe.source_id == RecipeSource.id),
             )
         )
+    await profile_repository.delete_profile(session, user_id)
     await session.execute(delete(User).where(User.id == user_id))

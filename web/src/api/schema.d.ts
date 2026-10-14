@@ -303,7 +303,10 @@ export interface paths {
         put?: never;
         /**
          * Create Plan
-         * @description Generate a plan from the profile snapshot, save it as the current plan and return it.
+         * @description Generate a plan, save it as the current plan and return it.
+         *
+         *     Built from the stored profile when there is one and health-data consent is
+         *     active, else from the request's profile snapshot.
          */
         post: operations["create_plan_v1_plans_post"];
         delete?: never;
@@ -353,6 +356,27 @@ export interface paths {
          *     returns the slot unchanged. Reusing an event id for a different change is a 409.
          */
         patch: operations["set_slot_status_v1_plans__plan_id__slots__slot__patch"];
+        trace?: never;
+    };
+    "/v1/me/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Profile */
+        get: operations["get_profile_v1_me_profile_get"];
+        /**
+         * Put Profile
+         * @description Save the whole profile, replacing the stored one.
+         */
+        put: operations["put_profile_v1_me_profile_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/imports": {
@@ -490,6 +514,22 @@ export interface components {
             message: string;
             /** Meal */
             meal: string | null;
+        };
+        /**
+         * BodyDataIn
+         * @description Optional; used only to suggest targets. Every field may be left out.
+         */
+        BodyDataIn: {
+            /** Age */
+            age?: number | null;
+            /** Sex */
+            sex?: ("female" | "male") | null;
+            /** Weight Kg */
+            weight_kg?: number | null;
+            /** Height Cm */
+            height_cm?: number | null;
+            /** Activity Level */
+            activity_level?: ("sedentary" | "light" | "moderate" | "active" | "very_active") | null;
         };
         /** CalculateIn */
         CalculateIn: {
@@ -669,8 +709,7 @@ export interface components {
          * ExportOut
          * @description Everything the server stores about the user (GDPR Art. 15 and 20).
          *
-         *     The health profile is not here because the server never has it; the app
-         *     exports it from the phone (D8).
+         *     The health profile is decrypted here (D13); ``None`` when none is stored.
          */
         ExportOut: {
             /**
@@ -683,6 +722,7 @@ export interface components {
             consent_history: components["schemas"]["ConsentOut"][];
             /** Sessions */
             sessions: components["schemas"]["SessionOut"][];
+            health_profile: components["schemas"]["HealthProfileOut"] | null;
             /** Private Recipes */
             private_recipes: {
                 [key: string]: unknown;
@@ -769,6 +809,66 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** HealthProfileIn */
+        HealthProfileIn: {
+            /** Daily Kcal */
+            daily_kcal: number;
+            /** Protein Min G */
+            protein_min_g: number;
+            /** Meals */
+            meals: components["schemas"]["MealIn"][];
+            /**
+             * Max Minutes
+             * @description None: no limit
+             */
+            max_minutes?: number | null;
+            /**
+             * Equipment
+             * @default []
+             */
+            equipment: string[];
+            /**
+             * Exclusions
+             * @default []
+             */
+            exclusions: components["schemas"]["ExclusionIn"][];
+            body?: components["schemas"]["BodyDataIn"] | null;
+        };
+        /** HealthProfileOut */
+        HealthProfileOut: {
+            /** Daily Kcal */
+            daily_kcal: number;
+            /** Protein Min G */
+            protein_min_g: number;
+            /** Meals */
+            meals: components["schemas"]["MealIn"][];
+            /**
+             * Max Minutes
+             * @description None: no limit
+             */
+            max_minutes?: number | null;
+            /**
+             * Equipment
+             * @default []
+             */
+            equipment: string[];
+            /**
+             * Exclusions
+             * @default []
+             */
+            exclusions: components["schemas"]["ExclusionIn"][];
+            body?: components["schemas"]["BodyDataIn"] | null;
+            /**
+             * Version
+             * @description Bumped on every save
+             */
+            version: number;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
         };
         /** ImportIn */
         ImportIn: {
@@ -1034,7 +1134,8 @@ export interface components {
              * @default 1
              */
             prep_days: number;
-            profile: components["schemas"]["ProfileIn"];
+            /** @description Snapshot used when there is no stored profile with health-data consent (D8 fallback). Ignored when there is one. */
+            profile?: components["schemas"]["ProfileIn"] | null;
         };
         /** PlanOut */
         PlanOut: {
@@ -1562,6 +1663,7 @@ export type SchemaBlockedDetail = components['schemas']['BlockedDetail'];
 export type SchemaBlockedOut = components['schemas']['BlockedOut'];
 export type SchemaBlockerKind = components['schemas']['BlockerKind'];
 export type SchemaBlockerOut = components['schemas']['BlockerOut'];
+export type SchemaBodyDataIn = components['schemas']['BodyDataIn'];
 export type SchemaCalculateIn = components['schemas']['CalculateIn'];
 export type SchemaCalculateOut = components['schemas']['CalculateOut'];
 export type SchemaCandidate = components['schemas']['Candidate'];
@@ -1585,6 +1687,8 @@ export type SchemaFoodDetail = components['schemas']['FoodDetail'];
 export type SchemaFoodRef = components['schemas']['FoodRef'];
 export type SchemaFoodSearchHit = components['schemas']['FoodSearchHit'];
 export type SchemaHttpValidationError = components['schemas']['HTTPValidationError'];
+export type SchemaHealthProfileIn = components['schemas']['HealthProfileIn'];
+export type SchemaHealthProfileOut = components['schemas']['HealthProfileOut'];
 export type SchemaImportIn = components['schemas']['ImportIn'];
 export type SchemaImportOrigin = components['schemas']['ImportOrigin'];
 export type SchemaImportOut = components['schemas']['ImportOut'];
@@ -2248,6 +2352,94 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
                 };
+            };
+        };
+    };
+    get_profile_v1_me_profile_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HealthProfileOut"];
+                };
+            };
+            /** @description `health_data_consent_required`: no active consent */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No profile saved yet */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description `health_profile_unavailable`: the encryption key is not available */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    put_profile_v1_me_profile_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HealthProfileIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HealthProfileOut"];
+                };
+            };
+            /** @description `health_data_consent_required`: no active consent */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description `health_profile_unavailable`: the encryption key is not available */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

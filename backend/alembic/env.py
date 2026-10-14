@@ -26,6 +26,7 @@ from app.core.db import Base  # noqa: E402
 from app.foods import models  # noqa: E402, F401
 from app.importjobs import models as import_job_models  # noqa: E402, F401
 from app.plans import models as plan_models  # noqa: E402, F401
+from app.profile import models as profile_models  # noqa: E402, F401
 from app.recipes import models as recipe_models  # noqa: E402, F401
 from app.users import models as user_models  # noqa: E402, F401
 
