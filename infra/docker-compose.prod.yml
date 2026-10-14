@@ -93,15 +93,15 @@ services:
       resources:
         limits: {cpus: "1.5", memory: 1G}
 
-  # arq worker. backend/app has no WorkerSettings yet, so the service sits behind the
-  # `worker` profile and never starts by default. Follow-up: add app.worker.WorkerSettings
-  # (and arq as a dependency), then deploy with `--profile worker`.
+  # arq worker: recipe imports (Development Plan §2.1). It fetches user-supplied links
+  # through the SSRF guard in app/imports/fetch.py; a firewall or egress proxy that
+  # blocks private ranges is the backstop (§7.7).
   worker:
     <<: *app
-    profiles: [worker]
-    command: ["arq", "app.worker.WorkerSettings"]
+    command: ["arq", "app.importjobs.worker.WorkerSettings"]
     depends_on:
       migrate: {condition: service_completed_successfully}
+      postgres: {condition: service_healthy}
       redis: {condition: service_healthy}
     deploy:
       resources:
