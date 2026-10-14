@@ -802,7 +802,7 @@
           "plans"
         ],
         "summary": "Create Plan",
-        "description": "Generate a plan from the profile snapshot, save it as the current plan and return it.",
+        "description": "Generate a plan, save it as the current plan and return it.\n\nBuilt from the stored profile when there is one and health-data consent is\nactive, else from the request's profile snapshot.",
         "operationId": "create_plan_v1_plans_post",
         "requestBody": {
           "content": {
@@ -944,6 +944,92 @@
             }
           }
         }
+      }
+    },
+    "/v1/me/profile": {
+      "get": {
+        "tags": [
+          "profile"
+        ],
+        "summary": "Get Profile",
+        "operationId": "get_profile_v1_me_profile_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthProfileOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "`health_data_consent_required`: no active consent"
+          },
+          "503": {
+            "description": "`health_profile_unavailable`: the encryption key is not available"
+          },
+          "404": {
+            "description": "No profile saved yet"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "profile"
+        ],
+        "summary": "Put Profile",
+        "description": "Save the whole profile, replacing the stored one.",
+        "operationId": "put_profile_v1_me_profile_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HealthProfileIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthProfileOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "`health_data_consent_required`: no active consent"
+          },
+          "503": {
+            "description": "`health_profile_unavailable`: the encryption key is not available"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     },
     "/healthz": {
@@ -1091,6 +1177,86 @@
           "meal"
         ],
         "title": "BlockerOut"
+      },
+      "BodyDataIn": {
+        "properties": {
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 120.0,
+                "minimum": 18.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          },
+          "sex": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "female",
+                  "male"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sex"
+          },
+          "weight_kg": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 300.0,
+                "minimum": 30.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight Kg"
+          },
+          "height_cm": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 250.0,
+                "minimum": 120.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height Cm"
+          },
+          "activity_level": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "sedentary",
+                  "light",
+                  "moderate",
+                  "active",
+                  "very_active"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Activity Level"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "BodyDataIn",
+        "description": "Optional; used only to suggest targets. Every field may be left out."
       },
       "CalculateIn": {
         "properties": {
@@ -1428,6 +1594,16 @@
             "type": "array",
             "title": "Sessions"
           },
+          "health_profile": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HealthProfileOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "private_recipes": {
             "items": {
               "additionalProperties": true,
@@ -1459,12 +1635,13 @@
           "user",
           "consent_history",
           "sessions",
+          "health_profile",
           "private_recipes",
           "recipe_variants",
           "plans"
         ],
         "title": "ExportOut",
-        "description": "Everything the server stores about the user (GDPR Art. 15 and 20).\n\nThe health profile is not here because the server never has it; the app\nexports it from the phone (D8)."
+        "description": "Everything the server stores about the user (GDPR Art. 15 and 20).\n\nThe health profile is decrypted here (D13); ``None`` when none is stored."
       },
       "FoodDetail": {
         "properties": {
@@ -1670,6 +1847,168 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "HealthProfileIn": {
+        "properties": {
+          "daily_kcal": {
+            "type": "number",
+            "maximum": 6000.0,
+            "minimum": 1200.0,
+            "title": "Daily Kcal"
+          },
+          "protein_min_g": {
+            "type": "number",
+            "maximum": 400.0,
+            "minimum": 0.0,
+            "title": "Protein Min G"
+          },
+          "meals": {
+            "items": {
+              "$ref": "#/components/schemas/MealIn"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 2,
+            "title": "Meals"
+          },
+          "max_minutes": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1440.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Minutes",
+            "description": "None: no limit"
+          },
+          "equipment": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Equipment",
+            "default": []
+          },
+          "exclusions": {
+            "items": {
+              "$ref": "#/components/schemas/ExclusionIn"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Exclusions",
+            "default": []
+          },
+          "body": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BodyDataIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "daily_kcal",
+          "protein_min_g",
+          "meals"
+        ],
+        "title": "HealthProfileIn"
+      },
+      "HealthProfileOut": {
+        "properties": {
+          "daily_kcal": {
+            "type": "number",
+            "maximum": 6000.0,
+            "minimum": 1200.0,
+            "title": "Daily Kcal"
+          },
+          "protein_min_g": {
+            "type": "number",
+            "maximum": 400.0,
+            "minimum": 0.0,
+            "title": "Protein Min G"
+          },
+          "meals": {
+            "items": {
+              "$ref": "#/components/schemas/MealIn"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 2,
+            "title": "Meals"
+          },
+          "max_minutes": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1440.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Minutes",
+            "description": "None: no limit"
+          },
+          "equipment": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Equipment",
+            "default": []
+          },
+          "exclusions": {
+            "items": {
+              "$ref": "#/components/schemas/ExclusionIn"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Exclusions",
+            "default": []
+          },
+          "body": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BodyDataIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version",
+            "description": "Bumped on every save"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "daily_kcal",
+          "protein_min_g",
+          "meals",
+          "version",
+          "updated_at"
+        ],
+        "title": "HealthProfileOut"
       },
       "InfeasibleOut": {
         "properties": {
@@ -2187,14 +2526,21 @@
             "default": 1
           },
           "profile": {
-            "$ref": "#/components/schemas/ProfileIn"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProfileIn"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Snapshot used when there is no stored profile with health-data consent (D8 fallback). Ignored when there is one."
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
-          "days",
-          "profile"
+          "days"
         ],
         "title": "PlanIn"
       },

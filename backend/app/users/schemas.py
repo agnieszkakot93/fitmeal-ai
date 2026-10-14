@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
-from typing import Any
+from typing import Any, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from app.profile.schemas import HealthProfileOut
 from app.users.models import ConsentType
 
 
@@ -24,6 +25,13 @@ class ConsentsIn(BaseModel):
     model_config = ConfigDict(extra="forbid", hide_input_in_errors=True)
 
     consents: list[ConsentIn] = Field(min_length=1, max_length=len(ConsentType))
+
+    @model_validator(mode="after")
+    def _one_answer_per_type(self) -> Self:
+        # answers share one timestamp, so two for a type would leave the current one undefined
+        if len({c.type for c in self.consents}) != len(self.consents):
+            raise ValueError("one answer per consent type")
+        return self
 
 
 class ConsentOut(BaseModel):
@@ -55,8 +63,7 @@ class SessionOut(BaseModel):
 class ExportOut(BaseModel):
     """Everything the server stores about the user (GDPR Art. 15 and 20).
 
-    The health profile is not here because the server never has it; the app
-    exports it from the phone (D8).
+    The health profile is decrypted here (D13); ``None`` when none is stored.
     """
 
     exported_at: datetime
@@ -64,6 +71,7 @@ class ExportOut(BaseModel):
     consent_history: list[ConsentOut]
     # refresh tokens, without their hashes
     sessions: list[SessionOut]
+    health_profile: HealthProfileOut | None
     private_recipes: list[dict[str, Any]]
     recipe_variants: list[dict[str, Any]]
     # each with its slots, and each slot with its status events
