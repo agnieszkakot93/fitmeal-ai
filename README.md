@@ -43,5 +43,6 @@ Subagents in [`.claude/agents/`](.claude/agents) cover the roles on this project
 | `backend-engineer` | `backend/`, `data/`, `infra/`: FastAPI, Postgres/Alembic, nutrition engine, optimizer, import pipeline |
 | `product-designer` | Flows, screen specs, PL/EN copy, explainability, paywall, accessibility |
 | `security-engineer` | Read-only reviews: auth, payments, GDPR health data, SSRF, LLM prompt safety |
+| `code-reviewer` | Read-only PR reviews with a verdict: correctness, OWASP security, current Python/FastAPI/TS/Swift standards, patterns, tests, migrations. Run with `/review-pr <number>` (add `--post` to publish on GitHub) |
 | `qa-engineer` | Test plans, property-based tests, golden set and LLM evals, acceptance checks |
 | `brand-researcher` | Brand naming research: name concepts, store/domain/trademark/handle checks, PL/EN language checks, [naming report](docs/branding/NAME_RESEARCH.md) |
