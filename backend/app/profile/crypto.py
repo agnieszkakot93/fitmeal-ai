@@ -1,12 +1,13 @@
 """Column encryption for the health profile (D13, Development Plan §7.2).
 
 AES-256-GCM with a 96-bit random nonce per value. The associated data binds each
-ciphertext to its user and column, so a value copied to another row or column
-fails to decrypt. The key is an application secret kept apart from the database
-credentials (``DONUT_PROFILE_KEY``, base64 of 32 bytes) and has an id stored
-with every row, so it can be rotated: set the new key and id, move the old key
-to ``DONUT_PROFILE_OLD_KEYS`` (``{"<id>": "<base64 key>"}``) and re-encrypt
-with :func:`app.profile.repository.reencrypt`. There is no default key: without
+ciphertext to its user, column and row version, so a value copied to another
+row or column, or an older value spliced into a newer row, fails to decrypt.
+The key is an application secret kept apart from the database credentials
+(``DONUT_PROFILE_KEY``, base64 of 32 bytes, e.g. ``openssl rand -base64 32``)
+and has an id stored with every row, so it can be rotated: set the new key and
+id, move the old key to ``DONUT_PROFILE_OLD_KEYS`` (``{"<id>": "<base64 key>"}``)
+and re-encrypt with :func:`app.profile.repository.reencrypt`. There is no default key: without
 one the profile can be neither read nor written (fail closed).
 """
 
@@ -68,22 +69,24 @@ class ProfileCipher:
         return f"ProfileCipher(key_id={self.key_id!r})"
 
     @staticmethod
-    def _aad(user_id: uuid.UUID, column: str) -> bytes:
-        return f"health_profiles:{column}:{user_id}".encode()
+    def _aad(user_id: uuid.UUID, column: str, version: int) -> bytes:
+        return f"health_profiles:{column}:{user_id}:{version}".encode()
 
-    def encrypt(self, user_id: uuid.UUID, column: str, value: Any) -> bytes:
+    def encrypt(self, user_id: uuid.UUID, column: str, version: int, value: Any) -> bytes:
         nonce = os.urandom(NONCE_BYTES)
         plaintext = json.dumps(value, separators=(",", ":")).encode()
-        sealed = self._aead[self.key_id].encrypt(nonce, plaintext, self._aad(user_id, column))
-        return nonce + sealed
+        aad = self._aad(user_id, column, version)
+        return nonce + self._aead[self.key_id].encrypt(nonce, plaintext, aad)
 
-    def decrypt(self, key_id: str, user_id: uuid.UUID, column: str, blob: bytes) -> Any:
+    def decrypt(
+        self, key_id: str, user_id: uuid.UUID, column: str, version: int, blob: bytes
+    ) -> Any:
         aead = self._aead.get(key_id)
         if aead is None:
             raise KeyUnavailable("no key for the row's key id")
         try:
             plaintext = aead.decrypt(
-                blob[:NONCE_BYTES], blob[NONCE_BYTES:], self._aad(user_id, column)
+                blob[:NONCE_BYTES], blob[NONCE_BYTES:], self._aad(user_id, column, version)
             )
         except InvalidTag:
             raise DecryptionFailed("stored profile did not authenticate") from None

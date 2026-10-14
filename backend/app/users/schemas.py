@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
-from typing import Any
+from typing import Any, Self
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from app.profile.schemas import HealthProfileOut
 from app.users.models import ConsentType
@@ -25,6 +25,13 @@ class ConsentsIn(BaseModel):
     model_config = ConfigDict(extra="forbid", hide_input_in_errors=True)
 
     consents: list[ConsentIn] = Field(min_length=1, max_length=len(ConsentType))
+
+    @model_validator(mode="after")
+    def _one_answer_per_type(self) -> Self:
+        # answers share one timestamp, so two for a type would leave the current one undefined
+        if len({c.type for c in self.consents}) != len(self.consents):
+            raise ValueError("one answer per consent type")
+        return self
 
 
 class ConsentOut(BaseModel):

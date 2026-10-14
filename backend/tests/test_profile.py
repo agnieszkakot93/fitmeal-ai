@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import base64
 import logging
 import os
@@ -24,6 +25,7 @@ from app.profile.crypto import (
     get_cipher,
 )
 from app.profile.models import HealthProfile
+from app.profile.schemas import HealthProfileIn
 from tests.test_auth import FakeApple, apple, apple_key, bearer, client, login
 from tests.test_plans import BODY, PROFILE, api, snapshot_catalog
 
@@ -169,6 +171,22 @@ async def test_a_value_moved_to_another_row_fails(client: AsyncClient, apple: Fa
     assert res.json()["detail"] == "health_profile_unavailable"
 
 
+async def test_an_older_value_spliced_in_fails(client: AsyncClient, apple: FakeApple) -> None:
+    """An old ``exclusions`` (say from a backup, before an allergy was added) won't authenticate."""
+    pair = await login(client, apple)
+    await _consent(client, pair, HEALTH)
+    assert (await _put(client, pair, {**STORED, "exclusions": []})).status_code == 200
+    async with get_sessionmaker()() as session:
+        old = (await session.scalars(select(HealthProfile))).one().exclusions
+    assert (await _put(client, pair)).status_code == 200
+    async with get_sessionmaker()() as session:
+        await session.execute(text("UPDATE health_profiles SET exclusions = :old"), {"old": old})
+        await session.commit()
+    res = await client.get("/v1/me/profile", headers=bearer(pair))
+    assert res.status_code == 503
+    assert "peanuts" not in res.text
+
+
 @pytest.mark.parametrize(
     "change",
     [
@@ -238,6 +256,58 @@ async def test_withdrawal_deletes_the_profile(client: AsyncClient, apple: FakeAp
     assert (await client.get("/v1/me/profile", headers=bearer(pair))).status_code == 404
 
 
+async def test_one_answer_per_consent_type(client: AsyncClient, apple: FakeApple) -> None:
+    """A grant and a withdrawal in one batch would share a timestamp: which one is current?"""
+    pair = await login(client, apple)
+    res = await client.post(
+        "/v1/me/consents", json={"consents": [HEALTH, WITHDRAW]}, headers=bearer(pair)
+    )
+    assert res.status_code == 422
+    assert (await _put(client, pair)).status_code == 403
+
+
+async def test_withdrawal_waits_for_a_save_in_flight(client: AsyncClient, apple: FakeApple) -> None:
+    """A save holding the user lock commits first; the withdrawal then deletes what it wrote."""
+    pair = await login(client, apple)
+    await _consent(client, pair, HEALTH)
+    user_id = await _user_id(client, pair)
+    async with get_sessionmaker()() as saving:
+        await repository.lock_user(saving, user_id)
+        assert await repository.has_health_consent(saving, user_id)
+        body = HealthProfileIn.model_validate(STORED)
+        await repository.put(saving, get_cipher(), user_id, body)
+        withdrawal = asyncio.create_task(_consent(client, pair, WITHDRAW))
+        await asyncio.sleep(0.5)
+        assert not withdrawal.done()  # blocked on the lock
+        await saving.commit()
+    await asyncio.wait_for(withdrawal, 10)
+    assert await _rows() == 0
+
+
+async def test_save_after_a_withdrawal_in_flight_is_refused(
+    client: AsyncClient, apple: FakeApple
+) -> None:
+    pair = await login(client, apple)
+    await _consent(client, pair, HEALTH)
+    user_id = await _user_id(client, pair)
+    async with get_sessionmaker()() as withdrawing:
+        await repository.lock_user(withdrawing, user_id)
+        await withdrawing.execute(
+            text(
+                "INSERT INTO consent_records (user_id, type, version, granted) "
+                "VALUES (:u, 'health_data', '2026-10-01', false)"
+            ),
+            {"u": user_id},
+        )
+        save = asyncio.create_task(_put(client, pair))
+        await asyncio.sleep(0.5)
+        assert not save.done()  # blocked on the lock
+        await withdrawing.commit()
+    res = await asyncio.wait_for(save, 10)
+    assert res.status_code == 403
+    assert await _rows() == 0
+
+
 # ── keys ────────────────────────────────────────────────────────────────────
 
 
@@ -287,18 +357,19 @@ def test_bad_key_settings_are_refused(key: str) -> None:
 def test_cipher_rejects_tampering() -> None:
     cipher = cipher_from(ProfileKeySettings(key=_key(), key_id="k1"))
     user = uuid.uuid4()
-    blob = cipher.encrypt(user, "targets", {"daily_kcal": 2000})
-    assert cipher.decrypt("k1", user, "targets", blob) == {"daily_kcal": 2000}
+    blob = cipher.encrypt(user, "targets", 3, {"daily_kcal": 2000})
+    assert cipher.decrypt("k1", user, "targets", 3, blob) == {"daily_kcal": 2000}
     flipped = blob[:-1] + bytes([blob[-1] ^ 1])
     for args in (
-        ("k1", user, "targets", flipped),
-        ("k1", uuid.uuid4(), "targets", blob),  # another user
-        ("k1", user, "exclusions", blob),  # another column
+        ("k1", user, "targets", 3, flipped),
+        ("k1", uuid.uuid4(), "targets", 3, blob),  # another user
+        ("k1", user, "exclusions", 3, blob),  # another column
+        ("k1", user, "targets", 4, blob),  # another save
     ):
         with pytest.raises(DecryptionFailed):
             cipher.decrypt(*args)
     with pytest.raises(KeyUnavailable):
-        cipher.decrypt("k0", user, "targets", blob)
+        cipher.decrypt("k0", user, "targets", 3, blob)
     assert "k1" in repr(cipher) and "key=" not in repr(cipher)
 
 

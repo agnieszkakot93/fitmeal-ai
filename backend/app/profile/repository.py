@@ -48,15 +48,16 @@ def _split(profile: HealthProfileIn) -> dict[str, Any]:
     }
 
 
-def _seal(cipher: ProfileCipher, user_id: uuid.UUID, fields: dict[str, Any]) -> dict[str, Any]:
-    return {column: cipher.encrypt(user_id, column, value) for column, value in fields.items()} | {
-        "key_id": cipher.key_id
-    }
+def _seal(
+    cipher: ProfileCipher, user_id: uuid.UUID, version: int, fields: dict[str, Any]
+) -> dict[str, Any]:
+    sealed = {c: cipher.encrypt(user_id, c, version, v) for c, v in fields.items()}
+    return sealed | {"key_id": cipher.key_id}
 
 
 def _open(cipher: ProfileCipher, row: HealthProfile) -> dict[str, Any]:
     def read(column: str) -> Any:
-        return cipher.decrypt(row.key_id, row.user_id, column, getattr(row, column))
+        return cipher.decrypt(row.key_id, row.user_id, column, row.version, getattr(row, column))
 
     return {
         **read("targets"),
@@ -87,13 +88,20 @@ async def get(
 async def put(
     session: AsyncSession, cipher: ProfileCipher, user_id: uuid.UUID, profile: HealthProfileIn
 ) -> None:
-    """Insert or replace the whole profile. The caller holds :func:`lock_user`."""
-    values = _seal(cipher, user_id, _split(profile))
-    stmt = insert(HealthProfile).values(user_id=user_id, version=1, **values)
+    """Insert or replace the whole profile. The caller holds :func:`lock_user`.
+
+    The new version is part of every column's associated data, so columns from
+    different saves can't be mixed.
+    """
+    current = await session.scalar(
+        select(HealthProfile.version).where(HealthProfile.user_id == user_id)
+    )
+    version = (current or 0) + 1
+    values = _seal(cipher, user_id, version, _split(profile)) | {"version": version}
+    stmt = insert(HealthProfile).values(user_id=user_id, **values)
     await session.execute(
         stmt.on_conflict_do_update(
-            index_elements=[HealthProfile.user_id],
-            set_={**values, "version": HealthProfile.version + 1, "updated_at": func.now()},
+            index_elements=[HealthProfile.user_id], set_={**values, "updated_at": func.now()}
         )
     )
 
@@ -118,8 +126,11 @@ async def reencrypt(session: AsyncSession, cipher: ProfileCipher, batch: int = 5
         )
     ).all()
     for row in rows:
-        fields = {c: cipher.decrypt(row.key_id, row.user_id, c, getattr(row, c)) for c in ENCRYPTED}
-        for column, value in _seal(cipher, row.user_id, fields).items():
+        fields = {
+            c: cipher.decrypt(row.key_id, row.user_id, c, row.version, getattr(row, c))
+            for c in ENCRYPTED
+        }
+        for column, value in _seal(cipher, row.user_id, row.version, fields).items():
             setattr(row, column, value)
     await session.flush()
     return len(rows)
