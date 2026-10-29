@@ -177,11 +177,11 @@ async def export(session: AsyncSession, user: User) -> ExportOut:
 async def erase(session: AsyncSession, user_id: uuid.UUID) -> None:
     """Delete the account and everything stored about it (GDPR Art. 17).
 
-    Recipes and variants point at users without a foreign key (they predate
-    this table), so they are deleted here explicitly. Refresh tokens, consent
-    records and plans (with their slots, shopping items and events) go with the user row
-    (ON DELETE CASCADE). The health profile would too; it is deleted explicitly
-    so its hard deletion doesn't hang on the cascade.
+    Everything that points at the user goes with the user row (ON DELETE
+    CASCADE; tests/test_guards.py checks this). Recipes and variants are still
+    deleted here explicitly so their now-unused import sources can be cleaned
+    up. The health profile is deleted explicitly too, so its hard deletion
+    doesn't hang on the cascade.
     """
     source_ids = (
         await session.scalars(select(Recipe.source_id).where(Recipe.owner_user_id == user_id))

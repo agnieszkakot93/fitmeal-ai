@@ -98,7 +98,8 @@ def apple(apple_key: rsa.RSAPrivateKey) -> Iterator[FakeApple]:
 @pytest.fixture
 async def client(migrated_db: None, apple: FakeApple) -> AsyncIterator[AsyncClient]:
     async with get_sessionmaker()() as session:
-        await session.execute(text("TRUNCATE users CASCADE"))
+        # DELETE, not TRUNCATE: TRUNCATE CASCADE would empty the whole recipes table
+        await session.execute(text("DELETE FROM users"))
         await session.commit()
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
         yield c

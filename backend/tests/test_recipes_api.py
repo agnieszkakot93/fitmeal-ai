@@ -6,7 +6,7 @@ from typing import Any
 
 import pytest
 from httpx import ASGITransport, AsyncClient
-from sqlalchemy import text, update
+from sqlalchemy import delete, text, update
 
 from app.core.db import get_sessionmaker
 from app.foods import importer
@@ -15,6 +15,7 @@ from app.foods.fdc import load_fdc_dirs
 from app.main import app
 from app.recipes import catalog
 from app.recipes.models import Recipe
+from app.users.models import User
 from tests.test_foods_db import CURATED
 from tests.test_tuning import CATALOG, SNAPSHOT
 
@@ -215,9 +216,12 @@ async def test_bad_recipe_id_is_422(client: AsyncClient) -> None:
 
 async def test_private_recipes_are_not_served(client: AsyncClient) -> None:
     recipe_id = uuid.UUID(await _id(client, "banana-bread-oat"))
+    owner = User(apple_sub=f"test-{uuid.uuid4()}")
     async with get_sessionmaker()() as session:
+        session.add(owner)
+        await session.flush()
         await session.execute(
-            update(Recipe).where(Recipe.id == recipe_id).values(owner_user_id=uuid.uuid4())
+            update(Recipe).where(Recipe.id == recipe_id).values(owner_user_id=owner.id)
         )
         await session.commit()
     try:
@@ -228,6 +232,7 @@ async def test_private_recipes_are_not_served(client: AsyncClient) -> None:
             await session.execute(
                 update(Recipe).where(Recipe.id == recipe_id).values(owner_user_id=None)
             )
+            await session.execute(delete(User).where(User.id == owner.id))
             await session.commit()
 
 

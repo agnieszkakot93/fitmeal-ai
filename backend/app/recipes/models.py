@@ -103,8 +103,10 @@ class Recipe(Base):
     source_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("recipe_sources.id", ondelete="RESTRICT")
     )
-    # owner of a private import; None for catalog recipes. No users table yet.
-    owner_user_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), index=True)
+    # owner of a private import; None for catalog recipes
+    owner_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
 
     title_en: Mapped[str | None] = mapped_column(Text)
     title_pl: Mapped[str | None] = mapped_column(Text)
@@ -196,7 +198,9 @@ class RecipeVariant(Base):
     parent_variant_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("recipe_variants.id", ondelete="CASCADE")
     )
-    user_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), index=True)
+    user_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
     label: Mapped[str | None] = mapped_column(Text)
     # only the targets this variant was computed for, never the health profile
     targets: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default="{}")
