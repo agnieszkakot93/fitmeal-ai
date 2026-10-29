@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.auth.routing import HideInputRoute
 from app.core.db import get_session
 from app.foods import repository
 from app.foods.schemas import NutrientsOut
@@ -13,7 +14,7 @@ from app.nutrition.calc import IngredientLine, calculate
 from app.nutrition.nutrients import Nutrients
 from app.nutrition.units import UnitConversionError
 
-router = APIRouter(prefix="/v1/nutrition", tags=["nutrition"])
+router = APIRouter(prefix="/v1/nutrition", tags=["nutrition"], route_class=HideInputRoute)
 
 
 class IngredientIn(BaseModel):

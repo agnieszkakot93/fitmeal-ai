@@ -9,16 +9,14 @@ access logs (D8); the GET variants work without them.
 from __future__ import annotations
 
 import uuid
-from collections.abc import Callable, Coroutine
-from typing import Annotated, Any
+from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response
-from fastapi.exceptions import RequestValidationError
-from fastapi.routing import APIRoute
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import ARRAY, Text, cast, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
+from app.auth.routing import HideInputRoute
 from app.core.db import get_session
 from app.foods import repository as foods_repo
 from app.foods.models import FoodItem
@@ -55,24 +53,7 @@ from app.recipes.schemas import (
     to_exclusions,
 )
 
-
-class _HideInputRoute(APIRoute):
-    """422 responses without the submitted values: they may be health data (§7.7)."""
-
-    def get_route_handler(self) -> Callable[[Request], Coroutine[Any, Any, Response]]:
-        handler = super().get_route_handler()
-
-        async def route(request: Request) -> Response:
-            try:
-                return await handler(request)
-            except RequestValidationError as exc:
-                errors = [{k: v for k, v in e.items() if k != "input"} for e in exc.errors()]
-                raise RequestValidationError(errors) from None
-
-        return route
-
-
-router = APIRouter(prefix="/v1/recipes", tags=["recipes"], route_class=_HideInputRoute)
+router = APIRouter(prefix="/v1/recipes", tags=["recipes"], route_class=HideInputRoute)
 
 Session = Annotated[AsyncSession, Depends(get_session)]
 

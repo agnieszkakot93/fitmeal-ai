@@ -3,11 +3,12 @@ from typing import Annotated, Literal
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.auth.routing import HideInputRoute
 from app.core.db import get_session
 from app.foods import repository
 from app.foods.schemas import FoodDetail, FoodSearchHit, FoodSummary
 
-router = APIRouter(prefix="/v1/foods", tags=["foods"])
+router = APIRouter(prefix="/v1/foods", tags=["foods"], route_class=HideInputRoute)
 
 Session = Annotated[AsyncSession, Depends(get_session)]
 
